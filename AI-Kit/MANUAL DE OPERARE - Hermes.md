@@ -155,10 +155,11 @@ treptele 3, 4 și 5 de mai sus: `lint`, `health-check`, `reconcile` în modul in
   Durata măsurată: **1 m 26 s**.
 - **De șters:** `Unregister-ScheduledTask -TaskName 'PKMS-Watch' -Confirm:$false`
 
-### `PKMS-Aliniere` — de creat, nu există încă
+### `PKMS-Aliniere` — EXISTĂ ți rulează
 
-Verificare la **2026-10-08**: `Get-ScheduledTask -TaskName 'PKMS-Aliniere'` → **nu găsește
-nimic**. Nu-l raporta ca existent.
+Verificare la **2026-10-09**: `Get-ScheduledTask -TaskName 'PKMS-Aliniere'` → starea **Ready**, ultima
+rulare **20:00:01**, rezultat **0**. Deci automatul exista chiar si atunci cand
+textul de mai jos spunea altceva; cifra de aici e cea masurata acum, nu cea veche.
 
 Când va fi creat, e al doilea automat al voltului, și are un **risc diferit** de
 `PKMS-Watch`:

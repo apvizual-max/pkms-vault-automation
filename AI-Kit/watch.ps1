@@ -119,7 +119,11 @@ foreach ($t in $trepte) {
         $erori = 1; $nota = 'comparatia cu backupul nu a putut fi facuta'
       }
       $atentii = @($rand | Where-Object { $_ -match 'ATENTIE:' }).Count
-      $detalii = @(Get-Detalii $rand @('^ATENTIE:', '^STOP:', 'BACKUP (INEXISTENT|NU A FOST GASIT)', 'Nu pot afirma') -Blocuri)
+      # '==>' prinde relocarile, 'POTRIVIRE FALSA' prinde potrivirile respinse
+      # pentru continut diferit. Fara ele,exact informatia care cere ochiul
+      # omului era cea care se pierdea: se vedea pe consola si nu ajungea in
+      # raportul zilnic.
+      $detalii = @(Get-Detalii $rand @('^ATENTIE:', '^STOP:', 'BACKUP (INEXISTENT|NU A FOST GASIT)', 'Nu pot afirma', '==>', 'POTRIVIRE FALSA') -Blocuri)
     }
   }
 

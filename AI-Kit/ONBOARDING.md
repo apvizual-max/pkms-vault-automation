@@ -174,8 +174,8 @@ citești, îl explici, îl propui lui Popy.
 **Logul e `raport-aliniere.log`, la rădăcina voltului** — nu în `_SYSTEM`, pentru că
 e locul unde Alex uită să se uite. **Se scrie doar la eveniment**: o rulare curentă nu
 atinge deloc fișierul. Rezolvatele se mută în `arhiva- raport aliniere.log` și rămân
-ca istoric. **Automatul `PKMS-Aliniere` nu există încă** (la 2026-10-08) — nu-l
-raporta ca existent. Blocajul se face cu **mutex**, nu cu fișier-pid.
+ca istoric. **Automatul `PKMS-Aliniere` există ți rulează** (verificat la 2026-10-09: starea Ready,
+ultima rulare 20:00:01, rezultat 0). Blocajul se face cu **mutex**, nu cu fișier-pid.
 
 **O regulă care nu se declanșează e o regulă scrisă în decor.** O excluziune scrisă ca
 `\01` era citită de .NET ca secvență **octală** (`U+0001`) și nu oprea nicio cale reală:

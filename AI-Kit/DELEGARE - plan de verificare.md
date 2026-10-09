@@ -68,8 +68,10 @@ Despre `align-index.ps1` raportează **doar citind fișierul**, și anume:
 3. Blocajul se face cu **mutex**, nu cu fișier-pid.
 4. Fiecare tipar de excluziune e scris `[\\/]`, nu `\01` — pentru că `\01` e citit de
    .NET ca secvență **octală** (`U+0001`) și nu se declanșează pe nicio cale reală.
-5. Automatul `PKMS-Aliniere` **nu există** la 2026-10-08 — nu-l raporta ca existent.
-   Verifică cu `Get-ScheduledTask -TaskName 'PKMS-Aliniere'`.
+5. ~~Automatul `PKMS-Aliniere` **nu există** la 2026-10-08.~~ **CORECTAT:** la 2026-10-09
+   automatul exista si ruleaza (Ready, ultima 20:00:01, rezultat 0). Se verifica la
+   fel cu `Get-ScheduledTask -TaskName 'PKMS-Aliniere'` — dar acum ca confirmare,
+   nu ca presupunere ca ar lipsi.
 
 Verifică:
 
