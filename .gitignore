@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# PKMS — mecanismul, NU continutul.
+#
+# Acest repo versioneaza DOAR stratul de intretinere: scripturile din AI-Kit si
+# documentatia de la radacina voltului. Continutul personal (rafturi, note,
+# capturi, atasamente) NU intra in git — nu e rolul lui si ar fi zeci de GB.
+#
+# REGULA: se INTERZICE tot ce se afla la radacina voltului, apoi se deschid
+# doar caile enumerate mai jos. Este invers fata de un .gitignore obisnuit, unde
+# se enumera ce se ignora — pentru ca aici pericolul e sa se versi accidental
+# continutul, nu sa se uit ceva.
+#
+# ATENTIE: NU rula `git clean -fdx` si `git reset --hard` in acest repo. `.git`
+# este IN interiorul voltului, iar un clean ar sterge continutul lui, nu doar
+# fisierele neversionate. Backupul e la D:\Alex_Knowlege_Vault - Backup - 10-08-2026
+# si nu e versionat nici el.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# 1. interzicem tot ce e la radacina
+/*
+
+# 2. deschidem mecanismul
+!/.gitignore
+!/AI-Kit/
+!/AI-Kit/**
+
+# 3. documentatia de la radacina — toate fisierele .md sunt, prin definitie,
+#    documentatie a sistemului (contract, COTOR, proceduri, onboarding)
+!/*.md
+
+# 4. logul viu: dovada ca poarta chiar merge, si cam de des
+!/raport-aliniere.log
+
+# ── raman IN AFARA, intentionat ──
+#   arhiva- raport aliniere.log  — creste la nesfarsit; istoricul lui ramane in
+#                                   backup, nu in istoricul git
+#   desktop.ini                 — fisier al Windows, nu al sistemului
+#   _ARCHIVE _QUARANTINE _SYSTEM 00_Inbox 01_Projects 02_Areas 03_Resources
+#   04_Archive 05_Attachments 06_Metadata 10_Work Canvas Bases Clippings
+#   Wisper_Transcripts .obsidian .trash si toti ceilalti fii ascunsi
+#     → continut personal. Nu se versioneaza aici.
