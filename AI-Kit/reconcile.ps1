@@ -352,9 +352,14 @@ if ($acoperit -ne $bak.Count) {
   exit 1
 }
 Write-Output "socoteala inchisa: $acoperit din $($bak.Count). Nicio categorie nu e ascunsa."
-} else {
-  Write-Output "backup neatins: NU AM PUTUT CITI NICIO FISIER DIN BACKUP"
 }
+# RAMURA ELIMINATA, masurata, nu ghicita. "else"-ul care spunea "NU AM PUTUT CITI
+# NICIO FISIER DIN BACKUP" era inaccesibil: el cerea $newest -lti, adica niciun
+# fisier citibil in backup - iar pentru exact asta scriptul iese deja cu cod 1,
+# la $bak.Count -eq 0, cu zece liniuri mai sus. $newest este ACEEASI enumerare ca
+# $bak, doar fara filtrul $ex, deci nu poate fi ne EMPTY cand $bak nu e. Mesajul
+# era deci repetarea exacta a unui verdict deja dat, cu iesire mai tare. A fost
+# eliminat, nu mutat: conditia ramane acoperita acolo unde chiar poate aparea.
 
 if ($missing -gt 0) {
   Write-Output ""

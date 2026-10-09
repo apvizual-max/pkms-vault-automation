@@ -60,10 +60,13 @@ Write-Output "COMENZI (enumerate dupa fisierele REALE din acest folder, nu din m
 # lista se construieste din ce e efectiv pe disc. un script nou adaugat aici apare
 # automat, iar unul fara descriere e spus cu numele lui, in loc sa fie omis tacit.
 $rol = @{
+  'align-index.ps1'    = 'aliniaza indexurile; scrie doar indexul, arhiva lui si logul'
   'paths.ps1'        = 'verifica drumul catre backup; nu scrie'
   'setup.ps1'        = 'verificare de preluare; nu scrie'
   'lint.ps1'         = 'POARTA: regulile; nu scrie'
+  'verifica-schema.ps1' = 'POARTA: forma indexurilor 00_INDEX; nu scrie'
   'health-check.ps1' = 'masoara voltul; nu scrie'
+  'inchide-log.ps1'    = 'recenseaza evenimentele deschise; scrie doar cu -Arhiveaza'
   'reconcile.ps1'    = 'compara cu backupul; implicit nu scrie'
   'watch.ps1'        = 'verificarea care vine singura; scrie UN raport'
   'build-index.ps1'  = 'regenereaza indexurile; ruleaza DOAR dupa mutari in masa'

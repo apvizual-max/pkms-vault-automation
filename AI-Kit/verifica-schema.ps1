@@ -15,6 +15,12 @@
   tiparele de excludere trebuie sa le opreasca. Daca una dintre ele nu e
   prinsa, iesirea e 2 si poarta nu poate fi crezuta.
 
+  REGULA PE CARE O RETINE SI BLOCATUL: un index pe care nu-l poti citi nu se
+  numara "bine". Daca lista celor NESCRISE nu se poate umple, poarta nu stie
+  ce nu a vazut si anunta "totul e pe schema" despre un arbore necitit. De
+  aceea -AutoTest blocheaza acum un 00_INDEX.md cu FileShare.None si cere ca
+  pe ecran sa apara "NESCRISE", cu iesire cu cod nenul.
+
   REGULA A DOUA: un bloc nu se cere pentru nimic. Masurat pe un index generat
   real, un folder gol are DOAR "## Ce e aici" si "## Cuvinte cheie" —
   "## Subfoldere" si "## Fișiere" nu se scriu cand nu e nimic de masurat.
@@ -48,6 +54,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
+# calea catre ACEST fisier. -AutoTest porneste un copil cu -File, iar copilul
+# trebuie sa stie exact ce script ruleaza, nu ce se gaseste in directorul curent.
+$self = $PSCommandPath
 
 # --- zonele interzise — OGLINDITE VERBATIM din build-index.ps1:22-45 --------
 $skipDirs = @(
@@ -304,6 +313,43 @@ $faraSub = ($faraSub -join "`n")
   }
   if (-not $probeOk) { $ok = $false }
 
+  # --- proba NESCRISE: singura poarta pe care o poate omori o stare gresita ---
+  Write-Host ""
+  Write-Host "  NESCRISE — un index BLOCAT (deschis cu FileShare.None, ca un folder"
+  Write-Host "  la care nu ai drept). Trebuie: 'NESCRISE: 1' + 'verdict incomplet' +"
+  Write-Host "  iesire cu cod nenul. Altfel verdictul 'totul e pe schema' se prefacea"
+  Write-Host "  despre un arbore pe care nu l-a citit."
+  $gRoot = Join-Path $t 'g'
+  $gOk   = Join-Path $gRoot 'g_bun'
+  $gBl   = Join-Path $gRoot 'g_blocaj'
+  $null = New-Item -ItemType Directory -Path (Join-Path $gOk 'sub') -Force
+  $null = New-Item -ItemType Directory -Path $gBl -Force
+  Set-Content -LiteralPath (Join-Path $gOk 'a.txt') -Value 'proba' -Encoding UTF8
+  Set-Content -LiteralPath (Join-Path $gOk '00_INDEX.md') -Value ($corect.Replace('autotest/bun','autotest/g_bun')) -Encoding UTF8
+  $gIdx = Join-Path $gBl '00_INDEX.md'
+  Set-Content -LiteralPath $gIdx -Value $corect -Encoding UTF8
+
+  $fs = $null; $gOut = ''; $gCod = 0
+  try {
+    # Blocaj REAL, tinut deschis in timp ce copilul citeste. Un proces strain
+    # primeste IOException la ReadAllText - exact ce primeste o poarta pe un
+    # index la care nu are acces.
+    $fs = [System.IO.File]::Open($gIdx, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::None)
+    $eaVechi = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
+    $gCod = $LASTEXITCODE
+    $ErrorActionPreference = $eaVechi
+  } finally {
+    if ($fs) { $fs.Close(); $fs.Dispose() }
+  }
+  foreach ($ln in @($gOut -split "`r?`n")) {
+    if ($ln -match 'NESCRISE|REZULTAT|analizate|erori:') { Write-Host ('             ' + $ln.Trim()) }
+  }
+  $gPrins = (($gOut -match 'NESCRISE:\s+1') -and ($gOut -match 'verdict incomplet') -and ($gCod -ne 0))
+  if ($gPrins) { Write-Host ('  [PRINS]    G index blocat -> cod ' + $gCod + ', "NESCRISE: 1" + "verdict incomplet"') }
+  else { $ok = $false; Write-Host ('  [NEPRINS]  G index blocat (cod=' + $gCod + ') — POARTA NU POATE DEVENI ROSIE') }
+
   Write-Host ""
   if ($ok) {
     Write-Host "AUTOPROBA: TOATE CAZURILE AU FOST PRINSE, SI TIPARELE DE EXCLUDERE LOVESC CAILE REALE. Poarta e vie."
@@ -314,7 +360,11 @@ $faraSub = ($faraSub -join "`n")
 }
 
 # ======================= RULARE ============================================
-if ($AutoTest) { $cod = Invoke-AutoTest; exit $cod }
+# Scanarea e functie, nu cod la nivel de script, pentru un singur motiv: ca
+# -AutoTest sa o poata rula asupra unui arbore de proba si sa verifice IESIREA
+# cu cod nenul. O poarta pe care nimeni nu poate apuca sa o tragi nu e o poarta.
+function Invoke-Scan {
+param([string]$Vault, [int]$Nivel = 1)
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 if (-not (Test-Path -LiteralPath $Vault)) { throw ('Voltul nu exista: ' + $Vault) }
@@ -324,6 +374,11 @@ $eroare = 0; $observatie = 0; $analizat = 0
 # Foldere al caror index NU a putut fi citit. Sunt raportate cu numele,
 # pentru ca o poarta care nu spune ce nu a vazut nu este o poarta.
 $probleme = New-Object System.Collections.ArrayList
+# MASURAT: $nescrise era folosit la 6 locuri si nu era initializat NICIODATA.
+# .Add() pe $null arunca RuntimeException, iar cu $ErrorActionPreference='Stop'
+# scriptul murea exact la indexul pe care nu-l putea citi - adica exact acolo
+# unde trebuia sa raporteze. O poarta ucisa de propria ei lista nu e o poarta.
+$nescrise = New-Object System.Collections.Generic.List[string]
 
 foreach ($f in $idx) {
   $rel = $f.FullName.Substring($Vault.Length).TrimStart('\')
@@ -339,7 +394,14 @@ foreach ($f in $idx) {
   for ($tent = 0; $tent -lt 3 -and -not $citit; $tent++) {
     try { $txt = [IO.File]::ReadAllText($f.FullName); $citit = $true }
     catch {
-      if ($tent -eq 2) { $nescrise.Add($rel) }
+      if ($tent -eq 2) {
+        # Refacerea listei daca initializarea de sus a fost stersa: ramura asta
+        # trebuie sa ramana intai de ori nu poate ajunge la null.
+        if ($nescrise -eq $null) { $nescrise = New-Object System.Collections.Generic.List[string] }
+        # si inapoi: un .Add() care arunca aici ar omori chiar mesajul pe care
+        # il are ca datorie. Poarta nu se poate ucide pe ea insasi.
+        try { [void]$nescrise.Add($rel) } catch { Write-Host ('  ATENTIE: nu am putut nota indexul neles: ' + $rel) }
+      }
       else { Start-Sleep -Milliseconds 400 }
     }
   }
@@ -381,11 +443,15 @@ if ($groups.Count -gt 0) {
 Write-Host ''
 if ($eroare -gt 0) {
   Write-Host ('REZULTAT: NEALINIAT cu §18.1 — ' + $eroare + ' erori.')
-  exit 1
+  return 1
 }
 if ($nescrise.Count -gt 0) {
   Write-Host ('REZULTAT: cele ' + $analizat + ' indexuri CITITE sunt pe schema §18.1; ' + $nescrise.Count + ' NU au putut fi citite — verdict incomplet.')
-  exit 1
+  return 1
 }
 Write-Host 'REZULTAT: toate indexurile analizate sunt pe schema §18.1.'
-exit 0
+return 0
+}
+
+if ($AutoTest) { $cod = Invoke-AutoTest; exit $cod }
+exit (Invoke-Scan -Vault $Vault -Nivel $Nivel)
