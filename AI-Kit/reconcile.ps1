@@ -20,7 +20,12 @@ param(
   # e separat de -Restore intentionat: aici suprascriem continut nou peste ceva
   # existent, nu umplem o gaura. versiunea curenta e pusa la loc inainte, in
   # _QUARANTINE\restaurari\, deci nimic nu se pierde nici aici.
-  [switch]$RestoreModified
+  [switch]$RestoreModified,
+  # NU schimba nimic singur. Exista doar ca sa cerse a doua oara intentia, cand
+  # cifra de pierderi e atat de mare incat cel mai probabil NU e o pierdere, ci un
+  # volt partial (copie de test, dosar nou, replica). Fara el, comanda refuza sa
+  # scrie ceva ce nimeni nu si-a cerut.
+  [switch]$RestoreConfirmat
 )
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
@@ -168,6 +173,22 @@ foreach ($f in $bak) {
     $lipsa.Add([pscustomobject]@{ Rel=$rel; Src=$f.FullName; Len=$f.Length })
   }
 }
+# Verifica daca doua fisiere sunt CU ADEVARAT acelasi fisier. Numele si marimea
+# NU sunt amprenta: doua fisiere pot avea acelasi nume si aceeasi marime fara
+# sa fie unul mutarea celuilalt. Masurat 2026-10-09: o stergere reala a fost
+# absorbita ca "mutare" si sistemul a raportat ca nu s-a pierdut nimic.
+function Test-FisiereIdentice($a, $b) {
+  try {
+    if (-not (Test-Path -LiteralPath $a)) { return $false }
+    if (-not (Test-Path -LiteralPath $b)) { return $false }
+    # -LiteralPath, obligatoriu: numele de foldere contin [ si ], pe care -Path
+    # le-ar citi ca metacaractere si ar intoarce un hash gol.
+    $h1 = (Get-FileHash -LiteralPath $a -Algorithm SHA256).Hash
+    $h2 = (Get-FileHash -LiteralPath $b -Algorithm SHA256).Hash
+    return ($h1 -eq $h2)
+  } catch { return $false }
+}
+
 # --- ultima runda: mutari fara manifest ---
 # rundele tarzii (note la radacina -> 00_Inbox, secrete -> _ARCHIVE, reziduuri ->
 # _QUARANTINE) nu au fost scrise in niciun manifest. Ca sa nu raportam ca pierdute
@@ -185,9 +206,18 @@ foreach ($l in $lipsa) {
   $key = ([IO.Path]::GetFileName($l.Rel)) + '|' + $l.Len
   if ($byNS.ContainsKey($key)) {
     $dest = $byNS[$key][0]
-    $relocat.Add("$($l.Rel)  ==>  $dest")
-    $relocPairs.Add([pscustomobject]@{ current = (Join-Path $Vault $dest); original = $l.Src })
-    continue
+    $destPath = Join-Path $Vault $dest
+    if (Test-FisiereIdentice $l.Src $destPath) {
+      $relocat.Add("$($l.Rel)  ==>  $dest")
+      $relocPairs.Add([pscustomobject]@{ current = $destPath; original = $l.Src })
+      continue
+    }
+    Write-Output ""
+    Write-Output "  ATENTIE, POTRIVIRE FALSA: $($l.Rel)"
+    Write-Output "    in volt exista '$dest', cu ACELASI nume si ACEEASI marime."
+    Write-Output "    dar CONTINUTUL DIFERA. Nu e o mutare — e alt fisier care se"
+    Write-Output "    impiedica de numele lui. Originalul e REAL LIPSA, nu sarit."
+    # NU continue intentionat: cade mai jos, ca sa ajunga in $realLipsa.
   }
   # nivelul 2: mutat SI RENUMIT. rafturile masinii pastreaza martorii cu prefix,
   # ca sa nu se ciocneasca ("Gemini Scribe - debug.log", nu "debug.log").
@@ -204,8 +234,18 @@ foreach ($l in $lipsa) {
     }
   }
   if ($hit) {
-    $relocat.Add("$($l.Rel)  ==>  $hit   [redenumit]")
-    $relocPairs.Add([pscustomobject]@{ current = (Join-Path $Vault $hit); original = $l.Src })
+    $hitPath = Join-Path $Vault $hit
+    if (Test-FisiereIdentice $l.Src $hitPath) {
+      $relocat.Add("$($l.Rel)  ==>  $hit   [redenumit]")
+      $relocPairs.Add([pscustomobject]@{ current = $hitPath; original = $l.Src })
+    }
+    else {
+      Write-Output ""
+      Write-Output "  ATENTIE, POTRIVIRE FALSA: $($l.Rel)"
+      Write-Output "    '$hit' se termina cu acelasi nume si are aceeasi marime,"
+      Write-Output "    dar CONTINUTUL DIFERA. Nu e o renumire — originalul e REAL LIPSA."
+      $realLipsa.Add($l)
+    }
   }
   else { $realLipsa.Add($l) }
 }
@@ -368,9 +408,34 @@ if ($missing -gt 0) {
   if ($missing -gt 20) { Write-Output "   ... si $($missing - 20) altele" }
   Write-Output ""
   Write-Output "Restaurarea copiaza FISAIERUL PE ACELASI NUME, inapoi la acelasi drum."
-  Write-Output "Nu se atinge backupul. Daca vrei:"
-  Write-Output "   .\reconcile.ps1 -Restore"
-  if ($Restore) {
+  Write-Output "Nu se atinge backupul."
+  Write-Output ""
+  # Pragul e ALES, dar pentru un motiv verificabil, nu din baza de ochi: peste 20
+  # nu mai poti citi lista cu ochii — scriptul afiseaza primele 20 si apoi
+  # "... si N altele". In acel punct nu mai stii CE restaura, ci doar CATE.
+  # Iar cifra mare are doua explicatii opuse:
+  #   - ai pierdut chiar atat;
+  #   - ai reorganizat fara manifest, iar scriptul numeste chiar asta
+  #     "datorie de plat" (vezi mai sus). In al doilea caz restaurarea aduce
+  #     inapoi fisiere pe care le-ai mutat cu gura, nu le-ai pierdut.
+  # Deci peste 20 se cere un cuvant in plus. Pragul mic e partea care ne apara.
+  $prag = 20
+  Write-Output "  prag: peste $prag de lipsuri nu mai poti verifica lista cu ochii"
+  if ($missing -gt $prag) {
+    Write-Output ""
+    Write-Output "ATENTIE — CIFRA DEPASESTE PRAGUL: $missing > $prag."
+    Write-Output "  Asta NU arata o pierdere. Arata un volt partial."
+    Write-Output "  Inainte sa faci orice, raspunde sincer: chiar am pierdut $missing de"
+    Write-Output "  fisiere, sau rulez pe o copie de proba, un folder nou, sau o baza de test?"
+    Write-Output "  Daca raspunsul este "nu am pierdut nimic", NU restaura nimic."
+    Write-Output "  Comanda de mai jos e BLOCATA pana o ceri a doua oara, intentionat:"
+    Write-Output "   .\reconcile.ps1 -Restore -RestoreConfirmat"
+    Write-Output ""
+  } else {
+    Write-Output "Cifra e sub prag, deci e o pierdere obisnuita. Daca vrei:"
+    Write-Output "   .\reconcile.ps1 -Restore"
+  }
+  if ($Restore -and ($missing -le $prag -or $RestoreConfirmat)) {
     Write-Output "RESTAURARE: se copiaza inapoi din backup, pe numele proprii"
     $copied = 0
     foreach ($l in $realLipsa) {
@@ -382,6 +447,10 @@ if ($missing -gt 0) {
       $copied++
     }
     Write-Output "restaurate: $copied"
+  } elseif ($Restore) {
+    Write-Output "REFUZAT: -Restore a fost cerut, dar cifra e peste prag."
+    Write-Output "NU AM SCRIS NIMIC. Daca esti sigur ca ai pierdut atat, reruleaza cu:"
+    Write-Output "   .\reconcile.ps1 -Restore -RestoreConfirmat"
   }
 }
 

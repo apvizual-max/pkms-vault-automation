@@ -509,7 +509,7 @@ try {
   $blocuriCunoscute = @('## Ce e aici', '## Cuvinte cheie', '## Subfoldere', '## Fișiere')
   $subBlocCunoscut = '### Cele mai mari 20'
   $evenimente = New-Object System.Collections.Generic.List[string]
-  $cnt = @{ LIPSA = 0; CORUPT = 0; INCOMPLET = 0; NEALINIAT = 0; CONFORM = 0; REFUZAT = 0 }
+  $cnt = @{ LIPSA = 0; CORUPT = 0; INCOMPLET = 0; NEALINIAT = 0; CONFORM = 0; NEMODIF = 0 }
   $duble = New-Object System.Collections.Generic.List[string]
 
   # Unde se opreste corpul generat al unui bloc. Orice linie care nu e de forma
@@ -840,11 +840,18 @@ try {
     }
 
     $cnt[$stare] = $cnt[$stare] + 1
-    # "neatinse" trebuie MASURAT, nu afisat ca 0. Un contor initializat si niciodata
-    # incrementat tipareste un numar care pare masuratoare si nu e nimic — mai rau decat
-    # o regula absenta, pentru ca omul are voie sa se increze in el. CONFORM inseamna
-    # exact "nu s-a atins nimic", deci aici se numara.
-    if ($stare -eq 'CONFORM') { $cnt.REFUZAT = $cnt.REFUZAT + 1 }
+    # "nemodificate" trebuie MASURAT, nu afisat ca 0. Un contor initializat si
+    # niciodata incrementat tipareste un numar care pare masuratoare si nu e nimic —
+    # mai rau decat o regula absenta, pentru ca omul are voie sa se increze in el.
+    # CONFORM inseamna exact "nu s-a atins nimic", deci aici se numara.
+    #
+    # ETICHETA VECHE ERA MINCINOASA (masurat 2026-10-09): contorul se numea
+    # REFUZAT si se afisa ca "neatinse", dar era exact numarul CONFORM repetat.
+    # Consecinta reala: din iesire nu rezulta NICIODATA cate foldere au fost
+    # SALTITE de excluziuni — pe voltul real sunt mii. Cifra aceea se vede la
+    # verifica-schema ("gasite N | analizate M"); aici spunem adevarul despre ce
+    # s-a numarat, nu ce s-a omis.
+    if ($stare -eq 'CONFORM') { $cnt.NEMODIF = $cnt.NEMODIF + 1 }
 
     # 6. RAPORTEAZA — doar la eveniment (§19.2). LIPSA nu se logheaza (§18.3).
     $eEveniment = $false
@@ -930,7 +937,7 @@ try {
   }
 
   Write-Output ''
-  Write-Output ("rezumat: {0} LIPSA · {1} CORUPT · {2} INCOMPLET · {3} NEALINIAT · {4} CONFORM · {5} neatinse" -f $cnt.LIPSA, $cnt.CORUPT, $cnt.INCOMPLET, $cnt.NEALINIAT, $cnt.CONFORM, $cnt.REFUZAT)
+  Write-Output ("rezumat: {0} LIPSA · {1} CORUPT · {2} INCOMPLET · {3} NEALINIAT · {4} CONFORM · {5} nemodificate" -f $cnt.LIPSA, $cnt.CORUPT, $cnt.INCOMPLET, $cnt.NEALINIAT, $cnt.CONFORM, $cnt.NEMODIF)
   $notaLog = 'evenimente de log: ' + $evenimente.Count
   if ($CeVad) { $notaLog = $notaLog + ' ( CeVad: logul NU s-a atins )' }
   Write-Output $notaLog

@@ -10,8 +10,15 @@
    - nu atinge structura WordPress YYYY\MM din media
    - nu scrie niciodată în backup
 #>
+# ATENTIE: $Vault ramane GOAL, intentionat (ca in align-index.ps1 si
+# reconcile.ps1). Un drum implicit aici face ca `if (-not $Vault)` de mai jos
+# sa nu se declanseze NICIODATA: $Vault ar fi mereu nevid, Get-PkmsVault n-ar
+# fi apelat niciodata, iar $env:PKMS_VAULT ar fi ignorat in tacere. Cine ar
+# rula pe o copie crezand ca ruleaza pe copie ar rescrie voltul REAL.
+# Masurat 2026-10-09: exact asta s-a intamplat intr-o proba adversara — 689 de
+# fisiere scrise in volt, pe cand operatorul credea ca lucreaza in alta parte.
 param(
-  [string]$Vault = 'D:\Alex_Knowlege_Vault',
+  [string]$Vault = '',
   [switch]$Quiet
 )
 $ErrorActionPreference = 'Stop'

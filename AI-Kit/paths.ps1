@@ -39,3 +39,26 @@ function Get-PkmsExclusions {
     'indexuri generate in gresit\\'
   )
 }
+
+# ---------------------------------------------------------------------------
+# Treapta 1 a lantului. Rulat DIRECT (nu prin dot-sourcing), trebuie sa spuna
+# ce a gasit si sa poata da rosu — altfel e o treapta goala intr-un lant care se
+# pretinde ca are cinci. Dotat din celelalte scripturi, ramane tacut: acolo nu
+# e o treapta, e doar o dependinta.
+#
+# ATENTIE: $env:PKMS_VAULT are prioritate. Daca nu e setat, Get-PkmsVault
+# intoarce drumul REAL. Cine ruleaza pe o copie trebuie sa si-o declare, altfel
+# lucreaza pe volt, crezand ca lucreaza pe copie.
+# ---------------------------------------------------------------------------
+if ($MyInvocation.InvocationName -ne '.') {
+  $v = Get-PkmsVault
+  $b = Get-PkmsBackup
+  Write-Output "volt:   $v"
+  Write-Output "backup: $b"
+  if ($b) {
+    Write-Output 'ambele la loc. nu s-a scris nimic.'
+  } else {
+    Write-Output 'BACKUP NU A FOST GASIT. comparatia cu backupul nu e posibila.'
+    exit 1
+  }
+}

@@ -179,7 +179,15 @@ $ie = & powershell -NoProfile -ExecutionPolicy Bypass -File $align -Vault $Vault
 
 $deschise = New-Object System.Collections.ArrayList
 foreach ($l in ($ie -split "`r?`n")) {
-  if ($l -match '^\s*(LIPSA|CORUPT|INCOMPLET|NEALINIAT)\s+(.+?)\s*$') {
+  # Doar liniile EVENIMENTELOR, care sunt intotdeauna intre paranteze:
+  #     [NEALINIAT] AI-Kit
+  # Paranteza e obligatorie. Fara ea se prindeau si liniile de DETALIU
+  # ("NEALINIAT   AI-Kit" urmat de "— ar rescrie 00_INDEX.md ..."), care NU
+  # sunt foldere. Era inofensiv cat timp $deschise se folosea doar ca reper de
+  # apartenenta; de cand le numaram ca stricari neacoperite, ar fi numarat
+  # si ele, ar fi spus "4 stricari" cand sunt 2, si ar fi numit drept stricare
+  # o linie care descrie o stricare.
+  if ($l -match '^\s*\[(LIPSA|CORUPT|INCOMPLET|NEALINIAT)\]\s+(.+?)\s*$') {
     [void]$deschise.Add($Matches[2])
   }
 }
@@ -201,10 +209,38 @@ $toateDrumuri = @($ev | Select-Object -ExpandProperty Drum -Unique)
 $foldereDeschise = @($cls.Deschise | Select-Object -ExpandProperty Drum -Unique)
 $foldereRezolvate = @($cls.Rezolvate | Select-Object -ExpandProperty Drum -Unique)
 
+# --- ACOPERIRE: logul vs poarta -------------------------------------------
+# $cls.Deschise numara doar evenimentele care sunt IN LOG. Daca poarta
+# raporteaza o stricare pe care logul nu o contine, numarul de "deschise"
+# este zero chiar daca stricarea exista — si spuneam "NIMIC DESCHIS" cu cod 0.
+# Masurat 2026-10-09 pe micro-volt-6: poarta 2 NEALINIAT, log gol,
+# "NIMIC DESCHIS", cod 0. Verde plin pe un volt stricat.
+#
+# ACOPERIREA e masura care lipsa: orice stricare raportata acum de poarta,
+# pentru care nu exista eveniment in log, e stricare neacoperita. Se numeste,
+# se arata, si ridica verdictul la 1.
+$neacoperite = New-Object System.Collections.ArrayList
+foreach ($d in $deschise) {
+  $acoperit = $false
+  foreach ($dr in $toateDrumuri) {
+    if ($dr -eq $d) { $acoperit = $true; break }
+  }
+  if (-not $acoperit) { [void]$neacoperite.Add($d) }
+}
+
 Write-Host ('Log: ' + $Log)
 Write-Host ('Evenimente inregistrate: ' + $ev.Count + '   in ' + $toateDrumuri.Count + ' foldere distincte')
 Write-Host ('  rezolvate ACUM: ' + $cls.Rezolvate.Count + ' evenimente, in ' + $foldereRezolvate.Count + ' foldere')
 Write-Host ('  DESCHISE ACUM:  ' + $cls.Deschise.Count + ' evenimente, in ' + $foldereDeschise.Count + ' foldere')
+Write-Host ''
+if ($neacoperite.Count -gt 0) {
+  Write-Host ''
+  Write-Host ('ATENTIE — POARTA REPORTA ' + $neacoperite.Count + ' STRICARI PE CARE LOGUL NU LE CONTINE:')
+  foreach ($d in $neacoperite) { Write-Host ('    ' + $d) }
+  Write-Host 'Logul si voltul nu mai sunt de acord. Aceste foldere nu pot fi nici'
+  Write-Host 'arhivate, nici declarate rezolvate: nu au eveniment de corespuns.'
+  Write-Host 'Ruleaza align-index.ps1 ca evenimentele sa ajunga in log.'
+}
 Write-Host ''
 Write-Host 'Un eveniment e rezolvat daca folderul lui NU mai apare in iesirea de azi'
 Write-Host 'a portii (align-index.ps1 -CeVad). Nu dupa ce scriam atunci — dupa ce masuram acum.'
@@ -229,6 +265,11 @@ if ($cls.Deschise.Count -gt 0) {
 
 if (-not $Arhiveaza) {
   Write-Host ''
+  if ($neacoperite.Count -gt 0) {
+    Write-Host ('VERDICT INCOMPLET: ' + $neacoperite.Count + ' stricari reale, necuprinse in log.')
+    Write-Host 'Nu pot spune "nimic deschis" — stiu ca sunt stricari, si nu le-am vazut.'
+    exit 1
+  }
   if ($cls.Deschise.Count -gt 0) {
     Write-Host ('RAMANE TREABA: ' + $cls.Deschise.Count + ' evenimente deschise.')
     Write-Host 'Nu s-a scris nimic. Cu -Arhiveaza se muta doar cele rezolvate.'
@@ -279,4 +320,8 @@ foreach ($g in ($cls.Deschise | Group-Object -Property Data)) {
 Write-Host ''
 Write-Host ('ARHIVAT: ' + $cls.Rezolvate.Count + ' evenimente -> ' + (Split-Path -Path $arhivaPath -Leaf))
 Write-Host ('RAMASE IN LOG: ' + $cls.Deschise.Count + ' evenimente deschise')
+if ($neacoperite.Count -gt 0) {
+  Write-Host ('VERDICT INCOMPLET: ' + $neacoperite.Count + ' stricari reale, necuprinse in log.')
+  exit 1
+}
 if ($cls.Deschise.Count -gt 0) { exit 1 } else { exit 0 }
