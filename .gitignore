@@ -28,6 +28,16 @@
 #    documentatie a sistemului (contract, COTOR, proceduri, onboarding)
 !/*.md
 
+# 3b. EXCEPTIE, masurata, nu presupunsa: INDEX CENTRAL.md se deschide mai sus,
+#     dar NU se versioneaza. Masurat pe 2026-10-09: contine 125 de randuri cu
+#     nume personale de foldere (clienti, JOB Applications, CV-uri, LinkedIn,
+#     teste de personalitate) si pana si lista folderului _ARCHIVE\Secrets.
+#     E un artefact DERIVAT — il rescrie build-index.ps1 la fiecare rulare — deci
+#     nu pierde nimeni nimic daca nu intra in git, iar voltul real ramane singurul
+#     loc in care acel continut conteaza. Daca cineva vrea sa-l urmareasca, il
+#     are deja pe disc.
+/INDEX CENTRAL.md
+
 # 4. logul viu: dovada ca poarta chiar merge, si cam de des
 !/raport-aliniere.log
 
