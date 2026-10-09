@@ -354,7 +354,8 @@ lasă urmă de citit, și nu se mai poate vedea când strică ceva.
 3. **Clasifică** — în cele cinci stări de mai sus.
 4. **Repară** — bloc cu bloc, păstrând motivul.
 5. **Scrie** — doar ce a diferit, **după** ce a pus vechea versiune în
-   `_SYSTEM\arhiva-indexe\<data>\`.
+   `_SYSTEM\arhiva-indexe\<data>_<ora>\` — folderul poartă ora rulării, ca
+   „înapoi un pas” să însemne înapoi **ultima scriere**, nu înapoi azi.
 6. **Raportează** — în log, **numai dacă a fost un eveniment**.
 
 ### Trei comutatoare, toate de citire

@@ -10,7 +10,7 @@
     3. clasifica in exact cinci stari (§18.3)
     4. repara (§18.4), pastrand motivul si orice text scris de om
     5. scrie doar ce a diferit, dupa ce a pus vechea versiune in
-       _SYSTEM\arhiva-indexe\<data>\
+       _SYSTEM\arhiva-indexe\<data>_<ora>\
     6. raporteaza in log DOAR daca a fost eveniment
 
   Cele cinci stari: LIPSA · CORUPT · INCOMPLET · NEALINIAT · CONFORM.
@@ -176,7 +176,12 @@ if ($modScriere) {
 
 $logFile    = Join-Path $Vault 'raport-aliniere.log'
 $data       = Get-Date -Format 'yyyy-MM-dd'
-$arhivaBaza = Join-Path $Vault ('_SYSTEM\arhiva-indexe\' + $data)
+# Arhiva e pe RULARA, nu pe zi (defect #4, audit 2026-10-09). Patru rulari
+# pe zi scriau in acelasi folder si se suprascrau, deci ' inapoi un pas'
+# (§18.4) era ' inapoi ultimele douazeci de minute'. Secunda intra in nume
+# ca doua rulari din aceeasi zi sa nu se piarda una pe alta.
+$arhivaRun  = $data + '_' + (Get-Date -Format 'HH-mm-ss')
+$arhivaBaza = Join-Path $Vault ('_SYSTEM\arhiva-indexe\' + $arhivaRun)
 
 # ---------------------------------------------------------------------------
 # functii de masuratoare — copiate din build-index.ps1, ca doua rulari
@@ -867,7 +872,7 @@ try {
       [void]$bl.AppendLine("    masura: $masura")
       [void]$bl.AppendLine("    indexul spunea: $vechiSpun")
       if ($descriere) { [void]$bl.AppendLine("    reparat: $descriere") }
-      if ($arhivat)  { [void]$bl.AppendLine("    vechea versiune: _SYSTEM/arhiva-indexe/$data/" + ($relSlash -replace '/', '__') + '.md') }
+      if ($arhivat)  { [void]$bl.AppendLine("    vechea versiune: _SYSTEM/arhiva-indexe/$arhivaRun/" + ($relSlash -replace '/', '__') + '.md') }
       if ($refuz)    { [void]$bl.AppendLine("    nu s-a putut decide: $refuz") }
       if ($rupte -gt 0) { [void]$bl.AppendLine("    nu s-a putut decide: link rupt catre un folder care nu mai exista ($rupte)") }
       $evenimente.Add($bl.ToString().TrimEnd())

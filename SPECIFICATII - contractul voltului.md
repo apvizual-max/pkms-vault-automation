@@ -389,6 +389,10 @@ Când automatul repară un index, **nu îl șterge și nu îl recrează**.
   fi măsurat la următoarea rulare ca foldere noi, iar automatul s-ar hrăni cu
   propria arhivă.
 
+  Folderul poartă **data și ora rulării** (`2026-10-09_20-14-33`), nu doar data.
+  Altfel patru rulări pe zi s-ar suprascrie în același loc, iar „înapoi un pas”
+  ar însemna înapoi acum două ore, nu înapoi la ce a scris **ultima** dată.
+
 Ultimul punct e cel care face sistemul demontabil. Dacă alinierea începe
 intr-o zi să scrie prost, versiunea bună e la un pas înapoi — nu la o căutare
 prin backup.
@@ -515,7 +519,7 @@ backup. Ordinea, fixă:
 3. **Clasifică** — cele cinci stări din §18.3.
 4. **Repară** — §18.4, bloc cu bloc, păstrând motivul.
 5. **Scrie** — doar ce a diferit, după ce a pus vechea versiune la
-   `_SYSTEM\arhiva-indexe\<data>\`.
+   `_SYSTEM\arhiva-indexe\<data>_<ora>\`.
 6. **Raportează** — în log, **numai dacă a fost un eveniment**.
 
 ### 19.2 Logul: `raport-aliniere.log`
