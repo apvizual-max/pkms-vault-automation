@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS watch.ps1 - singurul punct de intrare al verificarii.
   Ruleaza, in ordine fixa, trei trepte care NU scriu in volt:
      1. lint          - regulile de denumire, legaturi, documentatia
@@ -264,6 +264,18 @@ if (-not (Test-Path -LiteralPath $raportDir)) {
 }
 [System.IO.File]::WriteAllText($raportFile, ($L -join "`r`n"), (New-Object System.Text.UTF8Encoding $true))
 
+# --- ARHIVA, ca o EROARE sa nu poata disparea prin urmatoarea rulare reusita ---
+# Masurat 2026-10-11: PKMS-Watch a terminat cu cod 1 la 12:50, iar rularea
+# manuala de la 16:59 a suprascris raportul cu verdict OK. Cauza nu mai era
+# lizibila. Un raport care tine doar ultima stare ascunde exact momentul in
+# care ceva s-a rupt. Copia se face INAINDE de a raspunde, si o arhiva nereusita
+# NU are voie sa ascunda raportul principal.
+$arhivaDir = Join-Path $raportDir 'arhiva'
+if (-not (Test-Path -LiteralPath $arhivaDir)) { New-Item -ItemType Directory -Path $arhivaDir -Force | Out-Null }
+$arhivaFile = Join-Path $arhivaDir ('raport-' + (Get-Date -Format 'yyyy-MM-dd_HH-mm-ss') + '.txt')
+try { Copy-Item -LiteralPath $raportFile -Destination $arhivaFile -Force }
+catch { Write-Output ('ATENTIE: raport scris, dar nu arhivat: ' + $_.Exception.Message) }
+Write-Output "arhiva:       $arhivaFile"
 Write-Output "raport scris: $raportFile"
 Write-Output $verdict
 if ($verdict -like 'ATENȚIE:*') { exit 1 } else { exit 0 }

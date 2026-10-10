@@ -2,7 +2,7 @@
 
 **De ce e aici:** pachetul de predare al voltului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie `D:\Alex_Knowlege_Vault` fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
 
-**18 fișiere · 245 KB · 0 subfoldere**
+**18 fișiere · 246 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
@@ -32,9 +32,9 @@ Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 
 | `ONBOARDING.md` | 18 KB | 2026-10-10 |
 | `paths.ps1` | 3 KB | 2026-10-10 |
 | `PROMPT-INSCRIERE.md` | 4 KB | 2026-10-08 |
-| `raport-autocomit.log` | 893 B | 2026-10-10 |
+| `raport-autocomit.log` | 1 KB | 2026-10-11 |
 | `reconcile.ps1` | 27 KB | 2026-10-10 |
 | `setup.ps1` | 4 KB | 2026-10-10 |
 | `verifica-schema.ps1` | 23 KB | 2026-10-10 |
-| `watch.ps1` | 11 KB | 2026-10-10 |
+| `watch.ps1` | 12 KB | 2026-10-11 |
 
