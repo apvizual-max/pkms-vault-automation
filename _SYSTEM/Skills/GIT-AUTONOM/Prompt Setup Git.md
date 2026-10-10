@@ -3,9 +3,9 @@
 Trimite-l **ca atare** unei instanțe noi, într-un proiect nou, unde nu s-a
 atins niciodată Git și unde ea **nu știe nimic** despre GitHub.
 
-**Diferența față de `PROMPT-UNIVERSAL.md`:** acela spune *ce faci cu* Git.
+**Diferența față de `Prompt Skill Git Autonom.md`:** acela spune *ce faci cu* Git.
 Ăsta spune *cum îl instalez*. Rulează **o dată**, la început. După aceea,
-vreau ca `PROMPT-UNIVERSAL.md` să fie cel care merge.
+vreau ca `Prompt Skill Git Autonom.md` să fie cel care merge.
 
 ---
 
@@ -143,6 +143,6 @@ proiectele altcuiva.
 ## După instalare
 
 Instalația se termină aici. De acum înainte, ce rulează la fiecare ședință e
-`PROMPT-UNIVERSAL.md` — commit autonom, push doar cu acordul meu, interfața
+`Prompt Skill Git Autonom.md` — commit autonom, push doar cu acordul meu, interfața
 neatină. Nu retrimite promptul acesta: rulat de două ori, înființează un al
 doilea repo pe același proiect.
