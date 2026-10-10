@@ -284,9 +284,10 @@ rulate pe rând își rescriu reciproc indexurile la nesfârșit.
 
 ---
 
-## Cele 10 scripturi din `AI-Kit`
+## Cele 11 scripturi din `AI-Kit`
 
 Măsurate pe disc, nu promise: `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`
+→ **11** la 2026-10-10 (era 10 până la `git-autocommit.ps1`).
 
 | Script | Rolul |
 |---|---|
@@ -300,6 +301,7 @@ Măsurate pe disc, nu promise: `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Fi
 | `align-index.ps1` | **aliniază** indexurile existente — nu le creează din zero |
 | `verifica-schema.ps1` | **verifică** dacă indexurile sunt pe schema §18.1 — nu dacă există (asta e treaba lui `lint`) |
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
+| `git-autocommit.ps1` | **NU atinge voltul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
 
 **Ordinea canonică rămâne cea de 5 trepte** de mai sus (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.
@@ -331,7 +333,7 @@ Plus `Canvas Bases` — funcția **Bases** din Obsidian, se folosește de pe loc
 | `LOGICA - cum se foloseste fiecare baza.md` | fiecare bază, scopul, mecanismul, data-flow-ul |
 | `PROCESE - flux de la captură la utilizare.md` | arborele de proces, pas cu pas |
 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi de lucru |
-| `AUTOMATIZARI - scripturi.md` | cele 10 scripturi, ordinea canonică, ce scrie fiecare |
+| `AUTOMATIZARI - scripturi.md` | cele 11 scripturi, ordinea canonică, ce scrie fiecare |
 | `SPECIFICATII - contractul voltului.md` | regulile care nu se încalcă, inclusiv §16 și §17 |
 | `ONBOARDING AI - cum preia un AI voltul.md` | cum ia în posesie voltul un AI fără memorie |
 | `AI-Kit\ONBOARDING.md` | **copia octet cu octet identică** a onboarding-ului — `lint.ps1` o verifică la fiecare rulare |

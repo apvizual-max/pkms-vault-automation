@@ -20,6 +20,7 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 | `align-index.ps1` | **aliniază** indexurile care există deja cu măsurătoarea reală | da — doar `00_INDEX.md`, arhiva lui și logul |
 | `verifica-schema.ps1` | **verifică forma**, nu existența: titlu, motiv, cele patru blocuri, 2—12 cuvinte cheie | **nu** — doar citește |
 | `inchide-log.ps1` | recitește logul, re-măsoară fiecare folder și spune ce e **DESCHIS acum**; cu `-Arhiveaza` mută rezolvatele în arhivă | implicit **nu** — doar cu `-Arhiveaza` |
+| `git-autocommit.ps1` | comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta | **da, în git** — patru porți înainte: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare |
 
 **Dacă în `AI-Kit` apare un script pe care tabelul nu îl numește, e o gaură în documentație,
 nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din document:
@@ -28,7 +29,8 @@ nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din do
 (Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count
 ```
 
-**La data de 2026-10-08: 10** — cu `verifica-schema.ps1` și `inchide-log.ps1` adăugate.
+**La data de 2026-10-10: 11** — cu `git-autocommit.ps1` adăugat peste `verifica-schema.ps1`
+și `inchide-log.ps1`.
 
 ---
 
@@ -67,6 +69,7 @@ de citit.
 | `align-index.ps1` | **repară** indexuri existente — scrie, deși doar ce a diferit |
 | `verifica-schema.ps1` | nu scrie nimic, dar arată cât de schemă e datorie — de aceea nu e în lanț |
 | `inchide-log.ps1` | implicit nu scrie, dar cu `-Arhiveaza` **mută evenimente** din log în arhivă — iar hotărârea de a muta e a lui Alex |
+| `git-autocommit.ps1` | nu atinge voltul deloc, dar **scrie în istoricul git** — și poate **refuza**, caz în care panoul `Changes` rămâne plin tocmai când plasa era chemată să-l golească. De aceea rulează la 5 minute, nu la fiecare scriere |
 
 Rulă-le **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată
 „ca să fie sigur". `watch.ps1` rămâne singurul punct de intrare al verificării.
@@ -418,12 +421,13 @@ ar rescrie indexuri în interiorul caruia n-are voie să scrie.
 > toate rezolvate. **Logul gol e rezultatul dorit**: înseamnă că nu e treabă deschisă.
 > Verifică: `Get-Item D:\Alex_Knowlege_Vault\raport-aliniere.log | Select-Object Length`
 
-### Cele două automate, cu riscuri diferite
+### Cele trei automate, cu riscuri diferite
 
 | Automat | Când | Ce face | Risc | Stare la 2026-10-08 |
 |---|---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic | ✅ există |
 | `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | **scrie în volt** | ✅ **există, măsurat** |
+| `PKMS-GitAutoCommit` | **la 5 minute** | comită singur ce a rămas necomitat în repo git | **scrie în istoric**, și poate **refuza** | ✅ **există, măsurat** |
 
 Neamestecate pentru că riscurile nu sunt aceleași: automatul care doar citește poate
 rula oricând, iar automatul care scrie trebuie creat conștient, cu ora lui.
@@ -443,6 +447,61 @@ Unregister-ScheduledTask -TaskName 'PKMS-Aliniere' -Confirm:$false
 
 Indexurile deja scrise rămân; se văd în `_SYSTEM\arhiva-indexe\`, iar logul rămâne la
 rădăcină ca istoric.
+
+### `PKMS-GitAutoCommit` — plasa de siguranță pentru panoul `Changes`
+
+Alex nu e programator și nu va folosi niciodată panoul `Changes`; pentru el e blocaj,
+nu ajutor. Iar `Changes` plin apare exact când o sesiune se oprește la jumătate.
+Plasa răspunde la asta **fără să atingă interfața**: comită singur.
+
+```powershell
+.\git-autocommit.ps1              # comită ce a rămas necomitat
+.\git-autocommit.ps1 -CeVerificare # arată ce ar comita, fără să comite
+.\git-autocommit.ps1 -AutoProbe   # proba porților — trebuie să poată deveni ROȘIE
+```
+
+| Fișier | Ce e |
+|---|---|
+| `AI-Kit\git-autocommit-registru.txt` | repo-ul de supravegheat, o cale pe rând |
+| `AI-Kit\git-autocommit-ignorat.txt` | căi care nu se comită niciodată (wildcard) |
+| `AI-Kit\raport-autocomit.log` | urma fiecărui eveniment — scris **doar la eveniment** |
+
+**Cele patru porți, în ordine:** secrete pe **nume** → secrete pe **conținut** → căi
+**interzise** → **timp de așezare** (implicit 60 s, ca să nu prindă o scriere la jumătate).
+
+Coduri de ieșire: `0` curat / așteaptă / salvat · `1` refuzat · `2` mediu · `3` autoproba a picat.
+
+### De ce poarta de secrete a fost reconstruită, nu doar întărită
+
+Măsurat pe 2026-10-10: prima versiune căuta secrete **doar în nume**. Am probat cu un
+fișier `_config-uit.txt` al cărui conținut nu conținea niciun cuvânt-cheie — **a trecut
+pe lângă poartă și a fost comitat**. Repară: o a doua poartă care citește **conținutul**
+(chei PEM, `AKIA…`, `ghp_…`, `sk-…`, `password = "…"`), cu trei reguli de prudență —
+binarele nu se citesc, nimic peste 512 KB nu se citește, iar **ce s-a sărit se numără
+și apare în mesajul de comit**, ca să nu pară că totul a fost verificat.
+
+### Trei limite declarate, nu ascunse
+
+1. **Poarta nu se scanează pe ea însăși.** Un detector conține tiparele pe care le caută.
+   Excepția e **numită** (`exceptie-definire` în mesajul de comit), nu trecută sub tăcere.
+2. **O poartă recunoaște o CHEIE, nu o INTENȚIE.** Un fișier cu nume și conținut inocue
+   care spune „nu comita asta" e opac pentru orice automat. Forma corectă e declarația
+   explicită din `git-autocommit-ignorat.txt`.
+3. **Refuzul lasă `Changes` plin.** E un refuz **tăcut pentru om și tare pentru log**.
+   Preferat e un panoul plin și un motiv scris, peste un comit nedorit.
+
+Probă reală, măsurată: prima declanșare a taskului **7,8 secunde, rezultat 0**, comit
+`c7796c4`, cu `exceptie-definire 2` în mesaj. Iar porțile 2 și 3 au fost probate **separat**,
+cu `-CeVerificare`, ca nimic să nu ajungă în istoric: `notite-personale.txt` (nume inocent,
+conținut `ghp_…`) → **REFUZAT**, cod 1; `_proba-poarta3.txt` (tot inocent) → **REFUZAT**,
+cod 1. `HEAD` neatins după ambele.
+
+Ce nu atinge: interfața, hook-urile git globale (LiveReview), backupul. **Nu face push** —
+pushul rămâne decizia lui Alex. Cum se oprește:
+
+```powershell
+Unregister-ScheduledTask -TaskName 'PKMS-GitAutoCommit' -Confirm:$false
+```
 
 ### Regula de blocaj: mutex, nu fișier-pid
 

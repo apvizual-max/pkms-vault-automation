@@ -12,7 +12,7 @@ Data: 2026-10-08
 | Agent | Domeniu | Ce are voie | Ce are PROIBIT |
 |---|---|---|---|
 | **V1 — Structură** | arbore de foldere, numerotare, reguli de denumire | citire, `Get-ChildItem`, numărări | orice scriere, orice mutare |
-| **V2 — Scripturi** | cele 10 scripturi din `AI-Kit` | citire, rulare read-only a **5** scripturi (`paths`, `setup`, `lint`, `health-check`, `reconcile` — `reconcile` în modul implicit) | `build-index.ps1` (scrie), `align-index.ps1` (scrie), `reconcile.ps1 -Restore` (scrie), `inchide-log.ps1 -Arhiveaza` (mută în arhivă) |
+| **V2 — Scripturi** | cele 11 scripturi din `AI-Kit` | citire, rulare read-only a **5** scripturi (`paths`, `setup`, `lint`, `health-check`, `reconcile` — `reconcile` în modul implicit) | `build-index.ps1` (scrie), `align-index.ps1` (scrie), `reconcile.ps1 -Restore` (scrie), `inchide-log.ps1 -Arhiveaza` (mută în arhivă) |
 | **V3 — Documentație** | legături între documente, indexuri, carantină | citire, căutare de fișiere | orice scriere |
 
 Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.

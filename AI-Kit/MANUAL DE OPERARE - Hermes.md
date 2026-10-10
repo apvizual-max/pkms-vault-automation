@@ -59,7 +59,7 @@ Singurul motiv real de ștergere e decizia lui Popy, luată în `_QUARANTINE`.
 
 ## 4. Ordinea canonică a comenzilor
 
-În `AI-Kit` sunt **10 scripturi** (la data de 2026-10-08, măsurate pe disc cu
+În `AI-Kit` sunt **11 scripturi** (la data de 2026-10-10, măsurate pe disc cu
 `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`). Cele 6 din
 ordinea canonică se rulează într-o singură ordine, scrisă identic în `ONBOARDING.md`, în
 `MANUAL DE OPERARE - Hermes.md` și în `AUTOMATIZARI - scripturi.md`. Nu o schimba.
@@ -237,7 +237,7 @@ Planul stă scris unde se citește înapoi — widgetul de progres, bifat pas cu
 | Agent | Domeniu | Are voie | Are PROIBIT |
 |---|---|---|---|
 | V1 — Structură | arbore de foldere, numerotare, reguli de denumire | citire, numărări | orice scriere, orice mutare |
-| V2 — Scripturi | cele 10 scripturi din `AI-Kit` | citire, rulare read-only | `build-index.ps1`, `align-index.ps1`, `reconcile.ps1 -Restore` / `-RestoreModified` / `-WriteManifest` |
+| V2 — Scripturi | cele 11 scripturi din `AI-Kit` | citire, rulare read-only | `build-index.ps1`, `align-index.ps1`, `reconcile.ps1 -Restore` / `-RestoreModified` / `-WriteManifest` |
 | V3 — Documentație | legături între documente, indexuri, carantină | citire, căutare de fișiere | orice scriere |
 
 Niciun agent nu atinge `E:\`, nu atinge backupul, nu atinge `.git`.

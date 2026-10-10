@@ -141,10 +141,11 @@ pentru verificarea automată, și e deja programat.
   `Unregister-ScheduledTask -TaskName 'PKMS-Watch' -Confirm:$false`
 
 Un script nedocumentat într-un folder operațional e o **gaură**, nu un detaliu.
-În `AI-Kit` sunt **10 scripturi** (la data de 2026-10-08, măsurat pe disc cu
+În `AI-Kit` sunt **11 scripturi** (la data de 2026-10-10, măsurat pe disc cu
 `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`): cele șase de mai
-sus, plus `watch.ps1`, `align-index.ps1`, `verifica-schema.ps1` și `inchide-log.ps1`.
-**Numărul se numără pe disc, nu se promite din document** — dacă apare al unsprezecelea,
+sus, plus `watch.ps1`, `align-index.ps1`, `verifica-schema.ps1`,
+`inchide-log.ps1` și `git-autocommit.ps1`.
+**Numărul se numără pe disc, nu se promite din document** — dacă apare al doisprezecelea,
 e o gaură în documentație.
 
 ### `align-index.ps1` — aliniază indexurile, și nu intră în ordine
