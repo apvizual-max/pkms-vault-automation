@@ -1,3 +1,8 @@
+---
+name: mavis-git-install-skill
+description: "Punerea pe picioare a infrastructurii Git + GitHub într-un proiect nou, fără .git. Măsoară (git --version, gh --version, gh auth status, remote -v) și continuă fără să întrebi; git init, core.autocrlf false, core.eol native, ramură aleasă de AI; .gitignore prin NEGARE (/* interzice totul, deschizi explicit căile reale) verificat cu git check-ignore în ambele sensuri; primul comit, gh repo create --private --push, primul push e parte din instalare. Verifică push-ul cu git ls-remote, nu cu ieșirea shell-ului. Rulează o singură dată, înaintea lui mavis-git-autonom-skill; retrimis, face un al doilea repo pe același proiect."
+---
+
 # SKILL: git-install
 
 **Cum se pune pe picioare Git + GitHub, de la zero, o singură dată.**

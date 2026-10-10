@@ -1,3 +1,8 @@
+---
+name: mavis-git-autonom-skill
+description: "Regula de lucru zilnică cu Git, într-un proiect care are deja .git. COMMIT autonom la fiecare succes măsurat, inclusiv pe modificările lui Popy, fără să ceri confirmare și fără să lași panoul Changes plin. PUSH doar când Popy spune explicit, verificat cu git ls-remote, niciodată prin butonul din interfață. Nu atingi interfața. Nu ștergi nimic: muți în carantină cu motiv scris. Prohibit: git clean -fdx, git reset --hard, force push fără cerere, parole sau chei în commit. Nu ceri decizii tehnice — le iei tu și continui. Se încarcă la prima treabă care atinge Git; instalarea de la zero e skillul mavis-git-install-skill."
+---
+
 # SKILL: git-autonom
 
 **Cum funcționează Git după ce e pus, în fiecare zi.**
