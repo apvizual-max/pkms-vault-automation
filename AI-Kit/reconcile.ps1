@@ -144,6 +144,102 @@ function Map-Dir([string]$rel) {
   return $null
 }
 
+# --- REGISTRUL DE RETRAGERI ---
+# Un fisier absent din volt poate fi doua lucruri distincte, si sistemul trebuie
+# sa leiba: (1) l-ai pierdut fara sa vrei — asta e o alarma; (2) l-ai sters tu,
+# constient, pentru ca nu mai ai nevoie de el — asta e o hotarare, nu o pierdere.
+# Pana acum existau doar doua categorii: mutat si pierdut. Maparea catre o cale
+# care NU mai exista cadea in "pierdut" oricum s-ar fi scris, pentru ca o mutare
+# se recunoaste prin prezenta destinatiei. Masurat 2026-10-10 pe un caz real:
+# 1062 de capturi de site ale unui client inchis, sterse intentionat de om,
+# raportate ca pierdere in fiecare noapte, pentru totdeauna.
+#
+# REGISTRUL e DECIZIE, nu presupunere: are motiv si data, si se citeste cu ochiul.
+# De aceea e verificat INAINTA de cautarea de mutare prin nume — hotararea
+# omului bate orice inferenta pe care o poate face scriptul.
+#
+# Format: rel;motiv;data
+#   rel   = cale relativa la backup sau la volt. Se compara exact sau ca prefix
+#          de director (rel + "\"); cel mai lung prefix primeste.
+#   motiv = ce a decis omul. Se afiseaza in raport, ca hotararea sa fie citita.
+#   data  = cand s-a decis.
+$retireRules = New-Object System.Collections.Generic.List[object]
+$retireFile = Join-Path $maniDir 'RETIRE.csv'
+if (Test-Path -LiteralPath $retireFile) {
+  # ConvertFrom-Csv, NU o despartire pe ";". Masurat 2026-10-10: despartirea
+  # manuala lasa ghilimelele IN CALE, deci nicio regula nu se potrivea vreodata,
+  # iar raportul afisa "RETRAS: 0" fara un singur cuvant de avertizare. Era
+  # acelasi defect ca la contorul s16 — un numar pe care eu il vad si restul nu.
+  #
+  # Masurat 2026-10-10, a doua oara: ConvertFrom-Csv NU are -LiteralPath in
+  # PowerShell 5.1. De aceea fisierul e citit explicit pe disc si dat prin canal.
+  # asa ramane corect si pentru un nume de fisier cu [ sau ] in el, unde -Path
+  # ar citi metacaracterele.
+  $retireRows = @()
+  try {
+    $retireRaw = [System.IO.File]::ReadAllLines($retireFile)
+    if ($retireRaw.Count -gt 0) {
+      $retireRows = @($retireRaw | ConvertFrom-Csv -Delimiter ';')
+    }
+  }
+  catch {
+    Write-Output ""
+    Write-Output "STOP: REGISTRUL DE RETRAGERI NU POATE FI CITIT."
+    Write-Output "  $retireFile"
+    Write-Output "  $($_.Exception.Message)"
+    Write-Output "Un registru pe care nu pot sa-l citesc nu e o hotarare valida."
+    Write-Output "Nu afirm ca nu s-a pierdut nimic. Nu stiu ce a fost retras."
+    exit 1
+  }
+  # portiza de forma: daca fisierul are randuri dar nu are coloana "rel", atunci
+  # antetul e gresit si NOI NU STIAM CE CITIM. Tacea aici ar fi inselatoare.
+  if ($retireRows.Count -gt 0) {
+    $cols = $retireRows[0].PSObject.Properties.Name
+    if ($cols -notcontains 'rel') {
+      Write-Output ""
+      Write-Output "STOP: REGISTRUL DE RETRAGERI NU ARE COLOANA 'rel'."
+      Write-Output "  coloanele gasite: $($cols -join ', ')"
+      Write-Output "  prima linie trebuie sa fie exact: rel;motiv;data"
+      Write-Output "Nu pot citi hotararile. Nu afirm ca nu s-a pierdut nimic."
+      exit 1
+    }
+  }
+  foreach ($r in $retireRows) {
+    $relR = ([string]$r.rel).Trim()
+    $motiv = ([string]$r.motiv).Trim()
+    $dataR = ([string]$r.data).Trim()
+    if (-not $relR) { continue }
+    if (-not $motiv) {
+      Write-Output ""
+      Write-Output "ATENTIE: RETIRE.csv - `"$relR`" nu are motiv. Randul e IGNORAT."
+      Write-Output "  Un registru fara motiv nu e o hotarare, e o stergere deghizata."
+      continue
+    }
+    # cale absoluta -> relativa, si normalizata, ca sa fie comparabila cu ce
+    # scoate scriptul din backup. Slash-ul oblic devine vertical.
+    $norm = $relR.Replace('/', '\')
+    foreach ($pref in @($Vault, $Backup)) {
+      if (-not $pref) { continue }
+      if ($norm.StartsWith($pref, [StringComparison]::OrdinalIgnoreCase)) {
+        $norm = $norm.Substring($pref.Length)
+      }
+    }
+    $norm = $norm.TrimStart('\').TrimEnd('\')
+    if ($norm) {
+      $retireRules.Add([pscustomobject]@{ Rel=$norm; Motiv=$motiv; Data=$dataR })
+    }
+  }
+}
+$retireRules = @($retireRules | Sort-Object { $_.Rel.Length } -Descending)
+
+function Test-Retras([string]$rel) {
+  foreach ($r in $retireRules) {
+    if ($rel.Equals($r.Rel, [StringComparison]::OrdinalIgnoreCase)) { return $r }
+    if ($rel.StartsWith($r.Rel + '\', [StringComparison]::OrdinalIgnoreCase)) { return $r }
+  }
+  return $null
+}
+
 $laLoc     = 0
 $mutat     = 0
 $lipsa     = New-Object System.Collections.Generic.List[object]
@@ -204,7 +300,13 @@ foreach ($k in $nowRel.Keys) {
 $relocat = New-Object System.Collections.Generic.List[string]
 $relocPairs = New-Object System.Collections.Generic.List[object]
 $realLipsa = New-Object System.Collections.Generic.List[object]
+$retras = New-Object System.Collections.Generic.List[object]
 foreach ($l in $lipsa) {
+  $ret = Test-Retras $l.Rel
+  if ($ret) {
+    $retras.Add([pscustomobject]@{ Rel=$l.Rel; Motiv=$ret.Motiv; Data=$ret.Data })
+    continue
+  }
   $key = ([IO.Path]::GetFileName($l.Rel)) + '|' + $l.Len
   if ($byNS.ContainsKey($key)) {
     $dest = $byNS[$key][0]
@@ -281,6 +383,11 @@ Write-Output "din backup, la ACELASI drum in volt:            $laLoc"
 Write-Output "din backup, MUTAT, inregistrat in manifest:      $mutat"
 Write-Output "din backup, MUTAT, fara manifest (gasit in volt): $($relocat.Count)"
 Write-Output "din backup, REAL LIPSA (niciunde in volt):        $missing"
+Write-Output "din backup, RETRAS PRIN HOTARARE (din registru):  $($retras.Count)"
+if ($retras.Count -gt 0) {
+  $motivuri = $retras | Group-Object Motiv | Sort-Object Count -Descending
+  foreach ($m in $motivuri) { Write-Output "     $($m.Count) fisiere — $($m.Name)" }
+}
 if ($relocat.Count -gt 0) {
   Write-Output "  primele 5 relocari, ca sa le poti verifica cu ochiul:"
   $relocat | Select-Object -First 5 | ForEach-Object { Write-Output "     $_" }
@@ -383,11 +490,11 @@ if ($newest) {
 # cerinta de socoteala: categoriile trebuie sa acopere EXACT backupul.
 # un raport care nu se aduna nu e raport, e decor. am facut exact asta o data:
 # 2141 + 41907 = 44048, backupul are 46233, si diferenta s-a pierdut linistit.
-$acoperit = $laLoc + $mutat + $relocat.Count + $missing
+  $acoperit = $laLoc + $mutat + $relocat.Count + $retras.Count + $missing
 if ($acoperit -ne $bak.Count) {
   Write-Output ""
   Write-Output "STOP: RAPORTUL NU SE ADUNA."
-  Write-Output "  categorii: $laLoc + $mutat + $($relocat.Count) + $missing = $acoperit"
+  Write-Output "  categorii: $laLoc + $mutat + $($relocat.Count) + $($retras.Count) + $missing = $acoperit"
   Write-Output "  backup are: $($bak.Count)"
   Write-Output "  diferenta:  $($bak.Count - $acoperit)"
   Write-Output "Nu pot afirma ca nu s-a pierdut nimic. Nu s-a comparat tot."
