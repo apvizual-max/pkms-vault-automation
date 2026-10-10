@@ -172,7 +172,14 @@ if ($modScriere) {
   try { $mutexAlMeu = $mutex.WaitOne(0) }
   catch [System.Threading.AbandonedMutexException] { $mutexAlMeu = $true }
   if (-not $mutexAlMeu) {
-    # §19.5: iesire tacuta, cod 0. ZERO log.
+    # §19.5: iesim fara sa scriem nimic, cod 0. Contractul e respectat
+    # integral — zero log, zero scriere, zero modificare, iar programarea
+    # reincearca la urmatoarea trecere.
+    #
+    # Ce se schimba, exact un rand PE CONSOLA: altfel omul care ruleaza cu
+    # mana ramane in fata a unui ecran gol si nu are de unde sti ca nu s-a
+    # intamplat nimic. Logul ramane neatins.
+    Write-Output 'BLOCAT: alta rulare tine usa. Nimic scris, nimic atins, nimic stricat.'
     try { $mutex.Dispose() } catch { }
     exit 0
   }
@@ -917,6 +924,21 @@ try {
   }
   foreach ($p in $duble) {
     $evenimente.Add("[DUBLU] $p`n    masura: acelasi folder pe doua cai diferite`n    reparat: nu s-a atins nimic — nu stiu care cale e cea corecta")
+  }
+
+  # §16: contorul era tiparit DOAR pe consola. Masurat 2026-10-10 pe logul
+  # real: cautand "putin de 2 cuvinte cheie" in raport-aliniere.log, nu
+  # aparea nimic, in niciuna dintre cele 9079 de octeti. Un numar pe care il
+  # vad eu si nu ajunge in log nu ajunge la cititor — iar logul e al
+  # cititorului, nu al consolei.
+  #
+  # Se adauga IN EVENIMENTE, inainte de a se deschide logul, ca sa cada in
+  # acelasi fel ca orice alt eveniment: scris o data, citit de inchide-log,
+  # numarat de ritualul saptamanal. Fara sa atingem nimic pe disc.
+  if ($script:putineCuvinte -gt 0) {
+    $evenimente.Add(("[OBSERVATIE §16] foldere cu mai putin de 2 cuvinte cheie: " + $script:putineCuvinte) +
+      "`n" + "    masura: indexul le descrie corect, dar nu are de unde le da cuvinte cheie" +
+      "`n" + "    reparat: nu s-a atins nimic — cuvintele cheie vin din numele fisierelor, nu din automat")
   }
 
   # ---- logul: deschis NUMAI daca a fost eveniment (§19.2) ----
