@@ -41,6 +41,18 @@
 # 4. logul viu: dovada ca poarta chiar merge, si cam de des
 !/raport-aliniere.log
 
+# 4b. EXCEPTIE, masurata, nu presupunsa: skillurile fundamentale de administrare
+#     stau in _SYSTEM\Skills\, care altfel ramane inchis. _SYSTEM e inchis pentru
+#     ca e plin de artefacte derivate (arhive de indexe, resturi de unelte).
+#     Skillul de aici nu e continut personal si nici derivat: e mecanism, ca si
+#     scripturile din AI-Kit. Daca nu ar intra in git, o stergere accidentala a
+#     folderului ar pierde regula pentru toate proiectele de azi — masurat pe
+#     2026-10-10: commitul initial al acestei cai a intrat doar cu logul, cele
+#     doua fisiere au ramas neversonate fara niciun cuvant de avertizare.
+#     Se deschide EXACT aceasta cale, nu tot _SYSTEM.
+!/_SYSTEM/Skills/GIT-AUTONOM/
+!/_SYSTEM/Skills/GIT-AUTONOM/**
+
 # ── raman IN AFARA, intentionat ──
 #   arhiva- raport aliniere.log  — creste la nesfarsit; istoricul lui ramane in
 #                                   backup, nu in istoricul git
