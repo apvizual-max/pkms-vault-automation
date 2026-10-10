@@ -20,17 +20,20 @@ COMMIT = treaba ta, automată, la fiecare pas.
 PUSH = decizia mea, niciodată din inițiativa ta.
 
 1. MĂSOARĂ ÎNTÂI, NU PRESUPUNE.
-   Rulează și raportează-mă, înainte să schimbi ceva:
-   - git --version                (dacă lipsește: spune-mi, NU instala tu)
+   Rulează și raportează rezultatul, înainte să schimbi ceva:
+   - git --version                (dacă lipsește: NU instala — raportează lipsa)
    - gh --version                 (GitHub CLI)
    - gh auth status               (ești autentificat?)
+   - git config --global user.name ; git config --global user.email
    - git -C <proiect> rev-parse --is-inside-work-tree
    - git -C <proiect> remote -v
-   Spune-mi ce ai găsit, înainte de pasul 2.
+   Raportează ce ai găsit, înainte de pasul 2.
 
-2. IDENTITATEA — o singură dată, la nivel global.
-   Dacă user.name / user.email nu sunt setate, pune-le. Întreabă-mă pentru
-   nume și adresă, sau folosește ce am dat. Nu inventa identitatea mea.
+2. IDENTITATEA — NU O SCHIMBA.
+   Citește `git config --global user.name` și `user.email`. Dacă există, lasă-le
+   așa cum sunt și folosește-le. Nu cere altă identitate: identitatea e a
+   mașinii, nu a proiectului, și e deja stabilită. Raportează-le doar dacă
+   ambele lipsesc, și atunci spune ce ai măsurat, nu ce ai ales tu.
 
 3. PROIECTUL — configurează-l de la zero:
    git init
@@ -75,7 +78,7 @@ PUSH = decizia mea, niciodată din inițiativa ta.
    - NICIODATĂ `git reset --hard`. Distruge munca necomitată.
    - Fără `force push` fără cerere explicită.
    - Nu pune parole, tokenuri sau chei în fișiere urmărite. Dacă apare unul
-     într-un fișier urmărit, spune-mi IMEDIAT, nu îl comite.
+     într-un fișier urmărit, oprește-te acolo și raportează; nu îl comite.
 
 7. VERIFICĂ, NU ANUNȚA.
    După push: `git ls-remote origin master`. ASTA e adevărul.
@@ -84,9 +87,9 @@ PUSH = decizia mea, niciodată din inițiativa ta.
 
 8. DE CE INSTANTEZI TU, NU EU.
    Nu e o treabă de citit documentație. E o treabă de măsurat și de construit.
-   Dacă nu ai drept de scriere unde trebuie, spune-mi clar de ce.
+   Dacă nu ai drept de scriere unde trebuie, raportează clar de ce.
 
-La final spune-mi, pe scurt:
+La final, raportează pe scurt:
 - ce a existat și ce ai creat
 - comitul și repo-ul, cu adresa
 - ce verificări ai făcut și ce au răspuns

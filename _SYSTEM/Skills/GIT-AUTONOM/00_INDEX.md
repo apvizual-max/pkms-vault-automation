@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — _SYSTEM/Skills/GIT-AUTONOM
 
-**3 fișiere · 14 KB · 0 subfoldere**
+**3 fișiere · 15 KB · 0 subfoldere**
 
 > Generat automat de `AI-Kit\align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
