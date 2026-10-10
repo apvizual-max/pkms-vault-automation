@@ -6,8 +6,22 @@
   si scripturile cu numele scris tare au cazut. Acum il cauta.
 #>
 
+# Taie separatorul de la final. MASURAT 2026-10-10: Resolve-Path pastreaza bara
+# de la final (23 de caractere in loc de 22), iar calea relativa se taie cu
+# Substring($Vault.Length) — deci iese fara separatorul de la inceput si nu se
+# mai potriveste cu nimic. Rezultat: o bara obisnuita la sfarsitul caii face
+# ca toate cele 689 de indexuri sa para nealiniate. In modul de scriere, le-ar
+# rescrie pe toate.
+function Normalize-PkmsPath([string]$p) {
+  if (-not $p) { return $p }
+  $t = $p.TrimEnd([char]92, [char]47)
+  # o radacina de tip D:\ nu poate ramane goala dupa taiere
+  if ($t.Length -eq 0) { return $p.Substring(0,1) }
+  return $t
+}
+
 function Get-PkmsVault {
-  if ($env:PKMS_VAULT -and (Test-Path $env:PKMS_VAULT)) { return $env:PKMS_VAULT }
+  if ($env:PKMS_VAULT -and (Test-Path $env:PKMS_VAULT)) { return (Normalize-PkmsPath $env:PKMS_VAULT) }
   return 'D:\Alex_Knowlege_Vault'
 }
 
@@ -16,7 +30,7 @@ function Get-PkmsBackup {
 
   # numele vechi, daca exista
   $legacy = 'D:\Alex_Knowlege_Vault - CopyBACKUP'
-  if (Test-Path $legacy) { return $legacy }
+  if ($legacy -and (Test-Path $legacy)) { return (Normalize-PkmsPath $legacy) }
 
   # cauta in radacina lui D: orice copie a voltului
   $candidates = @(
@@ -24,7 +38,7 @@ function Get-PkmsBackup {
       Where-Object { $_.Name -match '^(Alex_Knowlege_Vault)\s*[-_].*' -and $_.FullName -ne (Get-PkmsVault) } |
       Sort-Object LastWriteTime -Desc
   )
-  if ($candidates.Count -gt 0) { return $candidates[0].FullName }
+  if ($candidates.Count -gt 0) { return (Normalize-PkmsPath $candidates[0].FullName) }
   return $null
 }
 

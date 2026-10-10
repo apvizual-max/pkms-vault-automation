@@ -24,6 +24,9 @@ $ErrorActionPreference = 'Continue'
 . "$PSScriptRoot\paths.ps1"
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
+# -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
+# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+$Vault = Normalize-PkmsPath $Vault
 if (-not (Test-Path -LiteralPath $Vault)) {
   Write-Output "VOLTUL NU EXISTA: $Vault"
   Write-Output 'Nu s-a scris niciun raport: nu am unde scrie.'

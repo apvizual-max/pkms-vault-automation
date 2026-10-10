@@ -31,6 +31,8 @@ $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
 if (-not $Backup) { $Backup = Get-PkmsBackup }
 if (-not $Vault)  { $Vault  = Get-PkmsVault }
+$Backup = Normalize-PkmsPath $Backup
+$Vault  = Normalize-PkmsPath $Vault
 if (-not $Backup) { Write-Output 'BACKUP NU A FOST GASIT'; exit 1 }
 if (-not (Test-Path -LiteralPath $Backup)) {
   Write-Output "BACKUP INEXISTENT: $Backup"

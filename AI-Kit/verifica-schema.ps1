@@ -367,6 +367,9 @@ function Invoke-Scan {
 param([string]$Vault, [int]$Nivel = 1)
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
+# -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
+# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+$Vault = Normalize-PkmsPath $Vault
 if (-not (Test-Path -LiteralPath $Vault)) { throw ('Voltul nu exista: ' + $Vault) }
 
 $idx = @(Get-ChildItem -LiteralPath $Vault -Recurse -File -Filter '00_INDEX.md' -Force -ErrorAction SilentlyContinue)

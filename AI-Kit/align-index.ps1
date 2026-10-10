@@ -45,6 +45,10 @@ $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
 if (-not $Vault) { $Vault = Get-PkmsVault }
 $Vault = (Resolve-Path -LiteralPath $Vault).Path
+# MASURAT: Resolve-Path pastreaza bara de la final. Fara taierea de mai jos,
+# calea relativa iese fara separatorul de inceput si toate cele 689 de
+# indexuri para nealiniate — iar in modul de scriere toate s-ar rescrie.
+$Vault = Normalize-PkmsPath $Vault
 
 # backupul e imutabil: nici citit cu scriere. il aflam doar ca sa ne aparam.
 $BackupRoot = $null

@@ -60,6 +60,9 @@ function Write-IndexRezilient([string]$cale, [string]$continut, [string[]]$vechi
 }
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
+# -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
+# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+$Vault = Normalize-PkmsPath $Vault
 
 
 # --- usa (§19.5, ca in align-index.ps1) ---

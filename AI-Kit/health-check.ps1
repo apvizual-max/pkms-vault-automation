@@ -6,6 +6,9 @@ param([string]$Vault = '')
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
 if (-not $Vault) { $Vault = Get-PkmsVault }
+# -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
+# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+$Vault = Normalize-PkmsPath $Vault
 $ex = '\\\.obsidian\\|\\\.git\\'
 
 # --- numaratoare REPRODUCIBILA ---
