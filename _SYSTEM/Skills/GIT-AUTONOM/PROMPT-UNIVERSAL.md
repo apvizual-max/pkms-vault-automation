@@ -93,7 +93,12 @@ tehnice, le iei tu.
 | `C:\Users\apviz\.minimax\agents\mavis\skills\mavis-git-autonom-skill\SKILL.md` | skillul viu, se încarcă automat |
 | `_SYSTEM\Skills\GIT-AUTONOM\SKILL.md` | același skill, în vault, pentru transfer |
 | `_SYSTEM\Skills\GIT-AUTONOM\PROMPT-UNIVERSAL.md` | promptul de mai sus, de trimis altor instanțe |
+| `_SYSTEM\Skills\GIT-AUTONOM\PROMPT-SETUP-GIT.md` | promptul de **instalare**, trimis **o singură dată**, înaintea celui de sus |
 
 Skillul se încarcă singur în toate proiectele. Promptul e pentru **celelalte**
 instanțe — Antígravity, Hermes, Gemini, orice AI cu care lucrezi pe alte
 repozitoare sau proiecte fără vault.
+
+**Ordinea, pentru o instanță nouă:** întâi `PROMPT-SETUP-GIT.md` (ridică
+infrastructura), apoi `PROMPT-UNIVERSAL.md` (regula de lucru). Invers, al
+doilea nu are pe ce lucra.

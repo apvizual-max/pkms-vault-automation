@@ -1,22 +1,23 @@
 ﻿# 00_INDEX — _SYSTEM/Skills/GIT-AUTONOM
 
-**2 fișiere · 8 KB · 0 subfoldere**
+**3 fișiere · 14 KB · 0 subfoldere**
 
 > Generat automat de `AI-Kit\align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din folder e `PROMPT-UNIVERSAL.md` (5 KB)
+Singura extensie prezentă e `.md` (3 din 3 fișiere). Cel mai mare element din folder e `PROMPT-SETUP-GIT.md` (6 KB)
 
 ## Cuvinte cheie
 
-`GIT-AUTONOM` · `PROMPT` · `UNIVERSAL` · `.md`
+`GIT-AUTONOM` · `PROMPT` · `SETUP` · `GIT` · `.md`
 
 ## Fișiere
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
+| `PROMPT-SETUP-GIT.md` | 6 KB | 2026-10-10 |
 | `PROMPT-UNIVERSAL.md` | 5 KB | 2026-10-10 |
 | `SKILL.md` | 3 KB | 2026-10-10 |
 
