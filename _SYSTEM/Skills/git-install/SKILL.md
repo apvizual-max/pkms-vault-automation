@@ -22,50 +22,78 @@
 Nu se rulează amândouă. `git-install` e o dată, `git-autonom` e restul vieții
 proiectului.
 
-## Ordinea nu se negociază
+## REGULA DE AUTORITATE — nu întrebi nimic
 
-1. **Măsoară înainte să schimbi ceva.** `git --version`, `gh --version`,
-   `gh auth status`, `git config --global user.name` / `user.email`,
-   `rev-parse --is-inside-work-tree`, `remote -v`. Raportează ce ai găsit.
-   Nu instala nimic din inițiativa proprie — deosebește „lipsește" de
-   „nu am voie".
+**Tu faci totul, tu decizi totul, eu doar primesc raportul.**
 
-2. **Identitatea NU se schimbă.** Dacă există global, se lasă cum e. E a
-   mașinii, nu a proiectului. Nu ceri altă identitate: o citești, o folosești,
-   o raportezi.
+Nu e voie să te oprești la mijloc și să întrebi. Nu întrezi cum se numește
+repo-ul, ce ramură, ce extensii, ce mesaj. **Alezi tu, corect, și îmi spui
+ce ai ales.**
 
-3. **Inițializează și configurează pe nivel de REPO**, nu global:
+| Situație | Ce faci |
+|---|---|
+| `git` sau `gh` lipsesc | îi instalezi. Permisiunea e deja dată — asta e sarcina ta |
+| nu ai drept de administrator | instalezi ce poți, termini tot ce se poate, raportzi restul |
+| nu ești autentificat pe GitHub | încerci `gh auth login`; dacă cere interacțiune, e **singurul** motiv pentru care te oprești |
+| nu știi numele repo-ului | îl derivi din numele folderului |
+| nu știi ce ramură | alegi `main`, o setezi explicit, nu întrebi |
+| nu știi ce `.gitignore` | scrii cel cu **negație**, îl verifici, îl corectezi |
+
+**Singurul motiv legitim de oprire:** ai nevoie de ceva ce numai omul îți poate
+da — un cod de autentificare, o plată, o acțiune fizică. Atunci spui exact
+ce lipsește, într-o proluză, și te oprești. **Nu pentru nume, nu pentru
+opțiuni, nu pentru „nu sunt sigur".**
+
+Semnul că ai făcut bine: **nu apare nicio întrebare în care să aleg între
+două variante pe care le-am putea numi eu înainte.**
+
+## Ordinea, fără întreruperi
+
+1. **Măsoară** `git --version`, `gh --version`, `gh auth status`, identitatea
+   globală, dacă există `.git`, ce remote are. Nu raporta și aștepta —
+   continuă.
+
+2. **Identitatea**: o citești, o lași. Nu o schimbi, nu o ceri, nu o inventezi.
+   Dacă lipsește, alegi tu una stabilă pentru proiect și o spui în raport.
+
+3. **Pregătește**: instalezi ce lipsește, `git init`, și configurezi **pe nivel
+   de repo**, nu global:
 
 ```
-git init
 git config core.autocrlf false
 git config core.eol native
 git config core.filemode false
+git checkout -b main
 ```
 
 `autocrlf false` e per-repo pentru că e decizie a proiectului. Global ar
 forța toate proiectele de pe mașină, inclusiv ale altcuia.
 
 4. **`.gitignore` prin NEGARE, nu enumerare.** Interzici totul cu `/*`, apoi
-   deschizi explicit căile pe care proiectul le are nevoie. La un proiect
-   mare, pericolul nu e să uiți un fișier — e să verși conținut în afară.
+   deschizi **tu**, singur, căile pe care le conține proiectul — le afli
+   citind structura lui, nu întrebând.
 
-5. **Repo privat pe GitHub:**
+5. **Primul comit, ramura, repo-ul privat:**
 
 ```
-gh auth login                       (doar dacă nu ești deja autentificat)
-gh repo create <nume> --private --source=. --remote=origin
 git add -A
 git commit -m "prima stare a proiectului"
-git push -u origin master
+gh auth login                      (doar dacă nu ești deja autentificat)
+gh repo create <nume-derivat-din-folder> --private --source=. --remote=origin --push
 ```
 
-6. **Verifică cu `git ls-remote origin master`.** Nu cu codul de ieșire:
+Nume-ul îl derivi tu din numele folderului: litere mici, cifre, cratime.
+**Primul push face parte din instalare** — fără el repo-ul nu există încă,
+deci nu ceri acord pentru el și îl anunți în raport.
+
+6. **Verifică singur**, cu `git ls-remote origin main`. Nu cu codul de ieșire:
    `git` scrie progresul pe stderr și poate arunca o eroare roșie chiar când a
-   mers bine.
+   mers bine. Dacă verificarea nu confirmă, **repară și reîncearci**, nu
+   raportezi succes.
 
 7. **Predă către `git-autonom`.** Ridicarea e gata; de acum înainte regulile
-   de fiecare zi sunt cele din skillul `git-autonom`.
+   de fiecare zi sunt ale skillului `git-autonom` — inclusiv interdicția de a
+   mai împinge fără acordul meu.
 
 ## Regula `.gitignore` care costă cel mai mult — măsurată, nu auzită
 
@@ -80,8 +108,6 @@ Cauza, găsită prin măsură cu `git check-ignore -v`:
 - Ultima regulă care se potrivește câștigă. Redeschiderile puse **înaintea**
   regulii de excludere sunt anulate de aceasta.
 
-Ordinea corectă, pe fiecare nivel:
-
 ```
 /_x/**
 !/_x/
@@ -89,10 +115,10 @@ Ordinea corectă, pe fiecare nivel:
 !/_x/sub/**
 ```
 
-Verifică după ce ai scris, cu `git check-ignore -v`: pe un fișier care trebuie
-urmărit, răspunsul corect e că **NU** e ignorat. Pe unul care nu trebuie,
-trebuie să rămână ignorat. Fără controlul pe partea a doua, poarta nu poate
-deveni roșie.
+Verifică cu `git check-ignore -v`: pe un fișier care trebuie urmărit,
+răspunsul corect e că **NU** e ignorat. Pe unul care nu trebuie, trebuie să
+rămână ignorat. **Verifică ambele sensuri** — fără control pe partea a doua,
+poarta nu poate deveni roșie.
 
 ## Prohibit, fără excepție
 
@@ -100,18 +126,28 @@ deveni roșie.
 fișiere urmărite · ștergerea conținutului utilizatorului (muți, cu motiv
 scris, în carantină).
 
-## Regula de comportament, de la prima zi
+## De la prima zi, fără excepție
 
-**Commit autonom la fiecare succes măsurat. Push doar cu acordul lui.
-Interfața aplicației nu se atinge** — rezolvarea e comportament, nu buton.
-Acestea nu se negociază nici la instalare: se pun în vigoare din comitul 1.
+**Commit autonom la fiecare succes măsurat. Push doar cu acordul meu — cu
+singura excepție a primului push din instalare. Interfața aplicației nu se
+atinge:** rezolvarea e comportament, nu buton.
+
+## Ce raportezi la final
+
+Un raport, cu cifre măsurate acum, nu cu impresii:
+
+- ce a existat înainte și ce ai creat
+- numele repo-ului și **de ce l-ai ales așa**
+- ramura, comitul, adresa
+- ce verificări ai făcut și ce au răspuns, cu răspunsul
+- singurul lucru rămas, dacă a rămas ceva, și de ce nu l-ai putut face
 
 ## Măsurat pe această mașină (2026-10-10)
 
 git `2.56.0.windows.2` · `gh 2.97.0`, instalat și autentificat ·
 `credential.https://github.com.helper=store` · identitate și `core.hooksPath`
-la nivel global. **`gh` e deja prezent și logat** — o instanță nouă nu e
-blocată pe autentificare.
+la nivel global. **`gh` e deja prezent și logat** — așa că la o instalare pe
+această mașină, singurul punct unde te-ai opri nu apare.
 
 ## Promptul pereche
 

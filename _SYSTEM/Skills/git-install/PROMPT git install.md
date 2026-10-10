@@ -12,40 +12,60 @@ unde Git nu s-a atins niciodată. Copiază blocul **ca atare**.
 ```
 SETUP GIT + GITHUB, de la zero. Nu știi nimic despre Git. Proiectul are nevoie
 de versionare și de o copie pe GitHub. Instalează tot ce trebuie, pas cu pas,
-și verifică tot ce ai făcut. Nu presupune nimic — măsoară înainte.
+până la capăt, și verifică tot ce ai făcut.
+
+=== REGULA DE AUTORITATE ===
+
+TU FACI TOTUL. TU DECIZI TOTUL. EU DOAR PRIMESC RAPORTUL.
+
+Nu mă întrebi nimic. Nu te oprești la mijloc. Nu alegi între variante pe
+care le-am putea numi eu înainte: numele repo-ului, ramura, extensiile,
+mesajul de comit, conținutul .gitignore — le alegi tu, corect, și îmi spui
+ce ai ales și de ce.
+
+Dacă nu știi ceva, alegi tu ce e mai sigur și continui. O întrebare pusă
+din nevoie este o eșec, nu o politețe.
+
+Singurul motiv real de oprire: ai nevoie de ceva ce numai eu îți pot da — un
+cod de autentificare, o plată, o acțiune fizică. Atunci spui ce lipsește,
+într-o proluză, și te oprești acolo. Nimic altceva.
 
 === REGULA DE BAZĂ, valabilă de la prima zi și peste tot ===
 
 COMMIT = treaba ta, automată, la fiecare pas.
-PUSH = decizia mea, niciodată din inițiativa ta.
+PUSH = decizia mea — cu singura excepție a primului push din instalare, care
+face parte din ce ai construit acum.
 
-1. MĂSOARĂ ÎNTÂI, NU PRESUPUNE.
-   Rulează și raportează rezultatul, înainte să schimbi ceva:
-   - git --version                (dacă lipsește: NU instala — raportează lipsa)
-   - gh --version                 (GitHub CLI)
-   - gh auth status               (ești autentificat?)
-   - git config --global user.name ; git config --global user.email
-   - git -C <proiect> rev-parse --is-inside-work-tree
-   - git -C <proiect> remote -v
-   Raportează ce ai găsit, înainte de pasul 2.
+1. MĂSOARĂ, APOI CONTINUĂ FĂRĂ SĂ AȘTEPTI.
+   Rulează: git --version · gh --version · gh auth status ·
+   git config --global user.name / user.email ·
+   rev-parse --is-inside-work-tree · remote -v.
+   Nu ceri permisiune pentru ce urmează. Continuă imediat.
 
-2. IDENTITATEA — NU O SCHIMBA.
-   Citește `git config --global user.name` și `user.email`. Dacă există, lasă-le
-   așa cum sunt și folosește-le. Nu cere altă identitate: identitatea e a
-   mașinii, nu a proiectului, și e deja stabilită. Raportează-le doar dacă
-   ambele lipsesc, și atunci spune ce ai măsurat, nu ce ai ales tu.
+2. DACĂ LIPSEȘTE CEVA, ÎL INSTALEZI.
+   Dacă git sau gh nu sunt pe mașină, îi instalezi cu winget. Nu e o decizie
+   a mea — e sarcina ta. Dacă nu ai drept de administrator, instalezi ce poți
+   și termini tot restul; spui la final că a rămas ceva.
 
-3. PROIECTUL — configurează-l de la zero:
+3. IDENTITATEA — NU O SCHIMBA, NU O CERE.
+   Citește user.name și user.email globale și lasă-le cum sunt. Identitatea
+   e a mașinii. Dacă ambele chiar lipsesc, alegi tu una stabilă pentru
+   proiect și o spui în raport.
+
+4. PROIECTUL — de la zero, fără întrebări:
    git init
-   git config core.autocrlf false      ← IMPORTANT, vezi secțiunea 6
+   git config core.autocrlf false      ← vezi secțiunea 6, nu le sări
    git config core.eol native
    git config core.filemode false
+   git checkout -b main                ← alegi tu `main`, nu întrebi
 
-4. .gitignore — MODUL GREȘIT E CEL MAI FRECVENT.
+5. .gitignore — ÎL SCRII TU, PE STRUCTURA REALĂ.
    NU folosi .gitignore obișnuit, cu liste de ce nu se urmărește. La un
-   proiect mare, pericolul nu e să uiți un fișier, ci să verși conținut
-   în afară: parole, fișiere personale, zeci de GB.
-   Folosește inversul: interzici TOTUL, apoi deschizi doar căile enumerate.
+   proiect mare, pericolul nu e să uiți un fișier, ci să verși conținut în
+   afară: parole, fișiere personale, zeci de GB.
+   Folosește inversul: interzici TOTUL, apoi deschizi doar căile pe care
+   proiectul le are cu adevărat. Le identifici citind structura lui — nu
+   întrebând și nu ghicind.
 
    /*                        ← tot ce e la rădăcină: interzis
    !/README.md               ← apoi deschizi explicit, pe rând
@@ -54,46 +74,51 @@ PUSH = decizia mea, niciodată din inițiativa ta.
 
    Reguli care contează:
    - Ordinea contează: ultima regulă care se potrivește câștigă.
-   - Git NU coboară într-un director interzis. Ca să redeschizi un
-     fișier, redeschide și PĂRINTELE lui, chiar dacă pe acesta cazi
-     înapoi imediat.
-   - `**` se potrivește și cu ZERO componente: `/_x/**` închide și
-     directorul `_x` însuși.
-   Verifică după ce ai scris: `git check-ignore -v <fișier>`.
-   Pentru un fișier care TREBUIE urmărit, răspunsul corect e că NU e ignorat.
-   Pentru unul care nu trebuie, trebuie să rămână ignorat.
+   - Git NU coboară într-un director interzis. Ca să redeschizi un fișier,
+     redeschide și PĂRINTELE lui, chiar dacă pe acesta cazi înapoi imediat.
+   - `**` se potrivește și cu ZERO componente: `/_x/**` închide și directorul
+     `_x` însuși.
+   Verifică singur, cu `git check-ignore -v`, în AMBELE sensuri:
+   - pe un fișier care TREBUIE urmărit → răspunsul corect e că NU e ignorat;
+   - pe unul care NU trebuie → trebuie să rămână ignorat.
+   Dacă verificarea contrazice regula, corectezi regula și reverifici.
 
-5. PRIMUL COMIT ȘI PRIMUL PUSH.
+6. PRIMUL COMIT, RAMURA, REPO-UL PRIVAT, PUSH-UL.
+   Numele repo-ului îl DERIVI TU din numele folderului: litere mici, cifre,
+   cratime. Nu îl ceri, nu îl întrebi. Îl anunți în raport.
+
+   git add -A
+   git commit -m "prima stare a proiectului"
    gh auth login                    (doar dacă nu ești deja autentificat)
-   gh repo create <nume> --private --source=. --remote=origin
-   git add -A ; git commit -m "prima stare a proiectului"
-   git push -u origin master
+   gh repo create <nume> --private --source=. --remote=origin --push
 
-6. LINII CRUCIALE — NU LE SARI.
+   Acest push NU ceri acord pentru el: fără el repo-ul nu există încă, deci
+   face parte din instalare. De aici înainte, orice push cere acordul meu.
+
+7. LINII CRUCIALE — NU LE SARI.
    - `core.autocrlf false` pe Windows: altfel fiecare fișier apare modificat
      la fiecare clone, fără ca cineva să fi atins ceva. E cauza #1 de
      „proiectul e stricat" pe Windows.
-   - NICIODATĂ `git clean -fdx`. Într-un proiect mare, șterge fișiere
-     ignorate care pot fi conținut real.
+   - NICIODATĂ `git clean -fdx`. Șterge fișiere ignorate care pot fi conținut
+     real.
    - NICIODATĂ `git reset --hard`. Distruge munca necomitată.
-   - Fără `force push` fără cerere explicită.
-   - Nu pune parole, tokenuri sau chei în fișiere urmărite. Dacă apare unul
-     într-un fișier urmărit, oprește-te acolo și raportează; nu îl comite.
+   - Fără `force push`.
+   - Nu pune parole, tokenuri sau chei în fișiere urmărite. Dacă apare unul,
+     îl scoți din urmărire, îl comentezi, și îl spui în raport.
 
-7. VERIFICĂ, NU ANUNȚA.
-   După push: `git ls-remote origin master`. ASTA e adevărul.
-   Nu încălzi cu codul de ieșire al shell-ului: `git` scrie progresul pe
-   stderr și poate arunca o eroare roșie chiar când totul a mers bine.
+8. VERIFICĂ SINGUR, REPARĂ DACĂ NU CONCORDE.
+   După push: `git ls-remote origin main`. ASTA e adevărul, nu codul de
+   ieșire — git scrie progresul pe stderr și poate arunca o eroare roșie
+   chiar când totul a mers bine.
+   Dacă verificarea nu confirmă, repeți și corectezi. Nu anunți succes pe
+     baza unui cod de ieșire.
 
-8. DE CE INSTANTEZI TU, NU EU.
-   Nu e o treabă de citire documentație. E o treabă de măsurat și de construit.
-   Dacă nu ai drept de scriere unde trebuie, raportează clar de ce.
-
-La final, raportează pe scurt:
-- ce a existat și ce ai creat
-- comitul și repo-ul, cu adresa
-- ce verificări ai făcut și ce au răspuns
-- ce n-ai putut face și de ce
+9. LA FINAL, UN RAPORT. Cu cifre măsurate acum, nu cu impresii:
+   - ce a existat înainte și ce ai creat
+   - numele repo-ului și DE CE l-ai ales așa
+   - ramura, comitul, adresa
+   - ce verificări ai făcut și ce au răspuns, cu răspunsul
+   - singurul lucru rămas, dacă a rămas, și de ce
 ```
 
 ---
@@ -101,13 +126,17 @@ La final, raportează pe scurt:
 ## Versiunea scurtă, pentru un AI cu context mare
 
 ```
-Măsoară: git --version, gh --version, gh auth status, remote -v. Configurează
-proiectul: init, core.autocrlf false, core.eol native. Scrie .gitignore prin
-NEGARE (interzici totul cu /*, deschizi explicit căile pe care le vrei).
-gh repo create --private, primul comit, push. Verifică push-ul cu git ls-remote,
-nu cu ieșirea shell-ului. Nu rula niciodată git clean -fdx sau git reset --hard.
-Nu comite parole sau tokenuri. Commit autonom la fiecare pas, push doar când
-eu spun. Interfața nu o schimbi.
+Tu faci totul și tu decizi totul. Nu mă întrebi nimic, nu te oprești la
+mijloc: numele repo-ului, ramura, extensiile, .gitignore le alegi tu și îmi
+spui ce ai ales. Singurul motiv real de oprire e un cod sau o plată de la mine.
+Măsoară, instalează ce lipsește cu winget, git init, core.autocrlf false,
+checkout -b main, .gitignore prin negare (/* interzice totul, deschizi
+explicit căile reale ale proiectului, verifici cu git check-ignore în ambele
+sensuri), primul comit, gh repo create <nume-derivat-din-folder> --private
+--push. Primul push face parte din instalare: nu ceri acord. Verifici cu git
+ls-remote, nu cu codul de ieșire. Nu rula niciodată git clean -fdx sau git
+reset --hard. Nu comite parole. Commit autonom, push doar cu acordul meu de
+acum înainte. Interfața nu o schimbi.
 ```
 
 ## Ce vine după
@@ -132,8 +161,8 @@ același proiect.
 | Identitate | `Sentinel Prime <sentinel.prime@optimus.local>` (global) |
 | Credential | `credential.https://github.com.helper = store` |
 
-`gh` **e deja prezent și logat** pe această mașină — o instanță nouă nu va fi
-blocată pe autentificare.
+`gh` **e deja prezent și logat** pe această mașină — la o instalare aici,
+singurul punct unde instalarea s-ar opri nu apare.
 
 ## Perechea, în archive
 
