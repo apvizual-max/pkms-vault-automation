@@ -49,7 +49,19 @@
 #     folderului ar pierde regula pentru toate proiectele de azi — masurat pe
 #     2026-10-10: commitul initial al acestei cai a intrat doar cu logul, cele
 #     doua fisiere au ramas neversonate fara niciun cuvant de avertizare.
-#     Se deschide EXACT aceasta cale, nu tot _SYSTEM.
+#     Git nu coboara intr-un director interzis: ca sa redeschizi un fisier
+#     trebuie redeschis si PARINTELE lui, chiar daca pe acesta se cade inapoi
+#     imediat cu o regula de excludere. Masurat pe 2026-10-10: cu doar
+#     `!/_SYSTEM/Skills/GIT-AUTONOM/**` in lista, fisierele au ramas neversonate
+#     si comitul a trecut de fiecare doua ori raportand doar logul.
+#     Ordinea conteaza si aici, masurat pe 2026-10-10. `**` se potriveste si
+#     cu ZERO componente, deci `/_SYSTEM/**` inchide si directorul `_SYSTEM` insusi
+#     — iar git nu coboara intr-un director inchis. Redeschirile trebuie puse
+#     DUPA regula de excludere, nu inainte: puse inainte, `/_SYSTEM/**` le
+#     anula si comitul raporta doar logul, de doua ori, fara niciun avertisment.
+/_SYSTEM/**
+!/_SYSTEM/
+!/_SYSTEM/Skills/
 !/_SYSTEM/Skills/GIT-AUTONOM/
 !/_SYSTEM/Skills/GIT-AUTONOM/**
 
