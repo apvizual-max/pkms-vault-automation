@@ -1,11 +1,11 @@
-# PROMPT DE INSTALARE — punerea pe picioare a infrastructurii Git + GitHub
+# PROMPT GIT INSTALL — punerea pe picioare a infrastructurii
 
-Trimite-l **ca atare** unei instanțe noi, într-un proiect nou, unde nu s-a
-atins niciodată Git și unde ea **nu știe nimic** despre GitHub.
+**Trimite-l o singură dată**, la începutul unei sesiuni noi, într-un proiect
+unde Git nu s-a atins niciodată. Copiază blocul **ca atare**.
 
-**Diferența față de `Prompt Skill Git Autonom.md`:** acela spune *ce faci cu* Git.
-Ăsta spune *cum îl instalez*. Rulează **o dată**, la început. După aceea,
-vreau ca `Prompt Skill Git Autonom.md` să fie cel care merge.
+> Se folosește **înaintea** lui `PROMPT git autonom.md`. Acesta ridică
+> infrastructura; celălalt spune ce faci cu ea, în fiecare zi.
+> Skillul pereche: **`git-install`**.
 
 ---
 
@@ -14,7 +14,7 @@ SETUP GIT + GITHUB, de la zero. Nu știi nimic despre Git. Proiectul are nevoie
 de versionare și de o copie pe GitHub. Instalează tot ce trebuie, pas cu pas,
 și verifică tot ce ai făcut. Nu presupune nimic — măsoară înainte.
 
-=== REGULA DE BAZĂ, valabilă peste tot ===
+=== REGULA DE BAZĂ, valabilă de la prima zi și peste tot ===
 
 COMMIT = treaba ta, automată, la fiecare pas.
 PUSH = decizia mea, niciodată din inițiativa ta.
@@ -86,7 +86,7 @@ PUSH = decizia mea, niciodată din inițiativa ta.
    stderr și poate arunca o eroare roșie chiar când totul a mers bine.
 
 8. DE CE INSTANTEZI TU, NU EU.
-   Nu e o treabă de citit documentație. E o treabă de măsurat și de construit.
+   Nu e o treabă de citire documentație. E o treabă de măsurat și de construit.
    Dacă nu ai drept de scriere unde trebuie, raportează clar de ce.
 
 La final, raportează pe scurt:
@@ -98,7 +98,7 @@ La final, raportează pe scurt:
 
 ---
 
-## Varianta scurtă, pentru un AI cu context mare
+## Versiunea scurtă, pentru un AI cu context mare
 
 ```
 Măsoară: git --version, gh --version, gh auth status, remote -v. Configurează
@@ -110,9 +110,16 @@ Nu comite parole sau tokenuri. Commit autonom la fiecare pas, push doar când
 eu spun. Interfața nu o schimbi.
 ```
 
-## Ce am măsurat pe această mașină, ca să fie verificabil
+## Ce vine după
 
-Nu e teorie — e starea reală de la care pornește orice proiect nou:
+Instalarea e terminată aici. De acum înainte, la fiecare ședință, merge
+**`PROMPT git autonom.md`** — commit autonom, push doar cu acordul meu,
+interfața neatinsă. Invers, acesta n-are pe ce lucra.
+
+**Nu retrimite acest prompt.** Rulat de două ori, face un al doilea repo pe
+același proiect.
+
+## Ce am măsurat pe această mașină, ca să fie verificabil
 
 | Ce | Valoare măsurată |
 |---|---|
@@ -120,29 +127,20 @@ Nu e teorie — e starea reală de la care pornește orice proiect nou:
 | GitHub CLI | `gh 2.97.0 (2026-07-31)` — **instalat** |
 | Autentificare | `hosts.yml` există → logat |
 | `core.autocrlf` | `false` — **pe nivel de repo, nu global** |
-| `core.eol` | `native` |
-| `core.filemode` | `false` |
+| `core.eol` / `core.filemode` | `native` / `false` |
 | `core.hooksPath` | `C:\Users\apviz\.git-hooks` (global) |
 | Identitate | `Sentinel Prime <sentinel.prime@optimus.local>` (global) |
 | Credential | `credential.https://github.com.helper = store` |
-| Remote | HTTPS, `apvizual-max/pkms-vault-automation.git` |
 
-**De ce `autocrlf=false` e pe nivel de repo:** e o decizie a proiectului, nu a
-mașinii. Două proiecte pe același calculator pot avea reguli diferite pe rânduri
-de text. Setată global, ar forța toate proiectele în același mod — inclusiv
-proiectele altcuiva.
+`gh` **e deja prezent și logat** pe această mașină — o instanță nouă nu va fi
+blocată pe autentificare.
 
-## Ce știu deja și nu trebuie repetat
+## Perechea, în archive
 
-- Regula `**` cu zero componente — **măsurată aici**, a costat două comituri
-  care raportau doar logul, fără niciun avertisment.
-- Interfața aplicației nu se atinge. Rezolvarea e comportament, nu buton.
-- `git ls-remote` e singurul verdict de push.
-- `chore: update <fișier>` vine din mesajul lăsat gol — nu e un intrus.
+`_SYSTEM\Skills\git-install\`
+├── `SKILL.md` ← skillul, se încarcă la proiect nou
+└── `PROMPT git install.md` ← acest document, se trimite o singură dată
 
-## După instalare
-
-Instalația se termină aici. De acum înainte, ce rulează la fiecare ședință e
-`Prompt Skill Git Autonom.md` — commit autonom, push doar cu acordul meu, interfața
-neatină. Nu retrimite promptul acesta: rulat de două ori, înființează un al
-doilea repo pe același proiect.
+`_SYSTEM\Skills\git-autonom\`
+├── `SKILL.md` ← skillul, se încarcă la fiecare treabă cu Git
+└── `PROMPT git autonom.md` ← regula de lucru, pentru fiecare ședință

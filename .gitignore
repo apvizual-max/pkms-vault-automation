@@ -44,26 +44,28 @@
 # 4b. EXCEPTIE, masurata, nu presupunsa: skillurile fundamentale de administrare
 #     stau in _SYSTEM\Skills\, care altfel ramane inchis. _SYSTEM e inchis pentru
 #     ca e plin de artefacte derivate (arhive de indexe, resturi de unelte).
-#     Skillul de aici nu e continut personal si nici derivat: e mecanism, ca si
-#     scripturile din AI-Kit. Daca nu ar intra in git, o stergere accidentala a
-#     folderului ar pierde regula pentru toate proiectele de azi — masurat pe
-#     2026-10-10: commitul initial al acestei cai a intrat doar cu logul, cele
-#     doua fisiere au ramas neversonate fara niciun cuvant de avertizare.
-#     Git nu coboara intr-un director interzis: ca sa redeschizi un fisier
-#     trebuie redeschis si PARINTELE lui, chiar daca pe acesta se cade inapoi
-#     imediat cu o regula de excludere. Masurat pe 2026-10-10: cu doar
-#     `!/_SYSTEM/Skills/GIT-AUTONOM/**` in lista, fisierele au ramas neversonate
-#     si comitul a trecut de fiecare doua ori raportand doar logul.
-#     Ordinea conteaza si aici, masurat pe 2026-10-10. `**` se potriveste si
-#     cu ZERO componente, deci `/_SYSTEM/**` inchide si directorul `_SYSTEM` insusi
-#     — iar git nu coboara intr-un director inchis. Redeschirile trebuie puse
-#     DUPA regula de excludere, nu inainte: puse inainte, `/_SYSTEM/**` le
-#     anula si comitul raporta doar logul, de doua ori, fara niciun avertisment.
+#     Skillurile de aici nu sunt continut personal si nici derivate: sunt
+#     mecanism, la fel ca scripturile din AI-Kit. Daca nu ar intra in git, o
+#     stergere accidentala a folderului ar pierde regula pentru toate proiectele
+#     de azi — masurat pe 2026-10-10: comitul initial al acestei cai a intrat
+#     doar cu logul, cele doua fisiere au ramas neversonate fara niciun cuvant
+#     de avertizare.
+#     ATENTIE LA ORDINE — masurat de doua ori pe 2026-10-10:
+#     1. Git nu coboara intr-un director interzis: ca sa redeschizi un fisier
+#        trebuie redeschis si PARINTELE lui.
+#     2. `**` se potriveste si cu ZERO componente, deci `/_SYSTEM/**` inchide si
+#        directorul `_SYSTEM` insusi, nu doar continutul lui.
+#     3. Redeschirile se pun DUPA regula de excludere. Puse inainte, `/_SYSTEM/**`
+#        le anula si comitul a raportat doar logul, de doua ori, fara avertisment.
+#     Exemple de perechi deschise: git-autonom (regula de lucru) si git-install
+#     (ridicarea infrastructurii). Fiecare are SKILL.md si PROMPT-ul pereche.
 /_SYSTEM/**
 !/_SYSTEM/
 !/_SYSTEM/Skills/
-!/_SYSTEM/Skills/GIT-AUTONOM/
-!/_SYSTEM/Skills/GIT-AUTONOM/**
+!/_SYSTEM/Skills/git-autonom/
+!/_SYSTEM/Skills/git-autonom/**
+!/_SYSTEM/Skills/git-install/
+!/_SYSTEM/Skills/git-install/**
 
 # ── raman IN AFARA, intentionat ──
 #   arhiva- raport aliniere.log  — creste la nesfarsit; istoricul lui ramane in

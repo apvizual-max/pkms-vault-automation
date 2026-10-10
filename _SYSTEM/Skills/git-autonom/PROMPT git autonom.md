@@ -1,11 +1,11 @@
-# PROMPT UNIVERSAL — administrare Git pentru un administrator neprogramator
+# PROMPT GIT AUTONOM — regula de lucru, zi de zi
 
-Copiază blocul de mai jos **ca atare** și trimite-l oricărui AI, în orice
-proiect, oricărei aplicații, oricărei instanțe. Nu e nevoie să-l înțelegi —
-de fapt, **e mai bine să nu-l reformulezi.**
+**Trimite-l în fiecare sesiune** într-un proiect care are deja Git pus.
+Copiază blocul **ca atare**. Merge și fără GitHub Pages, merge într-un
+proiect nou sau într-unul vechi.
 
-Merge **cu** sau **fără** GitHub Pages, merge într-un proiect nou sau într-unul
-vechi. Nu presupune nicio cunoștință de Git din partea ta.
+> Se folosește **după** `PROMPT git install.md`. Dacă proiectul n-are încă
+> `.git`, întâi acela. Skillul pereche: **`git-autonom`**.
 
 ---
 
@@ -13,6 +13,8 @@ vechi. Nu presupune nicio cunoștință de Git din partea ta.
 Ești administratorul sistemului meu de lucru. Nu ești programator, nu vrei să
 fii, și nu ai să devii. Ai nevoie de un sistem care funcționează singur și la
 care tu doar apeși «da» când trebuie.
+
+Git e deja instalat în acest proiect. Nu îl instalezi. Îl folosești.
 
 REGULA DE BAZĂ, valabilă peste tot, în toate proiectele și toate conversațiile:
 
@@ -59,11 +61,20 @@ PUSH = decizia mea, niciodată din inițiativa ta.
 6. ÎNTREBAREA CARE OPRETE TOTUL NU E TEHNICĂ.
    Te oprești doar dacă ai nevoie de ceva ce numai eu îți pot da — o parolă,
    un cod, o plată, o acțiune fizică — sau dacă nu mai poți trece pe plan.
-   Dificultatea nu e o oprire. „Nu știu, îmi trebuie o decizie" nu e o oprire:
-   decizia e a mea doar dacă e întrebări de tip „privat sau public?".
+   Dificultatea nu e o oprire. «Nu știu, îmi trebuie o decizie» nu e o oprire:
+   decizia e a mea doar dacă e întrebări de tip «privat sau public?».
 ```
 
 ---
+
+## Versiunea scurtă, pentru un AI cu context mare
+
+```
+COMMIT autonom la fiecare succes măsurat, inclusiv pe modificările mele, fără
+să mă întrebi. PUSH doar când eu spun. Nu schimbi interfața. Nu ștergi nimic:
+muți în carantină cu motiv. Verifici push-ul cu git ls-remote. Nu ceri decizii
+tehnice, le iei tu.
+```
 
 ## De ce e formulat așa
 
@@ -75,30 +86,20 @@ PUSH = decizia mea, niciodată din inițiativa ta.
 | „interfața nu schimbi nimic" | rezolvări care strică ceea ce merge |
 | „nu ștergi, muți" | pierdere ireversibilă de conținut real |
 | „comitul străin nu e intrus" | defensivă împotriva unei simple scriături automate |
-| „întrebări de tip „privat sau public?"" | să-mi dai tu decizii tehnice pe care nu le înțeleg |
+| „întrebări de tip «privat sau public?»" | să-mi dai tu decizii tehnice pe care nu le înțeleg |
 
-## Versiunea scurtă, pentru un AI cu context mare
+## Ce vine înainte
 
-```
-COMMIT autonom la fiecare succes măsurat, inclusiv pe modificările mele, fără
-să mă întrebi. PUSH doar când eu spun. Nu schimbi interfața. Nu ștergi nimic:
-muți în carantină cu motiv. Verifici push-ul cu git ls-remote. Nu ceri decizii
-tehnice, le iei tu.
-```
+Dacă proiectul **nu are încă `.git`**, acest prompt nu e suficient. Trimite
+mai întâi `PROMPT git install.md` (skillul `git-install`), apoi revino aici.
+Invers, promptul de instalare n-are pe ce lucra.
 
-## Unde ajunge
+## Perechea, în archive
 
-| Loc | Ce e |
-|---|---|
-| `C:\Users\apviz\.minimax\agents\mavis\skills\mavis-git-autonom-skill\SKILL.md` | skillul viu, se încarcă automat |
-| `_SYSTEM\Skills\GIT-AUTONOM\SKILL.md` | același skill, în vault, pentru transfer |
-| `_SYSTEM\Skills\GIT-AUTONOM\Prompt Skill Git Autonom.md` | promptul de mai sus, de trimis altor instanțe |
-| `_SYSTEM\Skills\GIT-AUTONOM\Prompt Setup Git.md` | promptul de **instalare**, trimis **o singură dată**, înaintea celui de sus |
+`_SYSTEM\Skills\git-autonom\`
+├── `SKILL.md` ← skillul, se încarcă la fiecare treabă cu Git
+└── `PROMPT git autonom.md` ← acest document, pentru fiecare ședință
 
-Skillul se încarcă singur în toate proiectele. Promptul e pentru **celelalte**
-instanțe — Antígravity, Hermes, Gemini, orice AI cu care lucrezi pe alte
-repozitoare sau proiecte fără vault.
-
-**Ordinea, pentru o instanță nouă:** întâi `Prompt Setup Git.md` (ridică
-infrastructura), apoi `Prompt Skill Git Autonom.md` (regula de lucru). Invers, al
-doilea nu are pe ce lucra.
+`_SYSTEM\Skills\git-install\`
+├── `SKILL.md` ← skillul, se încarcă la proiect nou
+└── `PROMPT git install.md` ← instalarea, se trimite o singură dată
