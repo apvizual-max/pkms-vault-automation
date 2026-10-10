@@ -41,6 +41,12 @@
 # 4. logul viu: dovada ca poarta chiar merge, si cam de des
 !/raport-aliniere.log
 
+# 4a. logul plasei de siguranta pentru Changes. Se deschide la fel ca 4: sunt
+#     fiseiere la radacina, nu directoare, deci regula de deschidere e suficienta.
+#     Fara el, singura urma a salvarilor automate ar fi istoricul git — adica
+#     s-ar stinge tocmai atunci cand exista ceva de vazut.
+!/raport-autocomit.log
+
 # 4b. EXCEPTIE, masurata, nu presupunsa: skillurile fundamentale de administrare
 #     stau in _SYSTEM\Skills\, care altfel ramane inchis. _SYSTEM e inchis pentru
 #     ca e plin de artefacte derivate (arhive de indexe, resturi de unelte).
