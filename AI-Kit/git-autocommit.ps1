@@ -10,41 +10,159 @@
       - nu atinge hook-urile git — sunt globale pe mașină și aparțin altui
         mecanism (LiveReview); aici ar produce conflict
       - nu șterge nimic, nu face reset, nu face force push
-      - nu comită fișiere care par secrete
+      - nu comită fișiere care PAR secrete (nume) sau CARE CONȚIN secrete
+      - nu comită fișierele declarate în git-autocommit-ignorat.txt
       - nu comită un fișier scris acum puțin timp (timpul de „așezare"),
         ca să nu prindă o scriere la jumătate
 
     Coduri de ieșire:
-      0  curat, sau așteaptă așezarea, sau a făcut salvarea
-      1  refuzat: secrete în lista de comitat, sau comitul a eșuat
+      0  curat, sau așteaptă așezarea, sau a făcut salvarea, sau autoproba a trecut
+      1  refuzat: secrete, căi interzise, sau comitul a eșuat
       2  eroare de mediu: repo invalid, git indisponibil
+      3  autoproba a eșuat (o poartă care nu poate deveni roșie e decor)
+
+    Fișiere pereche:
+      git-autocommit-registru.txt  — câte o cale de repo pe rând
+      git-autocommit-ignorat.txt  — căi care NU se comită niciodată (wildcard)
 #>
 
 [CmdletBinding()]
 param(
     [string]$Repo,
     [int]$SettleSeconds = 60,
-    [switch]$CeVerificare
+    [switch]$CeVerificare,
+    [switch]$AutoProbe
 )
 
 $ErrorActionPreference = 'Stop'
 
-# --- unde stă registrul și logul ---------------------------------------------
 $registru = Join-Path $PSScriptRoot 'git-autocommit-registru.txt'
-$log     = Join-Path $PSScriptRoot 'raport-autocomit.log'
+$ignorat  = Join-Path $PSScriptRoot 'git-autocommit-ignorat.txt'
+$log      = Join-Path $PSScriptRoot 'raport-autocomit.log'
+
+# ---------------------------------------------------------------------------
+# PORTA DE SECRETE
+# ---------------------------------------------------------------------------
+
+# (a) pe NUME — cale, extensie sau fragment
+$secreteNume = '(?i)(\.env($|\.)|(^|[\\/])id_rsa|(^|[\\/])id_ed25519|\.pem$|\.pfx$|\.p12$|\.keystore$|(^|[\\/])credentials?($|\.|\[)|(^|[\\/])\.?netrc|(^|[\\/])secrets?($|[\\/.\[])|secret|token|password|passwd)'
+
+# (b) pe CONTINUT — forme care chiar arată material secret
+$secreteContinut = @(
+    '-----BEGIN [A-Z ]*PRIVATE KEY-----',
+    '-----BEGIN OPENSSH PRIVATE KEY-----',
+    'AKIA[0-9A-Z]{16}',
+    'ASIA[0-9A-Z]{16}',
+    'gh[pousr]_[A-Za-z0-9]{20,}',
+    'github_pat_[A-Za-z0-9_]{20,}',
+    'glpat-[A-Za-z0-9_\-]{20,}',
+    'sk-[A-Za-z0-9]{20,}',
+    'AIza[0-9A-Za-z_\-]{30,}',
+    'xox[baprs]-[A-Za-z0-9\-]{10,}',
+    '(?i)\b(password|passwd|secret|token|api[_-]?key|access[_-]?key|client[_-]?secret)\b\s*[:=]\s*["'']?[^\s"''<>$\{]{8,}'
+)
+
+# extensii peste care nu citim conținutul (binare / prea mari)
+$binare = '\.(png|jpe?g|gif|webp|bmp|ico|svg|pdf|zip|7z|rar|gz|bz2|xz|tar|exe|dll|so|dylib|mp3|mp4|wav|avi|mov|mkv|docx?|xlsx?|pptx?|ttf|otf|woff2?|db|sqlite|psd|ai|sketch)$'
+
+# ZONE ORBE DECLARATE.
+# Un detector conține, prin definiție, tiparele pe care le caută — altfel
+# n-ar putea să le caute. Deci poarta nu se poate scanda pe ea însăși.
+# Excepția e NOUMITĂ, nu ascunsă, și numărul ei ajunge în mesajul de comit,
+# ca oricine citește istoricul să vadă ce a fost necăutat.
+$exceptiiDefinire = @(
+    'AI-Kit/git-autocommit.ps1',
+    'AI-Kit/git-autocommit-ignorat.txt'
+)
+
+$citireMaxOcteti = 512000
+
+function Test-ContinutSecret {
+    <#
+      Întoarce lista de motive pentru care un fișier e suspect.
+      Fișier lipsă, binar sau prea mare -> lista goala (nu e verdict de
+      curățenie, e verdict de «nu am putut citi»; asta se spune în log).
+    #>
+    param([string]$Full)
+
+    $motive = New-Object System.Collections.Generic.List[string]
+
+    if (-not (Test-Path -LiteralPath $Full)) { return $motive }
+    $it = Get-Item -LiteralPath $Full
+    if ($it.PSIsContainer) { return $motive }
+    if ($it.Name -match $binare) { return $motive }
+    if ($it.Length -eq 0) { return $motive }
+    if ($it.Length -gt $citireMaxOcteti) { return $motive }
+
+    $raw = $null
+    try { $raw = [System.IO.File]::ReadAllText($Full) } catch { return $motive }
+    if ([string]::IsNullOrEmpty($raw)) { return $motive }
+
+    # nul = binar deghizat
+    if ($raw.IndexOf([char]0) -ge 0) { return $motive }
+
+    foreach ($t in $secreteContinut) {
+        if ($raw -match $t) {
+            $nume = ([regex]::Match($t, '\(\?i\)|-----BEGIN \[[^\]]+\]|AKIA|gh[pousr]_|glpat-|sk-|AIza|xox\[[^\]]+\]')).Value
+            $motive.Add(('continut: ' + ($(if ($nume) { $nume } else { 'tipar' }))))
+            break
+        }
+    }
+    return $motive
+}
 
 function Scrie-Log([string]$msg) {
+    # Add-Content NU garantează rând nou înaintea primei scrieri pe fișier
+    # nou; de aceea verificăm explicit sfârșitul, nu doar existentă.
+    $prefix = ''
     if (Test-Path -LiteralPath $log) {
-        $t = Get-Content -LiteralPath $log -Raw -Encoding UTF8
-        if ($null -ne $t -and $t.Length -gt 0 -and -not $t.EndsWith("`n")) {
-            $t = $t + "`r`n"
-        }
-    } else { $t = '' }
-    $linie = '[' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + '] ' + $msg
+        $t = [System.IO.File]::ReadAllText($log)
+        if ($t.Length -gt 0 -and -not ($t.EndsWith("`n"))) { $prefix = "`r`n" }
+    }
+    $linie = $prefix + '[' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + '] ' + $msg
     Add-Content -LiteralPath $log -Value $linie -Encoding UTF8
 }
 
-# --- repo-urile de supraveghat -----------------------------------------------
+# ---------------------------------------------------------------------------
+# AUTOPROBA — o poartă care nu poate deveni ROȘIE e decor, nu poartă.
+# Fiecare caz pozitiv trebuie să ardă; un caz negativ nu trebuie să ardă.
+# ---------------------------------------------------------------------------
+if ($AutoProbe) {
+    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('acprobe-' + [guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Path $tmp -Force | Out-Null
+    $cazuri = @(
+        @{ n = 'PEM privat';        c = "-----BEGIN RSA PRIVATE KEY-----`nMIIEow=="; a = $true },
+        @{ n = 'cheie AWS';        c = 'AKIAIOSFODNN7EXAMPLE';                            a = $true },
+        @{ n = 'token GitHub';     c = 'ghp_0123456789abcdefghijABCDEFGHIJ';               a = $true },
+        @{ n = 'parola atribuita'; c = 'password = "Str0ng-SecreT!"';                     a = $true },
+        @{ n = 'api_key atribuita';c = 'api_key: abcd1234efgh5678';                        a = $true },
+        @{ n = 'text oarecare';    c = "nu comita asta`n";                                a = $false },
+        @{ n = 'README curat';     c = "# Documentatie`nFoloseste tokenul din vault.";    a = $false },
+        @{ n = 'cod fara secret';  c = 'function Get() { return password.Length; }';      a = $false }
+    )
+    $ars = 0; $pica = 0
+    foreach ($c in $cazuri) {
+        $f = Join-Path $tmp (($c.n -replace '\s', '_') + '.txt')
+        [System.IO.File]::WriteAllText($f, $c.c, (New-Object System.Text.UTF8Encoding($false)))
+        $m = Test-ContinutSecret -Full $f
+        $ars = if ($m.Count -gt 0) { $true } else { $false }
+        if ($ars -eq [bool]$c.a) {
+            $pica++
+            Write-Output ('AUTOPROBA: TRECUT  ' + $c.n + '  (așteptat ardere=' + $c.a + ')')
+        } else {
+            Write-Output ('AUTOPROBA: PICAT   ' + $c.n + '  (așteptat ardere=' + $c.a + ', real=' + $ars + ') motive=' + (($m | Select-Object -First 2) -join ','))
+        }
+    }
+    # control de sensibilitate: cazul pozitiv TREBUIE să ardă, altfel
+    # poarta e goală și trece tot ce-i dăm
+    Write-Output ('AUTOPROBA: ' + $pica + '/' + $cazuri.Count + ' cazuri')
+    if ($pica -eq $cazuri.Count) { Write-Output 'AUTOPROBA: POARTA DE SECRETE POATE DEVENI ROȘIE'; exit 0 }
+    exit 3
+}
+
+# ---------------------------------------------------------------------------
+# repo-ul de supraveghat
+# ---------------------------------------------------------------------------
 if ([string]::IsNullOrWhiteSpace($Repo)) {
     $Repo = $null
     if (Test-Path -LiteralPath $registru) {
@@ -82,8 +200,7 @@ try {
         exit 0
     }
 
-    # --- poarta 1: secrete -----------------------------------------------------
-    $secrete = '(\.env($|\.)|(^|[\\/])id_rsa|(^|[\\/])id_ed25519|\.pem$|\.pfx$|\.p12$|(^|[\\/])credentials?($|\.|\[)|secret|token|password)'
+    # --- lista căilor candidate ----------------------------------------------
     $cai = New-Object System.Collections.Generic.List[string]
     foreach ($linie in $raw) {
         $p = $linie.Substring(3).Trim()
@@ -91,14 +208,61 @@ try {
         $p = $p.Trim('"')
         $cai.Add($p)
     }
-    $periculoase = $cai | Where-Object { $_ -match $secrete }
-    if ($periculoase) {
-        Scrie-Log ('REFUZAT ' + $periculoase.Count + ' cale(s) cu posibile secrete: ' + (($periculoase | Select-Object -First 5) -join ' | '))
-        Write-Output ('AUTOCOMIT: REFUZAT — posibile secrete: ' + (($periculoase | Select-Object -First 5) -join ' | '))
+
+    # Căile care EXISTĂ acum pe disc. O ștergere nu e o cale cu secrete:
+    # portile au rost doar pe ce urmează să intre în istoric.
+    $caiNoi = New-Object System.Collections.Generic.List[string]
+    foreach ($c in $cai) {
+        if (Test-Path -LiteralPath (Join-Path $Repo $c)) { $caiNoi.Add($c) }
+    }
+
+    # --- poarta 1: secrete pe NUME -------------------------------------------
+    $periculoase = @($caiNoi | Where-Object { $_ -match $secreteNume })
+    if ($periculoase.Count -gt 0) {
+        Scrie-Log ('REFUZAT ' + $periculoase.Count + ' cale(s) cu secrete în NUME: ' + (($periculoase | Select-Object -First 5) -join ' | '))
+        Write-Output ('AUTOCOMIT: REFUZAT — secrete în nume: ' + (($periculoase | Select-Object -First 5) -join ' | '))
         exit 1
     }
 
-    # --- poarta 2: timpul de așezare ------------------------------------------
+    # --- poarta 2: secrete pe CONTINUT ---------------------------------------
+    $gasite = New-Object System.Collections.Generic.List[string]
+    $citite = 0; $sarite = 0; $exceptate = 0
+    foreach ($c in $caiNoi) {
+        $full = Join-Path $Repo $c
+        if (-not (Test-Path -LiteralPath $full)) { continue }
+        $it = Get-Item -LiteralPath $full
+        if ($it.PSIsContainer) { continue }
+        if ($exceptiiDefinire -contains ($c -replace '\\','/')) { $exceptate++; continue }
+        if ($it.Name -match $binare -or $it.Length -gt $citireMaxOcteti) { $sarite++; continue }
+        $citite++
+        $m = Test-ContinutSecret -Full $full
+        if ($m.Count -gt 0) { $gasite.Add($c + ' [' + (($m | Select-Object -First 1)) + ']') }
+    }
+    if ($gasite.Count -gt 0) {
+        Scrie-Log ('REFUZAT ' + $gasite.Count + ' cale(s) cu secrete în CONTINUT: ' + (($gasite | Select-Object -First 5) -join ' | '))
+        Write-Output ('AUTOCOMIT: REFUZAT — secrete în conținut: ' + (($gasite | Select-Object -First 5) -join ' | '))
+        exit 1
+    }
+
+    # --- poarta 3: căi declarate INTERZISE -----------------------------------
+    if (Test-Path -LiteralPath $ignorat) {
+        $reguli = @(Get-Content -LiteralPath $ignorat -Encoding UTF8 |
+                    Where-Object { -not [string]::IsNullOrWhiteSpace($_) -and -not $_.Trim().StartsWith('#') } |
+                    ForEach-Object { $_.Trim() })
+        $interzise = New-Object System.Collections.Generic.List[string]
+        foreach ($c in $caiNoi) {
+            foreach ($r in $reguli) {
+                if ($c -like $r) { $interzise.Add($c); break }
+            }
+        }
+        if ($interzise.Count -gt 0) {
+            Scrie-Log ('REFUZAT ' + $interzise.Count + ' cale(s) declarate interzise: ' + (($interzise | Select-Object -First 5) -join ' | '))
+            Write-Output ('AUTOCOMIT: REFUZAT — căi interzise: ' + (($interzise | Select-Object -First 5) -join ' | '))
+            exit 1
+        }
+    }
+
+    # --- poarta 4: timpul de așezare ------------------------------------------
     $prag = (Get-Date).AddSeconds(-1 * $SettleSeconds)
     $nestabilite = New-Object System.Collections.Generic.List[string]
     foreach ($c in $cai) {
@@ -116,6 +280,7 @@ try {
     $arata = ($cai | Select-Object -First 3) -join ', '
     if ($cai.Count -gt 3) { $arata = $arata + ', ...' }
     $mesaj = 'Salvare automata: ' + $cai.Count + ' cale(i) modificate — ' + $arata
+    $mesaj = $mesaj + ' [porti: nume 0, continut ' + $citite + ', sarite-binar ' + $sarite + ', exceptie-definire ' + $exceptate + ']'
 
     if ($CeVerificare) {
         Write-Output ('AUTOCOMIT: [verificare] ar comita ' + $cai.Count + ' cale(i)')

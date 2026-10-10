@@ -1,1 +1,5 @@
 ﻿[2026-10-10 22:51:52] OK 1929be5 — Salvare automata: 4 cale(i) modificate — .gitignore, AI-Kit/_prob\304\203-autocomit.txt, AI-Kit/git-autocommit-registru.txt, ...
+[2026-10-10 22:52:23] OK b1ce49b — Salvare automata: 3 cale(i) modificate — AI-Kit/_prob\304\203-autocomit.txt, AI-Kit/_config-uit.txt, AI-Kit/raport-autocomit.log
+[2026-10-10 22:55:41] REFUZAT 1 cale(s) cu secrete în CONTINUT: AI-Kit/git-autocommit.ps1 [continut: -----BEGIN [A-Z ]]
+[2026-10-10 22:56:24] REFUZAT 1 cale(s) declarate interzise: AI-Kit/_proba-poarta3.txt
+[2026-10-10 22:56:32] REFUZAT 1 cale(s) cu secrete în CONTINUT: AI-Kit/notite-personale.txt [continut: tipar]

@@ -1,0 +1,14 @@
+# git-autocommit-ignorat.txt
+# Căi pe care plasa de siguranță NU le comită niciodată.
+#
+# De ce există acest fișier, separat de poarta de secrete:
+# o poartă automată poate recunoaște o CHEIE (nume sau conținut).
+# Nu poate recunoaște o INTENȚIE. Un fișier al cărui nume și conținut
+# sunt amândoi inocue, dar care spune "nu comita asta" înăuntru,
+# este opac pentru orice automat. Singura formă corectă e declarația
+# explicită de mai jos.
+#
+# Format: câte o linie, cale relativă la rădăcina repo-ului,
+# wildcard PowerShell (-like). Liniile goale și cele cu # se ignoră.
+
+AI-Kit/_*
