@@ -41,11 +41,20 @@
 # 4. logul viu: dovada ca poarta chiar merge, si cam de des
 !/raport-aliniere.log
 
-# 4a. logul plasei de siguranta pentru Changes. Se deschide la fel ca 4: sunt
-#     fiseiere la radacina, nu directoare, deci regula de deschidere e suficienta.
-#     Fara el, singura urma a salvarilor automate ar fi istoricul git — adica
-#     s-ar stinge tocmai atunci cand exista ceva de vazut.
-!/raport-autocomit.log
+# 4a. LOGUL PLASEI — INCHIS, masurat, nu presupunsa. (2026-10-11)
+#     Regula precedenta deschidea /raport-autocomit.log, o cale care NU EXISTA:
+#     logul sta in AI-Kit\. Trei consecinte, toate masurate:
+#       1. regula era MOARTA — nu se potrivea cu nimic;
+#       2. logul intra in git prin !/AI-Kit/** de la linia 25, deci nu era
+#          protejat de nimic;
+#       3. plasa s-a comitat PE EA INSASI, la 5 minute, in bucla: 55 de
+#          comituri consecutive, fiecare cu doar raport-autocomit.log, intre
+#          13:11 si 17:46 pe 2026-10-11. Scrie o intrare, intrarea schimba
+#          fisierul, fisierul schimbat se comita din nou.
+#     Corect: logul ramane pe disc, LOCAL, si nu intra in istoric. Nu se
+#     pierde nimic — el ramane in AI-Kit\raport-autocomit.log, unde omul il
+#     citeste. Istoricul git nu e locul unei urme care se rescrie singura.
+/AI-Kit/raport-autocomit.log
 
 # 4b. EXCEPTIE, masurata, nu presupunsa: skillurile fundamentale de administrare
 #     stau in _SYSTEM\Skills\, care altfel ramane inchis. _SYSTEM e inchis pentru
