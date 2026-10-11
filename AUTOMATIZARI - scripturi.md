@@ -464,7 +464,7 @@ Plasa răspunde la asta **fără să atingă interfața**: comită singur.
 |---|---|
 | `AI-Kit\git-autocommit-registru.txt` | repo-ul de supravegheat, o cale pe rând |
 | `AI-Kit\git-autocommit-ignorat.txt` | căi care nu se comită niciodată (wildcard) |
-| `AI-Kit\raport-autocomit.log` | urma fiecărui eveniment — scris **doar la eveniment** |
+| `AI-Kit\raport-autocomit.log` | urma fiecărui eveniment — scris **doar la eveniment**. **NU intră în git** (măsurat 2026-10-11) |
 
 **Cele patru porți, în ordine:** secrete pe **nume** → secrete pe **conținut** → căi
 **interzise** → **timp de așezare** (implicit 60 s, ca să nu prindă o scriere la jumătate).
@@ -502,6 +502,33 @@ pushul rămâne decizia lui Alex. Cum se oprește:
 ```powershell
 Unregister-ScheduledTask -TaskName 'PKMS-GitAutoCommit' -Confirm:$false
 ```
+
+
+### De ce logul plasei NU intră în git
+
+Măsurat pe 2026-10-11, pe istoricul real al repo-ului: **55 de comituri consecutive**,
+fiecare conținând doar `AI-Kit\raport-autocomit.log`, între 13:11 și 17:46. Cauza nu era
+o greșeală de logică, ci o consecință: plasa scrie o intrare în log → intrarea schimbă
+fișierul → fișierul schimbat apare ca „modificat" la următoarea rundă → plasa îl comită.
+
+Logul **rămâne pe disc**, unde omul îl citește. Nu se pierde nimic; se doar mută lucrul
+care se rescrie singur în afara istoricului, care e locul lucrurilor care nu se schimbă.
+
+Două greșeli de-aici au fost și ele ale mele, închise laolaltă:
+
+1. **Regula `.gitignore` deschidea o cale care nu există** (`/raport-autocomit.log`),
+   pentru că logul mutase în `AI-Kit\`. Era o regulă **moartă**. Logul intra oricum în
+   git prin deschiderea `!/AI-Kit/**`.
+2. **Fixul de urgență a fost greșit, deși oprea bucla.** Logul a fost adăugat în
+   `git-autocommit-ignorat.txt` — adică în lista de căi *interzise*. Orice rundă s-ar
+   fi oprit cu „REFUZAT", deci **plasa nu ar mai comita nimic, niciodată**. Un refuz care
+   blochează tot sistemul nu e o reparare, e o oprire.
+
+Corectul e la nivelul corect: logul este **ignorat de git**, nu interzis de plasa. O
+cale interzisă oprește tot; o cale ignorată de git pur și simplu nu mai ajunge în `status`.
+
+Proba, în ambele sensuri: prima rundă a salvat cele 3 fișiere reale, iar **a doua rundă
+a răspuns „curat, nimic de facut"** — deși logul tocmai fusese scris. Acolo se închide bucla.
 
 ### Regula de blocaj: mutex, nu fișier-pid
 
