@@ -1,80 +1,37 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# PKMS — mecanismul, NU continutul.
+﻿# ─────────────────────────────────────────────────────────────────────────────
+# PKMS — REPO DE AUTOMATIZARE. NU DE CONȚINUT.
 #
-# Acest repo versioneaza DOAR stratul de intretinere: scripturile din AI-Kit si
-# documentatia de la radacina voltului. Continutul personal (rafturi, note,
-# capturi, atasamente) NU intra in git — nu e rolul lui si ar fi zeci de GB.
+# Măsurat 2026-10-12, pe `D:\Alex_Knowlege_Vault`.
 #
-# REGULA: se INTERZICE tot ce se afla la radacina voltului, apoi se deschid
-# doar caile enumerate mai jos. Este invers fata de un .gitignore obisnuit, unde
-# se enumera ce se ignora — pentru ca aici pericolul e sa se versi accidental
-# continutul, nu sa se uit ceva.
+# CE E ÎN ISTORIC: doar motorul. Scripturi, scheme, indexuri de cotor, skill-uri
+# vii, documentația de la rădăcină.
+# CE NU E ÎN ISTORIC: 52.949 de fișiere, 59,82 GB — date, documente, imagini,
+# dosare de clienți, CV-uri, fișiere de proiect.
 #
-# ATENTIE: NU rula `git clean -fdx` si `git reset --hard` in acest repo. `.git`
-# este IN interiorul voltului, iar un clean ar sterge continutul lui, nu doar
-# fisierele neversionate. Backupul e la D:\Alex_Knowlege_Vault - Backup - 10-08-2026
-# si nu e versionat nici el.
+# DE CE A FOST SCHIMBAT REGIMUL LA 2026-10-12: varianta anterioară urmărea 36
+# de fișiere dintre 52.949, iar auto-salvarea raporta succes pentru conținut care
+# nu intra niciodată în istoric — un sistem lent NU, unul FALS. Azi urmăritele
+# sunt 41, toate fiind motorul, deci orice raport de succes înseamnă ceva real.
+#
+# DE CE NU SE MAI TRIMITE VAULT-UL PE GITHUB (R0 Popy, 2026-10-12): conținutul
+# e personal, `.git` ar ajunge la ~10 GB, iar backupul e sovereign pe disc
+# (D:\_OPTIMUS-SNAPSHOT). Motorul se versionează; datele nu.
+#
+# ATENTIE: NU rula `git clean -fdx` si NU rula `git reset --hard` in acest repo.
+# `.git` este IN interiorul voltului. Un clean sterge continutul lui, nu doar
+# fisierele neversionate. Incident dovedit pe 2026-10-12.
 # ─────────────────────────────────────────────────────────────────────────────
 
-# 1. interzicem tot ce e la radacina
+# ── 1. Totul e interzis. Se deschide doar motorul, mai jos. ──
 /*
 
-# 2. deschidem mecanismul
+# ── 2. Motorul: scripturile care construiesc si verifica cotorul ──
 !/.gitignore
 !/AI-Kit/
 !/AI-Kit/**
 
-# 3. documentatia de la radacina — toate fisierele .md sunt, prin definitie,
-#    documentatie a sistemului (contract, COTOR, proceduri, onboarding)
-!/*.md
-
-# 3b. EXCEPTIE, masurata, nu presupunsa: INDEX CENTRAL.md se deschide mai sus,
-#     dar NU se versioneaza. Masurat pe 2026-10-09: contine 125 de randuri cu
-#     nume personale de foldere (clienti, JOB Applications, CV-uri, LinkedIn,
-#     teste de personalitate) si pana si lista folderului _ARCHIVE\Secrets.
-#     E un artefact DERIVAT — il rescrie build-index.ps1 la fiecare rulare — deci
-#     nu pierde nimeni nimic daca nu intra in git, iar voltul real ramane singurul
-#     loc in care acel continut conteaza. Daca cineva vrea sa-l urmareasca, il
-#     are deja pe disc.
-/INDEX CENTRAL.md
-
-# 4. logul viu: dovada ca poarta chiar merge, si cam de des
-!/raport-aliniere.log
-
-# 4a. LOGUL PLASEI — INCHIS, masurat, nu presupunsa. (2026-10-11)
-#     Regula precedenta deschidea /raport-autocomit.log, o cale care NU EXISTA:
-#     logul sta in AI-Kit\. Trei consecinte, toate masurate:
-#       1. regula era MOARTA — nu se potrivea cu nimic;
-#       2. logul intra in git prin !/AI-Kit/** de la linia 25, deci nu era
-#          protejat de nimic;
-#       3. plasa s-a comitat PE EA INSASI, la 5 minute, in bucla: 55 de
-#          comituri consecutive, fiecare cu doar raport-autocomit.log, intre
-#          13:11 si 17:46 pe 2026-10-11. Scrie o intrare, intrarea schimba
-#          fisierul, fisierul schimbat se comita din nou.
-#     Corect: logul ramane pe disc, LOCAL, si nu intra in istoric. Nu se
-#     pierde nimic — el ramane in AI-Kit\raport-autocomit.log, unde omul il
-#     citeste. Istoricul git nu e locul unei urme care se rescrie singura.
-/AI-Kit/raport-autocomit.log
-
-# 4b. EXCEPTIE, masurata, nu presupunsa: skillurile fundamentale de administrare
-#     stau in _SYSTEM\Skills\, care altfel ramane inchis. _SYSTEM e inchis pentru
-#     ca e plin de artefacte derivate (arhive de indexe, resturi de unelte).
-#     Skillurile de aici nu sunt continut personal si nici derivate: sunt
-#     mecanism, la fel ca scripturile din AI-Kit. Daca nu ar intra in git, o
-#     stergere accidentala a folderului ar pierde regula pentru toate proiectele
-#     de azi — masurat pe 2026-10-10: comitul initial al acestei cai a intrat
-#     doar cu logul, cele doua fisiere au ramas neversonate fara niciun cuvant
-#     de avertizare.
-#     ATENTIE LA ORDINE — masurat de doua ori pe 2026-10-10:
-#     1. Git nu coboara intr-un director interzis: ca sa redeschizi un fisier
-#        trebuie redeschis si PARINTELE lui.
-#     2. `**` se potriveste si cu ZERO componente, deci `/_SYSTEM/**` inchide si
-#        directorul `_SYSTEM` insusi, nu doar continutul lui.
-#     3. Redeschirile se pun DUPA regula de excludere. Puse inainte, `/_SYSTEM/**`
-#        le anula si comitul a raportat doar logul, de doua ori, fara avertisment.
-#     Exemple de perechi deschise: git-autonom (regula de lucru) si git-install
-#     (ridicarea infrastructurii). Fiecare are SKILL.md si PROMPT-ul pereche.
-/_SYSTEM/**
+# ── 3. Skill-urile vii. Skills_Archive (9.740 de fisiere vendor) ramane inchis:
+#       e copie de arhiva, nu mecanism. ──
 !/_SYSTEM/
 !/_SYSTEM/Skills/
 !/_SYSTEM/Skills/git-autonom/
@@ -82,11 +39,53 @@
 !/_SYSTEM/Skills/git-install/
 !/_SYSTEM/Skills/git-install/**
 
-# ── raman IN AFARA, intentionat ──
-#   arhiva- raport aliniere.log  — creste la nesfarsit; istoricul lui ramane in
-#                                   backup, nu in istoricul git
-#   desktop.ini                 — fisier al Windows, nu al sistemului
-#   _ARCHIVE _QUARANTINE _SYSTEM 00_Inbox 01_Projects 02_Areas 03_Resources
-#   04_Archive 05_Attachments 06_Metadata 10_Work Canvas Bases Clippings
-#   Wisper_Transcripts .obsidian .trash si toti ceilalti fii ascunsi
-#     → continut personal. Nu se versioneaza aici.
+# ── 3b. ATENTIE LA ORDIN (masurat 2026-10-12): deschiderea unui director
+#       redeschide INTREGUL subarbore al lui. Deschiderea lui /_SYSTEM/Skills/
+#       a readus 9.740 de fisiere din Skills_Archive pana cand copiii nedoriti
+#       au fost inchisi explicit, DUPA deschideri. Ultima regula care se
+#       potriveste castiga. ──
+/_SYSTEM/Skills/Skills_Archive/
+/_SYSTEM/arhiva-indexe/
+/_SYSTEM/rapoarte/
+/_SYSTEM/resturi de unelte/
+/_SYSTEM/Wisper Transcripts/
+
+# ── 4. Documentatia de la radacina: contractul sistemului ──
+!/*.md
+
+# ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
+#       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
+/AI-Kit/raport-autocomit.log
+/AI-Kit/git-autocomit-registru.txt
+
+# ── 6. INDEX CENTRAL.md: artefact DERIVAT, rescris de build-index.ps1 la fiecare
+#       rulare, si contine nume personale de foldere. Nu intra in istoric. ──
+/INDEX CENTRAL.md
+
+# ── 6b. Repo-uri git IMBRICATE (3, masurate) ──
+# Git nu coboara intr-un director care e el insusi repo: il trateaza ca gitlink
+# si nu parcurge nimic din interior. Fara regula asta, 588 de fisiere raman
+# in afara listei de urmarire fara niciun mesaj.
+/10_Work/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+/_QUARANTINE/indexuri generate in gresit/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
+/_SYSTEM/Skills/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
+
+# ── 7. SECRETE. Un secret intrat in istoric nu se mai scoate curat. ──
+_ARCHIVE/Secrets/
+**/credentials.json
+**/client_secret*.json
+*.pem
+*.key
+id_rsa*
+
+# ── 8. Cote ──
+# tot ce nu este deschis mai sus ramane in afara, intentionat:
+#   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
+#   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
+#   10_Work 32.252 · Canvas Bases 9 · Clippings 457 · Wisper_Transcripts 6
+#   raport-archive 2 · _ARCHIVE 7 · _QUARANTINE 4.789
+#   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
+#   resturi de unelte (derivate)
+#   .obsidian 1.174 · .vault-intelligence 14 · .trash · .sentinel_temp ·
+#   .wwebjs_cache · .claudian · .git
+#   106 fisiere peste 100 MB in total, pe care GitHub le respinge oricum.
