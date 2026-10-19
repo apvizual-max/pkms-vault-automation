@@ -30,6 +30,26 @@
 !/AI-Kit/
 !/AI-Kit/**
 
+# ── 2b. MOTORUL LA CALEA NOUA, masurat 2026-10-19. AI-Kit a urcat in
+#       02_Areas\02_2-AI-SOT\, iar .gitignore deschidea in continuare doar
+#       /AI-Kit/ de la radacina — cale care nu mai exista. Rezultat: TOATE cele
+#       11 scripturi, contractul si documentatia au devenit INVIZIBILE pentru git,
+#       deci plasa de siguranta nu mai veghea motorul pe care ea insasi il apara.
+#
+#       ATENTIE — REGULA 3b, APLICATA INTAIA DATA LA RAMURA 02_Areas.
+#       Prima incercare a fost doar `!/02_Areas/` + coborare pe strigate. Probe:
+#       `git add -A` trecea la 166 de fisiere, cu CV-uri, diplome, Certificate
+#       Google si documente de client. Fiecare deschidere de pe drum redeschide
+#       INTREGUL subarbore al acelui director, deci dupa deschideri trebuie
+#       INCHISE explicit fratii. Inchiderile sunt la 3e, mai jos. ──
+!/02_Areas/
+!/02_Areas/02_2-AI-SOT/
+!/02_Areas/02_2-AI-SOT/AI-Kit/
+!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/
+!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/**
+!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/
+!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/**
+
 # ── 3. Skill-urile vii. Arhiva vendor ramane inchisa:
 #       e copie de arhiva, nu mecanism.
 # ── MUTARE 2026-10-19: skillurile vii NU mai sunt la /_SYSTEM/Skills/, ci la
@@ -64,6 +84,29 @@
 # ── 3c. Inchiderea arhivei vendor pe NOUA cale, DUPA deschideri (regula 3b).
 #       Fara asta, /_SYSTEM/Skills_MASTER_Folder/ ramane deschis prin regula 3. ──
 /_SYSTEM/Skills_MASTER_Folder/_Skills_BackUp_Archive_2026-07-15/
+# ── 3d. Logul plasei, la calea noua. Inchis DUPA deschiderea 2b (regula 3b).
+#       Era inchis doar la calea veche /AI-Kit/raport-autocomit.log. ──
+/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/raport-autocomit.log
+/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/raport-aliniere.log
+/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/arhiva- raport aliniere.log
+
+# ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
+#       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu
+#       devina o gaura. Stergerea unuia din ele trebuie probata cu `git add -An`
+#       si cu cifra: 2.796 de fisiere NU trebuie sa intre in istoric. ──
+/02_Areas/00_INDEX.md
+/02_Areas/02_1-ALEX-SOT/
+/02_Areas/02_5-SCIENCE-SOT/
+/02_Areas/02_2-AI-SOT/SKILLS - SOT Folder/
+/02_Areas/02_2-AI-SOT/Hermes_GNotebook-COMS/
+/02_Areas/02_2-AI-SOT/AI Chats/
+/02_Areas/02_2-AI-SOT/Archive/
+/02_Areas/02_2-AI-SOT/AI Scripts/
+/02_Areas/02_2-AI-SOT/Mem Instructions - SOT folder/
+/02_Areas/02_2-AI-SOT/Wisper_Transcripts/
+/02_Areas/02_2-AI-SOT/GORDON - Docker AI/
+/02_Areas/02_2-AI-SOT/OpenWisper AI - Transcripts/
+/02_Areas/02_2-AI-SOT/00_INDEX.md
 
 # ── 4. Documentatia de la radacina: contractul sistemului ──
 !/*.md

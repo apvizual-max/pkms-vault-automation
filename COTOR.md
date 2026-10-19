@@ -2,9 +2,15 @@
 
 **Scheletul voltului.** Tot ce urmează pleacă de aici.
 
-Ultima actualizare: **8 octombrie 2026**. 50.970 de fișiere de lucru · 59,01 GB.
-Backupul e alături voltului, pe `D:` — neatins, se citește doar.
+Ultima actualizare: **19 octombrie 2026**. 50.198 de fișiere · 7.254 de foldere · 86,26 GB.
+Voltul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
+Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 **Calea lui nu se scrie tare nicăieri:** o descoperă `AI-Kit\paths.ps1`.
+
+> **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici voltul, nici backupul. Ce a rămas pe
+> `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
+> **lucrezi** a fost `10_Work` și acum e **`01_Projects`** — același volum, redenumit;
+> **backupul** a fost lângă volt pe `D:` și acum e pe **`H:`**.
 
 ---
 
@@ -12,11 +18,11 @@ Backupul e alături voltului, pe `D:` — neatins, se citește doar.
 
 | Cuvânt | Ce înseamnă aici | Nu e |
 |---|---|---|
-| **volt** | `D:\Alex_Knowlege_Vault` — singurul loc unde se lucrează | — |
-| **backup** | copia de pe `D:\`, **imutabilă**. Citește, copiază din ea. Nu scrie niciodată | nu e raft |
+| **volt** | `G:\My Drive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
+| **backup** | copia de pe `H:`, **imutabilă**. Citește, copiază din ea. Nu scrie niciodată | nu e raft |
 | **bază** | nivelul `00`–`06` (7 baze). Rămâne neatins, ca un fond de bibliotecă | nu e locul de lucru |
-| **Work** | `10_Work` — singurul nivel în care intri ca să lucrezi | nu e o bază |
-| **raft** | un folder din `10_Work`, pe un subiect de muncă | — |
+| **proiect** | `01_Projects` — singurul nivel în care intri ca să lucrezi | nu e o bază |
+| **raft** | un folder din `01_Projects`, pe un subiect de muncă | — |
 | **cotor** | documentația asta: tot sistemul pe un fir | — |
 | **index** | `00_INDEX.md` într-un folder: ce conține, în cuvinte | — |
 | **carantină** | `_QUARANTINE` — nimic nu se șterge, totul ajunge aici | nu e coș de gunoi |
@@ -26,94 +32,123 @@ Backupul e alături voltului, pe `D:` — neatins, se citește doar.
 ## Cele două niveluri
 
 ```
-D:\Alex_Knowlege_Vault\
+G:\My Drive\GDrive-Second_Brain_PKMS\
 │
-├── 00 … 07          BAZA — fondul. Nu se modifică. Aici stă ce nu e treabă curentă.
+├── 00 … 06          BAZA — fondul. Nu se rearanjează. Aici stă ce nu e treabă curentă.
 │
-├── 10_Work          LUCRU — aici intri. 8 rafturi, pe ce lucrezi.
+├── 01_Projects      LUCRU — aici intri. A fost `10_Work` pe D:. 6 rafturi.
 │
 ├── Clippings        TAIE — e locul în care programele trimit ce taie, iar Obsidian
 │                   e programat să-l caute la rădăcină. De aceea **NU se mută**
 │                   în bază: la rădăcină e locul lui, oriunde ar ajunge Obsidian
 │                   să scrie.
 │
-├── COTOR + documentația din rădăcină    (fișierele *.md de aici)
+├── COTOR + INDEX CENTRAL + raport-archive     (fișierele *.md de aici)
 │
-├── AI-Kit           pachetul de predare pentru orice AI, fără memorie
-│
-├── _SYSTEM          unelte, biblioteci de programe, rest de programe
-├── _ARCHIVE         parole și lucruri scoase din calea deschisă
+├── _SYSTEM          unelte, biblioteci de programe, skill-uri vii, rest de programe
+├── _ARCHIVE         lucruri scoase din calea deschisă
 ├── _QUARANTINE      tot ce e neclar. Nimic nu se șterge.
 │
 └── .obsidian, .trash, .vault-intelligence, .claudian, ...   NU SE ATINGE
 ```
 
-**Regula de aur:** întrezi în `10_Work`. Nu cauți niciodată prin baza `00`–`06`.
+**Regula de aur:** întrezi în `01_Projects`. Nu cauți niciodată prin baza `00`–`06`.
+
+### Unde stă motorul
+
+| Ce | Unde | De ce acolo |
+|---|---|---|
+| `AI-Kit\AI-Kit_manual` | `02_Areas\02_2-AI-SOT\` | scripturile — **motorul** |
+| `AI-Kit\AI-Kit_guide` | `02_Areas\02_2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
+| skill-urile vii `git-autonom` / `git-install` | `_SYSTEM\Skills_MASTER_Folder\SENTINEL - git-*- Skill\` | copii vii, verificate prin SHA-256 |
+| `arhiva vendor` de skill-uri | `_SYSTEM\Skills_MASTER_Folder\_Skills_BackUp_Archive_2026-07-15\` | **închisă**, nu e motor |
+
+> **Rădăcina nu mai conține documentația, doar `COTOR.md`, `INDEX CENTRAL.md` și
+> `MANUAL DE NAVIGARE - cotor.md`.** Restul a fost mutat în `AI-Kit_guide`. Uneltele
+> trebuie să caute acolo, nu la rădăcină — altfel urlă pe fișiere care există.
 
 ---
 
 ## Rafturile de lucru
 
-Măsurate pe **8 octombrie 2026**, cu `AI-Kit\health-check.ps1`:
+Măsurate pe **19 octombrie 2026**:
 
-| Raft | Ce e | Fișiere |
+| Raft | Fișiere | GB |
 |---|---|---|
-| `10_Work\Clienti` | Knights Tempar (44,57 GB) + ZURLI | 1.214 |
-| `10_Work\Site` | tema Salient cumpărată + 27.689 imagini din 2010 | 29.748 |
-| `10_Work\Joburi` | mașina de aplicare, 94 de firme | 602 |
-| `10_Work\Casa` | Oglinda Casă | 484 |
-| `10_Work\Documentatie AI` | articole tăiate din web | 359 |
-| `10_Work\Sisteme AI` | AP-ID Systems, Optimus, Hermes, Google AI | 379 |
-| `10_Work\Personaj Sentinel` | ființa Sentinel | 147 |
-| `10_Work\In Progress` | ce e în mișcare acum | 65 |
+| `01_Projects\Work_Folder (to sort)` | 32.249 | 47,78 |
+| `01_Projects\AP-ID.ro - AI Branding Work and Clients` | 734 | 31,58 |
+| `01_Projects\Alex - AI Work - Colaborations` | 78 | 0,07 |
+| `01_Projects\FORGE - AI JOB Automation` | 7 | 0,00 |
+| `01_Projects\Arhiva Elements - To Monetize` | 0 | 0,00 |
+| `01_Projects\Arhiva Foto - To Monetize` | 0 | 0,00 |
 
-Total `10_Work`: **32.998 de fișiere.**
+Total `01_Projects`: **33.069 de fișiere · 79,44 GB.**
 
 > **O cifră vie e o obligație, o cifră statică e o minciună cu termen.**
-> Tabelul de mai sus e o fotografie, nu o sursă. Se schimbă la fiecare mutare și la
-> fiecare index generat. **Pentru cifra de azi rulează `AI-Kit\health-check.ps1`**,
-> care numără pe loc și tipărește `TOTAL:`. Nu edita cifrele aici după ureche —
-> rulează uneltă.
+> Tabelul de mai sus e o fotografie, nu o sursă. **Pentru cifra de azi rulează
+> `AI-Kit\health-check.ps1`**, care numără pe loc și tipărește `TOTAL:`. Nu edita cifrele
+> aici după ureche — rulează o unealtă.
 
-> **De ce două cifre diferite despre același lucru sunt amândouă adevărate.**
-> **La data de 2026-10-08, după ștergerile făcute azi dimineață:** `00_INDEX.md` —
-> **4.649** pe disc, din care **3.988** în `_QUARANTINE\indexuri generate in gresit\` →
-> **661 utile**.
-> (Înaintea ștergerilor de azi erau 4.681 pe disc și 693 utile — diferența e exact ce
-> s-a șters. **Cifra vie: se schimbă la fiecare ștergere și la fiecare rulare de
-> `align-index`.** Nu o copia într-un plan ca număr fix — **măsoară:**
-> ```powershell
-> (Get-ChildItem 'D:\Alex_Knowlege_Vault' -Filter '00_INDEX.md' -File -Recurse -Force).Count
-> (Get-ChildItem 'D:\Alex_Knowlege_Vault\_QUARANTINE\indexuri generate in gresit' -Filter '00_INDEX.md' -File -Recurse -Force).Count
-> ```
-> Primul minus al doilea = indexurile utile.)
-> Nu alege un singur număr: spune **cifra la care te referi** și spune cum se re-verifică.
+> **`Work_Folder (to sort)` e datoria, și e numele ei.** 32.249 de fișiere într-un singur
+> raft nesortat, adică **97,5% din tot volumul de lucru**. Nu e o rață, e o măsurătoare
+> care spune că raftul acesta nu a fost încă despărțit. Se numește așa deoarece știe că
+> e în așteptare, nu pentru că ar fi o cofăjenie.
 
 ---
 
 ## Baza — ce a rămas jos
 
-Măsurate pe **8 octombrie 2026**:
+Măsurate pe **19 octombrie 2026**:
 
-| Bază | Ce mai e acolo |
-|---|---|
-| `00_Inbox` | 23 fișiere + rafturi de primire |
-| `01_Projects` | 2 fișiere (proiectele active au urcat în `10_Work`) |
-| `02_Areas` | 779 fișiere · 6,4 GB — clienți rămași, CV, cercetare despre tine |
-| `03_Resources` | 914 fișiere · 921 MB — personalitate, inspirații, memorie |
-| `04_Archive` | 1.109 fișiere — copii de site-uri, nimic valoros |
-| `05_Attachments` | 1.196 imagini capturate de tine |
-| `06_Metadata` | 43 fișiere — ținte, șabloane, agenți |
+| Bază | Fișiere | GB | Ce mai e acolo |
+|---|---|---|---|
+| `00_Inbox` | 27 | 0,00 | rafturi de primire |
+| `01_Projects` | 33.069 | 79,44 | **proiectele active — aici se lucrează** |
+| `02_Areas` | 2.932 | 1,01 | `02_1-ALEX-SOT` 2.271 · `02_2-AI-SOT` 657 (AI-Kit, GORDON, transcripturi) · `02_5-SCIENCE-SOT` 3 |
+| `03_Resources` | 912 | 0,90 | personalitate, inspirații, memorie |
+| `04_Archive` | 11 | 0,00 | copiile de site-uri au urcat în `01_Projects` |
+| `05_Attachments` | 1.266 | 0,41 | imagini capturate de tine |
+| `06_Metadata` | 43 | 0,00 | ținte, șabloane, agenți |
+| `Clippings` | 457 | 0,37 | articole tăiate din web |
+
+> **`01_Projects` a absorbit `10_Work` și a crescut.** Pe 8 octombrie `10_Work` avea
+> 32.998 de fișiere; azi `01_Projects` are 33.069. Diferența e exact ce a mai venit.
+> Volumul a sărit de la 59,28 GB la **86,26 GB** — deci **+26,98 GB**, în principal
+> `AP-ID.ro` (31,58 GB) și `Work_Folder` (47,78 GB).
 
 ---
 
 ## Cele trei rafturi ale mașinii
 
+Măsurate pe **19 octombrie 2026**:
+
 | | Ce e | De ce există |
 |---|---|---|
-| `_SYSTEM` | 9.746 fișiere — biblioteci de programe, prompturi, rest de programe | nu-s ale tale, dar stau în volt ca să nu te împiedici |
-| `_ARCHIVE\Secrets` | 7 fișiere | parole, mutate **doar după nume**, conținutul nu s-a deschis niciodată |
-| `_QUARANTINE` | 4.165 fișiere | tot ce a fost neclar. **Aici decizi tu, nu eu** |
+| `_SYSTEM` | 5.442 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în volt ca să nu te împiedici |
+| `_ARCHIVE` | 11 fișiere · 0,13 GB | parole și lucruri scoase din calea deschisă |
+| `_QUARANTINE` | 4.774 fișiere · 3,16 GB | tot ce a fost neclar. **Aici decizi tu, nu eu** |
+
+---
+
+## Indexurile — cifrele de azi
+
+Măsurate pe **19 octombrie 2026**:
+
+| Ce | Câte |
+|---|---|
+| `00_INDEX.md` pe disc, în tot voltul | **4.665** |
+| din care în `_QUARANTINE` | **4.088** |
+| **utili, în afara carantinei** | **577** |
+| foldere eligibile fără index (`lint`) | **46** |
+
+> **Nu alege un singur număr: spune cifra la care te referi și spune cum se re-verifică.**
+> 4.665, 4.088 și 577 sunt toate trei adevărate despre trei lucruri diferite.
+> ```powershell
+> $v = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+> (Get-ChildItem $v -Filter '00_INDEX.md' -File -Recurse -Force).Count
+> (Get-ChildItem "$v\_QUARANTINE" -Filter '00_INDEX.md' -File -Recurse -Force).Count
+> ```
+> Primul minus al doilea = indexurile utile.
 
 ---
 
@@ -129,7 +164,7 @@ de `## Subfoldere`:
 
 **De unde provin, obligatoriu măsurate:** cele două tipuri de fișiere care domină folderul
 după număr, numărul rafturilor copil și numele lor, cel mai mare element din folder.
-Dacă numele folderului spune el însuși scopul, acesta se **citează**, nu se interpretează.
+Dacă numele folderului spune el însăși scopul, acesta se **citează**, nu se interpretează.
 `Cuvinte cheie` se iau numai din numele folderului, primele trei cuvinte cu valoare din
 numele celui mai mare fișier, și cele mai frecvente două extensii.
 
@@ -138,11 +173,10 @@ numele celui mai mare fișier, și cele mai frecvente două extensii.
 un folder care conține `node_modules` nu e, prin asta, dependent de Node. Nu se descrie
 conținutul fișierelor — doar nume, tipuri și numere.
 
-**Niciodată nu se suprascrie** rândul `**De ce e aici:**` scris de mână. Există **23** în
-`_QUARANTINE` (la data de 2026-10-08), fiecare cu un motiv real, scris de un om sau de
-un agent care a privit fișierul înainte să-l mute. Cifra e vie — se re-verifică cu
-`Select-String -Pattern '\*\*De ce e aici:\*\*'` pe `00_INDEX.md` din `_QUARANTINE`,
-fără arborele `indexuri generate in gresit\`.
+**Niciodată nu se suprascrie** rândul `**De ce e aici:**` scris de mână. Fiecare are un
+motiv real, scris de un om sau de un agent care a privit fișierul înainte să-l mute. Cifra
+e vie — se re-verifică cu `Select-String -Pattern '\*\*De ce e aici:\*\*'` pe `00_INDEX.md`
+din `_QUARANTINE`, fără arborele `indexuri generate in gresit\`.
 
 Astea sunt **singurele două blocuri generate** care se suprascriu. Blocul adaugă cel mult
 **8 rânduri** unui index. Un index rămâne un index.
@@ -176,9 +210,18 @@ Nimic altceva în volt. Backupul primește citiri și atât.
 
 - Zilnic la **03:30**, taskul **`PKMS-Watch`**.
 - Rulează și pe baterie, și dacă PC-ul era închis.
-- Ultima măsurare: **1 m 26 s**.
 - Cod de ieșire: **`0` = totul bine**, **`1` = există o abatere**.
 - De șters: `Unregister-ScheduledTask -TaskName 'PKMS-Watch' -Confirm:$false`
+
+### Calea, pe mașina de azi
+
+`paths.ps1` ia calea din `$env:PKMS_VAULT` dacă e setată, și caută backupul în
+`$env:PKMS_BACKUP`. Pe structura de pe Drive se rulează așa, **fără niciun drum scris tare**:
+
+```powershell
+$env:PKMS_VAULT  = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+$env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'
+```
 
 ### Raportul
 
@@ -243,27 +286,16 @@ ar rescrie indexuri acolo unde n-are voie.
 - **O dată pe săptămână** Alex citește logul și rezolvă. Automatul nu rezolvă nimic
   în numele lui — doar notează ce n-a putut.
 
-> **La data de 2026-10-08: logul nu există încă pe disc** — nu a curs nicio aliniere.
-> Se creează la primul eveniment. Verifică:
-> `Test-Path D:\Alex_Knowlege_Vault\raport-aliniere.log`
-
 ### Cele două automate, cu riscuri diferite
 
-| Automat | Când | Ce face | Risc | Stare |
-|---|---|---|---|---|
-| `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic | ✅ există, `Ready` |
-| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | aliniază indexurile, scrie doar ce diferă | **scrie în volt** | 🔴 **de creat** |
+| Automat | Când | Ce face | Risc |
+|---|---|---|---|
+| `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic |
+| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | aliniază indexurile, scrie doar ce diferă | **scrie în volt** |
 
 **Neamestecate, pentru că riscurile nu sunt aceleași.** Automatul care doar citește
 poate fi lăsat să ruleze oricând; automatul care scrie trebuie creat conștient, cu
 ora lui, ca alegere — nu ca efect secundar.
-
-> **`PKMS-Aliniere` nu există la data de 2026-10-08.** Măsurat:
-> `Get-ScheduledTask -TaskName 'PKMS-Aliniere'` → nu găsește nimic. Când va fi creat,
-> „la computer pornit" se implementează ca **la autentificare**, cu 3 minute întârziere,
-> și rulează ca Alex, nu ca SYSTEM. Cele trei ore sunt **06:00, 13:00 și 20:00**.
-> Cum se oprește:
-> `Unregister-ScheduledTask -TaskName 'PKMS-Aliniere' -Confirm:$false`
 
 ### Regula de blocaj: mutex, nu fișier-pid
 
@@ -286,8 +318,8 @@ rulate pe rând își rescriu reciproc indexurile la nesfârșit.
 
 ## Cele 11 scripturi din `AI-Kit`
 
-Măsurate pe disc, nu promise: `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`
-→ **11** la 2026-10-10 (era 10 până la `git-autocommit.ps1`).
+Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_manual' -Filter *.ps1).Count`
+→ **11**.
 
 | Script | Rolul |
 |---|---|
@@ -303,7 +335,7 @@ Măsurate pe disc, nu promise: `(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Fi
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
 | `git-autocommit.ps1` | **NU atinge voltul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
 
-**Ordinea canonică rămâne cea de 5 trepte** de mai sus (`paths` → `setup` → `lint` →
+**Ordinea canonică rămâne cea de 5 trepte** (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.
 
 **`build-index` și `align-index` nu intră în lanț.** Nu pentru că sunt mai puțin
@@ -312,8 +344,8 @@ importante — pentru că amândoi **scriu**. `build-index` creează indexuri di
 sute de foldere fără să fie cerut ar face voltul să arate altfel fără motiv. Rulă-le
 **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată „ca să fie sigur".
 
-Ordinea canonică și ce înseamnă fiecare pas: `AI-Kit\AUTOMATIZARI - scripturi.md` și
-`AI-Kit\ONBOARDING.md`. **Un script care nu apare acolo e o gaură, nu un detaliu.**
+Ordinea canonică și ce înseamnă fiecare pas: `AI-Kit_guide\AUTOMATIZARI - scripturi.md`
+și `AI-Kit_guide\ONBOARDING.md`. **Un script care nu apare acolo e o gaură, nu un detaliu.**
 
 ---
 
@@ -328,18 +360,21 @@ Plus `Canvas Bases` — funcția **Bases** din Obsidian, se folosește de pe loc
 
 ## Restul documentației
 
+Toate stau acum în **`AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
+
 | Fișier | Ce e |
 |---|---|
+| `SPECIFICATII - contractul voltului.md` | regulile care nu se încalcă, inclusiv §16 și §17 |
 | `LOGICA - cum se foloseste fiecare baza.md` | fiecare bază, scopul, mecanismul, data-flow-ul |
 | `PROCESE - flux de la captură la utilizare.md` | arborele de proces, pas cu pas |
 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi de lucru |
 | `AUTOMATIZARI - scripturi.md` | cele 11 scripturi, ordinea canonică, ce scrie fiecare |
-| `SPECIFICATII - contractul voltului.md` | regulile care nu se încalcă, inclusiv §16 și §17 |
 | `ONBOARDING AI - cum preia un AI voltul.md` | cum ia în posesie voltul un AI fără memorie |
-| `AI-Kit\ONBOARDING.md` | **copia octet cu octet identică** a onboarding-ului — `lint.ps1` o verifică la fiecare rulare |
-| `AI-Kit\MANUAL DE OPERARE - Hermes.md` | manualul de lucru al agentului, cu ordinea canonică și rețeta „ce am pierdut din backup" |
-| `INDEX CENTRAL.md` | tot voltul, pe un singur ecran, generat de script |
+| `START AICI.md` | rafturile de lucru |
 | `AUDIT_RECONCILIERE_FINAL.md` | dovada că nu s-a pierdut nimic |
+
+La rădăcină au rămas **doar trei**: `COTOR.md` (acest fișier), `INDEX CENTRAL.md`
+(generat de `build-index.ps1`) și `MANUAL DE NAVIGARE - cotor.md`.
 
 ---
 
