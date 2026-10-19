@@ -32,17 +32,22 @@ Write-Output "==================== STAREA VAULTULUI ===================="
 Write-Output ""
 
 Write-Output "STRATUL DE LUCRU"
-if (Test-Path (Join-Path $Vault '10_Work')) {
-  foreach ($r in Get-ChildItem -LiteralPath (Join-Path $Vault '10_Work') -Directory -Force | Sort-Object Name) {
+# MUTARE 2026-10-19: 10_Work a fost redenumit 01_Projects si a urcat in baza.
+# Aceeasi lista ca in lint.ps1 ($workCorect). Un instrument care cauta un strat
+# de lucru care nu mai exista raporteaza "LIPSA" pentru ceva care EXISTA -- si
+# nu raporteaza niciun raft, deci nu masoara nimic in rafturile de lucru.
+$workLayer = '01_Projects'
+if (Test-Path (Join-Path $Vault $workLayer)) {
+  foreach ($r in Get-ChildItem -LiteralPath (Join-Path $Vault $workLayer) -Directory -Force | Sort-Object Name) {
     $f = @(Get-ChildItem -LiteralPath $r.FullName -File -Recurse -Force -EA SilentlyContinue)
     $mb = [math]::Round((($f | Measure-Object Length -Sum).Sum)/1MB,0)
     Write-Output ("  {0,-22} {1,6} fisiere  {2,8} MB" -f $r.Name, $f.Count, $mb)
   }
-} else { Write-Output "  LIPSA 10_Work" }
+} else { Write-Output "  LIPSA $workLayer" }
 
 Write-Output ""
 Write-Output "BAZA"
-foreach ($b in @('00_Inbox','01_Projects','02_Areas','03_Resources','04_Archive','05_Attachments','06_Metadata')) {
+foreach ($b in @('00_Inbox','01_Projects','02_Areas','03_Resources','04_Archive','05_Attachments','06_Metadata','07_Canvas Bases','08_Clippings','09_raport-archive')) {
   $p = Join-Path $Vault $b
   if (Test-Path $p) {
     $f = @(Get-ChildItem -LiteralPath $p -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
