@@ -223,6 +223,30 @@
 !/09_raport-archive/**
 /09_raport-archive/00_INDEX.md
 
+# ── 4c. PACHETUL DE HANDOFF, deschis la 2026-10-20, masurat. ──
+#
+#  CE CEREA: cerinta lui Popy e ca repo-ul sa permita RECONSTRUCTIA SISTEMULUI
+#  in intregime. Motorul, contractul, ghidul si skillurile erau in repo — dar
+#  promptul de initiere si harta implementarii NU erau. Masurat cu
+#  `git ls-files`: 0 intrari pentru ambele. Eraau inchise de regula 51 (`**/*`).
+#  Fara ele, un restore din repo dadea un sistem fara port de intrare si fara
+#  harta: motor fara doctrina. Iar skill-ul RESTORE trimite la aceste documente.
+#
+#  CE SE DESCHIDE: cele doua .md. Transcriptul (30.412.803 B) RAMANE INCHIS —
+#  e dovada unei sesiuni, nu programarea sistemului; la 30 MB ar fi poveste in
+#  repo, nu save point.
+#
+#  MECANICA: aceeasi ca la 3-bis — deschiderea de DIRECTOR nu ajunge la
+#  fisiere, deci e nevoie de negatia la nivel de FISIER (`!/<cale>/**`).
+#
+#  EXPUNERE: numele de client apare DEJA in arborele urmarit, prin stratul de
+#  indexare (regula 1b) — masurat cu `git grep`: 00_INDEX.md de la
+#  01_Projects/.../Knights Templar/ si subfoldare. Deci deschiderea asta nu
+#  introduce o clasa noua de expunere. ──
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/**
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/transcript-complet.json
+
 # ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
 #       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
 /AI-Kit/raport-autocomit.log
