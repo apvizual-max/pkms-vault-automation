@@ -111,6 +111,26 @@
 # ── 4. Documentatia de la radacina: contractul sistemului ──
 !/*.md
 
+# ── 4b. ARHIVA DE RAPOARTE, deschisa la 2026-10-19, masurat.
+#       Motivul inchiderii nu era scris: raport-archive era doar enumerat la
+#       cotele de la final, fara niciun „de ce". Fara motiv, orice schimbare
+#       aici e o presupunere, nu o corectie — si atunci nimeni nu stie ce
+#       inseamna sa atingi regula.
+#
+#       CE SCHIMBA: raportul din RADACINA este urmarit (regula 4, `!/*.md`),
+#       deci un raport e artefact de sistem. Arhiva contine tot un raport de
+#       sistem, de 4.182 B. Nu e material de client, nu e derivat, nu se
+#       rescrie. Excluderea lui era o consecinta de faptul ca se numeste
+#       „arhiva", nu o decizie.
+#
+#       INCHIDERE DUPA DESCHIDERE (regula 3b): 00_INDEX.md din orice folder e
+#       ARTEFACT DERIVAT, rescris de build-index la fiecare rulare — de aceea
+#       si /02_Areas/00_INDEX.md si .../02_2-AI-SOT/00_INDEX.md sunt inchise
+#       la 3e. Acelasi motiv se aplica aici. ──
+!/raport-archive/
+!/raport-archive/**
+/raport-archive/00_INDEX.md
+
 # ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
 #       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
 /AI-Kit/raport-autocomit.log
@@ -141,7 +161,9 @@ id_rsa*
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
 #   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
 #   10_Work 32.252 · Canvas Bases 9 · Clippings 457 · Wisper_Transcripts 6
-#   raport-archive 2 · _ARCHIVE 7 · _QUARANTINE 4.789
+#   raport-archive: DESCHISA din 2026-10-19 (regula 4b) — raportul intra in
+#     istoric, iar 00_INDEX.md din ea ramane inchis ca artefact derivat.
+#   _ARCHIVE 7 · _QUARANTINE 4.789
 #   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
 #   resturi de unelte (derivate)
 #   .obsidian 1.174 · .vault-intelligence 14 · .trash · .sentinel_temp ·
