@@ -71,9 +71,18 @@ $binare = '\.(png|jpe?g|gif|webp|bmp|ico|svg|pdf|zip|7z|rar|gz|bz2|xz|tar|exe|dl
 # n-ar putea să le caute. Deci poarta nu se poate scanda pe ea însăși.
 # Excepția e NOUMITĂ, nu ascunsă, și numărul ei ajunge în mesajul de comit,
 # ca oricine citește istoricul să vadă ce a fost necăutat.
+#
+# POTRIVIRE PRIN NUME DE FIȘIER, NU PRIN CALE ABSOLUTĂ — măsurat 2026-10-19.
+# Excepțiile erau scrise ca 'AI-Kit/git-autocommit.ps1', adică pentru structura
+# de pe D:. După mutarea pe Drive, fișierul stă la
+# 02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/git-autocommit.ps1, deci potrivirea
+# pe cale nu se mai făcea. Rezultatul: poarta respingea propriul detector cu
+# „secrete în continut" și ieșea 1 la fiecare 5 minute, pentru totdeauna.
+# Numele fișierului nu se schimbă la mutare, deci potrivirea pe nume e cea care
+# rezistă la orice reorganizare viitoare.
 $exceptiiDefinire = @(
-    'AI-Kit/git-autocommit.ps1',
-    'AI-Kit/git-autocommit-ignorat.txt'
+    'git-autocommit.ps1',
+    'git-autocommit-ignorat.txt'
 )
 
 $citireMaxOcteti = 512000
@@ -259,7 +268,9 @@ try {
         if (-not (Test-Path -LiteralPath $full)) { continue }
         $it = Get-Item -LiteralPath $full
         if ($it.PSIsContainer) { continue }
-        if ($exceptiiDefinire -contains ($c -replace '\\','/')) { $exceptate++; continue }
+        # potrivire pe NUME, nu pe cale — vezi $exceptiiDefinire
+        $numeFisier = [System.IO.Path]::GetFileName($c)
+        if ($exceptiiDefinire -contains $numeFisier) { $exceptate++; continue }
         if ($it.Name -match $binare -or $it.Length -gt $citireMaxOcteti) { $sarite++; continue }
         $citite++
         $m = Test-ContinutSecret -Full $full
@@ -310,7 +321,24 @@ try {
     $mesaj = $mesaj + ' [porti: nume 0, continut ' + $citite + ', sarite-binar ' + $sarite + ', exceptie-definire ' + $exceptate + ']'
 
     if ($CeVerificare) {
-        Write-Output ('AUTOCOMIT: [verificare] ar comita ' + $cai.Count + ' cale(i)')
+        # MĂSURĂTOARE DE INDEXABILITATE, nu de intenție.
+        #
+        # Defect găsit 2026-10-19: modul de verificare spunea 0 pentru un repo
+        # al cărui `git add -A` real picotează. Verificarea trecea peste poarta
+        # care singura poate da roșu, deci nu putea deveni roșie — decor.
+        #
+        # Probe uscată: `git add -An` face exact aceeași parcurgere ca `git add -A`
+        # și NU scrie, dar raportează exact aceleași erori de deschidere.
+        $probe = @(& git add -An 2>&1)
+        if ($LASTEXITCODE -ne 0) {
+            $erori = @($probe | Where-Object { $_ -match '^(error|fatal)' })
+            $most = ($erori | Select-Object -First 2) -join ' | '
+            Scrie-Log ('VERIFICARE: indexare imposibila (' + $erori.Count + ' erori) ' + $most)
+            Write-Output ('AUTOCOMIT: [verificare] NU SE POATE COMITA — ' + $erori.Count + ' eroare de indexare')
+            Write-Output ('AUTOCOMIT: [verificare] ' + $most)
+            exit 1
+        }
+        Write-Output ('AUTOCOMIT: [verificare] indexare posibila, ar comita ' + $cai.Count + ' cale(i)')
         Write-Output ('AUTOCOMIT: [verificare] mesaj: ' + $mesaj)
         exit 0
     }
