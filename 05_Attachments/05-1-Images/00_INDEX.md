@@ -17,7 +17,7 @@ Cele mai frecvente două extensii sunt `.png` (7 din 9 fișiere) și `.jpeg` (1 
 
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
-- [`05-1-1-Screenshots`](<05-1-1-Screenshots/00_INDEX.md>) — 983 fișiere · 11 subfoldere
+- [`05-1-1-Screenshots`](<05-1-1-Screenshots/00_INDEX.md>) — 989 fișiere · 11 subfoldere
 
 ## Fișiere
 
@@ -32,6 +32,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Pasted image 20260916075346.png` | 56 KB | 2026-09-16 |
 | `Pasted image 20260923152813.png` | 67 KB | 2026-09-23 |
 | `Pasted image 20260925100816.png` | 65 KB | 2026-09-25 |
-
-
 

@@ -13,13 +13,13 @@ Nu are fișiere de conținut. 3 rafturi copil: `AI-Kit_guide`, `AI-Kit_manual`, 
 
 ## Cuvinte cheie
 
-`02-2-4-AI-Kit` · `HANDOFF` · `HANDOFF-2026-10-19` · `AI-Kit_guide` · `AI-Kit_manual`
+`02-2-4-AI-Kit` · `HANDOFF` · `HANDOFF-2026-10-19` · `AI-Kit_manual` · `AI-Kit_guide`
 
 ## Subfoldere
 
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
-- [`AI-Kit_guide`](<AI-Kit_guide/00_INDEX.md>) — 13 fișiere · 0 subfoldere
-- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 18 fișiere · 0 subfoldere
+- [`AI-Kit_guide`](<AI-Kit_guide/00_INDEX.md>) — 11 fișiere · 0 subfoldere
+- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 17 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-19`](<HANDOFF-2026-10-19/00_INDEX.md>) — 3 fișiere · 0 subfoldere
 

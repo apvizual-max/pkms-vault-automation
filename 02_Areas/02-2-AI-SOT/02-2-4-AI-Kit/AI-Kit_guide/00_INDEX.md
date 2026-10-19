@@ -1,23 +1,22 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide
 
-**13 fișiere · 927 KB · 0 subfoldere**
+**11 fișiere · 127 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 din 13 fișiere). Cel mai mare element din folder e `arhiva- raport aliniere.log` (736 KB)
+Singura extensie prezentă e `.md` (11 din 11 fișiere). Cel mai mare element din folder e `AUTOMATIZARI - scripturi.md` (38 KB)
 
 ## Cuvinte cheie
 
-`AI-Kit_guide` · `arhiva` · `raport` · `aliniere` · `.md` · `.log`
+`AI-Kit_guide` · `AUTOMATIZARI` · `scripturi` · `.md`
 
 ## Fișiere
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `arhiva- raport aliniere.log` | 736 KB | 2026-10-09 |
 | `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-19 |
 | `AUTOMATIZARI - scripturi.md` | 38 KB | 2026-10-19 |
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
@@ -26,8 +25,7 @@ Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 
 | `ONBOARDING AI - cum preia un AI vaultul.md` | 18 KB | 2026-10-19 |
 | `PROCESE - flux de la captură la utilizare.md` | 6 KB | 2026-10-19 |
 | `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-11 01-35.md` | 4 KB | 2026-10-11 |
-| `raport-aliniere.log` | 64 KB | 2026-10-18 |
-| `SPECIFICATII - contractul vaultului.md` | 26 KB | 2026-10-19 |
+| `SPECIFICATII - contractul vaultului.md` | 27 KB | 2026-10-19 |
 | `START AICI.md` | 7 KB | 2026-10-19 |
 | `WORKFLOW - ce faci concret.md` | 3 KB | 2026-10-19 |
 

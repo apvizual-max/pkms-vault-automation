@@ -7,7 +7,7 @@
 
 ## Ce e aici
 
-Nu are fișiere de conținut. 6 rafturi copil (primele trei după nume: `02-2-1-AI-Archive`, `02-2-2-AI-Bridges`, `02-2-3-AI-Chats`); cel mai mare element din folder e `02-2-4-AI-Kit` (30 MB)
+Nu are fișiere de conținut. 6 rafturi copil (primele trei după nume: `02-2-1-AI-Archive`, `02-2-2-AI-Bridges`, `02-2-3-AI-Chats`); cel mai mare element din folder e `02-2-4-AI-Kit` (29 MB)
 
 ## Cuvinte cheie
 
