@@ -22,5 +22,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`01_Projects`](<01_Projects/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 - [`probe-autocomit-2026-10-10`](<probe-autocomit-2026-10-10/00_INDEX.md>) — 5 fișiere · 0 subfoldere
 
-Nu are fișiere de conținut. 2 rafturi copil: `01_Projects`, `probe-autocomit-2026-10-10`; cel mai mare element din folder e `01_Projects` (307 KB)
 

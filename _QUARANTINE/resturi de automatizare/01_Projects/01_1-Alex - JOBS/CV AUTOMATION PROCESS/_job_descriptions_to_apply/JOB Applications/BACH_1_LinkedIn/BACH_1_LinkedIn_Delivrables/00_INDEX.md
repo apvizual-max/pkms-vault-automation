@@ -25,7 +25,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`Honeywell Technologies`](<Honeywell Technologies/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 - [`Playson`](<Playson/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
-Nu are fișiere de conținut. 6 rafturi copil (primele trei după nume: `Ethos`, `EveryMatrix`, `Glovo`); cel mai mare element din folder e `Glovo` (69 KB)
-
-`BACH_1_LinkedIn_Delivrables` · `Glovo` · `Honeywell Technologies` · `Skillfinder International` · `EveryMatrix`
 

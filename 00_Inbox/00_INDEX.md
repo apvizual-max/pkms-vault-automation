@@ -43,6 +43,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Sohlara - BRIEF - JobTest.md` | 69 KB | 2026-09-16 |
 | `Untitled.md` | 1 KB | 2026-10-01 |
 
-
-
-

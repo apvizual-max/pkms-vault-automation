@@ -21,5 +21,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`BACH_1_LinkedIn_Delivrables`](<BACH_1_LinkedIn_Delivrables/00_INDEX.md>) — 0 fișiere · 5 subfoldere
 
-Nu are fișiere de conținut. Un raft copil: `BACH_1_LinkedIn_Delivrables`; cel mai mare element din folder e `BACH_1_LinkedIn_Delivrables` (307 KB)
 

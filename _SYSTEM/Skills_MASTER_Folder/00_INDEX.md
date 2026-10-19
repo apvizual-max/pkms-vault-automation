@@ -22,6 +22,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`SENTINEL - git-install Skill`](<SENTINEL - git-install Skill/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
 
-
-
-

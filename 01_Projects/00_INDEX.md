@@ -25,6 +25,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`01-6-Work_Folder (to sort)`](<01-6-Work_Folder (to sort)/00_INDEX.md>) — 1 fișiere · 8 subfoldere
 
 
-
-
-

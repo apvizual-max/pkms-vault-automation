@@ -22,6 +22,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`Skills_MASTER_Folder`](<Skills_MASTER_Folder/00_INDEX.md>) — 0 fișiere · 3 subfoldere
 
 
-
-
-

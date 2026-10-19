@@ -21,5 +21,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`JOB Applications`](<JOB Applications/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 
-Nu are fișiere de conținut. Un raft copil: `JOB Applications`; cel mai mare element din folder e `JOB Applications` (307 KB)
 

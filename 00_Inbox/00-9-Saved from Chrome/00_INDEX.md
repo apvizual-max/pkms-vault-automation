@@ -21,4 +21,3 @@ Cele mai frecvente două extensii sunt `.gsheet` (2 din 3 fișiere) și `.html` 
 | `Copy of Side Hustle Ideas Database_2025 [The Hustle].gsheet` | 173 B | 2026-08-03 |
 | `hermes-unlocked.html` | 218 KB | 2026-06-22 |
 
-

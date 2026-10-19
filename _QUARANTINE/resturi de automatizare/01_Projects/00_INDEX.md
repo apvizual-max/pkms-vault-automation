@@ -21,5 +21,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`01_1-Alex - JOBS`](<01_1-Alex - JOBS/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 
-Nu are fișiere de conținut. Un raft copil: `01_1-Alex - JOBS`; cel mai mare element din folder e `01_1-Alex - JOBS` (307 KB)
 

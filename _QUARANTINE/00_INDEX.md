@@ -36,8 +36,6 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`reziduuri-00_INDEX`](<reziduuri-00_INDEX/00_INDEX.md>) — 4 fișiere · 0 subfoldere
 - [`reziduuri-2026-10-19`](<reziduuri-2026-10-19/00_INDEX.md>) — 3 fișiere · 0 subfoldere
 
-Nu are fișiere de conținut. 9 rafturi copil (primele trei după nume: `duplicate - descrieri de job (identice cu cele din CV AUTOMATION PROCESS)`, `duplicate - extensie gresita`, `duplicate - rulare veche`); cel mai mare element din folder e `retirat-2026-10-10` (3.15 GB)
-
 > ~~Rândul de mai sus~~ a fost **șters pe 2026-10-08**. Se păstrează tăiat, ca să
 
 > se vadă ce a fost acolo și de ce a dispărut — nu ca să se creadă că mai există.

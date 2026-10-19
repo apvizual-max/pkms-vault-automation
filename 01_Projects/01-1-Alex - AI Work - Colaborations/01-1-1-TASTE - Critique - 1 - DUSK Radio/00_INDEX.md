@@ -39,4 +39,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `MFA — Alexandru Popescu.pdf` | 475 KB | 2026-08-19 |
 | `Statement of Work - Alexandru Popescu & Taste Tech - Golden Critiques Project.pdf` | 461 KB | 2026-08-26 |
 
-

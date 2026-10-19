@@ -19,4 +19,3 @@ Singura extensie prezentă e `.json` (1 din 1 fișiere). Cel mai mare element di
 |---|---|---|
 | `applet_access_history.json` | 2 KB | 2026-09-27 |
 
-
