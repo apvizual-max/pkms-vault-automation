@@ -142,8 +142,24 @@ configurare a taskului** — rularea manuală a *exact* acelei comenzi a ieșit 
 Probă reală: rulat prin Task Scheduler la **00:48:56**, jurnalul a scris „rulez
 watch.ps1". `PKMS-DriveFS-AutoRepair` nu e afectat — scriptul lui e deja pe `C:`.
 
-**Regra:** un `LastTaskResult` nenul la o automatizare e un incident de urmărit, chiar
+**Regula:** un `LastTaskResult` nenul la o automatizare e un incident de urmărit, chiar
 dacă porțile manuale sunt verzi. Porțile manuale nu acoperă automatizările.
+
+**Al doilea incident, măsurat 20.10.2026 — „raportul zilnic înghețat”.**
+`_SYSTEM\rapoarte\raport-ultima-rulare.txt` era înghețat la **18.10.2026 13:21:13**, cu
+textul „VOLTUL” și căile vechi de pe `D:`. Două cauze, ambele reale:
+(1) `watch.ps1` scria raportul **doar la final** (după toate cele trei trepte);
+(2) taskul `PKMS-Watch` avea `ExecutionTimeLimit = PT1H`, **mai scurtă decât o rulare pe
+DriveFS** (lint ~2 min + health-check ~5 min + reconcile peste 50 min) — deci taskul era
+oprit **înainte** să ajungă la scriere. O automatizare care nu lasă niciun urmă nu e o
+automatizare, e o promisiune.
+**Reparul:** (a) raportul se **rescrie după fiecare treaptă** (funcția `Actualizeaza-Raport`
+în `watch.ps1`), cu verdictul prefixat `IN CURS - N/3 trepte rulate` cât timp nu s-au
+terminat toate treptele — ca un raport pe jumătate să nu pară „OK”; (b) limita taskului
+ridicată la `PT6H`.
+**Probă:** bancă de test în `D:` cu trepte-stub — 15/15 probe. Proba decisivă e cea de
+**oprire la mijloc**: procesul e omorât în timpul treptei 3, iar raportul rămâne **proaspăt**
+(2/3, verdict „IN CURS”), nu vechi. Parse 0, BOM + LF păstrate, backup în `D:`.
 
 ## 6. Când vaultul crește — procedura, în ordine
 
@@ -228,6 +244,7 @@ infirmat ștergerea, nealinierea cache-ului DriveFS și caracterele Unicode look
 | `lint` dă erori de encoding | BOM lipsă sau CRLF stricat | verifică primii 3 octeți: `EF BB BF` = BOM |
 | `health-check` raportează `diferenta 0` fals | măsurătoarea nu e stabilă | nu raporta cifra până nu e stabilă |
 | `git status` arată fișiere care „nu există" | typo în nume | citește numele **de pe disc**, nu din memorie |
+| raportul zilnic are `mtime` vechi | automatizarea e oprită înainte să scrie (vezi §5) | citește `mtime`-ul lui `raport-ultima-rulare.txt`; mai vechi de o zi → rulează taskul și urmărește `LastTaskResult` |
 
 ## 10. Save point — repo-ul GitHub ca reconstrucție
 

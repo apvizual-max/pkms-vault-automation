@@ -129,14 +129,17 @@ Rulează, în ordine fixă, **doar** treptele 3, 4 și 5 de mai sus: `lint`, apo
 pentru verificarea automată, și e deja programat.
 
 - **Scrie un singur raport:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt`. Nimic altceva
-  în vault. Nu atinge backupul.
+  în vault. Nu atinge backupul. Raportul se **rescrie după fiecare treaptă**, nu doar la
+  final — dacă rularea e oprită la mijloc, rămâne un raport proaspăt, cu verdictul
+  `IN CURS - N/3 trepte rulate`.
 - **Nu rulează `build-index`.** Nu rulează **nicio** restaurare.
 - **Cod de ieșire:** `0` = nicio **eroare**, `1` = există **eroare**. Atențiile se scriu în
   raport, dar **nu schimbă codul de ieșire** și nu ridică singure verdictul. Verdictul e o
   singură linie: `OK` sau `ATENȚIE: <ce anume>`.
 - **Când rulează singur:** zilnic, la **03:30**. Rulează și pe baterie, și dacă PC-ul
   era închis la ora aceea.
-- **Cât durează:** **1 m 26 s** la ultima măsurare.
+- **Cât durează:** pe DriveFS, **peste o oră** (lint ~2 min + health-check ~5 min + reconcile
+  peste 50 min), măsurat 2026-10-20. Limita de execuție a taskului e `PT6H`.
 - **Dacă vrei să-l oprești:**
   `Unregister-ScheduledTask -TaskName 'PKMS-Watch' -Confirm:$false`
 

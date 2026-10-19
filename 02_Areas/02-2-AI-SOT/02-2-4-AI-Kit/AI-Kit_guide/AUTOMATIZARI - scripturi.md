@@ -314,6 +314,13 @@ sau de ceas. Rulează în ordine fixă trei trepte care **nu scriu în vault**:
 **Un singur fișier:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt` (și folderul lui, dacă lipsea).
 **Nimic altceva în vault.** Backupul primește citiri și atât.
 
+**Raportul se rescrie după fiecare treaptă, nu doar la final.** Măsurat 2026-10-20: pe
+vaultul de pe DriveFS, `reconcile` (treapta 3) durează peste 50 de minute, iar taskul era
+oprit de limita lui de 1 oră **înainte** să ajungă la scriere — raportul zilnic rămăsese
+înghețat la 18.10, cu căile vechi de pe `D:`. Cu scrierea după fiecare treaptă, raportul
+e proaspăt chiar dacă rularea e oprită la mijloc; verdictul are atunci prefixul
+`IN CURS - N/3 trepte rulate`, ca un raport pe jumătate să nu pară „OK”.
+
 ### Ce NU intră în automatism — și de ce
 
 - **`build-index.ps1` nu rulează aici.** Scrie sute de indexuri. Se rulează cu mâna,
@@ -333,7 +340,11 @@ Un raport care spune „merge bine" fără un număr lângă el nu e raport, e d
 
 - **Zilnic, la `03:30`.** Taskul se numește `PKMS-Watch`.
 - Rulează și **pe baterie**, și **dacă PC-ul era închis** la ora aceea.
-- Durata la ultima măsurare: **1 m 26 s** (12 s lint + 15 s health-check + 59 s reconcile).
+- Durata pe vaultul de pe DriveFS, măsurată 2026-10-20: **lint ~2 min · health-check ~5 min ·
+  reconcile peste 50 min** — deci **o oră și jumătate**, nu 1 m 26 s. Cifra veche era de pe
+  vaultul de pe `D:`.
+- **Limita de execuție a taskului: `PT6H`** (era `PT1H` — mai scurtă decât o rulare pe
+  DriveFS, deci taskul se oprea singur înainte să scrie raportul).
 
 Dacă vrei să-l oprești:
 
