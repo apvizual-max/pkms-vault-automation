@@ -198,10 +198,25 @@ if (-not (Test-Path $Guide)) {
 # descoperirea din paths.ps1 să nu se apeleze niciodată, iar scriptul comparează cu nimic
 # și anunță fals că nu s-a pierdut nimic.
 $hard = New-Object System.Collections.Generic.List[string]
+# 2026-10-19. DriveFS se degradeaza IN TIMPUL rularii, nu doar la inceput: in aceeasi
+# zi a intrat de 6 ori in starea in care citirea arunca "Incorrect function". O poarta
+# verificata la pornire poate sa treaca, iar voltul sa moara sub ea la jumatate.
+# Un stack trace la linia 204 nu e un verdict — e o masuratoare care nu s-a terminat.
+# Deci fiecare citire e gardata, iar o citire picata se numara si se raporteaza.
+$citiriEsuate = 0
+$citiriPicate = New-Object System.Collections.Generic.List[string]
+function Read-LinesGardat([string]$Path, [string]$De) {
+  try { return ,([System.IO.File]::ReadAllLines($Path)) }
+  catch {
+    $script:citiriEsuate++
+    $script:citiriPicate.Add($De)
+    return ,@()
+  }
+}
 foreach ($f in @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter *.ps1 -File -EA SilentlyContinue)) {
   if ($f.Name -eq 'paths.ps1') { continue }   # aici descoperirea e prin design
   $i = 0
-  foreach ($ln in [System.IO.File]::ReadAllLines($f.FullName)) {
+  foreach ($ln in (Read-LinesGardat $f.FullName ("script " + $f.Name))) {
     $i++
     if ($ln -match 'Alex_Knowlege_Vault\s+-\s+(CopyBACKUP|Backup)') {
       $hard.Add("script $($f.Name) linia $i : $($ln.Trim())")
@@ -213,7 +228,7 @@ foreach ($f in @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter *.ps1 -File -E
 foreach ($f in @(Get-ChildItem -LiteralPath $Vault -Filter *.md -File -EA SilentlyContinue)) {
   if ($f.Name -eq 'AUDIT_RECONCILIERE_FINAL.md') { continue }
   $i = 0
-  foreach ($ln in [System.IO.File]::ReadAllLines($f.FullName)) {
+  foreach ($ln in (Read-LinesGardat $f.FullName ("document " + $f.Name))) {
     $i++
     if ($ln -match 'Alex_Knowlege_Vault\s+-\s+CopyBACKUP') {
       $hard.Add("document $($f.Name) linia $i : $($ln.Trim())")
@@ -223,6 +238,14 @@ foreach ($f in @(Get-ChildItem -LiteralPath $Vault -Filter *.md -File -EA Silent
 if ($hard.Count -gt 0) {
   foreach ($h in $hard) { $errors.Add("cale de backup scrisa tare, trebuie descoperita: $h") }
 } else { $ok.Add("niciun script si niciun document nu are calea de backup scrisa tare") }
+
+# O citire picata NU e un verdict de "curat". E o masuratoare care nu s-a terminat,
+# si trebuie sa se vada ca atare, altfel poarta zice "OK" pentru ceva ce n-a citit.
+if ($citiriEsuate -gt 0) {
+  $errors.Add("VOLTUL NU A PUTUT FI CITIT COMPLET: $($citiriEsuate) citire(s) au picat in timpul rularii — " +
+              "filesystem-ul s-a degradat sub poarta. Verdictul de mai sus NU e de incredere. " +
+              "Repornește DriveFS și rulează din nou. Picat pe: " + ($citiriPicate -join ', '))
+}
 
 # --- 8. cele doua copii ale onboarding-ului trebuie sa fie identice ---
 # au fost scrise in paralel si au inceput sa difere: radacina era ramasa in urma.
