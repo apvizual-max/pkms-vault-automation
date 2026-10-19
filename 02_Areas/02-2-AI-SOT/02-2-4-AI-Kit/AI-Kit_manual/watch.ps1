@@ -284,6 +284,13 @@ foreach ($t in $trepte) {
 
   $rez.Add([pscustomobject]@{
     Nume = $t.Nume; Durata = $sw.Elapsed.TotalSeconds; Cod = $cod
+    # REGRESIE REPARATA 2026-10-20: aceste 4 proprietati au fost pierdute la
+    # rescrierea din segmentul 3. Fara ele, $r.Erori era $null, deci
+    # '$r.Erori -gt 0' era fals MEREU: o treapta cu erori si cod de iesire 0
+    # raporta "Erori deocamdata: 0". Randurile 'erori:'/'attentioni:'/'masura:'
+    # ramaneau goale, iar sectiunea de atentii nu se umplea niciodata.
+    # Sursa de adevar pentru forma obiectului: versiunea pre-fix (backup).
+    Erori = $erori; Atentii = $atentii; Nota = $nota; Detalii = $detalii
   })
 
   # raportul se rescrie acum, cu starea de pana acum. Daca treapta urmatoare
