@@ -1,4 +1,4 @@
-<#
+﻿<#
   PKMS watch.ps1 - singurul punct de intrare al verificarii.
   Ruleaza, in ordine fixa, trei trepte care NU scriu in volt:
      1. lint          - regulile de denumire, legaturi, documentatia
