@@ -488,3 +488,30 @@ doar la codul de ieșire.
 **Consecință în zilnic:** la 02:07:22 rularea lui `PKMS-Watch` a fost reluată cu codul
 reparat (SHA256 `B12A3270…`), ca raportul de 3/3 să fie scris de codul corect, nu de
 cel regresat.
+
+## 14. Un screenshot a aterizat în BACKUP (20.10.2026, 02:13) — cauză măsurată, reparată
+
+**Ce s-a măsurat.** Verificarea independentă a backupului (52.520 fișiere, prag = 20.10.2026
+00:00) a găsit **un fișier**: `Screenshot 2026-10-20 021315.png` (499.223 B,
+SHA256 `b3990c55cfcc725d21fa51a7f964bb3672e3440e5f5adcf8fbb484000507436f`) în
+`H:\...\05_Attachments\05_1-Images\Screenshots\`. **Nu exista în vault.**
+
+**Cauza.** Folderul cunoscut Windows „Screenshots" (`{B7BEDE81-DF94-4682-A7D8-57A52620B86F}`)
+a fost re-pointat spre vault pe 19.10 (§137). Dar un proces de captare pornit **înainte** de
+re-point a păstrat calea veche în memorie și a salvat acolo. Măsurătorile:
+- `SHGetKnownFolderPath` pentru GUID-ul de mai sus rezolvă **acum** spre
+  `G:\...\05_Attachments\05-1-Images\05-1-1-Screenshots` — registry-ul e corect;
+- la 02:13 nu rulează niciun proces de captare — condiția a trecut;
+- ultimul fișier scris în backup e exact acesta; tot restul e din 19.10.
+
+**Repar (procedura din §137, cu R0):** copiat în vault → SHA256 verificat identic → abia apoi
+copia din backup eliminată. Fișierul a fost **mutat, nu șters**: e în vault, bit cu bit.
+Dovada de anulare: `D:\PKMS-tooling\handoff\undo-proof-2026-10-20-screenshot-021315.txt`
+(1.475 B).
+
+**Re-măsurare:** 52.519 fișiere în backup, **0 peste prag** ⇒ backupul e snapshot curat.
+
+**Lecția, pentru orice redirectare făcută cu un proces deja pornit:** *corectarea
+registrului nu ajunge la procesele deja pornite.* Ele rezolvă calea o dată, la pornire.
+Reparul e relogare sau repornirea procesului — și verificarea de după mutare trebuie
+făcută **pe contorul fișierelor**, nu pe „am reparat registry-ul".
