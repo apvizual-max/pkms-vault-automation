@@ -29,7 +29,7 @@ Cele mai frecvente două extensii sunt `.ps1` (12 din 18 fișiere) și `.md` (4 
 | `inchide-log.ps1` | 14 KB | 2026-10-19 |
 | `lint.ps1` | 18 KB | 2026-10-19 |
 | `MANUAL DE OPERARE - Hermes.md` | 23 KB | 2026-10-19 |
-| `ONBOARDING.md` | 18 KB | 2026-10-19 |
+| `ONBOARDING.md` | 18 KB | 2026-10-20 |
 | `paths.ps1` | 12 KB | 2026-10-20 |
 | `PROMPT-INSCRIERE.md` | 4 KB | 2026-10-19 |
 | `reconcile.ps1` | 28 KB | 2026-10-19 |
