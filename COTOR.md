@@ -201,6 +201,31 @@ Astea sunt **singurele două blocuri generate** care se suprascriu. Blocul adaug
 
 ---
 
+## Regula cozii: blocul generat deține adevărul — §16.1
+
+Fiecare index poartă **două** blocuri generate: `## Ce e aici` și `## Cuvinte cheie`.
+Tot ce mai e în index — descrieri scrise cu mâna, liste de cuvinte cheie vechi, copii
+ale altor blocuri — e **rest**, nu informație.
+
+**Regula, măsurată pe 114 de indexuri (2026-10-19):**
+
+- Cele două blocuri generate dețin adevărul despre folder.
+- Orice altă copie a aceleiași informații, **diferită** de blocul generat, e
+  **reziduu** — se taie.
+- Copiile **identice** rămân: nu contrazic nimic.
+- `_QUARANTINE` nu se atinge. E material retras, nu coș de gunoi.
+
+**Măsurare:** 133 de contradicții înainte (114 în arborele viu + 19 în carantină) →
+**după: 19, toate în carantină, vii = 0**.
+
+**De ce a trebuut reparat și generatorul.** Reziduul nu se curăță singur: dacă
+`build-index.ps1` nu recunoaște formele pe care le scrie, orice regenerare le
+readuce în index. `Test-LiniaGenerata` a fost reparat să recunoască toate cele **5**
+forme generate (4 descrieri + rândul de cuvinte cheie). Poarta verifică
+**bidirecțional**: funcția nouă nu aruncă pe niciuna din 2.311 de rânduri reale, și
+recunoaște **181/181** reziduuri reale.
+
+---
 ## Cum se verifică singur — §17
 
 „Să fie respectat în permanență" nu înseamnă „când îmi amintesc".
@@ -315,6 +340,31 @@ ar rescrie indexuri acolo unde n-are voie.
 poate fi lăsat să ruleze oricând; automatul care scrie trebuie creat conștient, cu
 ora lui, ca alegere — nu ca efect secundar.
 
+### Cârligul de auto-repair pentru DriveFS — `PKMS-DriveFS-AutoRepair`
+
+Al treilea automat, dar **în afara vaultului**: rulează din
+`C:\Users\apviz\.minimax\drivefs\auto-repair-drivefs.ps1`, la fiecare **5 minute**.
+
+| | `PKMS-Watch` | `PKMS-Aliniere` | `PKMS-DriveFS-AutoRepair` |
+|---|---|---|---|
+| Unde rulează | în vault | în vault | **în afara vaultului** |
+| Scrie în vault | nu | da | nu |
+| Ce face | citește | aliniază indexurile | verifică santinelele DriveFS, repornește procesul doar dacă e rupt |
+
+**De ce stă în afara vaultului:** trebuie să funcționeze chiar și atunci când
+vaultul e ilizibil. Un cârlig aflat în vault ar lipsi exact atunci când ar trebui
+să tragă.
+
+**Sentinele:** 4 citiri de control. Dacă toate sunt curate, verdictul e `SANATOS`
+și nu se face nimic. Repornirea are loc doar la verdict de rupt, iar numărul de
+reporniri se scrie în `state.json` — nu se deduce din nimic.
+
+**Măsurat (2026-10-19):** `LastTaskResult = 0`, rulări reale dovedite, verdict
+`sanatos`, `totalReporniri: 0`. Task: `apviz`, `Interactive`, `Limited`, interval
+`PT5M`, `StartWhenAvailable`.
+
+**Limita, spusă limpede:** cârligul tratează **simptomul**. Cauza degradărilor
+DriveFS e necunoscută — logurile n-au nicio eroare, în 94.133 de rânduri.
 ### Regula de blocaj: mutex, nu fișier-pid
 
 Un singur automat poate scrie în vault odată. Dacă o aliniere e deja pornită și se
