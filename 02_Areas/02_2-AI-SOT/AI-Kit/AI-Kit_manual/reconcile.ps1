@@ -33,6 +33,9 @@ if (-not $Backup) { $Backup = Get-PkmsBackup }
 if (-not $Vault)  { $Vault  = Get-PkmsVault }
 $Backup = Normalize-PkmsPath $Backup
 $Vault  = Normalize-PkmsPath $Vault
+# Poarta de cale reala: reconcile compara backupul CU voltul, deci o cale
+# gresita l-ar face sa raporteze pierderi inexistente sau sa nu compare nimic.
+Assert-PkmsVaultReal -Vault $Vault -Cine 'reconcile'
 if (-not $Backup) { Write-Output 'BACKUP NU A FOST GASIT'; exit 1 }
 if (-not (Test-Path -LiteralPath $Backup)) {
   Write-Output "BACKUP INEXISTENT: $Backup"

@@ -21,25 +21,152 @@ function Normalize-PkmsPath([string]$p) {
 }
 
 function Get-PkmsVault {
-  if ($env:PKMS_VAULT -and (Test-Path $env:PKMS_VAULT)) { return (Normalize-PkmsPath $env:PKMS_VAULT) }
-  return 'D:\Alex_Knowlege_Vault'
+  # ORDINEA DE INCREDERE:
+  #  1. PKMS_VAULT din mediu — dar doar daca e un volt REAL (vezi Test-PkmsVaultReal)
+  #  2. descoperire pe disc: orice folder care are amprenta voltului
+  #  3. NIMIC — intoarce $null. Niciun drum implicit catre o cale moarta.
+  #
+  # DE CE S-A SCHIMBAT (masurat 2026-10-19):
+  #  Versunea veche cadea pe 'return D:\Alex_Knowlege_Vault' ori de cate ori
+  #  PKMS_VAULT nu era setat. D: mai are un folder — un STUB cu un singur
+  #  fisier, _NU-FOLOSIT-FOLDER-REFACUT.txt. Test-Path trecea, deci scriptul credea
+  #  ca e voltul. In consecinta, orice rulare fara PKMS_VAULT (adica orice
+  #  rulare pornita de un task programat, care mosteneste un mediu curat) scria
+  #  pe sau citia din folderul mort, in timp ce voltul real de pe G: nu era
+  #  atins. Datoria de index nu se rezolva pentru ca automatul nu privea niciodata
+  #  unde trebuia.
+  #  O cale care exista NU e neaparat calea corecta. Trebuie sa fie si REALA.
+
+  # 1. mediu, validat
+  if ($env:PKMS_VAULT -and (Test-Path -LiteralPath $env:PKMS_VAULT)) {
+    $p = (Normalize-PkmsPath $env:PKMS_VAULT)
+    if (Test-PkmsVaultReal -Path $p) { return $p }
+    # exista, dar nu e volt -> nu ne contam. Cadem mai jos, la descoperire.
+  }
+
+  # 2. descoperire pe disc
+  foreach ($c in (Get-PkmsVaultCandidates)) {
+    if (Test-PkmsVaultReal -Path $c) { return $c }
+  }
+
+  # 3. nimic confirmat
+  return $null
+}
+
+# Amprenta unui volt real: .git + COTOR.md + cel putin un folder numerotat la
+# radacina (00_..06_). Un folder obisnuit, oricat de gol, nu trece.
+function Test-PkmsVaultReal([string]$Path) {
+  if (-not $Path) { return $false }
+  if (-not (Test-Path -LiteralPath $Path)) { return $false }
+  $p = (Normalize-PkmsPath $Path)
+  if (-not (Test-Path -LiteralPath (Join-Path $p '.git')))      { return $false }
+  if (-not (Test-Path -LiteralPath (Join-Path $p 'COTOR.md')))  { return $false }
+  $numerotat = @(Get-ChildItem -LiteralPath $p -Directory -Force -EA SilentlyContinue |
+                 Where-Object { $_.Name -match '^\d\d_' })
+  if ($numerotat.Count -lt 3) { return $false }
+  return $true
+}
+
+function Get-PkmsVaultCandidates {
+  # Cautam in radacina fiecarui volum fix o copie cu amprenta voltului.
+  # Fara hardcodare pe o singura litera de disc: daca voltul se muta din nou,
+  # descoperirea merge singura.
+  #
+  # REGULA DE EXCLUDERE A COPIILOR (masurat 2026-10-19):
+  #  Backupul de pe H: are EXACT aceeasi amprenta ca voltul — .git, COTOR.md si
+  #  8 foldere numerotate. Daca descoperirea l-ar lua de bun, atunci build-index
+  #  (care RESCRIE tot) ar rescrie BACKUPUL. Backupul e reper, nu tinta.
+  #  Deci orice folder al carui NUME aduce a copie e exclus din lista de volturi.
+  #  Env-ul primeste prioritate (determinist); descoperirea e doar plansa de
+  #  siguranta, si plansa nu are voie sa indice spre o copie.
+  $rez = New-Object System.Collections.Generic.List[string]
+  # indiciu rapid, daca exista
+  $hint = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+  if (Test-Path -LiteralPath $hint) { $rez.Add((Normalize-PkmsPath $hint)) }
+  foreach ($vol in @(Get-PSDrive -PSProvider FileSystem -EA SilentlyContinue)) {
+    $rad = $vol.Root
+    if (-not (Test-Path -LiteralPath $rad)) { continue }
+    foreach ($d in @(Get-ChildItem -LiteralPath $rad -Directory -Force -EA SilentlyContinue)) {
+      $full = $d.FullName
+      if ($full -like '*My Drive*') {
+        foreach ($sub in @(Get-ChildItem -LiteralPath $full -Directory -Force -EA SilentlyContinue)) {
+          if ((Test-PkmsVaultReal -Path $sub.FullName) -and -not (Test-PkmsNumeleDeCopie $sub.Name)) {
+            $rez.Add((Normalize-PkmsPath $sub.FullName))
+          }
+        }
+      } elseif ((Test-PkmsVaultReal -Path $full) -and -not (Test-PkmsNumeleDeCopie $d.Name)) {
+        $rez.Add((Normalize-PkmsPath $full))
+      }
+    }
+  }
+  return $rez
+}
+
+function Test-PkmsNumeleDeCopie([string]$Nume) {
+  if (-not $Nume) { return $false }
+  return [bool]($Nume -match '(?i)(bkup|backup|copy|copia|salvat|rezerva|vechi|old)')
 }
 
 function Get-PkmsBackup {
+  # 1. mediu
   if ($env:PKMS_BACKUP -and (Test-Path $env:PKMS_BACKUP)) { return $env:PKMS_BACKUP }
 
-  # numele vechi, daca exista
+  # 2. numele vechi, daca exista
   $legacy = 'D:\Alex_Knowlege_Vault - CopyBACKUP'
   if ($legacy -and (Test-Path $legacy)) { return (Normalize-PkmsPath $legacy) }
 
-  # cauta in radacina lui D: orice copie a voltului
-  $candidates = @(
-    Get-ChildItem -LiteralPath 'D:\' -Directory -Force -EA SilentlyContinue |
-      Where-Object { $_.Name -match '^(Alex_Knowlege_Vault)\s*[-_].*' -and $_.FullName -ne (Get-PkmsVault) } |
-      Sort-Object LastWriteTime -Desc
-  )
-  if ($candidates.Count -gt 0) { return (Normalize-PkmsPath $candidates[0].FullName) }
+  # 3. descoperire pe toate volumele (masurat 2026-10-19: backupul s-a mutat pe
+  #    H: si nu mai era la D:, deci fara asta Get-PkmsBackup intoarcea null si
+  #    lantul se oprea la treapta 1 chiar cu backupul montat corect.)
+  #    Cautam un folder care ARE amprenta de volt (copie completa) si NU e
+  #    voltul activ. Preferam numele care spun "copie" (BKUP/BACKUP/...).
+  $volt = Get-PkmsVault
+  $copii = New-Object System.Collections.Generic.List[string]
+  foreach ($vol in @(Get-PSDrive -PSProvider FileSystem -EA SilentlyContinue)) {
+    $rad = $vol.Root
+    if (-not (Test-Path -LiteralPath $rad)) { continue }
+    foreach ($d in @(Get-ChildItem -LiteralPath $rad -Directory -Force -EA SilentlyContinue)) {
+      foreach ($p in (Get-PkmsCopiiDeVolt -Path $d.FullName)) {
+        if ($p -ne $volt) { $copii.Add($p) }
+      }
+    }
+  }
+  # preferinta: numele de copie inaintea oricarui alt criteriu
+  $numit = @($copii | Where-Object { (Split-Path -Leaf $_) -match '(?i)(bkup|backup|copy|copia)' })
+  if ($numit.Count -gt 0) { return (Normalize-PkmsPath $numit[0]) }
+  if ($copii.Count -gt 0)  { return (Normalize-PkmsPath $copii[0]) }
   return $null
+}
+
+# Copyile complete ale voltului aflate la radacina unui volum (sau sub My Drive),
+# recunoscute prin amprenta, nu prin nume — numele poate fi orice.
+function Get-PkmsCopiiDeVolt([string]$Path) {
+  $rez = New-Object System.Collections.Generic.List[string]
+  if (-not (Test-Path -LiteralPath $Path)) { return $rez }
+  $p = (Normalize-PkmsPath $Path)
+  if (Test-PkmsVaultReal -Path $p) { $rez.Add($p); return $rez }
+  if ($p -like '*My Drive*') {
+    foreach ($sub in @(Get-ChildItem -LiteralPath $p -Directory -Force -EA SilentlyContinue)) {
+      if (Test-PkmsVaultReal -Path $sub.FullName) { $rez.Add((Normalize-PkmsPath $sub.FullName)) }
+    }
+  }
+  return $rez
+}
+
+# Refuzul la scriere pe cale nerecunoscuta. Un singur loc, ca mesajul sa fie
+# identic in toate scripturile. $Vault vine si din -Vault (omul), deci chiar si
+# o cale trecuta manual trebuie validata: D: are un stub cu un fisier care ar
+# trece orice Test-Path.
+function Assert-PkmsVaultReal([string]$Vault, [string]$Cine) {
+  if (-not $Vault) {
+    Write-Output ("REFUZAT (" + $Cine + "): nu s-a reusit descoperirea voltului real. nu s-a scris nimic.")
+    exit 1
+  }
+  if (-not (Test-PkmsVaultReal -Path $Vault)) {
+    Write-Output ("REFUZAT (" + $Cine + "): casta nu e un volt real: " + $Vault)
+    Write-Output ('  (asteptat: .git + COTOR.md + cel putin 3 foldere NN_ la radacina)')
+    exit 1
+  }
 }
 
 function Get-PkmsExclusions {
@@ -69,6 +196,13 @@ if ($MyInvocation.InvocationName -ne '.') {
   $b = Get-PkmsBackup
   Write-Output "volt:   $v"
   Write-Output "backup: $b"
+
+  # VOLTUL INEXISTENT. O cale care exista nu e neaparat voltul — vezi Get-PkmsVault.
+  # Scrierea e interzisa pe orice cale nerecunoscuta: pe D: sta un stub de un
+  # fisier, iar acolo o rulare ar "reu"i fara sa atinga nimic real.
+  if (-not $v) { Write-Output 'VOLTUL REAL NU A FOST GASIT. nu s-a scris nimic.'; exit 1 }
+  if (-not (Test-PkmsVaultReal -Path $v)) { Write-Output "CALEA NU E UN VOLT REAL: $v"; exit 1 }
+
   if ($b) {
     Write-Output 'ambele la loc. nu s-a scris nimic.'
   } else {

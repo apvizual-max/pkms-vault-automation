@@ -64,6 +64,10 @@ if (-not $Vault) { $Vault = Get-PkmsVault }
 # obisnuita la finalul caii face ca tot voltul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
 
+# Poarta de cale reala. build-index RESCRIE tot ce gaseste, deci o cale gresita
+# aici nu e o greseala de raport, e o stergere in masa (vezi paths.ps1).
+Assert-PkmsVaultReal -Vault $Vault -Cine 'build-index'
+
 
 # --- usa (§19.5, ca in align-index.ps1) ---
 # build-index.ps1 rescrie TOT ce gaseste. Fara usa, o rulare suprapusa peste

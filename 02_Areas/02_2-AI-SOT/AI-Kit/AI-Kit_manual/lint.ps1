@@ -10,6 +10,8 @@ if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
 # obisnuita la finalul caii face ca tot voltul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
+# Poarta de cale reala — o poarta care verifica voltul gresit nu verifica nimic.
+Assert-PkmsVaultReal -Vault $Vault -Cine 'lint'
 $skip = Get-PkmsExclusions
 
 $errors = New-Object System.Collections.Generic.List[string]

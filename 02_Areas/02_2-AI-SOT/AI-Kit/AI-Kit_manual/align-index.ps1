@@ -44,6 +44,10 @@ param(
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
 if (-not $Vault) { $Vault = Get-PkmsVault }
+# Poarta de cale reala, INAINTE de Resolve-Path: pe o cale vida Resolve-Path
+# arunca sub ErrorActionPreference=Stop, deci o eroare necitita in loc de un
+# refuz curat. Pe D: sta stubul cu un fisier — Test-Path trece, dar nu e volt.
+Assert-PkmsVaultReal -Vault $Vault -Cine 'align-index'
 $Vault = (Resolve-Path -LiteralPath $Vault).Path
 # MASURAT: Resolve-Path pastreaza bara de la final. Fara taierea de mai jos,
 # calea relativa iese fara separatorul de inceput si toate cele 689 de
