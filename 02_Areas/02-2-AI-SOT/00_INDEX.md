@@ -20,7 +20,7 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`02-2-1-AI-Archive`](<02-2-1-AI-Archive/00_INDEX.md>) — 0 fișiere · 2 subfoldere
 - [`02-2-2-AI-Bridges`](<02-2-2-AI-Bridges/00_INDEX.md>) — 0 fișiere · 3 subfoldere
 - [`02-2-3-AI-Chats`](<02-2-3-AI-Chats/00_INDEX.md>) — 4 fișiere · 1 subfoldere
-- [`02-2-4-AI-Kit`](<02-2-4-AI-Kit/00_INDEX.md>) — 0 fișiere · 3 subfoldere
+- [`02-2-4-AI-Kit`](<02-2-4-AI-Kit/00_INDEX.md>) — 1 fișiere · 3 subfoldere
 - [`02-2-5-AI-Mem-SOT_Instructions-Folder`](<02-2-5-AI-Mem-SOT_Instructions-Folder/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 - [`02-2-6-AI-Scripts`](<02-2-6-AI-Scripts/00_INDEX.md>) — 0 fișiere · 3 subfoldere
 

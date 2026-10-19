@@ -19,6 +19,6 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`rapoarte`](<rapoarte/00_INDEX.md>) — 1 fișiere · 1 subfoldere
 - [`resturi de unelte`](<resturi de unelte/00_INDEX.md>) — 17 fișiere · 6 subfoldere
-- [`Skills_MASTER_Folder`](<Skills_MASTER_Folder/00_INDEX.md>) — 0 fișiere · 3 subfoldere
+- [`Skills_MASTER_Folder`](<Skills_MASTER_Folder/00_INDEX.md>) — 0 fișiere · 5 subfoldere
 
 

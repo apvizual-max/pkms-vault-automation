@@ -19,7 +19,7 @@ Cele mai frecvente două extensii sunt `.md` (2 din 3 fișiere) și `.json` (1 d
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `handoff-harta-implementarii.md` | 20 KB | 2026-10-19 |
-| `handoff-prompt.md` | 7 KB | 2026-10-19 |
+| `handoff-harta-implementarii.md` | 27 KB | 2026-10-20 |
+| `handoff-prompt.md` | 9 KB | 2026-10-20 |
 | `transcript-complet.json` | 29 MB | 2026-10-19 |
 
