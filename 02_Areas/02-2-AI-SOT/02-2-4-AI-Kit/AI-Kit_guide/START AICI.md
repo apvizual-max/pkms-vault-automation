@@ -26,7 +26,7 @@ după mutarea pe Drive și după renumerarea rafturilor.**
 | **06_Metadata** | Ținte, șabloane, agenți. | 2 fișiere · 3 subfoldere |
 | **07_Canvas Bases** | Funcția *Bases* din Obsidian. **Se folosește de pe loc — nu o atingi.** | 1 fișier · 3 subfoldere |
 | **08_Clippings** | Tăieturile tale: AI TOOLS, HERMES, LINKEDIN, spațiu, trading. | 0 fișiere · 13 subfoldere |
-| **09_raport-archive** | Rapoartele de stare datate. Nu se urcă în istoric (regula 7c). | 1 fișier · 0 subfoldere |
+| **09_raport-archive** | Rapoartele de stare datate. Nu se urcă în istoric (regula 7c). | 3 fișiere · 0 subfoldere |
 
 Numerele sunt **fișiere de conținut** — `00_INDEX.md` nu intră, fiindcă indexul e
 registrul, nu conținutul (contractul §18.7).
@@ -53,15 +53,16 @@ sistem, nu conținut".
 2. **`01_Projects\01-2-AP-ID.ro - AI Branding Work and Clients\01-2-2-AP-ID - Clients\Knights Templar` — 25,65 GB**
    (29 de foldere). Același material, într-o altă ramură.
 
-**Cele două ramuri se suprapun cu 14,09 GB**, în 17 subintrări cu același nume
-relativ și aceeași dimensiune. Probă de identitate, făcută pe fișiere reale:
-`Ordinul Dragonilor - ElementsENG - Full Dragon Emblem` (9.518.388 B),
-`Diploma - Ambasador General_Update.pdf` (10.898.947 B) și
-`Fisa - A4 - BilingvFisa_Engleza_Ad...` (386.757.769 B) — **SHA256 identic în
-ambele ramuri**. Sunt copii byte-cu-byte, nu versiuni diferite.
+**Cele două ramuri se suprapun cu 14,09 GB** (115 căi comune; 14,09 GB de conținut
++ 0,03 MB de indexuri). Inventarul complet, măsurat pe 20 octombrie 2026: dintre
+fișierele comune, **92 au aceeași dimensiune — și SHA256 identic în 92 din 92, cu 0
+diferite**; cele 23 rămase cu dimensiune diferită sunt **toate `00_INDEX.md`**
+(artefacte derivate). Deci **niciun fișier de conținut nu diferă între ramuri** —
+sunt copii byte-cu-byte, nu versiuni diferite.
 
-Restul nu se suprapun: **30,47 GB sunt doar în prima ramură**, **11,56 GB doar în a
-doua**. Deci **niciuna nu e cuprinsă în cealaltă** — nu se poate șterge una dintre
+Restul nu se suprapun: **30,48 GB sunt doar în prima ramură** (351 de fișiere),
+**11,56 GB doar în a doua** (42 de fișiere, inclusiv `Andu - Diplome` cu PSD-ul de
+1,65 GB). Deci **niciuna nu e cuprinsă în cealaltă** — nu se poate șterge una dintre
 ele pe simplă regulă, și n-a fost șters nimic. **Decizia e a ta; eu am măsurat.**
 
 > **Cum s-a întâmplat:** la mutarea pe Drive a trebuit unit manual ce ai fost

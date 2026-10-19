@@ -10,7 +10,7 @@
 
 | Se reface din repo | Nu se reface (e pe Drive) |
 |---|---|
-| cele 11 scripturi ale motorului | conținutul bazelor `00`–`09` |
+| cele 12 scripturi ale motorului | conținutul bazelor `00`–`09` |
 | contractul §18 + documentația ghidului | fișierele clientului |
 | `COTOR.md`, `AGENTS.md`, `MANUAL DE NAVIGARE - cotor.md` | fișierele atașate |
 | **skillurile** (`_SYSTEM\Skills_MASTER_Folder\`) | arhiva `_QUARANTINE` |
@@ -76,6 +76,18 @@ Copy-Item "$V\_SYSTEM\Skills_MASTER_Folder\PKMS - indexare Skill" `
 
 ### 1.6. Automatizările
 
+**Mai întâi, lansatorul de pe `C:`** — fără el, taskurile mor la logon (vezi §5 al
+skillului `PKMS - administrare`):
+
+```powershell
+$W = 'C:\Users\apviz\.minimax\pkms'
+New-Item -ItemType Directory -Path $W -Force | Out-Null
+Copy-Item "$M\rula-din-task.ps1" $W -Force
+```
+
+Lansatorul e și în repo (la `...\AI-Kit_manual\rula-din-task.ps1`, deschis de
+`.gitignore`), deci save point-ul e complet fără el.
+
 XML-urile sunt în
 `_SYSTEM\Skills_MASTER_Folder\PKMS - administrare Skill\automations\`. Se înregistrează
 cu:
@@ -86,10 +98,12 @@ foreach ($x in Get-ChildItem "$V\_SYSTEM\Skills_MASTER_Folder\PKMS - administrar
 }
 ```
 
-**Atenție:** XML-ul conține calea **absolută** a vaultului. Dacă vaultul s-a mutat, calea
-din XML trebuie înlocuită înainte de înregistrare — altfel taskul moare cu
-`ERROR_DIRECTORY` (2147942667), exact cum s-a întâmplat la 19.10.2026 când mutarea pe
-Drive a lăsat taskurile pe calea veche.
+**Atenție:** XML-ul conține calea **absolută** a lansatorului
+(`C:\Users\apviz\.minimax\pkms\rula-din-task.ps1`), iar calea vaultului e **în
+interiorul lansatorului**, nu în XML. Dacă vaultul s-a mutat, se schimbă `$Vault` din
+`rula-din-task.ps1`, nu XML-ul. Asta e exact cauza rămasă la 19.10.2026: taskurile
+arătau spre `02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_manual`, cale care nu mai exista după
+mutarea pe Drive — și au murit cu `ERROR_DIRECTORY` (2147942667).
 
 **Verificare după înregistrare:**
 

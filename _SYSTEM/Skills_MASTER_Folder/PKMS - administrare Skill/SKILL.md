@@ -25,7 +25,7 @@ license: Proprietar — Popy / OPTIMUS PRIME
 |---|---|
 | **Unde** | `G:\My Drive\GDrive-Second_Brain_PKMS` — DriveFS, volum virtual, cu latență mare |
 | **Backup** | `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` — **se citește, nu se atinge** |
-| **Motor** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` — 11 scripturi |
+| **Motor** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` — 12 scripturi |
 | **Ghid** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\` — contractul + documentația |
 | **Cotor** | `COTOR.md` la rădăcină (25.735 B) · `AGENTS.md` (4.357 B) · `INDEX CENTRAL.md` (derivat, neversionat) |
 
@@ -130,11 +130,17 @@ Get-ScheduledTask -TaskName 'PKMS-*' | ForEach-Object {
 }
 ```
 
-**Defect măsurat, 19.10.2026 — cursa de pornire.** La logon, `G:` (DriveFS) poate fi
-încă nemontat. Taskul pornește, calea de lucru nu există → `ERROR_DIRECTORY`
-(2147942667 = 0x8007010B). **Nu e defect de configurare a taskului** — calea e corectă;
-e o cursă între montarea volumului și pornirea taskului. De aceea taskurile trec prin
-`rula-din-task.ps1`, care **așteaptă calea** și reia.
+**Defect măsurat, 19–20.10.2026 — cursa de pornire. Reparat și măsurat.** La logon,
+`G:` (DriveFS) poate fi încă nemontat. Taskul pornește, calea de lucru nu există →
+`ERROR_DIRECTORY` (2147942667 = 0x8007010B). Măsurat: `PKMS-Aliniere` a pornit la
+**23:04:40** pe triggerul de logon și a murit cu 2147942667. **Nu e defect de
+configurare a taskului** — rularea manuală a *exact* acelei comenzi a ieșit `EXIT=0`
+în 629 s, cu 0 NEALINIAT; e o cursă între montarea volumului și pornirea taskului.
+**Reparare:** `PKMS-Aliniere`, `PKMS-Watch` și `PKMS-GitAutoCommit` pornesc acum prin
+`rula-din-task.ps1`, aflat pe `C:` (`C:\Users\apviz\.minimax\pkms\`), care
+**așteaptă calea** (max 300 s), apoi rulează scriptul și îi propagă codul de ieșire.
+Probă reală: rulat prin Task Scheduler la **00:48:56**, jurnalul a scris „rulez
+watch.ps1". `PKMS-DriveFS-AutoRepair` nu e afectat — scriptul lui e deja pe `C:`.
 
 **Regra:** un `LastTaskResult` nenul la o automatizare e un incident de urmărit, chiar
 dacă porțile manuale sunt verzi. Porțile manuale nu acoperă automatizările.
@@ -197,8 +203,8 @@ Cauza, măsurată: `raport-autocomit.log` (17.902 B) crește la fiecare commit p
 Bucla nu se oprea. Nicio rulare manuală nu o oprea, fiindcă fiecare rulare **era** bucla.
 
 **Reparul:** excluderea jurnalelor vii, **centralizată** în `paths.ps1` →
-`Test-PkmsLiveLog` (3 nume: `raport-autocomit.log`, `raport-aliniere.log`,
-`arhiva- raport aliniere.log`), aplicată **identic** în `build-index.ps1` (3 locuri),
+`Test-PkmsLiveLog` (4 nume: `raport-autocomit.log`, `raport-aliniere.log`,
+`arhiva- raport aliniere.log`, `raport-wrapper-task.log`), aplicată **identic** în `build-index.ps1` (3 locuri),
 `align-index.ps1` (2 locuri + `$bytes` aliniat cu `$realBytes`) și `verifica-schema.ps1`
 (1 loc). Regula a fost scrisă și în contractul §18.7 — altfel contractul și codul s-ar
 fi despărțit, exact ce §18.9 interzice.
@@ -236,7 +242,7 @@ poartă motivul ei, măsurat** — o regulă fără motiv e o presupunere, nu o 
 
 **Ce trebuie să fie în repo ca refacerea sistemului să fie posibilă:**
 
-1. cele 11 scripturi din `AI-Kit_manual`
+1. cele 12 scripturi din `AI-Kit_manual`
 2. contractul `SPECIFICATII - contractul vaultului.md` + documentația din `AI-Kit_guide`
 3. `COTOR.md`, `AGENTS.md`, `MANUAL DE NAVIGARE - cotor.md`
 4. **skillurile** (`_SYSTEM\Skills_MASTER_Folder\`) — inclusiv acest fișier

@@ -1,9 +1,9 @@
 # AUTOMATIZĂRI — scripturile
 
-Sunt în `AI-Kit\`. **Zece scripturi.** Rulează-le din PowerShell:
+Sunt în `AI-Kit\`. **Douăsprezece scripturi.** Rulează-le din PowerShell:
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 ```
 
 ---
@@ -21,6 +21,7 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 | `verifica-schema.ps1` | **verifică forma**, nu existența: titlu, motiv, cele patru blocuri, 2—12 cuvinte cheie | **nu** — doar citește |
 | `inchide-log.ps1` | recitește logul, re-măsoară fiecare folder și spune ce e **DESCHIS acum**; cu `-Arhiveaza` mută rezolvatele în arhivă | implicit **nu** — doar cu `-Arhiveaza` |
 | `git-autocommit.ps1` | comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta | **da, în git** — patru porți înainte: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare |
+| `rula-din-task.ps1` | **lansatorul** taskurilor: stă pe `C:`, așteaptă ca `G:` să fie montat, apoi rulează alt script și îi propagă codul | **da** — rulează scriptul însuși, cu `PKMS_VAULT` și `PKMS_BACKUP` setate |
 
 **Dacă în `AI-Kit` apare un script pe care tabelul nu îl numește, e o gaură în documentație,
 nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din document:
@@ -29,7 +30,7 @@ nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din do
 (Get-ChildItem .\AI-Kit_manual -Filter *.ps1).Count
 ```
 
-**La data de 2026-10-19: 11**, măsurat pe calea nouă
+**La data de 2026-10-20: 12**, măsurat pe calea nouă
 `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`. *Cifra veche din acest
 document spunea `D:\Alex_Knowlege_Vault\AI-Kit` — o cale care nu mai există de
 când vaultul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
@@ -40,7 +41,7 @@ calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 ## Ordinea canonică — o singură, scrisă identic în toate documentele de predare
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
@@ -73,6 +74,7 @@ de citit.
 | `verifica-schema.ps1` | nu scrie nimic, dar arată cât de schemă e datorie — de aceea nu e în lanț |
 | `inchide-log.ps1` | implicit nu scrie, dar cu `-Arhiveaza` **mută evenimente** din log în arhivă — iar hotărârea de a muta e a lui Alex |
 | `git-autocommit.ps1` | nu atinge vaultul deloc, dar **scrie în istoricul git** — și poate **refuza**, caz în care panoul `Changes` rămâne plin tocmai când plasa era chemată să-l golească. De aceea rulează la 5 minute, nu la fiecare scriere |
+| `rula-din-task.ps1` | nu e o treaptă de verificare, e **lansatorul**: stă pe `C:`, ca să poată porni și când `G:` nu e montat; așteaptă calea, apoi rulează alt script |
 
 Rulă-le **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată
 „ca să fie sigur". `watch.ps1` rămâne singurul punct de intrare al verificării.

@@ -35,8 +35,8 @@
   <Actions Context="Author">
     <Exec>
       <Command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Command>
-      <Arguments>-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\watch.ps1"</Arguments>
-      <WorkingDirectory>G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual</WorkingDirectory>
+      <Arguments>-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\apviz\.minimax\pkms\rula-din-task.ps1" watch.ps1</Arguments>
+      <WorkingDirectory>C:\Users\apviz\.minimax\pkms</WorkingDirectory>
     </Exec>
   </Actions>
 </Task>

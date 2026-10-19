@@ -501,7 +501,7 @@ fișier" despre un copil care nu are niciunul.
 
 **Jurnalele motorului nu sunt conținut.** Un fișier scris de automat *în timpul
 automatului* — `raport-autocomit.log`, `raport-aliniere.log`,
-`arhiva- raport aliniere.log` — își schimbă dimensiunea fără ca un om să fi
+`arhiva- raport aliniere.log`, `raport-wrapper-task.log` — își schimbă dimensiunea fără ca un om să fi
 atins vreun folder. Măsurat 2026-10-19: `raport-autocomit.log` crește la
 fiecare commit, deci indexul lui `AI-Kit_manual` era `NEALINIAT` la fiecare
 5 minute, pentru totdeauna, și nicio rulare nu-l putea duce la `CONFORM` — mai

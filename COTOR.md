@@ -2,7 +2,7 @@
 
 **Scheletul vaultului.** Tot ce urmează pleacă de aici.
 
-Ultima actualizare: **19 octombrie 2026**. 50.714 de fișiere · 7.509 de foldere · 85,75 GB.
+Ultima actualizare: **20 octombrie 2026**. 50.714 de fișiere · 7.509 de foldere · 85,75 GB.
 Vaultul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
 Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 **Calea lui nu se scrie tare nicăieri:** o descoperă `AI-Kit\paths.ps1`.
@@ -44,7 +44,7 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 │                   `Clippings` la rădăcină — mutat, poate scrie în gol. Observația
 │                   e în `AGENTS.md` și `START AICI.md`; decizia e a lui Popy.
 │
-├── COTOR + INDEX CENTRAL + AGENTS + MANUAL DE NAVIGARE + raport de stare
+├── COTOR + INDEX CENTRAL + AGENTS + MANUAL DE NAVIGARE
 │
 ├── _SYSTEM          unelte, biblioteci de programe, skill-uri vii, rest de programe
 ├── _ARCHIVE         lucruri scoase din calea deschisă
@@ -62,11 +62,13 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 | `AI-Kit\AI-Kit_manual` | `02_Areas\02-2-AI-SOT\` | scripturile — **motorul** |
 | `AI-Kit\AI-Kit_guide` | `02_Areas\02-2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
 | skill-urile vii `git-autonom` / `git-install` | `_SYSTEM\Skills_MASTER_Folder\SENTINEL - git-*- Skill\` | copii vii, verificate prin SHA-256 |
+| skill-urile PKMS (`administrare` / `indexare`) | `_SYSTEM\Skills_MASTER_Folder\PKMS - *- Skill\` | sursa de adevăr a sistemului; copii și în sistemul central |
 | `arhiva vendor` de skill-uri | `_SYSTEM\Skills_MASTER_Folder\_Skills_BackUp_Archive_2026-07-15\` | **închisă**, nu e motor |
 
-> **Rădăcina nu mai conține documentația, ci cinci fișiere `.md`:** `COTOR.md`,
-> `INDEX CENTRAL.md`, `MANUAL DE NAVIGARE - cotor.md`, `AGENTS.md` (puntea către
-> LLM Wiki) și raportul de stare al zilei. Restul e în `AI-Kit_guide`. Uneltele
+> **Rădăcina nu mai conține documentația, ci patru fișiere `.md`:** `COTOR.md`,
+> `INDEX CENTRAL.md`, `MANUAL DE NAVIGARE - cotor.md` și `AGENTS.md` (puntea către
+> LLM Wiki). Rapoartele de stare sunt documente datate: cele vechi stau în
+> `09_raport-archive`, cel nou în `02-2-4-AI-Kit`. Restul e în `AI-Kit_guide`. Uneltele
 > trebuie să caute acolo, nu la rădăcină — altfel urlă pe fișiere care există.
 
 ---
@@ -113,7 +115,7 @@ Măsurate pe **19 octombrie 2026**, după numerotarea pe trei niveluri:
 | `06_Metadata` | 43 | 0,00 | ținte, șabloane, agenți |
 | `07_Canvas Bases` | 9 | 0,00 | canvas-urile din Obsidian |
 | `08_Clippings` | 457 | 0,37 | articole tăiate din web |
-| `09_raport-archive` | 2 | 0,00 | rapoartele de stare vechi |
+| `09_raport-archive` | 4 | 0,00 | rapoartele de stare vechi |
 
 > **`01_Projects`, pe rnduri:** `01-6-Work_Folder (to sort)` 32.181 fișiere / 47,78 GB · `01-2-AP-ID.ro` 764 fișiere / 31,58 GB · `01-1-Alex` 97 fișiere / 0,07 GB · `01-5-FORGE` 9 · `01-3-Arhiva Elements` 1 · `01-4-Arhiva Foto` 1.
 
@@ -340,6 +342,16 @@ ar rescrie indexuri acolo unde n-are voie.
 poate fi lăsat să ruleze oricând; automatul care scrie trebuie creat conștient, cu
 ora lui, ca alegere — nu ca efect secundar.
 
+**Cursa de montare, măsurată și reparată (20.10.2026).** `PKMS-Aliniere` a pornit la
+**23:04:40** pe triggerul de **logon** și a murit cu `2147942667` (ERROR_DIRECTORY): `G:`
+(DriveFS) nu era încă montat, iar taskul pornea cu `WorkingDirectory` pe `G:` — deci
+calea de lucru nu exista înainte de a rula orice. **Configurația taskului era corectă:**
+rularea manuală a *exact* acelei comenzi a ieșit `EXIT=0` în 629 s, cu 0 NEALINIAT.
+Reparare: `PKMS-Aliniere`, `PKMS-Watch` și `PKMS-GitAutoCommit` pornesc acum prin
+`rula-din-task.ps1`, aflat pe `C:` (`C:\Users\apviz\.minimax\pkms\`), care **așteaptă
+calea** (max 300 s), apoi rulează scriptul și îi propagă codul de ieșire. Jurnalul lui
+(`raport-wrapper-task.log`) e **jurnal viu**, deci **nu intră** în nicio numărătoare (§18.7).
+
 ### Cârligul de auto-repair pentru DriveFS — `PKMS-DriveFS-AutoRepair`
 
 Al treilea automat, dar **în afara vaultului**: rulează din
@@ -397,10 +409,10 @@ rulate pe rând își rescriu reciproc indexurile la nesfârșit.
 
 ---
 
-## Cele 11 scripturi din `AI-Kit`
+## Cele 12 scripturi din `AI-Kit`
 
 Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual' -Filter *.ps1).Count`
-→ **11**.
+→ **12**.
 
 | Script | Rolul |
 |---|---|
@@ -415,6 +427,7 @@ Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-K
 | `verifica-schema.ps1` | **verifică** dacă indexurile sunt pe schema §18.1 — nu dacă există (asta e treaba lui `lint`) |
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
 | `git-autocommit.ps1` | **NU atinge vaultul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
+| `rula-din-task.ps1` | **lansatorul taskurilor**, nu o treaptă: stă pe `C:` (`C:\Users\apviz\.minimax\pkms\`), **așteaptă** ca `G:` să fie montat (max 300 s), apoi rulează un script din `AI-Kit_manual` și îi propagă codul de ieșire. Există pentru că la logon `G:` poate fi încă nemontat | **da** — rulează scriptul însuși, cu `PKMS_VAULT` și `PKMS_BACKUP` setate |
 
 **Ordinea canonică rămâne cea de 5 trepte** (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.
@@ -449,16 +462,16 @@ Toate stau acum în **`AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
 | `LOGICA - cum se foloseste fiecare baza.md` | fiecare bază, scopul, mecanismul, data-flow-ul |
 | `PROCESE - flux de la captură la utilizare.md` | arborele de proces, pas cu pas |
 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi de lucru |
-| `AUTOMATIZARI - scripturi.md` | cele 11 scripturi, ordinea canonică, ce scrie fiecare |
+| `AUTOMATIZARI - scripturi.md` | cele 12 scripturi, ordinea canonică, ce scrie fiecare |
 | `ONBOARDING AI - cum preia un AI vaultul.md` | cum ia în posesie vaultul un AI fără memorie |
 | `START AICI.md` | rafturile de lucru |
 | `AUDIT_RECONCILIERE_FINAL.md` | dovada că nu s-a pierdut nimic |
 
-La rădăcină au rămas **cinci** fișiere `.md`: `COTOR.md` (acest fișier),
-`INDEX CENTRAL.md` (generat de `build-index.ps1`), `MANUAL DE NAVIGARE - cotor.md`,
-`AGENTS.md` (puntea către LLM Wiki) și raportul de stare al zilei. Raportul de stare
-e un document datat, ca cele din `09_raport-archive` — mutarea lui e decizia lui
-Popy; nu se mută nimic fără R0.
+La rădăcină au rămas **patru** fișiere `.md`: `COTOR.md` (acest fișier),
+`INDEX CENTRAL.md` (generat de `build-index.ps1`), `MANUAL DE NAVIGARE - cotor.md`
+și `AGENTS.md` (puntea către LLM Wiki). Rapoartele de stare sunt documente datate:
+cele vechi stau în `09_raport-archive`, cel nou în `02-2-4-AI-Kit`. Mutarea lor a fost
+hotărârea lui Popy, cu R0 — nu se mută nimic fără R0.
 
 ## LLM Wiki — legătura cu stratul de indexuri
 

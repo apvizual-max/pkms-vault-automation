@@ -67,15 +67,16 @@ conținutul, calculează cifrele, scrie blocurile derivate. Restul rămâne.
 
 ## 4. Regula „jurnalele vii nu sunt conținut" — §18.7
 
-Cele trei jurnale ale motorului **cresc în timp ce rulează**:
+Cele patru jurnale ale motorului **cresc în timp ce rulează**:
 
 | Jurnal | Unde | De ce crește |
 |---|---|---|
 | `raport-autocomit.log` | `AI-Kit_manual\` | `git-autocommit.ps1:133` adaugă la fiecare commit |
 | `raport-aliniere.log` | `AI-Kit_guide\` | fiecare rulare de aliniere adaugă un eveniment |
 | `arhiva- raport aliniere.log` | `AI-Kit_guide\` | arhiva fiecărei rulări |
+| `raport-wrapper-task.log` | `AI-Kit_manual\` | `rula-din-task.ps1` scrie la fiecare pornire de task |
 
-**Regula (contractul §18.7):** aceste trei nume nu intră în numărătoarea de fișiere a
+**Regula (contractul §18.7):** aceste patru nume nu intră în numărătoarea de fișiere a
 folderului care le conține. Lista e **într-un singur loc** — `paths.ps1` →
 `Test-PkmsLiveLog` — și e aplicată identic în `build-index.ps1` (3 locuri),
 `align-index.ps1` (2 locuri + `$bytes` aliniat cu `$realBytes`) și `verifica-schema.ps1`
