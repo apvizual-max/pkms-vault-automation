@@ -1,5 +1,5 @@
 ﻿<#
-  PKMS setup.ps1 - ruleaza asta PRIMUL, cand preiei voltul.
+  PKMS setup.ps1 - ruleaza asta PRIMUL, cand preiei vaultul.
   verifica mediul si iti spune exact ce stiu si ce nu stiu.
   nu modifica nimic.
 #>
@@ -9,7 +9,7 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
 
 Write-Output "=============================================="
@@ -18,7 +18,7 @@ Write-Output "=============================================="
 Write-Output ""
 
 if (-not (Test-Path $Vault)) { Write-Output "NU EXISTA: $Vault"; exit 1 }
-Write-Output "[OK] voltul exista: $Vault"
+Write-Output "[OK] vaultul exista: $Vault"
 
 $B = Get-PkmsBackup
 if ($B) { Write-Output "[OK] backupul exista: $B" }
@@ -27,7 +27,7 @@ else { Write-Output "[EROARE] backupul nu a fost gasit in radacina lui D:. NU co
 Write-Output ""
 Write-Output "CITESTE IN ACEASTA ORDINE (nu sari):"
 $docs = @(
-  'SPECIFICATII - contractul voltului.md',
+  'SPECIFICATII - contractul vaultului.md',
   'COTOR.md',
   'LOGICA - cum se foloseste fiecare baza.md',
   'PROCESE - flux de la captură la utilizare.md',
@@ -43,7 +43,7 @@ foreach ($d in $docs) {
   else { Write-Output ("  {0}. LIPSA: {1}" -f $i, $d) }
   $i++
 }
-Write-Output "  $i. INDEX CENTRAL.md  (tot voltul, pe un ecran)"
+Write-Output "  $i. INDEX CENTRAL.md  (tot vaultul, pe un ecran)"
 
 Write-Output ""
 $skip = Get-PkmsExclusions
@@ -68,7 +68,7 @@ $rol = @{
   'setup.ps1'        = 'verificare de preluare; nu scrie'
   'lint.ps1'         = 'POARTA: regulile; nu scrie'
   'verifica-schema.ps1' = 'POARTA: forma indexurilor 00_INDEX; nu scrie'
-  'health-check.ps1' = 'masoara voltul; nu scrie'
+  'health-check.ps1' = 'masoara vaultul; nu scrie'
   'inchide-log.ps1'    = 'recenseaza evenimentele deschise; scrie doar cu -Arhiveaza'
   'reconcile.ps1'    = 'compara cu backupul; implicit nu scrie'
   'watch.ps1'        = 'verificarea care vine singura; scrie UN raport'

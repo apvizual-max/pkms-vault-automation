@@ -1,13 +1,13 @@
 ﻿<#
-  PKMS reconcile.ps1 - compara voltul cu backupul si raporteaza pierderile.
+  PKMS reconcile.ps1 - compara vaultul cu backupul si raporteaza pierderile.
   REGULA: nu scrie niciodata in backup. doar citeste.
-  Daca gaseste lipsuri, le COPIAZA din backup in volt - nu le muta.
+  Daca gaseste lipsuri, le COPIAZA din backup in vault - nu le muta.
 #>
 param(
   # ATENTIE: lasat GOAL, la fel ca $Backup de mai jos. Daca am pune aici un drum,
   # Get-PkmsVault nu s-ar apela niciodata, iar $env:PKMS_VAULT ar fi ignorat in
   # tacure. era exact regula scrisa in comentariul de sub $Backup, aplicata pe
-  # backup si uitata pe volt.
+  # backup si uitata pe vault.
   [string]$Vault = '',
   # ATENTIE: lasat GOAL. Daca am pune aici un drum, Get-PkmsBackup nu s-ar apela
   # niciodata, iar scriptul ar compara cu nimic si ar anunta fals "nu s-a pierdut nimic".
@@ -23,7 +23,7 @@ param(
   [switch]$RestoreModified,
   # NU schimba nimic singur. Exista doar ca sa cerse a doua oara intentia, cand
   # cifra de pierderi e atat de mare incat cel mai probabil NU e o pierdere, ci un
-  # volt partial (copie de test, dosar nou, replica). Fara el, comanda refuza sa
+  # vault partial (copie de test, dosar nou, replica). Fara el, comanda refuza sa
   # scrie ceva ce nimeni nu si-a cerut.
   [switch]$RestoreConfirmat
 )
@@ -33,7 +33,7 @@ if (-not $Backup) { $Backup = Get-PkmsBackup }
 if (-not $Vault)  { $Vault  = Get-PkmsVault }
 $Backup = Normalize-PkmsPath $Backup
 $Vault  = Normalize-PkmsPath $Vault
-# Poarta de cale reala: reconcile compara backupul CU voltul, deci o cale
+# Poarta de cale reala: reconcile compara backupul CU vaultul, deci o cale
 # gresita l-ar face sa raporteze pierderi inexistente sau sa nu compare nimic.
 Assert-PkmsVaultReal -Vault $Vault -Cine 'reconcile'
 if (-not $Backup) { Write-Output 'BACKUP NU A FOST GASIT'; exit 1 }
@@ -42,11 +42,11 @@ if (-not (Test-Path -LiteralPath $Backup)) {
   Write-Output 'Nu s-a comparat nimic. Nu pot spune ca nu s-a pierdut nimic.'
   exit 1
 }
-# aceeasi regula pentru voltul: daca nu exista, comparatia nu are obiect.
+# aceeasi regula pentru vaultul: daca nu exista, comparatia nu are obiect.
 # fara asta, Get-ChildItem ar intoarce 0 fisiere si scriptul ar raporta
 # "lipsa reala" pentru tot backupul, fara sa stie ca n-a citit nimic.
 if (-not (Test-Path -LiteralPath $Vault)) {
-  Write-Output "VOLT INEXISTENT: $Vault"
+  Write-Output "VAULT INEXISTENT: $Vault"
   Write-Output 'Nu s-a comparat nimic. Nu pot spune ca nu s-a pierdut nimic.'
   exit 1
 }
@@ -59,15 +59,15 @@ $nv = [int64](($now | Measure-Object Length -Sum).Sum)
 $bk = [int64](($bak | Measure-Object Length -Sum).Sum)
 
 # potrivire pe NUME RELATIV, nu pe dimensiune.
-# motivul: dimensiunea egala nu inseamna acelasi fisier. Un fisier sters din volt se
-# putea ascunde in faptul ca in volt exista ALT fisier de aceeasi dimensiune, iar
+# motivul: dimensiunea egala nu inseamna acelasi fisier. Un fisier sters din vault se
+# putea ascunde in faptul ca in vault exista ALT fisier de aceeasi dimensiune, iar
 # scriptul ar raporta "nu s-a pierdut nimic". Asta e un repaus fals.
 #
-# dar numele relativ singur nu ajunge: voltul a fost REORGANIZAT, deci 39.469 de
+# dar numele relativ singur nu ajunge: vaultul a fost REORGANIZAT, deci 39.469 de
 # fisiere au drum nou. Fiecare dintre ele ar pare "lipsa" daca nu corelam cu manifestul
 # de mutari. De aceea corelatia, nu dimensiunea, decide cine e mutat si cine e pierdut.
 $nowRel = New-Object 'System.Collections.Generic.Dictionary[string,long]' ([StringComparer]::OrdinalIgnoreCase)
-# scris la ce moment in volt. fara asta, "modificat" nu poate fi despartit in
+# scris la ce moment in vault. fara asta, "modificat" nu poate fi despartit in
 # ACTIV (scris recent, viu) si SUSPECT (diferit, dar vechi) - vezi mai jos.
 $nowTime = New-Object 'System.Collections.Generic.Dictionary[string,datetime]' ([StringComparer]::OrdinalIgnoreCase)
 foreach ($f in $now) {
@@ -77,7 +77,7 @@ foreach ($f in $now) {
 }
 
 # pragul de ACTIVITATE: cea mai recenta scriere din backup. orice fisier scris in
-# volt DUPA asta a fost atins dupa ultima captura, deci nu poate fi judecat prin
+# vault DUPA asta a fost atins dupa ultima captura, deci nu poate fi judecat prin
 # comparatie cu backupul - continutul lui mai nou e chiar el.
 $ultimaScriereBackup = [datetime]::MinValue
 if ($bak.Count -gt 0) {
@@ -87,7 +87,7 @@ if ($bak.Count -gt 0) {
 
 function Test-Activ([string]$relCur) {
   # mai multe probe, nu unul singur. un fisier modificat saptamana trecuta NU e activ.
-  # 1) exista in volt la acel drum
+  # 1) exista in vault la acel drum
   if (-not $nowTime.ContainsKey($relCur)) { return $false }
   $t = $nowTime[$relCur]
   # 2) scris DUPAA ultima scriere cunoscuta din backup (altfel backupul e mai nou)
@@ -148,7 +148,7 @@ function Map-Dir([string]$rel) {
 }
 
 # --- REGISTRUL DE RETRAGERI ---
-# Un fisier absent din volt poate fi doua lucruri distincte, si sistemul trebuie
+# Un fisier absent din vault poate fi doua lucruri distincte, si sistemul trebuie
 # sa leiba: (1) l-ai pierdut fara sa vrei — asta e o alarma; (2) l-ai sters tu,
 # constient, pentru ca nu mai ai nevoie de el — asta e o hotarare, nu o pierdere.
 # Pana acum existau doar doua categorii: mutat si pierdut. Maparea catre o cale
@@ -162,7 +162,7 @@ function Map-Dir([string]$rel) {
 # omului bate orice inferenta pe care o poate face scriptul.
 #
 # Format: rel;motiv;data
-#   rel   = cale relativa la backup sau la volt. Se compara exact sau ca prefix
+#   rel   = cale relativa la backup sau la vault. Se compara exact sau ca prefix
 #          de director (rel + "\"); cel mai lung prefix primeste.
 #   motiv = ce a decis omul. Se afiseaza in raport, ca hotararea sa fie citita.
 #   data  = cand s-a decis.
@@ -293,7 +293,7 @@ function Test-FisiereIdentice($a, $b) {
 # --- ultima runda: mutari fara manifest ---
 # rundele tarzii (note la radacina -> 00_Inbox, secrete -> _ARCHIVE, reziduuri ->
 # _QUARANTINE) nu au fost scrise in niciun manifest. Ca sa nu raportam ca pierdute
-# fisiere care exista, cautam fiecare "lipsa" dupa NUME si DIMENSIUNE in tot voltul.
+# fisiere care exista, cautam fiecare "lipsa" dupa NUME si DIMENSIUNE in tot vaultul.
 $byNS = New-Object 'System.Collections.Generic.Dictionary[string,System.Collections.Generic.List[string]]'
 foreach ($k in $nowRel.Keys) {
   $key = ([IO.Path]::GetFileName($k)) + '|' + $nowRel[$k]
@@ -321,7 +321,7 @@ foreach ($l in $lipsa) {
     }
     Write-Output ""
     Write-Output "  ATENTIE, POTRIVIRE FALSA: $($l.Rel)"
-    Write-Output "    in volt exista '$dest', cu ACELASI nume si ACEEASI marime."
+    Write-Output "    in vault exista '$dest', cu ACELASI nume si ACEEASI marime."
     Write-Output "    dar CONTINUTUL DIFERA. Nu e o mutare — e alt fisier care se"
     Write-Output "    impiedica de numele lui. Originalul e REAL LIPSA, nu sarit."
     # NU continue intentionat: cade mai jos, ca sa ajunga in $realLipsa.
@@ -360,7 +360,7 @@ $missing = $realLipsa.Count
 
 Write-Output "=== RECONCILIERE ==="
 Write-Output "backup folosit: $Backup"
-Write-Output "volt:    $($now.Count) fisiere  $([math]::Round($nv/1GB,2)) GB"
+Write-Output "vault:    $($now.Count) fisiere  $([math]::Round($nv/1GB,2)) GB"
 Write-Output "backup:  $($bak.Count) fisiere  $([math]::Round($bk/1GB,2)) GB"
 Write-Output "diferenta de dimensiune: $([math]::Round($nv-$bk,0)) octeti"
 Write-Output ""
@@ -382,10 +382,10 @@ if ($bak.Count -eq 0) {
   exit 1
 }
 
-Write-Output "din backup, la ACELASI drum in volt:            $laLoc"
+Write-Output "din backup, la ACELASI drum in vault:            $laLoc"
 Write-Output "din backup, MUTAT, inregistrat in manifest:      $mutat"
-Write-Output "din backup, MUTAT, fara manifest (gasit in volt): $($relocat.Count)"
-Write-Output "din backup, REAL LIPSA (niciunde in volt):        $missing"
+Write-Output "din backup, MUTAT, fara manifest (gasit in vault): $($relocat.Count)"
+Write-Output "din backup, REAL LIPSA (niciunde in vault):        $missing"
 Write-Output "din backup, RETRAS PRIN HOTARARE (din registru):  $($retras.Count)"
 if ($retras.Count -gt 0) {
   $motivuri = $retras | Group-Object Motiv | Sort-Object Count -Descending
@@ -409,12 +409,12 @@ if ($relocat.Count -gt 0) {
 $activ    = @($modificat | Where-Object { $_.Activ })
 $suspect  = @($modificat | Where-Object { -not $_.Activ })
 Write-Output "la acelasi drum, dar dimensiune diferita (continut modificat): $($modificat.Count)"
-Write-Output "   dintre care ACTIVI (scrisi in volt dupa ultima scriere din backup): $($activ.Count)"
+Write-Output "   dintre care ACTIVI (scrisi in vault dupa ultima scriere din backup): $($activ.Count)"
 Write-Output "   dintre care SUSPECTI (diferiti, dar nu activi):                     $($suspect.Count)"
 if ($activ.Count -gt 0) {
   Write-Output ""
   Write-Output "ACTIVI - nu sunt suspecti, nu se restaura:"
-  Write-Output "  un fisier activ a fost scris in volt DUPA ultima scriere din backup, deci"
+  Write-Output "  un fisier activ a fost scris in vault DUPA ultima scriere din backup, deci"
   Write-Output "  continutul lui mai nou e chiar el, nu o degradare. masurat pe:"
   # CIFRA SE CALCULEAZA AICI, NU SE SCRITE.
   # era scrisa tare (964 octeti) intr-un script care, doua randuri mai jos, afisa chiar
@@ -424,9 +424,9 @@ if ($activ.Count -gt 0) {
   $dbgCur = Join-Path $Vault $dbgRel
   $dbgBak = Join-Path $Backup $dbgRel
   if (Test-Path -LiteralPath $dbgCur) {
-    Write-Output "    $dbgRel - $((Get-Item -LiteralPath $dbgCur).Length) octeti in volt acum"
+    Write-Output "    $dbgRel - $((Get-Item -LiteralPath $dbgCur).Length) octeti in vault acum"
   } else {
-    Write-Output "    $dbgRel - nu a fost gasit in volt acum"
+    Write-Output "    $dbgRel - nu a fost gasit in vault acum"
   }
   if (Test-Path -LiteralPath $dbgBak) {
     Write-Output "    in backup: $((Get-Item -LiteralPath $dbgBak).Length) octeti, la ultima captura."
@@ -437,7 +437,7 @@ if ($activ.Count -gt 0) {
   Write-Output "  Pentru ei nu se propune -RestoreModified: ar suprascrie un log viu cu unul vechi."
   $activ | Select-Object -First 10 | ForEach-Object {
     $t = if ($nowTime.ContainsKey($_.Cur)) { $nowTime[$_.Cur].ToString('yyyy-MM-dd HH:mm:ss') } else { '?' }
-    Write-Output "   ACTIV:   $($_.Cur)  ($($_.Was) -> $($_.Now) octeti, scris in volt la $t)" }
+    Write-Output "   ACTIV:   $($_.Cur)  ($($_.Was) -> $($_.Now) octeti, scris in vault la $t)" }
   if ($activ.Count -gt 10) { Write-Output "   ... si $($activ.Count - 10) altii activi" }
 }
 if ($suspect.Count -gt 0) {
@@ -536,7 +536,7 @@ if ($missing -gt 0) {
   if ($missing -gt $prag) {
     Write-Output ""
     Write-Output "ATENTIE — CIFRA DEPASESTE PRAGUL: $missing > $prag."
-    Write-Output "  Asta NU arata o pierdere. Arata un volt partial."
+    Write-Output "  Asta NU arata o pierdere. Arata un vault partial."
     Write-Output "  Inainte sa faci orice, raspunde sincer: chiar am pierdut $missing de"
     Write-Output "  fisiere, sau rulez pe o copie de proba, un folder nou, sau o baza de test?"
     Write-Output "  Daca raspunsul este "nu am pierdut nimic", NU restaura nimic."

@@ -29,7 +29,7 @@ dintr-un NotebookLM ┘                                    │
 
 ## PROCESUL 2 — Job
 
-Singurul proces cu automatizare în volt.
+Singurul proces cu automatizare în vault.
 
 ```
 firmă țintă
@@ -135,7 +135,7 @@ de programe salvate la trei date. 1.110 sunt imagini încărcate de două ori pe
 6. Notează tot ce a fost mutat într-un CSV cu adresa veche
 ```
 
-**Regula:** măsurătoarea e o condiție, nu un rezultat. Dacă după măsurare voltul arată la fel,
+**Regula:** măsurătoarea e o condiție, nu un rezultat. Dacă după măsurare vaultul arată la fel,
 măsurătoarea a fost un tur pierdut.
 
 ---

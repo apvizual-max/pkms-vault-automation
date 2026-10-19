@@ -1,6 +1,6 @@
 ﻿<#
   PKMS verifica-schema.ps1
-  Verifica daca fiecare 00_INDEX.md respecta SCHEMA din contractul voltului
+  Verifica daca fiecare 00_INDEX.md respecta SCHEMA din contractul vaultului
   §18.1 — nu daca exista (astea e treaba lui lint.ps1, punctul 5), ci daca e
   BINE FACUT.
 
@@ -33,7 +33,7 @@
   ESCAPE OCTAL (\01 devine U+0001, deci nu poate potrivi nicio cale reala), iar
   \S \H \_ \i nici nu sunt recunoscute — arunca la potrivire.apte tipare moarte,
   iar prima autoproba nu le-a prins pentru ca Test-Excluded ruleaza doar in
-  scanarea voltului, nu in -AutoTest. De aceea autoproba le verifica acum.
+  scanarea vaultului, nu in -AutoTest. De aceea autoproba le verifica acum.
 
   Fara AI. Fara retea. Fara cost. NU scrie nimic pe D:. Citeste doar.
   Nu sterge nimic.
@@ -368,9 +368,9 @@ param([string]$Vault, [int]$Nivel = 1)
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
-if (-not (Test-Path -LiteralPath $Vault)) { throw ('Voltul nu exista: ' + $Vault) }
+if (-not (Test-Path -LiteralPath $Vault)) { throw ('Vaultul nu exista: ' + $Vault) }
 
 $idx = @(Get-ChildItem -LiteralPath $Vault -Recurse -File -Filter '00_INDEX.md' -Force -ErrorAction SilentlyContinue)
 $eroare = 0; $observatie = 0; $analizat = 0

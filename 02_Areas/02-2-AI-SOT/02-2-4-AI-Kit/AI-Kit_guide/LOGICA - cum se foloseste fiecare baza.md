@@ -1,6 +1,6 @@
 # LOGICA — cum se folosește fiecare bază
 
-Aceasta este întrebarea la care trebuie să răspundă orice AI care primește voltul:
+Aceasta este întrebarea la care trebuie să răspundă orice AI care primește vaultul:
 **„ce pun aici, și de ce?”**
 
 Fiecare bază are: **scop · mecanism · ce intră · ce NU intră · unde se duce · cum se folosește.**
@@ -98,11 +98,11 @@ Când vrei, se poate șterge. **Până atunci stau.**
 
 **NU e o cale de captură.** Nu se pune nimic direct aici la venire.
 `05_Attachments` e **depozitul** a ceea ce ai hotărât deja să păstrezi.
-Singura poartă de intrare în volt rămâne **`00_Inbox`** — fotografie de pe telefon,
+Singura poartă de intrare în vault rămâne **`00_Inbox`** — fotografie de pe telefon,
 captură de ecran, PDF trimis pe WhatsApp sau e-mail: toate ajung întâi în Inbox,
 prin calea de transfer pe care o folosești, și **de acolo** sunt triate.
 
-- ai nevoie de un mecanism automat telefon → volt? **nu există unul instalat**;
+- ai nevoie de un mecanism automat telefon → vault? **nu există unul instalat**;
   până se instalează, transferul se face manual în `00_Inbox`, și atât.
 - **care raft de primire?** `00.1_WhatsApp` dacă vine prin conversație,
   `00.3_Email` dacă vine prin e-mail, `00.2_Daily_Raw_Notes` dacă îl notezi tu în ziua

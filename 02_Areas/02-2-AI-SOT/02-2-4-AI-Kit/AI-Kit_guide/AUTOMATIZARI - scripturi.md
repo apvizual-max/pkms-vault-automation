@@ -13,7 +13,7 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 | `paths.ps1` | descoperă backupul și excepțiile, apoi le verifică | nu |
 | `setup.ps1` | verifică mediul, îți spune ce să citești | nu |
 | `lint.ps1` | verifică regulile, raportează abaterile | nu |
-| `health-check.ps1` | starea voltului într-un raport scurt | nu |
+| `health-check.ps1` | starea vaultului într-un raport scurt | nu |
 | `reconcile.ps1` | compară cu backupul, raportează pierderile | **nu în mod implicit** — doar cu `-Restore`, `-RestoreModified` sau `-WriteManifest` |
 | `build-index.ps1` | regenerează indexurile din conținutul real | da, doar `00_INDEX.md` |
 | `watch.ps1` | rulează singur `lint` → `health-check` → `reconcile` și scrie un raport | da — **un singur raport**, nimic altceva |
@@ -32,7 +32,7 @@ nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din do
 **La data de 2026-10-19: 11**, măsurat pe calea nouă
 `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`. *Cifra veche din acest
 document spunea `D:\Alex_Knowlege_Vault\AI-Kit` — o cale care nu mai există de
-când voltul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
+când vaultul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
 calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 
 ---
@@ -45,7 +45,7 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
-powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara voltul                 (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\reconcile.ps1    # 5. cifre despre pierderi          (implicit: nu scrie)
 ```
 
@@ -62,7 +62,7 @@ la cerere de index nou**. Nu e parte din preluare.
 
 **Nici `align-index.ps1` nu intră în această ordine** — și asta e important, pentru că
 altfel pare doar „încă un pas de verificare". Nu e: `align-index` **scrie**. Un lanț de
-preluare care ar rescrie indexuri la fiecare sesiune ar face voltul să arate altfel fără
+preluare care ar rescrie indexuri la fiecare sesiune ar face vaultul să arate altfel fără
 să fi fost cerut nimic, iar un automat care atinge și un index corect nu mai lasă urmă
 de citit.
 
@@ -72,7 +72,7 @@ de citit.
 | `align-index.ps1` | **repară** indexuri existente — scrie, deși doar ce a diferit |
 | `verifica-schema.ps1` | nu scrie nimic, dar arată cât de schemă e datorie — de aceea nu e în lanț |
 | `inchide-log.ps1` | implicit nu scrie, dar cu `-Arhiveaza` **mută evenimente** din log în arhivă — iar hotărârea de a muta e a lui Alex |
-| `git-autocommit.ps1` | nu atinge voltul deloc, dar **scrie în istoricul git** — și poate **refuza**, caz în care panoul `Changes` rămâne plin tocmai când plasa era chemată să-l golească. De aceea rulează la 5 minute, nu la fiecare scriere |
+| `git-autocommit.ps1` | nu atinge vaultul deloc, dar **scrie în istoricul git** — și poate **refuza**, caz în care panoul `Changes` rămâne plin tocmai când plasa era chemată să-l golească. De aceea rulează la 5 minute, nu la fiecare scriere |
 
 Rulă-le **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată
 „ca să fie sigur". `watch.ps1` rămâne singurul punct de intrare al verificării.
@@ -85,7 +85,7 @@ Rulă-le **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată
 .\setup.ps1
 ```
 
-Verifică că voltul și backupul există, și îți tipărește documentația în ordinea de citit.
+Verifică că vaultul și backupul există, și îți tipărește documentația în ordinea de citit.
 **Nu modifică nimic.**
 
 ---
@@ -101,7 +101,7 @@ Verifică, în ordine:
   cifră scrisă tare. Măsurat 2026-10-19: backupul e pe **`H:`**, nu pe `D:`, și e descoperit din
   `$env:PKMS_BACKUP`, apoi pe toate volumele. **Mesajele poarții nu numesc un volum** — un mesaj
   care trimite la volumul greșit e mai rău decât unul care nu trimite deloc.
-- backupul e **în afara voltului** (altfel ar fi o copie care se șterge odată cu originalul)
+- backupul e **în afara vaultului** (altfel ar fi o copie care se șterge odată cu originalul)
 - `_SYSTEM` / `_ARCHIVE` / `_QUARANTINE` n-au numerotare
 - cuvântul interzis `LUCURARE` nu apare în **nume** (nu și în conținut)
 - stratul de lucru se numește **`01_Projects`** (nu `10_Work` — reapariția lui e o regresie)
@@ -118,7 +118,7 @@ BOM e sănătos și nu e acuzat — o poartă care urluiește pe fișiere sănă
 ignoreze.
 
 Poarta are și o **gardă de citibilitate**: dacă DriveFS se degradează *în timpul* rulării, citirile
-picate se numără și se raportează ca „voltul nu a putut fi citit complet". Altfel poarta ar da
+picate se numără și se raportează ca „vaultul nu a putut fi citit complet". Altfel poarta ar da
 `0` pentru ceva ce n-a citit.
 
 Iese cu `1` dacă sunt erori, `0` dacă totul e curat.
@@ -148,21 +148,21 @@ In Progress:        N   (0 = bine, nu ai nimic neterminat)
 .\reconcile.ps1
 ```
 
-Compara voltul cu backupul, **fără să scrie nimic în backup**.
+Compara vaultul cu backupul, **fără să scrie nimic în backup**.
 Iese cu `1` dacă găsește pierderi **sau** dacă socoteala nu se închide.
 
 ### Cele cinci categorii, și de ce sunt cinci
 
-Un backup e o fotografie de **înainte** de reorganizare, deci voltul *nu arată la fel* cu
+Un backup e o fotografie de **înainte** de reorganizare, deci vaultul *nu arată la fel* cu
 backupul. „Nu se potrivește" nu înseamnă „s-a pierdut". De aceea le desparte:
 
 | Categorie | Ce înseamnă |
 |---|---|
 | **la același drum** | nu s-a mișcat. Compară dimensiunea — diferența înseamnă **conținut modificat** |
 | **mutat, înregistrat în manifest** | `REVERT.csv` (fișier cu fișier) sau `REVERT2.csv` (directoare, aplicate ca prefix) |
-| **mutat, fără manifest** | găsit în volt după nume + dimensiune. Scriptul arată **unde a ajuns** |
+| **mutat, fără manifest** | găsit în vault după nume + dimensiune. Scriptul arată **unde a ajuns** |
 | **mutat și redenumit** | recunoscut după sufixul numelui — martorii din `_SYSTEM` primesc prefix |
-| **real pierdut** | nu e niciunde în volt. **Doar astea se numără pierderi** |
+| **real pierdut** | nu e niciunde în vault. **Doar astea se numără pierderi** |
 
 **Potrivirea se face pe drum, nu pe dimensiune.** Pe dimensiune, un fișier șters dispărea
 într-un alt fișier de aceeași mărime, iar scriptul raporta „nu s-a pierdut nimic".
@@ -231,7 +231,7 @@ Citește cei indicatorii în ordine. **Oprește-te la primul care spune „0".**
    `-WriteManifest`, apoi rulează din nou, până când categoria ajunge la `0`.
 6. **„modificat" nu e pierdere.** Conținutul s-a schimbat intenționat sau s-a stricat.
 
-**Singura cifră care înseamnă pierdere este `REAL LIPSA (niciunde in volt)`.** Orice potrivire
+**Singura cifră care înseamnă pierdere este `REAL LIPSA (niciunde in vault)`.** Orice potrivire
 cu un nume **mai mic** decât în backup e o **diferență de dimensiune**, nu o lipsă.
 
 ### Cele trei comutatoare care scriu — repetat, pentru că e cel mai uitat lucru
@@ -269,7 +269,7 @@ structura WordPress `YYYY\MM`, bibliotecile de programe din `_SYSTEM\Skills`,
 folderul `indexuri generate in gresit\` din carantină.
 
 **Nu îl rulează nimeni la preluare.** Scrie în sute de foldere, iar singurul efect al
-unei rulări la preluare e un volt care arată altfel fără să fi fost cerut nimic.
+unei rulări la preluare e un vault care arată altfel fără să fi fost cerut nimic.
 Rulează-l **doar** după mutări în masă sau la cerere de index nou.
 
 ---
@@ -280,7 +280,7 @@ Backupul a fost redenumit o dată: `CopyBACKUP` → `Backup - 10-08-2026`.
 Toate scripturile au căzut, fiindcă aveau numele scris tare.
 
 `paths.ps1` **descoperă** backupul: mai întâi verifică numele vechi, apoi caută în rădăcina lui `D:`
-orice folder care începe cu `Alex_Knowlege_Vault` și nu e voltul însuși.
+orice folder care începe cu `Alex_Knowlege_Vault` și nu e vaultul însuși.
 
 **Rolul lui în ordine:** nu găsește calea, ci **o verifică**. De aceea nu o scriem tare
 nici în scripturi, nici în documentele de predare — `lint.ps1` urmărește exact asta.
@@ -301,16 +301,16 @@ $env:PKMS_BACKUP = '<drumul descoperit de paths.ps1>'
 ```
 
 Nu e „un script care face mai multe". E **un singur punct de intrare**, chemat de om
-sau de ceas. Rulează în ordine fixă trei trepte care **nu scriu în volt**:
+sau de ceas. Rulează în ordine fixă trei trepte care **nu scriu în vault**:
 
 1. `lint` — regulile de denumire, cuvântul interzis, legăturile, copiile de onboarding.
-2. `health-check` — numerele vii ale voltului.
+2. `health-check` — numerele vii ale vaultului.
 3. `reconcile` — socoteala cu backupul, în modul informativ, fără restaurări.
 
 ### Ce scrie
 
 **Un singur fișier:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt` (și folderul lui, dacă lipsea).
-**Nimic altceva în volt.** Backupul primește citiri și atât.
+**Nimic altceva în vault.** Backupul primește citiri și atât.
 
 ### Ce NU intră în automatism — și de ce
 
@@ -385,7 +385,7 @@ lasă urmă de citit, și nu se mai poate vedea când strică ceva.
 |---|---|
 | `-CeVad` | face tot, **nu scrie nimic**, tipărește ce ar face |
 | `-VerificaExcluderi` | aplică lista de excluziuni pe **căi reale** și raportează fiecare tipar |
-| `-DoarCargol` | aliniază un singur subarbore, nu tot voltul |
+| `-DoarCargol` | aliniază un singur subarbore, nu tot vaultul |
 
 ```powershell
 .\align-index.ps1 -CeVad               # vedere, nu scrie
@@ -417,13 +417,13 @@ excluziune, e o speranță.
 ### Rădăcina zonei interzise se indexează, interiorul nu
 
 O zonă interzisă e scoasă **cu tot cu interiorul**, dar **rădăcina ei e un raft
-obișnuit** al voltului și se indexează ca orice raft. Altfel `build-index` și
+obișnuit** al vaultului și se indexează ca orice raft. Altfel `build-index` și
 `align-index` ar da răspunsuri diferite exact în zonele protejate, iar unul dintre ele
 ar rescrie indexuri în interiorul caruia n-are voie să scrie.
 
 ### Logul: `raport-aliniere.log`
 
-- **În rădăcina voltului**, lângă `COTOR.md` — nu în `_SYSTEM`. Motivul: e locul unde
+- **În rădăcina vaultului**, lângă `COTOR.md` — nu în `_SYSTEM`. Motivul: e locul unde
   Alex uită să se uite. **Un log ascuns e un log care nu se citește.**
 - **Se scrie doar la eveniment.** O rulare curentă, fără nimic de reparat, **nu atinge
   deloc fișierul** — nu îl deschide, nu îl reînnoiește. De aceea data de modificare a
@@ -444,7 +444,7 @@ ar rescrie indexuri în interiorul caruia n-are voie să scrie.
 | Automat | Când | Ce face | Risc | Stare la 2026-10-08 |
 |---|---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic | ✅ există |
-| `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | **scrie în volt** | ✅ **există, măsurat** |
+| `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | **scrie în vault** | ✅ **există, măsurat** |
 | `PKMS-GitAutoCommit` | **la 5 minute** | comită singur ce a rămas necomitat în repo git | **scrie în istoric**, și poate **refuza** | ✅ **există, măsurat** |
 
 Neamestecate pentru că riscurile nu sunt aceleași: automatul care doar citește poate
@@ -455,7 +455,7 @@ rula oricând, iar automatul care scrie trebuie creat conștient, cu ora lui.
 `AI-Kit`, limita de 1 oră, `IgnoreNew`, fereastră ascunsă. Declanșat o singură dată
 cu mâna: **22,4 secunde, rezultat 0** — și a prins un drift real, deci nu e decor.
 „La computer pornit" s-a implementat ca **la autentificare**, cu 3 minute întârziere,
-ca Alex și nu ca SYSTEM (altfel ar avea alte drepturi și altă vedere asupra voltului).
+ca Alex și nu ca SYSTEM (altfel ar avea alte drepturi și altă vedere asupra vaultului).
 
 Cum se oprește:
 
@@ -576,7 +576,7 @@ a răspuns „curat, nimic de facut"** — deși logul tocmai fusese scris. Acol
 
 ### Regula de blocaj: mutex, nu fișier-pid
 
-Un singur automat poate scrie în volt odată. Dacă o aliniere e deja pornită și se
+Un singur automat poate scrie în vault odată. Dacă o aliniere e deja pornită și se
 declanșează alta, aceasta din urmă **iese tăcut, în cod 0, fără log**.
 
 **Mutex, nu fișier-pid** — pentru că un fișier se poate minte (pid reutilizat, scriere
@@ -718,7 +718,7 @@ Fiecare eveniment arhivat își păstrează rândul
 `--- rezolvat: <folder> (raportat <data și oră>)`, deci istoricul rămâne lizibil
 după luni.
 
-### Măsurat la 2026-10-08, pe voltul real
+### Măsurat la 2026-10-08, pe vaultul real
 
 | | |
 |---|---|

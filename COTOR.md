@@ -1,16 +1,16 @@
 # COTOR
 
-**Scheletul voltului.** Tot ce urmează pleacă de aici.
+**Scheletul vaultului.** Tot ce urmează pleacă de aici.
 
 Ultima actualizare: **19 octombrie 2026**. 50.198 de fișiere · 7.254 de foldere · 86,26 GB.
-Voltul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
+Vaultul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
 Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 **Calea lui nu se scrie tare nicăieri:** o descoperă `AI-Kit\paths.ps1`.
 
-> **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici voltul, nici backupul. Ce a rămas pe
+> **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici vaultul, nici backupul. Ce a rămas pe
 > `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
 > **lucrezi** a fost `01_Projects\01-6-Work_Folder (to sort)` și acum e **`01_Projects`** — același volum, redenumit;
-> **backupul** a fost lângă volt pe `D:` și acum e pe **`H:`**.
+> **backupul** a fost lângă vault pe `D:` și acum e pe **`H:`**.
 
 ---
 
@@ -18,7 +18,7 @@ Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 
 | Cuvânt | Ce înseamnă aici | Nu e |
 |---|---|---|
-| **volt** | `G:\My Drive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
+| **vault** | `G:\My Drive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
 | **backup** | copia de pe `H:`, **imutabilă**. Citește, copiază din ea. Nu scrie niciodată | nu e raft |
 | **bază** | nivelul `00`–`06` (7 baze). Rămâne neatins, ca un fond de bibliotecă | nu e locul de lucru |
 | **proiect** | `01_Projects` — singurul nivel în care intri ca să lucrezi | nu e o bază |
@@ -136,7 +136,7 @@ Măsurate pe **19 octombrie 2026**:
 
 | | Ce e | De ce există |
 |---|---|---|
-| `_SYSTEM` | 6.969 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în volt ca să nu te împiedici |
+| `_SYSTEM` | 6.969 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în vault ca să nu te împiedici |
 | `_ARCHIVE` | 13 fișiere · 0,13 GB | parole și lucruri scoase din calea deschisă |
 | `_QUARANTINE` | 4.778 fișiere · 3,16 GB | tot ce a fost neclar. **Aici decizi tu, nu eu** |
 
@@ -148,7 +148,7 @@ Măsurate pe **19 octombrie 2026**:
 
 | Ce | Câte |
 |---|---|
-| `00_INDEX.md` pe disc, în tot voltul | **6.490** |
+| `00_INDEX.md` pe disc, în tot vaultul | **6.490** |
 | din care în `_QUARANTINE` | **4.089** |
 | **utili, în afara carantinei** | **2.401** |
 | pe GitHub, în repo-ul de automatizare | **4.438** |
@@ -208,14 +208,14 @@ Astea sunt **singurele două blocuri generate** care se suprascriu. Blocul adaug
 
 ### Un singur punct de intrare: `AI-Kit\watch.ps1`
 
-Rulează, în ordine fixă, doar lucruri care **nu scriu în volt**:
+Rulează, în ordine fixă, doar lucruri care **nu scriu în vault**:
 
 1. `lint` — regulile de denumire, cuvântul interzis, legăturile, copiile de onboarding.
-2. `health-check` — numerele vii ale voltului.
+2. `health-check` — numerele vii ale vaultului.
 3. `reconcile` — socoteala cu backupul, în modul informativ, fără restaurări.
 
 **Scrie un singur raport:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt`.
-Nimic altceva în volt. Backupul primește citiri și atât.
+Nimic altceva în vault. Backupul primește citiri și atât.
 
 **Ce nu intră în automatism:**
 - **`build-index`** nu se rulează la verificare — scrie sute de indexuri.
@@ -276,7 +276,7 @@ lasă urmă de citit și nu se mai poate vedea când strică ceva. Rândul
 |---|---|
 | `-CeVad` | face tot, **nu scrie nimic**, tipărește ce ar face |
 | `-VerificaExcluderi` | aplică lista de excluziuni pe **căi reale** și raportează fiecare tipar |
-| `-DoarCargol` | aliniază un singur subarbore, nu tot voltul |
+| `-DoarCargol` | aliniază un singur subarbore, nu tot vaultul |
 
 **O regulă care nu se declanșează e o regulă scrisă în decor.** Asta s-a plătit deja:
 o excluziune scrisă ca `\01` era citită de .NET ca secvență **octală** — bara împreună
@@ -293,7 +293,7 @@ ar rescrie indexuri acolo unde n-are voie.
 
 ### Logul: `raport-aliniere.log`
 
-- **În rădăcina voltului**, lângă `COTOR.md` — nu în `_SYSTEM`. E locul unde Alex
+- **În rădăcina vaultului**, lângă `COTOR.md` — nu în `_SYSTEM`. E locul unde Alex
   uită să se uite; un log ascuns e un log care nu se citește.
 - **Se scrie doar la eveniment.** O rulare fără nimic de reparat **nu atinge deloc
   fișierul**. Data de modificare a logului înseamnă „ultima dată când s-a întâmplat
@@ -309,7 +309,7 @@ ar rescrie indexuri acolo unde n-are voie.
 | Automat | Când | Ce face | Risc |
 |---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic |
-| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | aliniază indexurile, scrie doar ce diferă | **scrie în volt** |
+| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | aliniază indexurile, scrie doar ce diferă | **scrie în vault** |
 
 **Neamestecate, pentru că riscurile nu sunt aceleași.** Automatul care doar citește
 poate fi lăsat să ruleze oricând; automatul care scrie trebuie creat conștient, cu
@@ -317,7 +317,7 @@ ora lui, ca alegere — nu ca efect secundar.
 
 ### Regula de blocaj: mutex, nu fișier-pid
 
-Un singur automat poate scrie în volt odată. Dacă o aliniere e deja pornită și se
+Un singur automat poate scrie în vault odată. Dacă o aliniere e deja pornită și se
 declanșează alta, aceasta din urmă **iese tăcut, în cod 0, fără log**. Sistemul nu se
 apără cu un fișier care declară cine are dreptul — se apără cu un mecanism pe care
 **nu-l poate minți**. Un fișier-pid se poate minte (pid reutilizat, scriere pe jumătate);
@@ -351,7 +351,7 @@ Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-K
 | `align-index.ps1` | **aliniază** indexurile existente — nu le creează din zero |
 | `verifica-schema.ps1` | **verifică** dacă indexurile sunt pe schema §18.1 — nu dacă există (asta e treaba lui `lint`) |
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
-| `git-autocommit.ps1` | **NU atinge voltul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
+| `git-autocommit.ps1` | **NU atinge vaultul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
 
 **Ordinea canonică rămâne cea de 5 trepte** (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.
@@ -359,7 +359,7 @@ Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-K
 **`build-index` și `align-index` nu intră în lanț.** Nu pentru că sunt mai puțin
 importante — pentru că amândoi **scriu**. `build-index` creează indexuri din conținut;
 `align-index` repară indexuri care există deja. Un lanț de preluare care ar scrie în
-sute de foldere fără să fie cerut ar face voltul să arate altfel fără motiv. Rulă-le
+sute de foldere fără să fie cerut ar face vaultul să arate altfel fără motiv. Rulă-le
 **la cerere** sau prin automatul dedicat (`PKMS-Aliniere`), niciodată „ca să fie sigur".
 
 Ordinea canonică și ce înseamnă fiecare pas: `AI-Kit_guide\AUTOMATIZARI - scripturi.md`
@@ -382,12 +382,12 @@ Toate stau acum în **`AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
 
 | Fișier | Ce e |
 |---|---|
-| `SPECIFICATII - contractul voltului.md` | regulile care nu se încalcă, inclusiv §16 și §17 |
+| `SPECIFICATII - contractul vaultului.md` | regulile care nu se încalcă, inclusiv §16 și §17 |
 | `LOGICA - cum se foloseste fiecare baza.md` | fiecare bază, scopul, mecanismul, data-flow-ul |
 | `PROCESE - flux de la captură la utilizare.md` | arborele de proces, pas cu pas |
 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi de lucru |
 | `AUTOMATIZARI - scripturi.md` | cele 11 scripturi, ordinea canonică, ce scrie fiecare |
-| `ONBOARDING AI - cum preia un AI voltul.md` | cum ia în posesie voltul un AI fără memorie |
+| `ONBOARDING AI - cum preia un AI vaultul.md` | cum ia în posesie vaultul un AI fără memorie |
 | `START AICI.md` | rafturile de lucru |
 | `AUDIT_RECONCILIERE_FINAL.md` | dovada că nu s-a pierdut nimic |
 

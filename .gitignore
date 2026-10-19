@@ -18,7 +18,7 @@
 # (D:\_OPTIMUS-SNAPSHOT). Motorul se versionează; datele nu.
 #
 # ATENTIE: NU rula `git clean -fdx` si NU rula `git reset --hard` in acest repo.
-# `.git` este IN interiorul voltului. Un clean sterge continutul lui, nu doar
+# `.git` este IN interiorul vaultului. Un clean sterge continutul lui, nu doar
 # fisierele neversionate. Incident dovedit pe 2026-10-12.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -230,7 +230,7 @@
 
 # ── 6c. FOLDERE CU PUNCT, in orice adancime. ──
 #       Deschiderea 1b face orice director traversabil, deci si cele cu punct
-#       intrau in scanare. Dar voltul le EXCLUDE din indexare (Get-PkmsExclusions
+#       intrau in scanare. Dar vaultul le EXCLUDE din indexare (Get-PkmsExclusions
 #       lista .obsidian, .trash, .vault-intelligence, .claudian, ...), deci un
 #       00_INDEX.md de acolo e un artefact pe care build-index nu l-ar scrie
 #       niciodata — ar ramane orfan in istoric. Masurat: 8 astfel de intrari
@@ -252,7 +252,7 @@ id_rsa*
 #       castiga, deci asta se aplica PESTRE regula 1b care deschide indexurile.
 #
 #       Ce este: _QUARANTINE\retirat-2026-10-10\ — 88 de indexuri, 0,09 MB.
-#       De ce e inchis: singurul loc din volt unde apare un nume de client pe
+#       De ce e inchis: singurul loc din vault unde apare un nume de client pe
 #       care operatorul l-a inchis definitiv („subiect definitiv inchis, nu
 #       vom lucra cu ei niciodata"). Masurat, nu banuit: cautare cu -LiteralPath
 #       peste toate cele 5.031 de indexuri — 88 de potriviri, TOATE sub acest

@@ -7,7 +7,7 @@ Nu teorie. Ce apeși, dimineață.
 ## Dimineața — 2 minute
 
 ```
-1. Deschide voltul. Apeși 02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md
+1. Deschide vaultul. Apeși 02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md
 2. Look la raftul In Progress. Ce e acolo e ce lucrezi acum.
 3. Nimic? → 01_Projects\01-6-Work_Folder (to sort)\01-6-5-Joburi dacă e săptămâna de job-uri
            → 01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti dacă ai o livrare

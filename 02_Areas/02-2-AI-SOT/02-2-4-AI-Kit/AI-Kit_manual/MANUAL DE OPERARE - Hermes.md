@@ -1,6 +1,6 @@
 # MANUAL DE OPERARE — Hermes
 
-Manual de lucru pentru un AI fără memorie care ia în posesie voltul.
+Manual de lucru pentru un AI fără memorie care ia în posesie vaultul.
 Citește tot, în ordine. Nu sari. Nu improviza comenzi.
 
 ---
@@ -18,7 +18,7 @@ Nu cere aprobare pentru ceva ce ți-a cerut. Nu opri lucrul pentru că e greu sa
 | | |
 |---|---|
 | Vault de lucru | `D:\Alex_Knowlege_Vault` — aici se lucrează, aici se mută |
-| Backup | alături voltului, în rădăcina lui `D:` — **imutabil**. Nu-i scriem calea: o descoperă `AI-Kit\paths.ps1` |
+| Backup | alături vaultului, în rădăcina lui `D:` — **imutabil**. Nu-i scriem calea: o descoperă `AI-Kit\paths.ps1` |
 
 **Backupul nu i se scrie niciodată.** Citește din el, copiază din el. Nu scrie, nu mută, nu redenumește, nu șterge.
 Dacă o comandă l-ar atinge, comanda e greșită, nu backupul.
@@ -77,7 +77,7 @@ La fiecare sesiune, în această ordine:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
-powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara voltul                 (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\reconcile.ps1    # 5. cifre despre pierderi          (implicit: nu scrie)
 ```
 
@@ -143,7 +143,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\watch.ps1
 Singurul punct de intrare al verificării automate. Rulează în ordine fixă doar
 treptele 3, 4 și 5 de mai sus: `lint`, `health-check`, `reconcile` în modul informativ.
 
-- **Scrie un singur raport** în volt: `_SYSTEM\rapoarte\raport-ultima-rulare.txt`.
+- **Scrie un singur raport** în vault: `_SYSTEM\rapoarte\raport-ultima-rulare.txt`.
   Nimic altceva. Backupul nu e atins.
 - **Nu rulează `build-index`.** Nu rulează **nicio** restaurare.
 - **Ieșire:** `0` = nicio **eroare**, `1` = există **eroare**. **Atențiile se raportează,
@@ -161,23 +161,23 @@ Verificare la **2026-10-09**: `Get-ScheduledTask -TaskName 'PKMS-Aliniere'` → 
 rulare **20:00:01**, rezultat **0**. Deci automatul exista chiar si atunci cand
 textul de mai jos spunea altceva; cifra de aici e cea masurata acum, nu cea veche.
 
-Când va fi creat, e al doilea automat al voltului, și are un **risc diferit** de
+Când va fi creat, e al doilea automat al vaultului, și are un **risc diferit** de
 `PKMS-Watch`:
 
 | Automat | Când | Ce face | Risc |
 |---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic |
-| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | `align-index.ps1` — scrie doar ce diferă | **scrie în volt** |
+| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | `align-index.ps1` — scrie doar ce diferă | **scrie în vault** |
 
 „La computer pornit" se implementează ca **la autentificare**, cu 3 minute întârziere,
 și rulează **ca Alex, nu ca SYSTEM** — altfel ar avea alte drepturi și altă vedere asupra
-voltului. Cele trei ore sunt **06:00, 13:00 și 20:00**.
+vaultului. Cele trei ore sunt **06:00, 13:00 și 20:00**.
 
-Un singur automat poate scrie în volt odată: dacă o aliniere e deja pornită și se
+Un singur automat poate scrie în vault odată: dacă o aliniere e deja pornită și se
 declanșează alta, aceasta **iese tăcut, în cod 0, fără log**. Mecanismul e un
 **mutex**, nu un fișier-pid — pentru că un fișier se poate minte, iar un mutex nu.
 
-Iesirea: `raport-aliniere.log`, **la rădăcina voltului** (nu în `_SYSTEM`). **Se scrie
+Iesirea: `raport-aliniere.log`, **la rădăcina vaultului** (nu în `_SYSTEM`). **Se scrie
 doar la eveniment** — o rulare curentă nu atinge deloc fișierul, deci data lui de
 modificare înseamnă „ultima dată când s-a întâmplat ceva". Rezolvatele se mută în
 `arhiva- raport aliniere.log` și rămân ca istoric. Nimic nu se șterge.
@@ -186,7 +186,7 @@ modificare înseamnă „ultima dată când s-a întâmplat ceva". Rezolvatele s
 
 ### `reconcile.ps1` nu scrie **în mod implicit**
 
-Doar apelarea goală nu scrie nimic. Există **trei comutatoare care scriu în volt**:
+Doar apelarea goală nu scrie nimic. Există **trei comutatoare care scriu în vault**:
 
 | Comutator | Ce scrie |
 |---|---|
@@ -211,13 +211,13 @@ Citește cei indicatorii în ordine, și oprește-te la primul care spune „0":
    nu e dovedită. Remediere: `-WriteManifest`, apoi rulează din nou, până ajunge la `0`.
 6. **„modificat" nu e pierdere** — conținutul s-a schimbat intenționat sau s-a stricat.
 
-**Singura cifră care înseamnă pierdere e `REAL LIPSA (niciunde in volt)`.** Orice
+**Singura cifră care înseamnă pierdere e `REAL LIPSA (niciunde in vault)`.** Orice
 potrivire cu nume **mai mic** decât în backup e o **diferență de dimensiune**, nu o lipsă.
 
 ### Cifrele vii
 
 Nu copia cifrele dintr-un document — măsură. Rulează `health-check.ps1` și citește
-`TOTAL:`. Măsurate pe 8 octombrie 2026: **50.970** de fișiere de lucru în volt (fără
+`TOTAL:`. Măsurate pe 8 octombrie 2026: **50.970** de fișiere de lucru în vault (fără
 `.obsidian` și `.git`), **59,01 GB**; pe disc, cu tot cu folderele programelor, **52.239**.
 `reconcile.ps1` numără la fel ca `health-check.ps1`, deci comparația cu backupul se
 face pe prima cifră. Nu amesteca cele două.
@@ -297,7 +297,7 @@ O auditare a declarat +23 de fișiere noi. Diferența reală era +30.
 
 ### Dacă un linter semnalează ceva, presupune că lumea e greșită
 
-Au existat două semnalări false: o comparație de dată la limita de egalitate, și un test de prefix potrivit voltul împotriva backup-ului.
+Au existat două semnalări false: o comparație de dată la limita de egalitate, și un test de prefix potrivit vaultul împotriva backup-ului.
 **Nu corecta fișierele. Verifică ambele părți și corectează dovedind.**
 
 ### Dacă regula se lovește singură prin documentarea ei, regula e greșită
@@ -323,7 +323,7 @@ O singură redenumire a backupului a rupt orice script cu numele scris tare.
 
 Reconcilierea potrivea după dimensiune. Un fișier șters dispărea într-un altul de aceeași
 mărime, iar scriptul raporta **„nu s-a pierdut nimic"**. Corectată după drum, a raportat
-**34.380 de pierderi false** — pentru că voltul fusese reorganizat.
+**34.380 de pierderi false** — pentru că vaultul fusese reorganizat.
 
 **Corect e în trei straturi:** același drum → mutat, cu manifest → mutat, căutat după
 nume + dimensiune. Iar mapările de **director** se aplică ca **prefix**, nu ca cheie exactă.
@@ -339,7 +339,7 @@ spune „nu am comparat tot". Un zero obținut printr-o buclă care nu s-a execu
 
 ### Dacă un folder redenumit pare pierdut, caută mai întâi după fragmente
 
-`POPY - GORDON - Docker Ai` lipsea din volt. Nu lipsea — devenise `_SYSTEM\GORDON - Docker AI`.
+`POPY - GORDON - Docker Ai` lipsea din vault. Nu lipsea — devenise `_SYSTEM\GORDON - Docker AI`.
 O căutare după nume exact dă „nu îl găsesc" și ton de pierdere.
 **„Nu îl găsesc" înseamnă „nu îl găsesc după criteriul meu".**
 
@@ -416,7 +416,7 @@ lăsa să îmbătrânească: într-un folder viu, orice cifră statică are term
 - Să dezarhivezi bibliotecile de programe. Copiile repetate sunt artefacte de build, nu mizerie.
 - Să ieși din `01_Projects\01-6-Work_Folder (to sort)` cu peste 30 de rafturi. Semnalul e numărul de rafturi, nu volumul.
 - Să atingi `_ARCHIVE\Secrets\`. Se mută doar după nume. Conținutul nu s-a deschis niciodată, nu se deschide.
-- Să normalizezi fișiere de pe `D:`. E un subdomeniu, nu o regulă a voltului.
+- Să normalizezi fișiere de pe `D:`. E un subdomeniu, nu o regulă a vaultului.
 
 ---
 

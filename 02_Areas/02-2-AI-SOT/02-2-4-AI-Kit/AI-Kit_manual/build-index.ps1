@@ -1,6 +1,6 @@
 ﻿<#
   PKMS build-index.ps1
-  Generează 00_INDEX.md în fiecare folder al voltului, din conținutul REAL.
+  Generează 00_INDEX.md în fiecare folder al vaultului, din conținutul REAL.
   Apoi scrie indexul central, prin însumare de la jos în sus.
 
   Reguli pe care le respectă singur:
@@ -14,9 +14,9 @@
 # reconcile.ps1). Un drum implicit aici face ca `if (-not $Vault)` de mai jos
 # sa nu se declanseze NICIODATA: $Vault ar fi mereu nevid, Get-PkmsVault n-ar
 # fi apelat niciodata, iar $env:PKMS_VAULT ar fi ignorat in tacere. Cine ar
-# rula pe o copie crezand ca ruleaza pe copie ar rescrie voltul REAL.
+# rula pe o copie crezand ca ruleaza pe copie ar rescrie vaultul REAL.
 # Masurat 2026-10-09: exact asta s-a intamplat intr-o proba adversara — 689 de
-# fisiere scrise in volt, pe cand operatorul credea ca lucreaza in alta parte.
+# fisiere scrise in vault, pe cand operatorul credea ca lucreaza in alta parte.
 param(
   [string]$Vault = '',
   [switch]$Quiet
@@ -61,7 +61,7 @@ function Write-IndexRezilient([string]$cale, [string]$continut, [string[]]$vechi
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
 
 # Poarta de cale reala. build-index RESCRIE tot ce gaseste, deci o cale gresita
@@ -183,7 +183,7 @@ function Get-ValueWords([string]$name, [int]$max, [bool]$stripExt) {
 # de aceea plasa de forma exista deloc.
 # ---------------------------------------------------------------------------
 # Tiparul randului de stare scris cu `fi[sş]iere` NU se declansea niciodata:
-# clasa continea U+015F (s cu cedila, 351), iar in volt scris cu U+0219
+# clasa continea U+015F (s cu cedila, 351), iar in vault scris cu U+0219
 # (s cu virgula dedesubt, 537). Masurat: 707 de randuri se potriveau cu
 # "incepe cu ** cifra", si toate se scurgeau ca "text de om". Rezultatul era
 # vizibil: AI-Kit\00_INDEX.md avea SASE randuri de stare suprapuse (176/182/
@@ -654,7 +654,7 @@ $top = @(Get-ChildItem -LiteralPath $Vault -Directory -Force -EA SilentlyContinu
 $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine("# INDEX CENTRAL — generat automat, nu se scrie manual")
 [void]$sb.AppendLine()
-[void]$sb.AppendLine("**Tot voltul, pe un singur ecran.** Generat de ``AI-Kit\build-index.ps1``. Dacă editezi acest fișier, următoarea rulare îl suprascrie.")
+[void]$sb.AppendLine("**Tot vaultul, pe un singur ecran.** Generat de ``AI-Kit\build-index.ps1``. Dacă editezi acest fișier, următoarea rulare îl suprascrie.")
 [void]$sb.AppendLine()
 [void]$sb.AppendLine("Actualizat: $(Get-Date -Format 'yyyy-MM-dd HH:mm')")
 [void]$sb.AppendLine()

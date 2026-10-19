@@ -1,4 +1,4 @@
-# ONBOARDING AI — cum preiești voltul
+# ONBOARDING AI — cum preiești vaultul
 
 Pentru **orice AI, cu sau fără memorie**. Hermes, Claude, Gemini, orice altceva.
 Citește tot, în ordine. Nu sari.
@@ -35,18 +35,18 @@ nume scris tare a căzut. `setup.ps1` verifică mediul și îți tipărește ce 
 
 ## Pasul 1 — citește, în această ordine
 
-Toate drumurile de mai jos sunt **relative la rădăcina voltului** (`D:\Alex_Knowlege_Vault`),
+Toate drumurile de mai jos sunt **relative la rădăcina vaultului** (`D:\Alex_Knowlege_Vault`),
 nu la folderul `AI-Kit` în care se află acest fișier.
 
 | # | Fișier | De ce |
 |---|---|---|
-| 1 | `SPECIFICATII - contractul voltului.md` | **cele 15 reguli.** Nu se negociază |
+| 1 | `SPECIFICATII - contractul vaultului.md` | **cele 15 reguli.** Nu se negociază |
 | 2 | `COTOR.md` | scheletul, vocabularul, cele două niveluri |
 | 3 | `LOGICA - cum se foloseste fiecare baza.md` | fiecare bază: scop, mecanism, ce nu intră |
 | 4 | `PROCESE - flux de la captură la utilizare.md` | cele 8 procese, pas cu pas |
 | 5 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi |
 | 6 | `AUTOMATIZARI - scripturi.md` | ce rulezi și în ce ordine |
-| 7 | `INDEX CENTRAL.md` | tot voltul, pe un ecran |
+| 7 | `INDEX CENTRAL.md` | tot vaultul, pe un ecran |
 | 8 | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md` | rafturile de lucru |
 
 ### Despre indexuri — și de ce nu ai un număr, ci o regulă
@@ -83,7 +83,7 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
-powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara voltul                 (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\reconcile.ps1    # 5. cifre despre pierderi          (implicit: nu scrie)
 ```
 
@@ -116,7 +116,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\build-index.ps1
 
 Rulează-l **numai** dacă ai mutat ceva în masă, sau dacă ți s-a cerut index nou.
 Scrie `00_INDEX.md` în sute de foldere. **Nu e parte din preluare** — un agent care
-intră în volt nu îl rulează ca prim pas. Nu îl rulează nici „ca să fie sigur".
+intră în vault nu îl rulează ca prim pas. Nu îl rulează nici „ca să fie sigur".
 
 ### `watch.ps1` — verificarea care vine singură
 
@@ -129,7 +129,7 @@ Rulează, în ordine fixă, **doar** treptele 3, 4 și 5 de mai sus: `lint`, apo
 pentru verificarea automată, și e deja programat.
 
 - **Scrie un singur raport:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt`. Nimic altceva
-  în volt. Nu atinge backupul.
+  în vault. Nu atinge backupul.
 - **Nu rulează `build-index`.** Nu rulează **nicio** restaurare.
 - **Cod de ieșire:** `0` = nicio **eroare**, `1` = există **eroare**. Atențiile se scriu în
   raport, dar **nu schimbă codul de ieșire** și nu ridică singure verdictul. Verdictul e o
@@ -156,7 +156,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\align-index.ps1
 
 **Scrie.** De aceea e în afara lanțului, la fel ca `build-index`: nu pentru că e mai
 puțin important, ci pentru că un lanț de preluare care ar rescrie indexuri la fiecare
-sesiune ar face voltul să arate altfel fără să fie cerut nimic.
+sesiune ar face vaultul să arate altfel fără să fie cerut nimic.
 
 Diferența față de `build-index`: nu creează indexuri din conținut, ci **aliniază**
 indexurile care există deja cu măsurătoarea reală, scriind **doar ce a diferit** și
@@ -172,7 +172,7 @@ Trei comutatoare, toate de citire: `-CeVad` (face tot, nu scrie nimic),
 **La preluare nu îl rulezi deloc** — nici cu `-CeVad` doar pentru că „nu scrie". Îl
 citești, îl explici, îl propui lui Popy.
 
-**Logul e `raport-aliniere.log`, la rădăcina voltului** — nu în `_SYSTEM`, pentru că
+**Logul e `raport-aliniere.log`, la rădăcina vaultului** — nu în `_SYSTEM`, pentru că
 e locul unde Alex uită să se uite. **Se scrie doar la eveniment**: o rulare curentă nu
 atinge deloc fișierul. Rezolvatele se mută în `arhiva- raport aliniere.log` și rămân
 ca istoric. **Automatul `PKMS-Aliniere` există ți rulează** (verificat la 2026-10-09: starea Ready,
@@ -190,7 +190,7 @@ Detaliul complet: `AUTOMATIZARI - scripturi.md`, secțiunea `align-index.ps1`.
 ## Pasul 3 — `reconcile.ps1` nu scrie **în mod implicit**. Există trei comutatoare care scriu
 
 `.\reconcile.ps1` cu nimic în plus **nu scrie nimic**. Dar există **trei comutatoare
-care scriu în volt**, și fiecare trebuie cunoscut cu numele lui înainte de a fi folosit:
+care scriu în vault**, și fiecare trebuie cunoscut cu numele lui înainte de a fi folosit:
 
 | Comutator | Ce scrie | Când e permis |
 |---|---|---|
@@ -244,7 +244,7 @@ se rulează din nou, până când categoria ajunge la `0`.
 Conținutul s-a schimbat intenționat sau s-a stricat. Nu îl atinge nicio comandă fără
 nume magic.
 
-**Singura cifră care înseamnă pierdere este `REAL LIPSA (niciunde in volt)`.**
+**Singura cifră care înseamnă pierdere este `REAL LIPSA (niciunde in vault)`.**
 Tot ce se potrivește cu un nume **mai mic** decât în backup e o **diferență de
 dimensiune**, nu o lipsă.
 
@@ -257,16 +257,16 @@ rulând `.\health-check.ps1`. Cifra vie e o obligație: **măsoară, nu copia.**
 
 | | |
 |---|---|
-| Volt | `D:\Alex_Knowlege_Vault` — 59,01 GB |
-| Fișiere de lucru | **50.970** — tot ce e în volt, **mai puțin** `.obsidian` și `.git` |
+| Vault | `D:\Alex_Knowlege_Vault` — 59,01 GB |
+| Fișiere de lucru | **50.970** — tot ce e în vault, **mai puțin** `.obsidian` și `.git` |
 | Fișiere pe disc, cu tot | **52.239** — dacă numărăm și folderele programelor |
-| Backup | alături voltului, pe `D:` — **imutabil**. Îl descoperă `paths.ps1`, nu-l scrie |
+| Backup | alături vaultului, pe `D:` — **imutabil**. Îl descoperă `paths.ps1`, nu-l scrie |
 | Nivel de lucru | `01_Projects\01-6-Work_Folder (to sort)` — 8 rafturi, aici intri |
 | Bază | `00`–`06` — fondul, nu se rearanjează |
 | Mașină | `_SYSTEM`, `_ARCHIVE`, `_QUARANTINE` — fără numerotare |
 | Nu se atinge | folderele cu punct, `Site\01_Theme_Salient`, media WordPress |
 
-**Peste trei sferturi din tot voltul sunt în `01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar`** (44,57 GB).
+**Peste trei sferturi din tot vaultul sunt în `01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar`** (44,57 GB).
 **În `01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site` sunt 29.748 de fișiere**, dintre care **27.881 cu extensie de imagine**
 (`.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.svg`), măsurate pe **8 octombrie 2026**.
 
@@ -313,7 +313,7 @@ Doar trei situații justifică oprirea:
 
 1. **ACCESS** — ai nevoie de ceva ce numai Alex îți poate da (o parolă, un cod, o plată,
    sau o decizie pe care numai el o poate lua — de exemplu, cine primește o copie de ceva
-   din volt).
+   din vault).
 2. **DRIFT** — nu mai poți trece pe plan.
 3. **TAIL** — repeți același lucru și nu iese nimic. Și atunci: **schimbă perspectiva.**
    Citește fișierul pe care nu l-ai citit încă.
@@ -335,7 +335,7 @@ Nu pentru că e greu. Nu pentru că vrei voie. Nu pentru că nu e sigur — **ne
 | nu redenumești imagini din `Site` | structură WordPress `YYYY\MM`, 21 de ani de istorie |
 | nu dezarhivezi biblioteci de unelte | copiile repetate sunt artefacte de build |
 | nu pui cuvântul interzis în nume | doar în **nume**, nu în conținut |
-| nu atingi `E:\` | nu aparține voltului |
+| nu atingi `E:\` | nu aparține vaultului |
 | nu ieși din plan ca să „optimizezi" | planul e al lui Alex, execută-l |
 | **nu rulezi `build-index` la preluare** | scrie în sute de foldere. Doar după mutări în masă |
 
@@ -368,12 +368,12 @@ Dacă răspunsul e nu, **nu ai terminat.**
 ```
 1. STOP. Nu măsura nimic.
 2. Scrie lista în widget. Cu fișierele exacte.
-3. Întreabă: ce s-ar vedea în volt dacă termin? Dacă răspunsul e "nimic", planul e greșit.
+3. Întreabă: ce s-ar vedea în vault dacă termin? Dacă răspunsul e "nimic", planul e greșit.
 4. Execută primul pas. Bifează.
 5. Continuă.
 ```
 
 **Punctul 1 e cel care a lipsit de cinci ori.**
 Măsurătoarea e condiție, nu rezultat. Cinci tururi de măsurătoare corecte au arătat exact
-ca o muncă — pentru că singura diferență dintre muncă și măsurătoare, faptul că voltul
+ca o muncă — pentru că singura diferență dintre muncă și măsurătoare, faptul că vaultul
 nu s-a mișcat, nu se vede în ieșire.

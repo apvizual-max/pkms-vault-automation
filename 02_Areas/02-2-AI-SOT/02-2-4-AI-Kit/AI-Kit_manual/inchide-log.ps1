@@ -2,9 +2,9 @@
 # evenimente sunt INCA DESCHISE acum.
 #
 # PROBLEMA pe care o rezolva, masurata: documentatia cere ca evenimentele
-# rezolvate sa se mute in "arhiva- raport aliniere.log". Masurat pe voltul
+# rezolvate sa se mute in "arhiva- raport aliniere.log". Masurat pe vaultul
 # real inainte de a scrie acest script: 1.313 evenimente, 661 de foldere,
-# toate dintr-o singura zi, si ZERO fisiere de arhiva in tot voltul.
+# toate dintr-o singura zi, si ZERO fisiere de arhiva in tot vaultul.
 # Asadar ritualul saptamanal era la jumatate: se stia ce se cere, nu exista
 # prin ce se face. Iar deschiderea logului cerea 537 KB ca sa afli ca nu
 # mai e nimic de facut.
@@ -26,12 +26,12 @@ param(
   # parametru ar face ca Get-PkmsVault sa nu fie apelat niciodata, iar
   # $env:PKMS_VAULT ar fi ignorat in tacure.
   [string]$Vault = '',
-  # Fisierul de log. GOAL intentionat, ca mai sus: implicit luat din volt.
+  # Fisierul de log. GOAL intentionat, ca mai sus: implicit luat din vault.
   [string]$Log = '',
   # Implicit: DOAR raporteaza. Nimic nu se scrie.
   [switch]$Arhiveaza,
   # Autoproba: dovedeste ca poarta poate deveni rosie si ca arhivarea nu
-  # inghiteaza lucru deschis. Ruleaza in %TEMP%, nu atinge voltul.
+  # inghiteaza lucru deschis. Ruleaza in %TEMP%, nu atinge vaultul.
   [switch]$AutoTest,
   [int]$Nivel = 1
 )
@@ -163,9 +163,9 @@ if ($AutoTest) { $cod = Invoke-AutoTest; exit $cod }
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
-if (-not (Test-Path -LiteralPath $Vault)) { throw ('Voltul nu exista: ' + $Vault) }
+if (-not (Test-Path -LiteralPath $Vault)) { throw ('Vaultul nu exista: ' + $Vault) }
 if (-not $Log) { $Log = Join-Path $Vault 'raport-aliniere.log' }
 if (-not (Test-Path -LiteralPath $Log)) {
   Write-Host ('LOGUL NU EXISTA: ' + $Log)
@@ -177,7 +177,7 @@ if (-not (Test-Path -LiteralPath $Log)) {
 $align = Join-Path $PSScriptRoot 'align-index.ps1'
 if (-not (Test-Path -LiteralPath $align)) { throw ('Lipseste poarta: ' + $align) }
 # -Vault se propaga. Fara asta, cu -Vault spre alt arbore, clasificarea s-ar
-# face dupa starea voltului implicit, nu a celui cerut.
+# face dupa starea vaultului implicit, nu a celui cerut.
 $ie = & powershell -NoProfile -ExecutionPolicy Bypass -File $align -Vault $Vault -CeVad 2>&1 | Out-String
 
 $deschise = New-Object System.Collections.ArrayList
@@ -216,8 +216,8 @@ $foldereRezolvate = @($cls.Rezolvate | Select-Object -ExpandProperty Drum -Uniqu
 # $cls.Deschise numara doar evenimentele care sunt IN LOG. Daca poarta
 # raporteaza o stricare pe care logul nu o contine, numarul de "deschise"
 # este zero chiar daca stricarea exista — si spuneam "NIMIC DESCHIS" cu cod 0.
-# Masurat 2026-10-09 pe micro-volt-6: poarta 2 NEALINIAT, log gol,
-# "NIMIC DESCHIS", cod 0. Verde plin pe un volt stricat.
+# Masurat 2026-10-09 pe micro-vault-6: poarta 2 NEALINIAT, log gol,
+# "NIMIC DESCHIS", cod 0. Verde plin pe un vault stricat.
 #
 # ACOPERIREA e masura care lipsa: orice stricare raportata acum de poarta,
 # pentru care nu exista eveniment in log, e stricare neacoperita. Se numeste,
@@ -240,7 +240,7 @@ if ($neacoperite.Count -gt 0) {
   Write-Host ''
   Write-Host ('ATENTIE — POARTA REPORTA ' + $neacoperite.Count + ' STRICARI PE CARE LOGUL NU LE CONTINE:')
   foreach ($d in $neacoperite) { Write-Host ('    ' + $d) }
-  Write-Host 'Logul si voltul nu mai sunt de acord. Aceste foldere nu pot fi nici'
+  Write-Host 'Logul si vaultul nu mai sunt de acord. Aceste foldere nu pot fi nici'
   Write-Host 'arhivate, nici declarate rezolvate: nu au eveniment de corespuns.'
   Write-Host 'Ruleaza align-index.ps1 ca evenimentele sa ajunga in log.'
 }

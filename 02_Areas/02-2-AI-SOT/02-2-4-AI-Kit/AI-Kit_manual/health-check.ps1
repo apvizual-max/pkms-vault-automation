@@ -1,5 +1,5 @@
 ﻿<#
-  PKMS health-check.ps1 - starea de sanatate a voltului, intr-un raport scurt.
+  PKMS health-check.ps1 - starea de sanatate a vaultului, intr-un raport scurt.
   Nu modifica nimic.
 #>
 param([string]$Vault = '')
@@ -7,13 +7,13 @@ $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
 $ex = '\\\.obsidian\\|\\\.git\\'
 
 # --- numaratoare REPRODUCIBILA ---
 # masurat: aceeasi expresie, doua rulari la 3 secunde, a dat 50.967 apoi 50.970.
-# deci expresia e stabila, dar VOLTUL CRESTE sub ea - procese vii scriu in el.
+# deci expresia e stabila, dar VAULTUL CRESTE sub ea - procese vii scriu in el.
 # intrebarea "de ce difera doua numarari?" nu se raspunde ghicind: se raspunde
 # masurand de doua ori si spunand diferenta.
 # NOTA: Get-ChildItem nu pierde nimic la cale lunga. masurat: 52.242 cu
@@ -28,7 +28,7 @@ $probe2 = @(Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA Silently
 $drift = $probe2 - $probe1
 $exSurse = "excludere folosita aici: \\.obsidian\\ si \\.git\\ (2 tipare). paths.ps1 Get-PkmsExclusions are 15 tipare si da ALT numar - nu se amesteca."
 
-Write-Output "==================== STAREA VOLTULUI ===================="
+Write-Output "==================== STAREA VAULTULUI ===================="
 Write-Output ""
 
 Write-Output "STRATUL DE LUCRU"
@@ -71,11 +71,11 @@ Write-Output "  $exSurse"
 Write-Output "  masurat: Get-ChildItem pierde 0 fisiere la cale >259 caractere (52.242 = 52.242 vs .NET EnumerateFiles, \\?\)"
 Write-Output "  stabilitate: $probe1 la prima masuratoare, $probe2 la a doua (la 700 ms distanta), diferenta $drift"
 if ($drift -ne 0) {
-  Write-Output "  ATENTIE: voltul s-a schimbat intre cele doua masuratori. cifrele de mai sus sunt"
+  Write-Output "  ATENTIE: vaultul s-a schimbat intre cele doua masuratori. cifrele de mai sus sunt"
   Write-Output "  momente, nu constante. daca vrei comparatie intre doua rulari, ruleaza in"
   Write-Output "  intervale cu procesele de scriere oprite."
 } else {
-  Write-Output "  voltul nu s-a schimbat intre cele doua masuratori."
+  Write-Output "  vaultul nu s-a schimbat intre cele doua masuratori."
 }
 
 Write-Output ""
@@ -92,7 +92,7 @@ if ($prgDir.Count -ge 1) {
   $prg = @(Get-ChildItem -LiteralPath $prgDir[0].FullName -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.Name -ne '00_INDEX.md' }).Count
   Write-Output "  In Progress:        $prg   (0 = bine, nu ai nimic neterminat)   [$($prgDir[0].FullName.Substring($Vault.Length+1))]"
 } else {
-  Write-Output "  In Progress:        NU CAZUT   (raftul 'In Progress' nu a fost gasit sub volt)"
+  Write-Output "  In Progress:        NU CAZUT   (raftul 'In Progress' nu a fost gasit sub vault)"
 }
 Write-Output ""
 Write-Output "=========================================================="

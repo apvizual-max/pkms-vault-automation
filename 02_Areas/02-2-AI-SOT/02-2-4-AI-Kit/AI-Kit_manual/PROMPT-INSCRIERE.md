@@ -1,6 +1,6 @@
 # PROMPT DE ÎNSCRIERE
 
-Copiază asta **ca atare** și trimite-l oricărui AI care trebuie să lucreze în voltul lui Alex.
+Copiază asta **ca atare** și trimite-l oricărui AI care trebuie să lucreze în vaultul lui Alex.
 Nu e nevoie să-l înțelegi — de fapt, **e mai bine să nu-l reformulezi.**
 
 ---
@@ -25,7 +25,7 @@ La început:
                .\setup.ps1     (verificare de preluare; nu scrie)
 
 2. Citește, în ordine, fără să sari:
-   - SPECIFICATII - contractul voltului.md
+   - SPECIFICATII - contractul vaultului.md
    - COTOR.md
    - LOGICA - cum se foloseste fiecare baza.md
    - PROCESE - flux de la captură la utilizare.md
@@ -40,7 +40,7 @@ La început:
 
    Și NU rulează niciodată, la preluare:
    .\build-index.ps1   scrie 694 de indexuri; doar după mutări în masă
-   .\watch.ps1          scrie un raport în volt; e automatismul zilnic
+   .\watch.ps1          scrie un raport în vault; e automatismul zilnic
 
 4. Mi spui, pe scurt:
    - câți fișiere ai numărat, cât de mare e dosarul
@@ -83,14 +83,14 @@ Ascunzi un ochi dacă ceva nu ți-a ieșit. Îmi spui exact.
 | „Nu începi până nu spui «am înțeles»" | AI-ul care începe și face altceva |
 | „Decide și scrie motivul" | nesiguranța lui Alex ca sarcină, nu a AI-ului |
 | „Bifezi fiecare pas" | munca fără urmă vizibilă |
-| „Măsuri înainte și după" | trompa: măsurătoare corectă, volt neschimbat |
+| „Măsuri înainte și după" | trompa: măsurătoare corectă, vault neschimbat |
 
 ---
 
 ## Varianta scurtă, pentru AI cu context mare
 
 ```
-Citește D:\Alex_Knowlege_Vault\SPECIFICATII - contractul voltului.md și
+Citește D:\Alex_Knowlege_Vault\SPECIFICATII - contractul vaultului.md și
 D:\Alex_Knowlege_Vault\COTOR.md. Rulează D:\Alex_Knowlege_Vault\AI-Kit\lint.ps1.
 Scrie-ți planul unde poate fi citit înapoi și arată-mi-l. Nu executa până nu aprob.
 Nu șterge nimic. Nu scrie în backup. Nu atinge folderele cu punct.

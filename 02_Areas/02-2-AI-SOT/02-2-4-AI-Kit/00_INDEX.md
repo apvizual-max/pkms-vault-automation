@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit
 
-**De ce e aici:** pachetul AI-Kit, în interiorul bazei ALEX-SOT, nu lângă ea — voltul e pe Drive, iar pachetul care se învață pe sine stă unde poate fi găsit după **nume**, nu după cale scrisă tare. Două rafturi copil, cu roluri diferite: `AI-Kit_guide` (documentația de predare, citită de om și de AI) și `AI-Kit_manual` (motorul: scripturile care scriu și verifică voltul). Cele două nu se amestecă: ghidul spune *ce*, motorul face *ce*.
+**De ce e aici:** pachetul AI-Kit, în interiorul bazei ALEX-SOT, nu lângă ea — vaultul e pe Drive, iar pachetul care se învață pe sine stă unde poate fi găsit după **nume**, nu după cale scrisă tare. Două rafturi copil, cu roluri diferite: `AI-Kit_guide` (documentația de predare, citită de om și de AI) și `AI-Kit_manual` (motorul: scripturile care scriu și verifică vaultul). Cele două nu se amestecă: ghidul spune *ce*, motorul face *ce*.
 
 **0 fișiere · 0 B · 2 subfoldere**
 

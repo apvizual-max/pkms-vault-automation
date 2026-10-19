@@ -1,7 +1,7 @@
 # INTEGRARE — Mavis Optimus CI
 
 **De ce acest fișier e aici.** Repo-ul acesta (`pkms-vault-automation`) versionează
-**motorul**. Conținutul brut al voltului **nu** e aici și nu va fi. Motorul, în
+**motorul**. Conținutul brut al vaultului **nu** e aici și nu va fi. Motorul, în
 schimb, are nevoie de o singură poartă către sistemul care îl conduce: proiectul
 `MAVIS-OPTIMUS-CI`.
 
@@ -65,7 +65,7 @@ număr fix — se spune data și se spune cum se re-verifică.
 Ce rămâne sub urmărire: **41–42 de fișiere**, toate motorul.
 
 **ATENȚIE:** `git clean -fdx` și `git reset --hard` sunt interzise aici. `.git`
-e **în interiorul** voltului — un clean șterge conținutul voltului, nu doar
+e **în interiorul** vaultului — un clean șterge conținutul vaultului, nu doar
 fișierele neversionate. Incident produs și măsurat pe 2026-10-12.
 
 ---
@@ -76,7 +76,7 @@ fișierele neversionate. Incident produs și măsurat pe 2026-10-12.
 paths → setup → lint → health-check → reconcile
 ```
 
-`build-index` și `align-index` **nu intră în lanț**: amândoi scriu în volt.
+`build-index` și `align-index` **nu intră în lanț**: amândoi scriu în vault.
 Se rulează cu mâna, sau prin automatul dedicat, la cerere.
 
 `lint.ps1` e poarta: dacă nu dă `0`, nu începi.

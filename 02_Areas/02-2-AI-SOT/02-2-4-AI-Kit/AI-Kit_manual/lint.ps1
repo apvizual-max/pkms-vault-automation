@@ -1,5 +1,5 @@
 ﻿<#
-  PKMS lint.ps1 - verifica regulile voltului si raporteaza abaterile.
+  PKMS lint.ps1 - verifica regulile vaultului si raporteaza abaterile.
   NU corecteaza nimic. doar raporteaza. corectia ramane decizia lui Alex.
 #>
 param([string]$Vault = '')
@@ -8,9 +8,9 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
-# Poarta de cale reala — o poarta care verifica voltul gresit nu verifica nimic.
+# Poarta de cale reala — o poarta care verifica vaultul gresit nu verifica nimic.
 Assert-PkmsVaultReal -Vault $Vault -Cine 'lint'
 $skip = Get-PkmsExclusions
 
@@ -69,10 +69,10 @@ if (-not $B) {
   } else {
     $ok.Add("backup neatins la nivel de FOLDERE: 0 foldere dupa prag")
   }
-  # backupul nu trebuie sa fie in interiorul voltului
+  # backupul nu trebuie sa fie in interiorul vaultului
   # (comparație pe cale completa, cu separator - altfel 'Vault - Backup' da match pe prefix)
   $vPrefix = $Vault.TrimEnd('\') + '\'
-  if ($B.TrimEnd('\').StartsWith($vPrefix)) { $errors.Add("copia de backup e INSIDE voltului. trebuie sa stea PE ALT VOLUM, in afara voltului. Calea gasita: $B") }
+  if ($B.TrimEnd('\').StartsWith($vPrefix)) { $errors.Add("copia de backup e INSIDE vaultului. trebuie sa stea PE ALT VOLUM, in afara vaultului. Calea gasita: $B") }
 }
 
 # --- 2. rafturile masinii fara numerotare ---
@@ -124,7 +124,7 @@ if (-not $gasitCorect) { $errors.Add("nu exista stratul de lucru: nici $($workCo
 
 # --- 5. index in fiecare folder de continut ---
 # 01_Projects a intrat aici odata cu redenumirea. Inainte NU era scanat, pentru ca
-# lista urmarea 10_Work, care nu mai exista — deci cel mai mare arbore din volt
+# lista urmarea 10_Work, care nu mai exista — deci cel mai mare arbore din vault
 # putea lipsi de index fara ca poarta sa geaba. O poarta mutata pe baza noua trebuie
 # sa-si mute si aria, nu doar numele.
 $noIdx = @()
@@ -163,7 +163,7 @@ $Guide = @(Get-ChildItem -LiteralPath $Vault -Recurse -Directory -Force -Depth 6
            Where-Object { $_.Name -eq 'AI-Kit_guide' } | Select-Object -First 1)
 $Guide = if ($Guide.Count -ge 1) { $Guide[0].FullName } else { Join-Path $Vault 'AI-Kit\AI-Kit_guide' }
 # Contractul s-a numit mereu SPECIFICATII - contractul <...>.md, dar in 10-11 i s-a
-# schimbat grafia din "voltului" in "vaultului" in nume, iar H1 a ramas cu vechea.
+# schimbat grafia din "vaultului" in "vaultului" in nume, iar H1 a ramas cu vechea.
 # Poarta nu are voie sa retina o grafie ca regula: cerinta reala e "contractul
 # EXISTA", nu "are exact acest nume". Se cauta dupa tipar, la radacina sau in ghid,
 # si daca nu apare niciuna dintre grafii, atunci chiar lipseste.
@@ -174,7 +174,7 @@ if ($contract.Count -gt 0) {
   $ok.Add("doc: contractul ($rel)")
   if ($contract.Count -gt 1) { $warn.Add("EXISTĂ $($contract.Count) contracte, nu stiu care e cel canon: $($rel.FullName)") }
 } else {
-  $errors.Add("LIPSA documentatia: SPECIFICATII - contractul <voltului|vaultului>.md")
+  $errors.Add("LIPSA documentatia: SPECIFICATII - contractul <vaultului|vaultului>.md")
 }
 
 foreach ($doc in @('COTOR.md','START AICI.md','INDEX CENTRAL.md',
@@ -182,7 +182,7 @@ foreach ($doc in @('COTOR.md','START AICI.md','INDEX CENTRAL.md',
                    'PROCESE - flux de la captură la utilizare.md',
                    'WORKFLOW - ce faci concret.md',
                    'AUTOMATIZARI - scripturi.md',
-                   'ONBOARDING AI - cum preia un AI voltul.md')) {
+                   'ONBOARDING AI - cum preia un AI vaultul.md')) {
   $atRadacina = Test-Path (Join-Path $Vault $doc)
   $inGuide    = Test-Path (Join-Path $Guide $doc)
   if ($atRadacina)      { $ok.Add("doc: $doc (radacina)") }
@@ -200,7 +200,7 @@ if (-not (Test-Path $Guide)) {
 $hard = New-Object System.Collections.Generic.List[string]
 # 2026-10-19. DriveFS se degradeaza IN TIMPUL rularii, nu doar la inceput: in aceeasi
 # zi a intrat de 6 ori in starea in care citirea arunca "Incorrect function". O poarta
-# verificata la pornire poate sa treaca, iar voltul sa moara sub ea la jumatate.
+# verificata la pornire poate sa treaca, iar vaultul sa moara sub ea la jumatate.
 # Un stack trace la linia 204 nu e un verdict — e o masuratoare care nu s-a terminat.
 # Deci fiecare citire e gardata, iar o citire picata se numara si se raporteaza.
 $citiriEsuate = 0
@@ -242,7 +242,7 @@ if ($hard.Count -gt 0) {
 # O citire picata NU e un verdict de "curat". E o masuratoare care nu s-a terminat,
 # si trebuie sa se vada ca atare, altfel poarta zice "OK" pentru ceva ce n-a citit.
 if ($citiriEsuate -gt 0) {
-  $errors.Add("VOLTUL NU A PUTUT FI CITIT COMPLET: $($citiriEsuate) citire(s) au picat in timpul rularii — " +
+  $errors.Add("VAULTUL NU A PUTUT FI CITIT COMPLET: $($citiriEsuate) citire(s) au picat in timpul rularii — " +
               "filesystem-ul s-a degradat sub poarta. Verdictul de mai sus NU e de incredere. " +
               "Repornește DriveFS și rulează din nou. Picat pe: " + ($citiriPicate -join ', '))
 }
@@ -251,8 +251,8 @@ if ($citiriEsuate -gt 0) {
 # au fost scrise in paralel si au inceput sa difere: radacina era ramasa in urma.
 # o copie care se dezincronizeaza e mai rea decat una singura, pentru ca nimeni
 # nu stie care e cea corecta.
-$onb1 = Join-Path $Guide 'ONBOARDING AI - cum preia un AI voltul.md'
-if (-not (Test-Path $onb1)) { $onb1 = Join-Path $Vault 'ONBOARDING AI - cum preia un AI voltul.md' }
+$onb1 = Join-Path $Guide 'ONBOARDING AI - cum preia un AI vaultul.md'
+if (-not (Test-Path $onb1)) { $onb1 = Join-Path $Vault 'ONBOARDING AI - cum preia un AI vaultul.md' }
 $onb2 = Join-Path $PSScriptRoot 'ONBOARDING.md'
 if ((Test-Path $onb1) -and (Test-Path $onb2)) {
   $h1 = (Get-FileHash -LiteralPath $onb1 -Algorithm SHA256).Hash

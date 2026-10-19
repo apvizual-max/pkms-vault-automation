@@ -1,6 +1,6 @@
 ﻿<#
   PKMS align-index.ps1
-  Alinierea automata a indexurilor 00_INDEX.md — contractul voltului §18 + §19.
+  Alinierea automata a indexurilor 00_INDEX.md — contractul vaultului §18 + §19.
 
   Fara AI, fara retea, fara cost, fara scriere in backup.
 
@@ -31,7 +31,7 @@
 param(
   # ATENTIE: lasat GOAL intentionat, ca in reconcile.ps1:7. Daca am pune aici
   # un drum, Get-PkmsVault nu s-ar apela niciodata, iar $env:PKMS_VAULT ar fi
-  # ignorat in tacure. Calea voltului o descopera AI-Kit\paths.ps1.
+  # ignorat in tacure. Calea vaultului o descopera AI-Kit\paths.ps1.
   [string]$Vault = '',
   # face tot, nu scrie nimic, tipareste ce ar face.
   [switch]$CeVad,
@@ -46,7 +46,7 @@ $ErrorActionPreference = 'Stop'
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # Poarta de cale reala, INAINTE de Resolve-Path: pe o cale vida Resolve-Path
 # arunca sub ErrorActionPreference=Stop, deci o eroare necitita in loc de un
-# refuz curat. Pe D: sta stubul cu un fisier — Test-Path trece, dar nu e volt.
+# refuz curat. Pe D: sta stubul cu un fisier — Test-Path trece, dar nu e vault.
 Assert-PkmsVaultReal -Vault $Vault -Cine 'align-index'
 $Vault = (Resolve-Path -LiteralPath $Vault).Path
 # MASURAT: Resolve-Path pastreaza bara de la final. Fara taierea de mai jos,
@@ -63,7 +63,7 @@ try { $BackupRoot = Get-PkmsBackup } catch { $BackupRoot = $null }
 # ([\\/]|$) in loc de doar [\\/]: un folder gol, sau unul aflat la capatul
 # caii, nu are nimic dupa el, deci '([\\/])' nu s-ar potrivi NICIODATA. Patru
 # din cele de mai jos (.claudian, .neural_memory, .sentinel_temp,
-# .wwebjs_cache) sunt exact astfel, la radacina voltului: cu bara finala
+# .wwebjs_cache) sunt exact astfel, la radacina vaultului: cu bara finala
 # raportau 0 cai — o regula care nu se declanseaza. Forma de mai jos se
 # declanseaza si pe ele, si tot ramane imuna la secventele octale.
 # ---------------------------------------------------------------------------
@@ -78,7 +78,7 @@ $Excluderi = @(
   @{ Label = '.wwebjs_cache';           Pat = '[\\/]\.wwebjs_cache([\\/]|$)' }
   @{ Label = 'node_modules';            Pat = '[\\/]node_modules([\\/]|$)' }
   # Radacina unei zone interzise NU e in interiorul ei: e un raft obisnuit al
-  # voltului, si se indexeaza ca orice alt raft. Doar interiorul e neatins.
+  # vaultului, si se indexeaza ca orice alt raft. Doar interiorul e neatins.
   # (build-index.ps1 cere deja bara finala, si cele 13 radacini pastrate pe disc
   #  sunt tot atatea. Daca align ar cere doar '([\\/]|$)', ar stinge radacinile si
   #  ar contrazice build-index in exact zonele protejate.)
@@ -100,7 +100,7 @@ $Excluderi = @(
   # masurata, prima rulare ar crea acolo fise, a doua le-ar gasi ca foldere
   # noi, si automatul s-ar hrani singur cu propria arhiva. Bara finala e
   # optionala, ca tiparul sa loveasca si folderul 'arhiva-indexe' el insusi.
-  # NOTE: in voltul real acest folder nu exista inca (n-a curs nicio aliniere),
+  # NOTE: in vaultul real acest folder nu exista inca (n-a curs nicio aliniere),
   # deci tiparul raporteaza 0 cai Acolo. Pe fixture se declanseaza la 3 foldere.
   @{ Label = '_SYSTEM\arhiva-indexe';   Pat = '[\\/]arhiva-indexe[\\/]?' }
 )
@@ -147,7 +147,7 @@ if ($VerificaExcluderi) {
     $pat = '[\\/]' + [regex]::Escape($c) + '[\\/]'
     $n = @($toate | Where-Object { $_.FullName -match $pat }).Count
     if ($n -eq 0) {
-      Write-Output ("[DEFECT] contra-proba {0}: nu exista in volt" -f $c)
+      Write-Output ("[DEFECT] contra-proba {0}: nu exista in vault" -f $c)
     } else {
       Write-Output ("[OK]     contra-proba {0}: {1} cai, neatinse de tipare" -f $c, $n)
     }
@@ -863,7 +863,7 @@ try {
     # ETICHETA VECHE ERA MINCINOASA (masurat 2026-10-09): contorul se numea
     # REFUZAT si se afisa ca "neatinse", dar era exact numarul CONFORM repetat.
     # Consecinta reala: din iesire nu rezulta NICIODATA cate foldere au fost
-    # SALTITE de excluziuni — pe voltul real sunt mii. Cifra aceea se vede la
+    # SALTITE de excluziuni — pe vaultul real sunt mii. Cifra aceea se vede la
     # verifica-schema ("gasite N | analizate M"); aici spunem adevarul despre ce
     # s-a numarat, nu ce s-a omis.
     if ($stare -eq 'CONFORM') { $cnt.NEMODIF = $cnt.NEMODIF + 1 }

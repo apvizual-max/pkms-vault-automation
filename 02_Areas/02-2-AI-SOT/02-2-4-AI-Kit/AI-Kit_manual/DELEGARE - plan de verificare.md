@@ -64,7 +64,7 @@ după ștergerile de azi: **661** de indexuri utile în afara carantinei; erau 6
 Despre `align-index.ps1` raportează **doar citind fișierul**, și anume:
 1. Cele cinci stări apar în ordinea din §18.3: `LIPSA`, `CORUPT`, `INCOMPLET`,
    `NEALINIAT`, `CONFORM` — și `CONFORM` nu atinge nimic.
-2. Logul e `raport-aliniere.log` **la rădăcina voltului**, nu în `_SYSTEM`.
+2. Logul e `raport-aliniere.log` **la rădăcina vaultului**, nu în `_SYSTEM`.
 3. Blocajul se face cu **mutex**, nu cu fișier-pid.
 4. Fiecare tipar de excluziune e scris `[\\/]`, nu `\01` — pentru că `\01` e citit de
    .NET ca secvență **octală** (`U+0001`) și nu se declanșează pe nicio cale reală.

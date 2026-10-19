@@ -1,8 +1,8 @@
 ﻿<#
   PKMS watch.ps1 - singurul punct de intrare al verificarii.
-  Ruleaza, in ordine fixa, trei trepte care NU scriu in volt:
+  Ruleaza, in ordine fixa, trei trepte care NU scriu in vault:
      1. lint          - regulile de denumire, legaturi, documentatia
-     2. health-check  - numerele vii ale voltului
+     2. health-check  - numerele vii ale vaultului
      3. reconcile     - socoteala cu backupul, doar informativ
   Scrie UN SINGUR fisier: _SYSTEM\rapoarte\raport-ultima-rulare.txt
 
@@ -25,10 +25,10 @@ $ErrorActionPreference = 'Continue'
 
 if (-not $Vault) { $Vault = Get-PkmsVault }
 # -Vault vine de la om si nu trece prin Get-PkmsVault. Fara asta, o bara
-# obisnuita la finalul caii face ca tot voltul sa para nealiniat.
+# obisnuita la finalul caii face ca tot vaultul sa para nealiniat.
 $Vault = Normalize-PkmsPath $Vault
 if (-not (Test-Path -LiteralPath $Vault)) {
-  Write-Output "VOLTUL NU EXISTA: $Vault"
+  Write-Output "VAULTUL NU EXISTA: $Vault"
   Write-Output 'Nu s-a scris niciun raport: nu am unde scrie.'
   exit 1
 }
@@ -116,7 +116,7 @@ foreach ($t in $trepte) {
       $detalii = @(Get-Detalii $rand @('LIPSA'))
     }
     'reconcile' {
-      $m = [regex]::Match($text, 'REAL LIPSA \(niciunde in volt\):\s*(\d+)')
+      $m = [regex]::Match($text, 'REAL LIPSA \(niciunde in vault\):\s*(\d+)')
       if ($m.Success) { $erori = [int]$m.Groups[1].Value }
       elseif ($text -match 'BACKUP NU A FOST GASIT|BACKUP INEXISTENT|NU SE ADUNA') {
         $erori = 1; $nota = 'comparatia cu backupul nu a putut fi facuta'
@@ -193,11 +193,11 @@ if ($probleme.Count -eq 0) {
 $backup = Get-PkmsBackup
 $L = New-Object System.Collections.Generic.List[string]
 $L.Add('================================================================')
-$L.Add('VOLTUL - VERIFICARE ZILNIEARA')
+$L.Add('VAULTUL - VERIFICARE ZILNIEARA')
 $L.Add('================================================================')
 $L.Add("Data si ora rularii:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')")
 $L.Add("Durata totala:        $(Fmt-Durata $swTotal.Elapsed.TotalSeconds)")
-$L.Add("Volt verificat:       $Vault")
+$L.Add("Vault verificat:       $Vault")
 $L.Add("Backup comparat:      $(if ($backup) { $backup } else { 'NU A FOST GASIT' })")
 $L.Add('Ce a scris:           doar acest raport (si folderul lui, daca lipsea). nimic altceva.')
 $L.Add('Ce NU a rulat:        build-index (NU ruleaza la verificare) si orice restaurare.')
@@ -207,7 +207,7 @@ $L.Add('')
 foreach ($r in $rez) {
   $titlu = switch ($r.Nume) {
     'lint'         { 'PASUL 1 - lint (regulile de denumire)' }
-    'health-check' { 'PASUL 2 - health-check (masura voltului)' }
+    'health-check' { 'PASUL 2 - health-check (masura vaultului)' }
     'reconcile'    { 'PASUL 3 - reconcile (socoteala cu backupul)' }
   }
   $L.Add($titlu)

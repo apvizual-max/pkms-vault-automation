@@ -1,6 +1,6 @@
 # START AICI
 
-Harta voltului tău. Un singur loc unde vezi tot ce ai.
+Harta vaultului tău. Un singur loc unde vezi tot ce ai.
 **Cifrele de mai jos sunt măsurate pe 8 octombrie 2026, după reorganizarea care a dus
 `07_Site_Build` în `01_Projects\01-6-Work_Folder (to sort)` și pe după ștergerile făcute în aceeași zi.**
 
@@ -34,7 +34,7 @@ loc în care intri ca să lucrezi: `01_Projects\01-6-Work_Folder (to sort)\01-6-
 
 ## Cele trei rafturi ale mașinii
 
-Nu-s ale tale, dar stau în volt ca să nu te împiedici de ele.
+Nu-s ale tale, dar stau în vault ca să nu te împiedici de ele.
 
 | Folder | Ce e |
 |---|---|
@@ -48,7 +48,7 @@ scoate în runda 3, cele 92 de descrieri de job identice și fișierul de decizi
 decizia lui, nu o ștergere automată. Ce a rămas: rafturi cu motive scrise în
 `00_INDEX.md`, fiecare index spunând de ce e acolo.
 
-**Ce nu s-a șters:** **`Clippings`**, care a fost mutat **la rădăcina voltului**, nu
+**Ce nu s-a șters:** **`Clippings`**, care a fost mutat **la rădăcina vaultului**, nu
 șters. **Trebuie să rămână acolo** — Obsidian e programat să-l caute la rădăcină. Are
 13 subfoldere (rafturi) și 404 fișiere de conținut. Doar 3 rafturi conțin indexuri
 în interior — `AI TOOLS` (6), `HERMES` (3), `LINKEDIN` (2) — iar împreună cu indexul de
@@ -65,7 +65,7 @@ la rădăcină, `Clippings` are 12 fișiere `00_INDEX.md`.
 
 ## Unde stă greutatea — de unde începi
 
-**Cele două locuri care țin aproape tot voltul.**
+**Cele două locuri care țin aproape tot vaultul.**
 
 1. **`01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar` — 44,57 GB**
    396 de fișiere, în două comenzi: *Ordinul Sfantului Bernard* (284 fișiere, 30,94 GB)
@@ -157,7 +157,7 @@ Dacă te interesează prima rundă, le ai înapoi într-o secundă.
 **`AUDIT_RECONCILIERE_FINAL.md`, în rădăcină.** Conține calculul, cu fiecare fișier
 nou numit și cu cine l-a făcut.
 
-Rezultatul, **la momentul acelei reconcilieri**: **46.263 în volt, 46.233 în backup,
+Rezultatul, **la momentul acelei reconcilieri**: **46.263 în vault, 46.233 în backup,
 plus 30** — **23 de fișiere scrise de mine** (hărțile, acest raport, rafturile de primire)
 **+ 7 capturi de ecran făcute de tine** între 20:12 și 22:58, în timp ce lucram.
 
@@ -176,4 +176,4 @@ Fiecare mutare e într-un tabel cu adresa veche și adresa nouă:
 `C:\Users\apviz\.minimax\vault-manifest\REVERT.csv`
 
 Backup-ul tău e la `D:\Alex_Knowlege_Vault - Backup - 10-08-2026` — neatins, nu am scris niciodată în el.
-Verificarea de azi: **niciun fișier din backup nu lipsește din volt.**
+Verificarea de azi: **niciun fișier din backup nu lipsește din vault.**

@@ -1,7 +1,7 @@
 ﻿# AUDIT_RECONCILIERE_FINAL
 
-**Verificare 1:1 între voltul reorganizat și backup-ul inițial.**
-Generat: 2026-10-07 23:29 · Volt: `D:\Alex_Knowlege_Vault` · Backup: `D:\Alex_Knowlege_Vault - CopyBACKUP`
+**Verificare 1:1 între vaultul reorganizat și backup-ul inițial.**
+Generat: 2026-10-07 23:29 · Vault: `D:\Alex_Knowlege_Vault` · Backup: `D:\Alex_Knowlege_Vault - CopyBACKUP`
 Corecție 2026-10-08: backupul a fost redenumit în `D:\Alex_Knowlege_Vault - Backup - 10-08-2026`; cifra de mai sus e cea de la momentul scrierii. Verificarea de azi a fost reluată.
 
 ---
@@ -17,7 +17,7 @@ Nu s-a pierdut niciun singur fișier. Nu s-a șters nimic. Nu s-a scris niciodat
 | | Fișiere | Dimensiune |
 |---|---|---|
 | **Backup (referință)** | 46233 | 59.01 GB |
-| **Volt, după reorganizare** | 46263 | 59.01 GB |
+| **Vault, după reorganizare** | 46263 | 59.01 GB |
 | **Diferență** | **+30** | +804 KB |
 
 ## Calculul, explicit
@@ -26,7 +26,7 @@ Nu s-a pierdut niciun singur fișier. Nu s-a șters nimic. Nu s-a scris niciodat
 
     fișiere_finale (46263) >= fișiere_backup (46233)    ✅  îndeplinită
 
-**Ce nu are pereche în volt, din tot backup-ul:**
+**Ce nu are pereche în vault, din tot backup-ul:**
 
     46233 fișiere în backup  →  fără pereche: 0        ← trebuia să fie 0
 
@@ -40,7 +40,7 @@ Nu s-a pierdut niciun singur fișier. Nu s-a șters nimic. Nu s-a scris niciodat
 
     23 + 7 = 30     ✅     niciun alt fișier nou
 
-**Un singur fișier din volt are conținut diferit de backup:**
+**Un singur fișier din vault are conținut diferit de backup:**
 `_SYSTEM\Skills\...\agent-browser\.git\index`. E indexul unui depozit Git dintr-o
 bibliotecă de programe — se schimbă singur la fiecare acces. Nu e conținutul tău.
 
@@ -73,7 +73,7 @@ Fiecare mutare are adresa veche și adresa nouă în
 ## Verificarea de conținut, nu doar de număr
 
 Comparația de mai sus e pe **dimensiune** — spune că fiecare fișier din backup există
-undeva în volt. A fost completată de două ori cu verificare de **conținut** (SHA-256,
+undeva în vault. A fost completată de două ori cu verificare de **conținut** (SHA-256,
 119 GB citiți, 95.006 citiri):
 
 - **47.502 fișiere** — identice, conținut cu conținut.

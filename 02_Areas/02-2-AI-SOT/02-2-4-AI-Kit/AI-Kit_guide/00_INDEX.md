@@ -23,7 +23,7 @@ Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
 | `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-12 |
 | `LOGICA - cum se foloseste fiecare baza.md` | 8 KB | 2026-10-19 |
-| `ONBOARDING AI - cum preia un AI voltul.md` | 18 KB | 2026-10-19 |
+| `ONBOARDING AI - cum preia un AI vaultul.md` | 18 KB | 2026-10-19 |
 | `PROCESE - flux de la captură la utilizare.md` | 6 KB | 2026-10-19 |
 | `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-11 01-35.md` | 4 KB | 2026-10-11 |
 | `raport-aliniere.log` | 64 KB | 2026-10-18 |

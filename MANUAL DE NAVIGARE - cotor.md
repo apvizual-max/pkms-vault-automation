@@ -1,6 +1,6 @@
 # MANUAL DE NAVIGARE PRIN COTOR
 
-**Cum găsești ceva în volt fără să scanezi tot volumul.**
+**Cum găsești ceva în vault fără să scanezi tot volumul.**
 Măsurat 2026-10-19 pe `G:\My Drive\GDrive-Second_Brain_PKMS`.
 
 > Acest document nu repetă `COTOR.md` (acolo e *ce* e sistemul).
@@ -15,7 +15,7 @@ Motorul care întreține cotorul stă aici:
 
 ## 0. Interdicția care dă cel mai mult timp înapoi
 
-**Nu scanezi niciodată întregul volt ca să găsești un fișier.**
+**Nu scanezi niciodată întregul vault ca să găsești un fișier.**
 
 Măsurat: cotorul atinge **2.515 de foldere indexate** și **16.113 de fișiere**
 descrise, prin `git grep`, în **sub o secundă**. Un `Get-ChildItem -Recurse -Force`
@@ -61,7 +61,7 @@ git -C $V grep -l -i 'termen' -- '*/00_INDEX.md'
 Fiecare rezultat e un **folder**, cu un `00_INDEX.md` care spune ce conține.
 Citești 20 de linii, nu 20.000.
 
-> **Atenție, măsurat 2026-10-19:** `git grep` pe acest volt s-a dovedit
+> **Atenție, măsurat 2026-10-19:** `git grep` pe acest vault s-a dovedit
 > **instabil** — de mai multe ori a returnat `fatal: not a git repository` în
 > mijlocul altor comenzi din același bloc. Nu e greșeala căutării; e DriveFS-ul.
 > Dacă se întâmplă, **repornește DriveFS și reia** — nu căuta altă cale și nu
@@ -78,7 +78,7 @@ Get-ChildItem '<folder>' -File -Recurse | Where-Object { $_.Name -like '*termen*
 
 ### Treapta 3 — nu știi nici subiectul
 
-`INDEX CENTRAL.md`, din rădăcină. Un ecran, tot voltul, generat de
+`INDEX CENTRAL.md`, din rădăcină. Un ecran, tot vaultul, generat de
 `build-index.ps1`. **Nu se versionează** — e derivat, și îl regenerezi.
 
 ---
@@ -139,9 +139,9 @@ Codul e **poziția**, nu eticheta:
 | `lint.ps1` dă ≠ 0 | te oprești, **nu cauți nimic** | poarta e poartă |
 | n-ai mai făcut asta de luni | verifică `health-check.ps1`, **nu** rescrie | cifrele sunt vii |
 
-> `build-index.ps1` și `align-index.ps1` **scriu în volt**. Nu intră în lanțul
+> `build-index.ps1` și `align-index.ps1` **scriu în vault**. Nu intră în lanțul
 > `watch.ps1` tocmai pentru că un automatism care scrie în sute de foldere fără
-> să fie cerut face voltul să arate altfel fără motiv.
+> să fie cerut face vaultul să arate altfel fără motiv.
 
 ---
 

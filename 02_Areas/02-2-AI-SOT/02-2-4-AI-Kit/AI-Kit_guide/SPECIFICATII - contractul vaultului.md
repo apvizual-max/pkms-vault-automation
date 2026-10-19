@@ -2,9 +2,9 @@
 
 Regulile care **nu se încalcă**. Fără excepții, fără „de data asta".
 
-> **Actualizat 2026-10-19, după mutarea voltului pe Google Drive.** Contractul a fost
+> **Actualizat 2026-10-19, după mutarea vaultului pe Google Drive.** Contractul a fost
 > mutat odată cu `AI-Kit` în `02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_guide\`, iar numele lui
-> a trecut de la *voltului* la *vaultului*. Titlul de mai sus a rămas cu grafsia veche:
+> a trecut de la *vaultului* la *vaultului*. Titlul de mai sus a rămas cu grafsia veche:
 > un document care nu-și spune propriul nume în propria titulatură nu e corect.
 >
 > **`01_Projects\01-6-Work_Folder (to sort)` nu mai există.** Măsurat: pe 8 octombrie avea 32.998 de fișiere; azi
@@ -183,7 +183,7 @@ Verificarea care a lipsit o dată: `Video Screen Shots` — **6 din 12 capturi e
 
 ## 11. Măsurătoarea e condiție, nu rezultat
 
-Măsoară **înainte** și **după**. Dacă după măsurare voltul arată la fel, măsurătoarea a fost un tur pierdut.
+Măsoară **înainte** și **după**. Dacă după măsurare vaultul arată la fel, măsurătoarea a fost un tur pierdut.
 
 Măsurătoarea care nu a produs schimbare, de cinci ori la rând, se numește **trompă**.
 
@@ -205,7 +205,7 @@ conținea doar constatări de eșec.
 
 Un număr mare și un cuvânt „gata" **înseamnă că nu s-a întâmplat nimic vizibil**.
 Cinci runde de măsurători corecte au arătat exact ca o muncă, pentru că singura diferență
-dintre muncă și măsurătoare — **voltul nu s-a mișcat** — nu se vede în ieșire.
+dintre muncă și măsurătoare — **vaultul nu s-a mișcat** — nu se vede în ieșire.
 
 ---
 
@@ -299,7 +299,7 @@ fișierul înainte să-l mute.
 `AI-Kit\watch.ps1` rulează, în ordine fixă, doar lucruri care **nu scriu în vault**:
 
 1. `lint` — regulile de denumire, cuvântul interzis, legăturile, copiile de onboarding.
-2. `health-check` — numerele vii ale voltului.
+2. `health-check` — numerele vii ale vaultului.
 3. `reconcile` — socoteala cu backupul, în modul informativ, fără restaurări.
 
 ### Ce nu intră în automatism
@@ -462,12 +462,12 @@ Folderele excluse nu sunt indexate, nu sunt reparate, nu sunt atinse:
 `HERMES-Skills`, `_Skills_BackUp`, `indexuri generate in gresit`.
 
 **Rădăcina unei zone interzise nu e în interiorul ei.** E un raft obișnuit al
-voltului și se indexează ca orice raft — doar interiorul e neatins. Altfel
+vaultului și se indexează ca orice raft — doar interiorul e neatins. Altfel
 `build-index` și `align-index` ar da răspunsuri diferite exact în zonele
 protejate, și unul dintre ele ar rescrie indexuri în interiorul caruia n-are voie.
 
 **O regulă care nu se declanșează e o regulă scrisă în decor.** Fiecare din
-cele de mai sus a fost pusă pe o cale care chiar există în volt și s-a
+cele de mai sus a fost pusă pe o cale care chiar există în vault și s-a
 verificat că o oprește. Când se adaugă o excluziune nouă, obligatoriu se
 arată o cale reală pe care o oprește — altfel nu e o excluziune, e o
 speranță.
@@ -543,7 +543,7 @@ backup. Ordinea, fixă:
 
 ### 19.2 Logul: `raport-aliniere.log`
 
-- **În rădăcina voltului**, lângă `COTOR.md` și `SPECIFICATII…`, nu în
+- **În rădăcina vaultului**, lângă `COTOR.md` și `SPECIFICATII…`, nu în
   `_SYSTEM`. Motivul: e locul unde Alex uită să se uite. Un log ascuns e un
   log care nu se citește.
 - **Se scrie doar la eveniment.** O rulare fără nimic de reparat **nu atinge
@@ -571,11 +571,11 @@ Două automate, cu riscuri diferite, neamestecate:
 | Automat | Când | Ce face | Risc |
 |---|---|---|---|
 | `PKMS-Watch` | zilnic, 03:30 | doar citire: lint, health-check, reconcile | nu scrie nimic |
-| `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | scrie în volt |
+| `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | scrie în vault |
 
 „La computerul pornit" se implementează ca **la autentificare**, cu trei
 minute întârziere. Automatul rulează ca Alex, nu ca SYSTEM — un automat de
-SYSTEM ar avea alte drepturi și altă vedere asupra voltului. Cele trei ore
+SYSTEM ar avea alte drepturi și altă vedere asupra vaultului. Cele trei ore
 sunt 06:00, 13:00 și 20:00.
 
 ### 19.4 Ce poate și ce nu poate repara singur
@@ -598,7 +598,7 @@ intervenția automată ar distruge informație.
 
 ### 19.5 Regula de blocaj
 
-Un singur automat poate scrie în volt odată. Dacă o aliniere e deja pornită
+Un singur automat poate scrie în vault odată. Dacă o aliniere e deja pornită
 și se declanșează alta, aceasta din urmă iese tăcut, în cod 0, fără log.
 Sistemul nu se apără cu un fișier care declară cine are dreptul — se apără
 cu un mecanism pe care nu-l poate minți.
