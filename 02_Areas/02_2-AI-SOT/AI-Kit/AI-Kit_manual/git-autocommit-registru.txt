@@ -1,3 +1,8 @@
 # Repo-uri supraveghate de plasa de siguranta. Unul pe linie.
-D:\Alex_Knowlege_Vault
+#
+# MUTARE 2026-10-19: prima linie era D:\Alex_Knowlege_Vault, care nu mai exista.
+# Plasa lovea aceasta in fiecare 5 minute si pica cu 0x800701B, fara sa spuna nimic.
+# Codul 1 pe care il dadea nu era "a esuat comitul", ci "nu am gasit repo-ul".
+# Verificat dupa corectare: rezultat 0.
+G:\My Drive\GDrive-Second_Brain_PKMS
 C:\Users\apviz\AI_Tools\qwen-system
