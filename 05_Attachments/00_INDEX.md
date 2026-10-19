@@ -7,21 +7,25 @@
 
 ## Ce e aici
 
-Singura extensie prezentă e `.nomedia` (1 din 1 fișiere). Un raft copil: `05_1-Images`; cel mai mare element din folder e `05_1-Images` (415 MB)
+Singura extensie prezentă e `.nomedia` (1 din 1 fișiere). Un raft copil: `05-1-Images`; cel mai mare element din folder e `05-1-Images` (415 MB)
 
 ## Cuvinte cheie
 
-`05_Attachments` · `Images` · `.nomedia` · `05_1-Images`
+`05_Attachments` · `Images` · `.nomedia` · `05-1-Images`
 
 ## Subfoldere
 
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
-- [`05_1-Images`](<05_1-Images/00_INDEX.md>) — 9 fișiere · 1 subfoldere
+- [`05-1-Images`](<05-1-Images/00_INDEX.md>) — 9 fișiere · 1 subfoldere
 
 ## Fișiere
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
 | `.nomedia` | 0 B | 2026-08-01 |
+
+Singura extensie prezentă e `.nomedia` (1 din 1 fișiere). Un raft copil: `05_1-Images`; cel mai mare element din folder e `05_1-Images` (415 MB)
+
+`05_Attachments` · `Images` · `.nomedia` · `05_1-Images`
 

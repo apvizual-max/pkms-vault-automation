@@ -1,4 +1,4 @@
-﻿# ─────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 # PKMS — REPO DE AUTOMATIZARE. NU DE CONȚINUT.
 #
 # Măsurat 2026-10-12, pe `D:\Alex_Knowlege_Vault`.
@@ -70,12 +70,12 @@
 #       INTREGUL subarbore al acelui director, deci dupa deschideri trebuie
 #       INCHISE explicit fratii. Inchiderile sunt la 3e, mai jos. ──
 !/02_Areas/
-!/02_Areas/02_2-AI-SOT/
-!/02_Areas/02_2-AI-SOT/AI-Kit/
-!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/
-!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/**
-!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/
-!/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/**
+!/02_Areas/02-2-AI-SOT/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/**
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/**
 
 # ── 3. Skill-urile vii. Arhiva vendor ramane inchisa:
 #       e copie de arhiva, nu mecanism.
@@ -134,9 +134,9 @@
 /_SYSTEM/Skills_MASTER_Folder/SKILLS - SOT Folder/
 # ── 3d. Logul plasei, la calea noua. Inchis DUPA deschiderea 2b (regula 3b).
 #       Era inchis doar la calea veche /AI-Kit/raport-autocomit.log. ──
-/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/raport-autocomit.log
-/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/raport-aliniere.log
-/02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_guide/arhiva- raport aliniere.log
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/raport-autocomit.log
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/raport-aliniere.log
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/arhiva- raport aliniere.log
 
 # ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
 #       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu
@@ -144,25 +144,40 @@
 #       si cu cifra: 2.796 de fisiere NU trebuie sa intre in istoric.
 #       2026-10-19: randul /02_Areas/00_INDEX.md a fost SCOS, nu sters — il
 #       deschide acum regula 1b. Indexul e hartă, nu gunoi derivat. ──
-/02_Areas/02_1-ALEX-SOT/
-/02_Areas/02_5-SCIENCE-SOT/
-/02_Areas/02_2-AI-SOT/SKILLS - SOT Folder/
-/02_Areas/02_2-AI-SOT/Hermes_GNotebook-COMS/
-/02_Areas/02_2-AI-SOT/AI Chats/
-/02_Areas/02_2-AI-SOT/Archive/
-/02_Areas/02_2-AI-SOT/AI Scripts/
-/02_Areas/02_2-AI-SOT/Mem Instructions - SOT folder/
-/02_Areas/02_2-AI-SOT/Wisper_Transcripts/
-/02_Areas/02_2-AI-SOT/GORDON - Docker AI/
-/02_Areas/02_2-AI-SOT/OpenWisper AI - Transcripts/
-# 2026-10-19: randul /02_Areas/02_2-AI-SOT/00_INDEX.md a fost SCOS, nu sters —
+/02_Areas/02-1-ALEX-SOT/
+/02_Areas/02-5-SCIENCE-SOT/
+
+# ── 3e-bis. RENUMERAREA 2026-10-19 a schimbat numele, nu s-a schimbat granita. ──
+#       Randurile de mai jos erau scrise pe numele VECHI. Cum renumerarea le-a
+#       mutat, ele au incetat sa inchida ceva — iar folderele NOI s-au deschis.
+#       Corectia e sa se inchida numele NOU. Masurat pe disc: sub 02-2-AI-SOT
+#       exista exact 6 foldere, 02-2-1 .. 02-2-6. Singurul care ramane deschis
+#       e 02-2-4-AI-Kit (motorul), deschis mai sus, la randul 74.
+/02_Areas/02-2-AI-SOT/02-2-1-AI-Archive/
+/02_Areas/02-2-AI-SOT/02-2-2-AI-Bridges/
+/02_Areas/02-2-AI-SOT/02-2-3-AI-Chats/
+/02_Areas/02-2-AI-SOT/02-2-5-AI-Mem-SOT_Instructions-Folder/
+/02_Areas/02-2-AI-SOT/02-2-6-AI-Scripts/
+#
+# Randurile VECHI, pastrate ca istoric al granitei, INACTIVE de la 2026-10-19:
+#   /02_Areas/02_2-AI-SOT/SKILLS - SOT Folder/       -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/Hermes_GNotebook-COMS/      -> 02-2-2-AI-Bridges
+#   /02_Areas/02_2-AI-SOT/AI Chats/                   -> 02-2-3-AI-Chats
+#   /02_Areas/02_2-AI-SOT/Archive/                    -> 02-2-1-AI-Archive
+#   /02_Areas/02_2-AI-SOT/AI Scripts/                 -> 02-2-6-AI-Scripts
+#   /02_Areas/02_2-AI-SOT/Mem Instructions - SOT folder/ -> 02-2-5-AI-Mem-SOT_Instructions-Folder
+#   /02_Areas/02_2-AI-SOT/Wisper_Transcripts/         -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/GORDON - Docker AI/         -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/OpenWisper AI - Transcripts/ -> 02-2-? (contopit in cod)
+# Stergerea lor ar fi o stergere; mutarea lor inapoi ar reintroduce o gaura.
+# 2026-10-19: randul /02_Areas/02-2-AI-SOT/00_INDEX.md a fost SCOS, nu sters —
 #       deschis de regula 1b, la fel ca cel de la 02_Areas.
 
 # ── 4. Documentatia de la radacina: contractul sistemului ──
 !/*.md
 
 # ── 4b. ARHIVA DE RAPOARTE, deschisa la 2026-10-19, masurat.
-#       Motivul inchiderii nu era scris: raport-archive era doar enumerat la
+#       Motivul inchiderii nu era scris: 09_raport-archive era doar enumerat la
 #       cotele de la final, fara niciun „de ce". Fara motiv, orice schimbare
 #       aici e o presupunere, nu o corectie — si atunci nimeni nu stie ce
 #       inseamna sa atingi regula.
@@ -177,9 +192,9 @@
 #       00_INDEX.md din arhiva, fiindca regula 1b nu se aplica la ea — arhiva
 #       nu e un folder de lucru, e o coletie de rapoarte, iar indexul ei era
 #       singurul motiv pentru care deschideam un director intreg. ──
-!/raport-archive/
-!/raport-archive/**
-/raport-archive/00_INDEX.md
+!/09_raport-archive/
+!/09_raport-archive/**
+/09_raport-archive/00_INDEX.md
 
 # ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
 #       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
@@ -208,10 +223,10 @@
 /10_Work/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
 # ── 6b-bis. MUTARE 2026-10-19: 10_Work a devenit 01_Projects. Repo-ul imbricat
 #       se deplaseaza cu raftul, iar inchiderea de mai sus a ramas pe cale moarta.
-#       Masurat: `git add -An` oferea '01_Projects/Work_Folder (to sort)/Sisteme
+#       Masurat: `git add -An` oferea '01_Projects/01-6-Work_Folder (to sort)/Sisteme
 #       AI/.../PLATEFUL - DTC - Niv/' ca intrare — adica git ar fi adaugat un
 #       repo strain drept GITLINK, exact ceea ce 6b exista sa previna. ──
-/01_Projects/Work_Folder (to sort)/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+/01_Projects/01-6-Work_Folder (to sort)/01-6-7-Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
 
 # ── 6c. FOLDERE CU PUNCT, in orice adancime. ──
 #       Deschiderea 1b face orice director traversabil, deci si cele cu punct
@@ -259,18 +274,18 @@ id_rsa*
 #       Nu se sterg si nu se rescriu: JURNAL_OGLINDA e append-only. Raman pe
 #       Drive, in istoric. Doar nu urca in repo.
 **/RAPORT DE STARE*.md
-/raport-archive/
+/09_raport-archive/
 
 # ── 8. Cote ──
 # tot ce nu este deschis mai sus ramane in afara, intentionat:
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
 #   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
-#   10_Work 32.252 · Canvas Bases 9 · Clippings 457 · Wisper_Transcripts 6
-#   raport-archive: INCHISA din 2026-10-19 (regula 7c). Ramane pe Drive, in
+#   10_Work 32.252 · 07_Canvas Bases 9 · 08_Clippings 457 · Wisper_Transcripts 6
+#   09_raport-archive: INCHISA din 2026-10-19 (regula 7c). Ramane pe Drive, in
 #     istoric; nu urca, fiindca tinea numele clientului inchis.
 #   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — 4.543 de indexuri care
 #     intra in istoric. Excepții: raftul retras _QUARANTINE\retirat-2026-10-10
-#     (regula 7b, 88 de indexuri) si raport-archive/00_INDEX.md (regula 4b, ca
+#     (regula 7b, 88 de indexuri) si 09_raport-archive/00_INDEX.md (regula 4b, ca
 #     artefact derivat).
 #   _ARCHIVE 7 · _QUARANTINE 4.789
 #   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,

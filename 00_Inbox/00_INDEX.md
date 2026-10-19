@@ -7,7 +7,7 @@
 
 ## Ce e aici
 
-Singura extensie prezentă e `.md` (11 din 11 fișiere). 9 rafturi copil (primele trei după nume: `00.1_WhatsApp`, `00.2_Daily_Raw_Notes`, `00.3_Email`); cel mai mare element din folder e `Saved from Chrome` (219 KB)
+Singura extensie prezentă e `.md` (11 din 11 fișiere). 9 rafturi copil (primele trei după nume: `00-1-WhatsApp`, `00-2-Daily_Raw_Notes`, `00-3-Email`); cel mai mare element din folder e `00-9-Saved from Chrome` (219 KB)
 
 ## Cuvinte cheie
 
@@ -17,15 +17,15 @@ Singura extensie prezentă e `.md` (11 din 11 fișiere). 9 rafturi copil (primel
 
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
-- [`00.1_WhatsApp`](<00.1_WhatsApp/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`00.2_Daily_Raw_Notes`](<00.2_Daily_Raw_Notes/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`00.3_Email`](<00.3_Email/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`00.4_Web_Clips`](<00.4_Web_Clips/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`00.5_NotebookLM`](<00.5_NotebookLM/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`ce arunci aici zilnic  linkuri, idei, screenshot-uri`](<ce arunci aici zilnic  linkuri, idei, screenshot-uri/00_INDEX.md>) — 0 fișiere · 0 subfoldere
-- [`Daily Notes`](<Daily Notes/00_INDEX.md>) — 0 fișiere · 0 subfoldere
-- [`Google AI Studio`](<Google AI Studio/00_INDEX.md>) — 1 fișiere · 0 subfoldere
-- [`Saved from Chrome`](<Saved from Chrome/00_INDEX.md>) — 3 fișiere · 0 subfoldere
+- [`00-1-WhatsApp`](<00-1-WhatsApp/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-2-Daily_Raw_Notes`](<00-2-Daily_Raw_Notes/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-3-Email`](<00-3-Email/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-4-Web_Clips`](<00-4-Web_Clips/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-5-NotebookLM`](<00-5-NotebookLM/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-6-ce arunci aici zilnic  linkuri, idei, screenshot-uri`](<00-6-ce arunci aici zilnic  linkuri, idei, screenshot-uri/00_INDEX.md>) — 0 fișiere · 0 subfoldere
+- [`00-7-Daily Notes`](<00-7-Daily Notes/00_INDEX.md>) — 0 fișiere · 0 subfoldere
+- [`00-8-Google AI Studio`](<00-8-Google AI Studio/00_INDEX.md>) — 1 fișiere · 0 subfoldere
+- [`00-9-Saved from Chrome`](<00-9-Saved from Chrome/00_INDEX.md>) — 3 fișiere · 0 subfoldere
 
 ## Fișiere
 
@@ -42,6 +42,8 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Qwen - Prompt Contiunation.md` | 36 KB | 2026-09-25 |
 | `Sohlara - BRIEF - JobTest.md` | 69 KB | 2026-09-16 |
 | `Untitled.md` | 1 KB | 2026-10-01 |
+
+Singura extensie prezentă e `.md` (11 din 11 fișiere). 9 rafturi copil (primele trei după nume: `00.1_WhatsApp`, `00.2_Daily_Raw_Notes`, `00.3_Email`); cel mai mare element din folder e `Saved from Chrome` (219 KB)
 
 Singura extensie prezentă e `.md` (11 din 11 fișiere). 6 rafturi copil (primele trei după nume: `00.1_WhatsApp`, `00.2_Daily_Raw_Notes`, `00.3_Email`); cel mai mare element din folder e `Life Dental Spa - BRIEF - JobTest.md` (70 KB)
 
