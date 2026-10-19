@@ -58,8 +58,8 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 
 | Ce | Unde | De ce acolo |
 |---|---|---|
-| `AI-Kit\AI-Kit_manual` | `02_Areas\02_2-AI-SOT\` | scripturile — **motorul** |
-| `AI-Kit\AI-Kit_guide` | `02_Areas\02_2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
+| `AI-Kit\AI-Kit_manual` | `02_Areas\02-2-AI-SOT\` | scripturile — **motorul** |
+| `AI-Kit\AI-Kit_guide` | `02_Areas\02-2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
 | skill-urile vii `git-autonom` / `git-install` | `_SYSTEM\Skills_MASTER_Folder\SENTINEL - git-*- Skill\` | copii vii, verificate prin SHA-256 |
 | `arhiva vendor` de skill-uri | `_SYSTEM\Skills_MASTER_Folder\_Skills_BackUp_Archive_2026-07-15\` | **închisă**, nu e motor |
 
@@ -98,23 +98,35 @@ Total `01_Projects`: **33.069 de fișiere · 79,44 GB.**
 
 ## Baza — ce a rămas jos
 
-Măsurate pe **19 octombrie 2026**:
+Măsurate pe **19 octombrie 2026**, după numerotarea pe trei niveluri:
 
 | Bază | Fișiere | GB | Ce mai e acolo |
 |---|---|---|---|
-| `00_Inbox` | 27 | 0,00 | rafturi de primire |
-| `01_Projects` | 33.069 | 79,44 | **proiectele active — aici se lucrează** |
-| `02_Areas` | 2.932 | 1,01 | `02_1-ALEX-SOT` 2.271 · `02_2-AI-SOT` 657 (AI-Kit, GORDON, transcripturi) · `02_5-SCIENCE-SOT` 3 |
+| `00_Inbox` | 30 | 0,00 | rafturi de primire, numerotate `00-1` … `00-9` |
+| `01_Projects` | 33.122 | 79,44 | **proiectele active — aici se lucrează** |
+| `02_Areas` | 3.162 | 1,01 | `02-1-ALEX-SOT` 2.459 · `02-2-AI-SOT` 699 (AI-Kit, punți, transcripturi) · `02-5-SCIENCE-SOT` 3 |
 | `03_Resources` | 912 | 0,90 | personalitate, inspirații, memorie |
 | `04_Archive` | 11 | 0,00 | copiile de site-uri au urcat în `01_Projects` |
 | `05_Attachments` | 1.266 | 0,41 | imagini capturate de tine |
 | `06_Metadata` | 43 | 0,00 | ținte, șabloane, agenți |
-| `Clippings` | 457 | 0,37 | articole tăiate din web |
+| `07_Canvas Bases` | 9 | 0,00 | canvas-urile din Obsidian |
+| `08_Clippings` | 457 | 0,37 | articole tăiate din web |
+| `09_raport-archive` | 2 | 0,00 | rapoartele de stare vechi |
 
-> **`01_Projects` a absorbit `01_Projects\01-6-Work_Folder (to sort)` și a crescut.** Pe 8 octombrie `01_Projects\01-6-Work_Folder (to sort)` avea
-> 32.998 de fișiere; azi `01_Projects` are 33.069. Diferența e exact ce a mai venit.
-> Volumul a sărit de la 59,28 GB la **86,26 GB** — deci **+26,98 GB**, în principal
-> `AP-ID.ro` (31,58 GB) și `Work_Folder` (47,78 GB).
+> **`01_Projects`, pe rnduri:** `01-6-Work_Folder (to sort)` 32.249 fișiere / 47,78 GB ·
+> `01-2-AP-ID.ro` 764 / 31,58 GB · `01-1-Alex - AI Work - Colaborations` 97 / 0,07 GB ·
+> `01-5-FORGE` 9 · `01-3` și `01-4` câte 1.
+
+### Cum se citește un cod
+
+`02-1-ALEX-SOT` înseamnă: **baza** `02` → **copilul cu nr. 1** → `ALEX-SOT`.
+La nivelul 3 se adaugă o cifră: `02-2-4-AI-Kit` = baza 02, copil 2, copil 4.
+Numerotarea **se oprește la al treilea folder în adâncime** — mai jos, numele rămân
+cum le-ai numit. Codurile **pe care le aveai deja nu și-au schimbat poziția**, ca un
+folder nou pus primul la alfabet să nu împingă toate referințele existente.
+
+Rădăcinile care încep cu `_` — `_SYSTEM`, `_ARCHIVE`, `_QUARANTINE` — **nu primesc cod**
+deliberat: linia de subliniere e deja semnalul „sunt sistem, nu conținut".
 
 ---
 
@@ -124,9 +136,9 @@ Măsurate pe **19 octombrie 2026**:
 
 | | Ce e | De ce există |
 |---|---|---|
-| `_SYSTEM` | 5.442 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în volt ca să nu te împiedici |
-| `_ARCHIVE` | 11 fișiere · 0,13 GB | parole și lucruri scoase din calea deschisă |
-| `_QUARANTINE` | 4.774 fișiere · 3,16 GB | tot ce a fost neclar. **Aici decizi tu, nu eu** |
+| `_SYSTEM` | 6.969 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în volt ca să nu te împiedici |
+| `_ARCHIVE` | 13 fișiere · 0,13 GB | parole și lucruri scoase din calea deschisă |
+| `_QUARANTINE` | 4.778 fișiere · 3,16 GB | tot ce a fost neclar. **Aici decizi tu, nu eu** |
 
 ---
 
@@ -136,10 +148,16 @@ Măsurate pe **19 octombrie 2026**:
 
 | Ce | Câte |
 |---|---|
-| `00_INDEX.md` pe disc, în tot voltul | **4.665** |
-| din care în `_QUARANTINE` | **4.088** |
-| **utili, în afara carantinei** | **577** |
-| foldere eligibile fără index (`lint`) | **46** |
+| `00_INDEX.md` pe disc, în tot voltul | **6.490** |
+| din care în `_QUARANTINE` | **4.089** |
+| **utili, în afara carantinei** | **2.401** |
+| pe GitHub, în repo-ul de automatizare | **4.438** |
+
+> Cele trei cifre mari sunt adevărate despre lucruri diferite și **niciuna nu o
+> anulează pe cealaltă**. Pe disc sunt 6.490 pentru că `build-index` a scris index și
+> în arborele renumerotat. Pe GitHub sunt 4.438 pentru că acolo nu urcă materialul și
+> nici raftul retras. Diferența dintre 6.490 și 4.438 nu e o pierdere: e **ce a rămas
+> pe Drive anume ca să nu urce** —raftul retras inclusiv, cu numele clientului închis.
 
 > **Nu alege un singur număr: spune cifra la care te referi și spune cum se re-verifică.**
 > 4.665, 4.088 și 577 sunt toate trei adevărate despre trei lucruri diferite.
@@ -318,7 +336,7 @@ rulate pe rând își rescriu reciproc indexurile la nesfârșit.
 
 ## Cele 11 scripturi din `AI-Kit`
 
-Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_manual' -Filter *.ps1).Count`
+Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual' -Filter *.ps1).Count`
 → **11**.
 
 | Script | Rolul |
