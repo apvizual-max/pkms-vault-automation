@@ -64,7 +64,32 @@ function Test-PkmsVaultReal([string]$Path) {
   $numerotat = @(Get-ChildItem -LiteralPath $p -Directory -Force -EA SilentlyContinue |
                  Where-Object { $_.Name -match '^\d\d_' })
   if ($numerotat.Count -lt 3) { return $false }
+  if (-not (Test-PkmsVaultCitibil -Path $p)) { return $false }
   return $true
+}
+
+# 2026-10-19. Amprenta de mai sus se baza doar pe Test-Path si Get-ChildItem.
+# Ambele TREC pe un filesystem care nu mai poate citi continutul: DriveFS a
+# intrat de 5 ori in aceasta zi in starea in care lista directoarele, dar
+# citirea fisierelor arunca "Incorrect function" (Win32 ERROR_INVALID_FUNCTION).
+# Test-Path era deci VERDE pe un mont mort — si orice poarta construită pe el
+# raporta zero-uri care nu insemnau nimic. Zero de la o masuratoare care nu a
+# masurat nu e zero.
+#
+# Testul de mai jos citeste OCTETI, nu statistici de metadate. Daca citirea
+# arunca, voltul e declarat ilizibil si poarta se opreste cu rosu, in loc sa
+# numere in gol.
+function Test-PkmsVaultCitibil([string]$Path) {
+  if (-not $Path) { return $false }
+  $santinela = Join-Path $Path 'COTOR.md'
+  try {
+    if (-not (Test-Path -LiteralPath $santinela)) { return $false }
+    $b = [System.IO.File]::ReadAllBytes($santinela)
+    if ($b.Length -eq 0) { return $false }
+    return $true
+  } catch {
+    return $false
+  }
 }
 
 function Get-PkmsVaultCandidates {
