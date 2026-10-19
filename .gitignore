@@ -30,14 +30,26 @@
 !/AI-Kit/
 !/AI-Kit/**
 
-# ── 3. Skill-urile vii. Skills_Archive (9.740 de fisiere vendor) ramane inchis:
-#       e copie de arhiva, nu mecanism. ──
+# ── 3. Skill-urile vii. Arhiva vendor ramane inchisa:
+#       e copie de arhiva, nu mecanism.
+# ── MUTARE 2026-10-19: skillurile vii NU mai sunt la /_SYSTEM/Skills/, ci la
+#       /_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-*- Skill/. Ca urmare a
+#       regulii 3b de mai jos, !/_SYSTEM/ redeschidea oricum intregul subarbore,
+#       iar Skills_MASTER_Folder/ ramanea deschis: masurat, 523 de fisiere
+#       peste prag, dintre care un repo git inglobat. Corectat mai jos, cu
+#       inchiderea arhivei PE NOAUA REALA. ──
 !/_SYSTEM/
 !/_SYSTEM/Skills/
 !/_SYSTEM/Skills/git-autonom/
 !/_SYSTEM/Skills/git-autonom/**
 !/_SYSTEM/Skills/git-install/
 !/_SYSTEM/Skills/git-install/**
+
+!/_SYSTEM/Skills_MASTER_Folder/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-autonom Skill/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-autonom Skill/**
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/**
 
 # ── 3b. ATENTIE LA ORDIN (masurat 2026-10-12): deschiderea unui director
 #       redeschide INTREGUL subarbore al lui. Deschiderea lui /_SYSTEM/Skills/
@@ -49,6 +61,9 @@
 /_SYSTEM/rapoarte/
 /_SYSTEM/resturi de unelte/
 /_SYSTEM/Wisper Transcripts/
+# ── 3c. Inchiderea arhivei vendor pe NOUA cale, DUPA deschideri (regula 3b).
+#       Fara asta, /_SYSTEM/Skills_MASTER_Folder/ ramane deschis prin regula 3. ──
+/_SYSTEM/Skills_MASTER_Folder/_Skills_BackUp_Archive_2026-07-15/
 
 # ── 4. Documentatia de la radacina: contractul sistemului ──
 !/*.md
