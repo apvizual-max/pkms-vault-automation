@@ -76,12 +76,14 @@ la rădăcină, `Clippings` are 12 fișiere `00_INDEX.md`.
 2. **`10_Work\Site\07_Site_Build\02_Media_Uploads` — 27.689 de imagini, 1,9 GB**
    Site-ul, din 2010. Nu s-a atins niciun nume.
 
-Restul: **`ZURLI`** — 660 de fișiere (clienți, brief-uri, artwork).
+Restul: **raftul retras** — 660 de fișiere (clienți, brief-uri, artwork). Client închis:
+> numele lui nu mai apare nici în acest document, nici în indexuri. Raftul stă în
+> `_QUARANTINE\retirat-2026-10-10\` — mutat, nu șters.
 
 > **La data de 2026-10-08:** `Knights Tempar` = 396 de fișiere / 44,57 GB (confirmat),
-> `ZURLI` = 660 de fișiere (cifra de 7 octombrie era 1.742 — nu se mai reproduce după
-> reorganizare). Măsură cu:
-> `Get-ChildItem 'D:\Alex_Knowlege_Vault\10_Work\Clienti' -Directory | ForEach-Object { $_.Name + ': ' + (Get-ChildItem $_.FullName -File -Recurse -Force | Where-Object { $_.Name -ne '00_INDEX.md' } | Measure-Object).Count }`
+> raftul retras = 660 de fișiere (cifra de 7 octombrie era 1.742 — nu se mai reproduce
+> după reorganizare). Măsură cu:
+> `Get-ChildItem 'G:\My Drive\GDrive-Second_Brain_PKMS\01_Projects\Work_Folder (to sort)\Clienti' -Directory | ForEach-Object { $_.Name + ': ' + (Get-ChildItem $_.FullName -File -Recurse -Force | Where-Object { $_.Name -ne '00_INDEX.md' } | Measure-Object).Count }`
 
 ---
 

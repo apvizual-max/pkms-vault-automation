@@ -63,7 +63,7 @@ brief sau comandă
 10_Work\Clienti\
     ├── Knights Tempar\  → Ordinul Sfantului Bernard (284 fiș)
     │                   → Ordinul Dragonilor – Juramant Cavaler (104 fiș)
-    └── ZURLI\          → clienți, brief-uri, artwork
+    └── raft retras\    → clienți, brief-uri, artwork (client închis)
 ```
 
 **Regulă:** proiectul **urcă** în `10_Work` când începe, **coboară** în bază când se închide.

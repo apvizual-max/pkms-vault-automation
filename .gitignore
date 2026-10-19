@@ -111,6 +111,27 @@
 # ── 3c. Inchiderea arhivei vendor pe NOUA cale, DUPA deschideri (regula 3b).
 #       Fara asta, /_SYSTEM/Skills_MASTER_Folder/ ramane deschis prin regula 3. ──
 /_SYSTEM/Skills_MASTER_Folder/_Skills_BackUp_Archive_2026-07-15/
+
+# ── 3d-bis. MATERIAL, NU AUTOMATIZARE — inchis la 2026-10-19, gasit de proba
+#         uscata (nu de citire, nu de banuiala). ──
+#       /_SYSTEM/Skills_MASTER_Folder/ era deschis prin regula 3b, dar lista
+#       de inchideri de mai sus acoperea doar 3 subfoldere. Au ramas doua deschise
+#       care NU sunt automatizare:
+#
+#       OPTIMUS_Skills_ARCHIVE/  4.502 de fisiere, 126,65 MB, skilluri third-party
+#         (LICENSE-uri, README-uri, cod sursa straina). Material. In plus, contine
+#         un REPO GIT INGROPAT la _Sentinel-SKILLS_HERMES\agent-browser — proba
+#         uscata l-a raportat ca warning „adding embedded git repository", adica
+#         ar fi intrat ca GITLINK, exact clasa de gura descoperita la PLATEFUL.
+#
+#       SKILLS - SOT Folder/  76 de fisiere .gdoc (shortcut-uri Google Docs), 0,01 MB.
+#         Material. Iar aici proba uscata a PICAT, nu a trecut usor:
+#         „error: unable to index file .../SKILLS - SOT Folder/00_INDEX.md —
+#          No such file or directory", apoi „fatal: adding files failed".
+#         Un `git add -A` care esueaza asa e candidat la codul 1 al plasei.
+#         Deci inchiderea asta nu e doar higiena: repara o cale de esecare.
+/_SYSTEM/Skills_MASTER_Folder/OPTIMUS_Skills_ARCHIVE/
+/_SYSTEM/Skills_MASTER_Folder/SKILLS - SOT Folder/
 # ── 3d. Logul plasei, la calea noua. Inchis DUPA deschiderea 2b (regula 3b).
 #       Era inchis doar la calea veche /AI-Kit/raport-autocomit.log. ──
 /02_Areas/02_2-AI-SOT/AI-Kit/AI-Kit_manual/raport-autocomit.log
@@ -228,16 +249,29 @@ id_rsa*
 #       acel index NU mentioneaza numele clientului, ci doar raftul. ──
 /_QUARANTINE/retirat-2026-10-10/
 
+# ── 7c. RAPOARTE DE STARE DATATE — inchise la 2026-10-19. ──
+#       Ce este: rapoartele cu data in titlu, plus arhiva de rapoarte din radacina.
+#       De ce inchise: un AI cu 0 memorie nu are nevoie de ele — descriu o stare
+#       care a trecut, nu o procedura reutilizabila. Procedura ramane in ghid.
+#       Iar masurat: dupa curatarea documentatiei de ghid (4 fisiere, numele
+#       clientului inchis scris ca „raft retras"), AU RAMAS 2 potriviri — exact
+#       rapoartele de stare. Era deci ele, nu ghidul, tinea numele viu.
+#       Nu se sterg si nu se rescriu: JURNAL_OGLINDA e append-only. Raman pe
+#       Drive, in istoric. Doar nu urca in repo.
+**/RAPORT DE STARE*.md
+/raport-archive/
+
 # ── 8. Cote ──
 # tot ce nu este deschis mai sus ramane in afara, intentionat:
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
 #   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
 #   10_Work 32.252 · Canvas Bases 9 · Clippings 457 · Wisper_Transcripts 6
-#   raport-archive: DESCHISA din 2026-10-19 (regula 4b) — raportul intra in
-#     istoric, iar 00_INDEX.md din ea ramane inchis ca artefact derivat.
+#   raport-archive: INCHISA din 2026-10-19 (regula 7c). Ramane pe Drive, in
+#     istoric; nu urca, fiindca tinea numele clientului inchis.
 #   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — 4.543 de indexuri care
-#     intra in istoric, plus INDEX CENTRAL.md. Exceptia unica: raftul retras
-#     _QUARANTINE\retirat-2026-10-10 (regula 7b), 88 de indexuri, 0,09 MB.
+#     intra in istoric. Excepții: raftul retras _QUARANTINE\retirat-2026-10-10
+#     (regula 7b, 88 de indexuri) si raport-archive/00_INDEX.md (regula 4b, ca
+#     artefact derivat).
 #   _ARCHIVE 7 · _QUARANTINE 4.789
 #   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
 #   resturi de unelte (derivate)

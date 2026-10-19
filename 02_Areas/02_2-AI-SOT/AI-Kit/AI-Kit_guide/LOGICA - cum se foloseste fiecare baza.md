@@ -87,7 +87,7 @@ Gmail nu trimite, nu șterge, nu marchează. NotebookLM se citește.
 
 **Scop:** păstrat, dar scos din drum.
 
-`ZURLI - copii de site-uri` — 1.082 de copii ale unor site-uri, 113 MB. Nu le-ați citit niciodată.
+`raft retras - copii de site-uri` — 1.082 de copii ale unor site-uri, 113 MB. Nu le-ați citit niciodată.
 Când vrei, se poate șterge. **Până atunci stau.**
 
 ---
