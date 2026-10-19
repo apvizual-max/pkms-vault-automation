@@ -1,0 +1,12 @@
+﻿# 00_INDEX — _SYSTEM\Skills\Skills_Archive\SCIENCE\pdb_database\references
+
+**1 fișiere · 878 B · 0 subfoldere**
+
+> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+
+## Fișiere
+
+| Fișier | Dimensiune | Modificat |
+|---|---|---|
+| `citation.bib` | 878 B | 2026-07-08 |
+

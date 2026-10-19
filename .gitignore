@@ -25,6 +25,33 @@
 # ── 1. Totul e interzis. Se deschide doar motorul, mai jos. ──
 /*
 
+# ── 1b. STRATUL DE INDEXARE, deschis la 2026-10-19, masurat. ──
+#
+#  CE CEREA: pe GitHub trebuie sa ajunga tot ce are nevoie un AI cu 0 memorie
+#  si 0 context. Stratul de indexare ESTE harta vaultului — fara el, un cititor
+#  nou vede 942 de foldere fara nicio relatie intre ele.
+#
+#  DE CE ERA INCHIS: regula 3e si regula 6 inchideau fiecare 00_INDEX.md cu
+#  motivul „artefact derivat, rescris de build-index la fiecare rulare". Motivul
+#  e adevarat despre SCIRIERE, si fals despre TINE: un derivat se regenereaza,
+#  dar un derivat pe care nu-l vezi nu iti spune nimic pana nu-l cauti in Drive.
+#
+#  MECANICA, masurata intr-un repo de proba, nu presupusa:
+#  Gitul NU coboara intr-un director ignorat, deci o negatie pe fisier
+#  (`!*/00_INDEX.md`) nu ajunge la nimic: proba a dat 0 intrari. Ca un fisier
+#  adanc sa poata fi urmarit, directorii trebuie deschisi.
+#  Sandwich-ul de mai jos deschide directorii, inchide continutul, redeschide
+#  directorii, si abia apoi deschide indexurile. Ordinea conteaza: ultima
+#  regula care se potriveste castiga.
+#
+#  ATENTIE: acest sandwich se apune INAINTE de deschiderile specifice de mai jos
+#  (2, 2b, 3, 4, 4b), ca acelea sa castige peste `**/*`. Daca l-as pune la
+#  sfarsit, ar inchide motorul, contractul si skill-urile.
+!*/
+**/*
+!*/
+!**/00_INDEX.md
+
 # ── 2. Motorul: scripturile care construiesc si verifica cotorul ──
 !/.gitignore
 !/AI-Kit/
@@ -93,8 +120,9 @@
 # ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
 #       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu
 #       devina o gaura. Stergerea unuia din ele trebuie probata cu `git add -An`
-#       si cu cifra: 2.796 de fisiere NU trebuie sa intre in istoric. ──
-/02_Areas/00_INDEX.md
+#       si cu cifra: 2.796 de fisiere NU trebuie sa intre in istoric.
+#       2026-10-19: randul /02_Areas/00_INDEX.md a fost SCOS, nu sters — il
+#       deschide acum regula 1b. Indexul e hartă, nu gunoi derivat. ──
 /02_Areas/02_1-ALEX-SOT/
 /02_Areas/02_5-SCIENCE-SOT/
 /02_Areas/02_2-AI-SOT/SKILLS - SOT Folder/
@@ -106,7 +134,8 @@
 /02_Areas/02_2-AI-SOT/Wisper_Transcripts/
 /02_Areas/02_2-AI-SOT/GORDON - Docker AI/
 /02_Areas/02_2-AI-SOT/OpenWisper AI - Transcripts/
-/02_Areas/02_2-AI-SOT/00_INDEX.md
+# 2026-10-19: randul /02_Areas/02_2-AI-SOT/00_INDEX.md a fost SCOS, nu sters —
+#       deschis de regula 1b, la fel ca cel de la 02_Areas.
 
 # ── 4. Documentatia de la radacina: contractul sistemului ──
 !/*.md
@@ -123,10 +152,10 @@
 #       rescrie. Excluderea lui era o consecinta de faptul ca se numeste
 #       „arhiva", nu o decizie.
 #
-#       INCHIDERE DUPA DESCHIDERE (regula 3b): 00_INDEX.md din orice folder e
-#       ARTEFACT DERIVAT, rescris de build-index la fiecare rulare — de aceea
-#       si /02_Areas/00_INDEX.md si .../02_2-AI-SOT/00_INDEX.md sunt inchise
-#       la 3e. Acelasi motiv se aplica aici. ──
+#       INCHIDERE DUPA DESCHIDERE (regula 3b): a ramas inchis doar
+#       00_INDEX.md din arhiva, fiindca regula 1b nu se aplica la ea — arhiva
+#       nu e un folder de lucru, e o coletie de rapoarte, iar indexul ei era
+#       singurul motiv pentru care deschideam un director intreg. ──
 !/raport-archive/
 !/raport-archive/**
 /raport-archive/00_INDEX.md
@@ -136,8 +165,19 @@
 /AI-Kit/raport-autocomit.log
 /AI-Kit/git-autocomit-registru.txt
 
-# ── 6. INDEX CENTRAL.md: artefact DERIVAT, rescris de build-index.ps1 la fiecare
-#       rulare, si contine nume personale de foldere. Nu intra in istoric. ──
+# ── 6. INDEX CENTRAL.md — RAMANE INCHIS. ──
+#       Era inchis cu doua motive: „artefact derivat" si „contine nume personale
+#       de foldere". Al doilea s-a dovedit mult mai tare decat parea, masurat:
+#       fiindca indexul central AGREGĂ toate celelalte, el enumera raftul retras
+#       de 567 de ori. Era singurul fisier care ar fi dus in repo numele clientului
+#       inchis, in timp ce cele 88 de indexuri din raft se sterg prin regula 7b.
+#       Pericolul acesta a fost posibil doar pentru ca fisierul sa fie mare si
+#       sa NU fie un 00_INDEX.md — deci scanarea pe indexuri nu l-ar fi prins.
+#
+#       CE RAMANE IN SCHIMB: 4.431 de indexuri individuale, COTOR.md si
+#       documentatia. Un AI cu 0 memorie are navigatie completa prin ele.
+#       Masterul e pe Drive, unde e folosit; nu are rost sa fie si in istoric,
+#       iar duplicatul ar mentine doua adevaruri care oricum nu coincid.
 /INDEX CENTRAL.md
 
 # ── 6b. Repo-uri git IMBRICATE (3, masurate) ──
@@ -145,6 +185,22 @@
 # si nu parcurge nimic din interior. Fara regula asta, 588 de fisiere raman
 # in afara listei de urmarire fara niciun mesaj.
 /10_Work/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+# ── 6b-bis. MUTARE 2026-10-19: 10_Work a devenit 01_Projects. Repo-ul imbricat
+#       se deplaseaza cu raftul, iar inchiderea de mai sus a ramas pe cale moarta.
+#       Masurat: `git add -An` oferea '01_Projects/Work_Folder (to sort)/Sisteme
+#       AI/.../PLATEFUL - DTC - Niv/' ca intrare — adica git ar fi adaugat un
+#       repo strain drept GITLINK, exact ceea ce 6b exista sa previna. ──
+/01_Projects/Work_Folder (to sort)/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+
+# ── 6c. FOLDERE CU PUNCT, in orice adancime. ──
+#       Deschiderea 1b face orice director traversabil, deci si cele cu punct
+#       intrau in scanare. Dar voltul le EXCLUDE din indexare (Get-PkmsExclusions
+#       lista .obsidian, .trash, .vault-intelligence, .claudian, ...), deci un
+#       00_INDEX.md de acolo e un artefact pe care build-index nu l-ar scrie
+#       niciodata — ar ramane orfan in istoric. Masurat: 8 astfel de intrari
+#       la prima proba. Coada `/` inseamna „doar directoare": nu atinge
+#       `.gitignore` de la radacina, care trebuie urmarit. ──
+**/.*/
 /_QUARANTINE/indexuri generate in gresit/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
 /_SYSTEM/Skills/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
 
@@ -156,6 +212,22 @@ _ARCHIVE/Secrets/
 *.key
 id_rsa*
 
+# ── 7b. RAFTUL RETRAS, inchis la 2026-10-19. Ultima regula care se potriveste
+#       castiga, deci asta se aplica PESTRE regula 1b care deschide indexurile.
+#
+#       Ce este: _QUARANTINE\retirat-2026-10-10\ — 88 de indexuri, 0,09 MB.
+#       De ce e inchis: singurul loc din volt unde apare un nume de client pe
+#       care operatorul l-a inchis definitiv („subiect definitiv inchis, nu
+#       vom lucra cu ei niciodata"). Masurat, nu banuit: cautare cu -LiteralPath
+#       peste toate cele 5.031 de indexuri — 88 de potriviri, TOATE sub acest
+#       raft. In afara lui: 0. Deci inchiderea asta nu lasa nimic deoparte.
+#
+#       Ce ramane deschis: _QUARANTINE\00_INDEX.md, care descrie cele 7 rafturi
+#       si motivele lor. Un AI cu 0 memorie trebuie sa stie CA exista o carantina
+#       si DE CE — nu sa navigheze prin rafturi de material retras. Verificat:
+#       acel index NU mentioneaza numele clientului, ci doar raftul. ──
+/_QUARANTINE/retirat-2026-10-10/
+
 # ── 8. Cote ──
 # tot ce nu este deschis mai sus ramane in afara, intentionat:
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
@@ -163,6 +235,9 @@ id_rsa*
 #   10_Work 32.252 · Canvas Bases 9 · Clippings 457 · Wisper_Transcripts 6
 #   raport-archive: DESCHISA din 2026-10-19 (regula 4b) — raportul intra in
 #     istoric, iar 00_INDEX.md din ea ramane inchis ca artefact derivat.
+#   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — 4.543 de indexuri care
+#     intra in istoric, plus INDEX CENTRAL.md. Exceptia unica: raftul retras
+#     _QUARANTINE\retirat-2026-10-10 (regula 7b), 88 de indexuri, 0,09 MB.
 #   _ARCHIVE 7 · _QUARANTINE 4.789
 #   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
 #   resturi de unelte (derivate)

@@ -1,0 +1,19 @@
+﻿# 00_INDEX — _SYSTEM\Skills\Skills_Archive\HERMES-Skills\alloydb-postgres-admin\scripts
+
+**8 fișiere · 25 KB · 0 subfoldere**
+
+> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+
+## Fișiere
+
+| Fișier | Dimensiune | Modificat |
+|---|---|---|
+| `create_cluster.js` | 3 KB | 2026-07-11 |
+| `create_instance.js` | 3 KB | 2026-07-11 |
+| `database_overview.js` | 3 KB | 2026-07-11 |
+| `get_cluster.js` | 3 KB | 2026-07-11 |
+| `get_instance.js` | 3 KB | 2026-07-11 |
+| `list_clusters.js` | 3 KB | 2026-07-11 |
+| `list_instances.js` | 3 KB | 2026-07-11 |
+| `wait_for_operation.js` | 3 KB | 2026-07-11 |
+

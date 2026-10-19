@@ -1,0 +1,19 @@
+﻿# 00_INDEX — _SYSTEM\Skills\Skills_Archive\_Skills_BackUp_Archive_2026-07-15\productivity\pdf
+
+**4 fișiere · 36 KB · 1 subfoldere**
+
+> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+
+## Subfoldere
+
+- `scripts` — 8 fișiere
+
+## Fișiere
+
+| Fișier | Dimensiune | Modificat |
+|---|---|---|
+| `forms.md` | 12 KB | 2026-08-05 |
+| `LICENSE.txt` | 1 KB | 2026-08-05 |
+| `reference.md` | 16 KB | 2026-08-05 |
+| `SKILL.md` | 7 KB | 2026-08-05 |
+

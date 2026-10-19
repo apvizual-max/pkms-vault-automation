@@ -1,0 +1,23 @@
+﻿# 00_INDEX — 03_Resources/03_3-ALEX_Research/16 Personalities - imagi descarcate/Old - 16 Pers/Surveys/Sadness
+
+**3 fișiere · 23 MB · 0 subfoldere**
+
+> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
+
+## Ce e aici
+
+Cele mai frecvente două extensii sunt `.png` (2 din 3 fișiere) și `.pdf` (1 din 3 fișiere). Cel mai mare element din folder e `screencapture-16personalities-members-area-insights-surveys-sadness-results-2019-05-07-05_59_49.pdf` (15 MB)
+
+## Cuvinte cheie
+
+`Sadness` · `screencapture` · `16personalities` · `members` · `.png` · `.pdf`
+
+## Fișiere
+
+| Fișier | Dimensiune | Modificat |
+|---|---|---|
+| `screencapture-16personalities-members-area-insights-surveys-sadness-results-2019-05-07-05_59_49.pdf` | 15 MB | 2019-05-07 |
+| `screencapture-16personalities-members-area-insights-surveys-sadness-results-2019-05-07-05_59_49.png` | 5 MB | 2019-05-07 |
+| `screencapture-16personalities-members-area-insights-surveys-sadness-results-2019-05-07-05_59_49-2.png` | 4 MB | 2019-05-07 |
+

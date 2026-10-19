@@ -1,0 +1,28 @@
+﻿# 00_INDEX — 01_Projects/Work_Folder (to sort)/Joburi/01_1-Alex - JOBS/CV AUTOMATION PROCESS/_job_descriptions_to_apply/JOB Applications/BACH_1_LinkedIn/BACH_1_LinkedIn_Delivrables/Playson
+
+**8 fișiere · 215 KB · 0 subfoldere**
+
+> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
+
+## Ce e aici
+
+Cele mai frecvente două extensii sunt `.docx` (4 din 8 fișiere) și `.pdf` (4 din 8 fișiere). Cel mai mare element din folder e `Playson_Marketing Designer_Alex_CV - PFD.pdf` (57 KB)
+
+## Cuvinte cheie
+
+`Playson` · `Marketing` · `Designer` · `.docx` · `.pdf`
+
+## Fișiere
+
+| Fișier | Dimensiune | Modificat |
+|---|---|---|
+| `Playson_Marketing Designer_Alex_CV - PFD.pdf` | 57 KB | 2026-07-28 |
+| `Playson_Marketing Designer_Alex_CV.docx` | 10 KB | 2026-07-28 |
+| `Playson_Marketing Designer_Alex_Letter - PFD.pdf` | 33 KB | 2026-07-28 |
+| `Playson_Marketing Designer_Alex_Letter.docx` | 8 KB | 2026-07-28 |
+| `Playson_UI Artist for Games_Alex_CV - PFD.pdf` | 56 KB | 2026-07-28 |
+| `Playson_UI Artist for Games_Alex_CV.docx` | 10 KB | 2026-07-28 |
+| `Playson_UI Artist for Games_Alex_Letter - PFD.pdf` | 34 KB | 2026-07-28 |
+| `Playson_UI Artist for Games_Alex_Letter.docx` | 8 KB | 2026-07-28 |
+
