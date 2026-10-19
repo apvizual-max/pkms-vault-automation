@@ -39,7 +39,9 @@ Write-Output "STRATUL DE LUCRU"
 $workLayer = '01_Projects'
 if (Test-Path (Join-Path $Vault $workLayer)) {
   foreach ($r in Get-ChildItem -LiteralPath (Join-Path $Vault $workLayer) -Directory -Force | Sort-Object Name) {
-    $f = @(Get-ChildItem -LiteralPath $r.FullName -File -Recurse -Force -EA SilentlyContinue)
+    # Acelasi filtru ca in bucla de mai jos (BAZA): altfel rafturile si bazele
+    # masoara doua lucruri diferite, iar suma lor nu mai este suma bazei.
+    $f = @(Get-ChildItem -LiteralPath $r.FullName -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
     $mb = [math]::Round((($f | Measure-Object Length -Sum).Sum)/1MB,0)
     Write-Output ("  {0,-22} {1,6} fisiere  {2,8} MB" -f $r.Name, $f.Count, $mb)
   }

@@ -2,7 +2,7 @@
 
 **Scheletul vaultului.** Tot ce urmează pleacă de aici.
 
-Ultima actualizare: **19 octombrie 2026**. 50.198 de fișiere · 7.254 de foldere · 86,26 GB.
+Ultima actualizare: **19 octombrie 2026**. 50.714 de fișiere · 7.509 de foldere · 85,75 GB.
 Vaultul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
 Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 **Calea lui nu se scrie tare nicăieri:** o descoperă `AI-Kit\paths.ps1`.
@@ -20,7 +20,7 @@ Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 |---|---|---|
 | **vault** | `G:\My Drive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
 | **backup** | copia de pe `H:`, **imutabilă**. Citește, copiază din ea. Nu scrie niciodată | nu e raft |
-| **bază** | nivelul `00`–`06` (7 baze). Rămâne neatins, ca un fond de bibliotecă | nu e locul de lucru |
+| **bază** | nivelul `00`–`09` (10 baze). Rămâne neatins, ca un fond de bibliotecă | nu e locul de lucru |
 | **proiect** | `01_Projects` — singurul nivel în care intri ca să lucrezi | nu e o bază |
 | **raft** | un folder din `01_Projects`, pe un subiect de muncă | — |
 | **cotor** | documentația asta: tot sistemul pe un fir | — |
@@ -34,16 +34,17 @@ Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 ```
 G:\My Drive\GDrive-Second_Brain_PKMS\
 │
-├── 00 … 06          BAZA — fondul. Nu se rearanjează. Aici stă ce nu e treabă curentă.
+├── 00 … 09          BAZA — fondul. Nu se rearanjează. Aici stă ce nu e treabă curentă.
 │
 ├── 01_Projects      LUCRU — aici intri. A fost `01_Projects\01-6-Work_Folder (to sort)` pe D:. 6 rafturi.
 │
-├── Clippings        TAIE — e locul în care programele trimit ce taie, iar Obsidian
-│                   e programat să-l caute la rădăcină. De aceea **NU se mută**
-│                   în bază: la rădăcină e locul lui, oriunde ar ajunge Obsidian
-│                   să scrie.
+├── 08_Clippings     TAIE — locul în care programele trimit ce taie. A stat la
+│                   rădăcină până la numerotarea din 19 oct; acum stă în seria
+│                   bazelor. ⚠ **De verificat:** Obsidian era programat să caute
+│                   `Clippings` la rădăcină — mutat, poate scrie în gol. Observația
+│                   e în `AGENTS.md` și `START AICI.md`; decizia e a lui Popy.
 │
-├── COTOR + INDEX CENTRAL + raport-archive     (fișierele *.md de aici)
+├── COTOR + INDEX CENTRAL + AGENTS + MANUAL DE NAVIGARE + raport de stare
 │
 ├── _SYSTEM          unelte, biblioteci de programe, skill-uri vii, rest de programe
 ├── _ARCHIVE         lucruri scoase din calea deschisă
@@ -52,7 +53,7 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 └── .obsidian, .trash, .vault-intelligence, .claudian, ...   NU SE ATINGE
 ```
 
-**Regula de aur:** întrezi în `01_Projects`. Nu cauți niciodată prin baza `00`–`06`.
+**Regula de aur:** întrezi în `01_Projects`. Nu cauți niciodată prin baza `00`–`09`.
 
 ### Unde stă motorul
 
@@ -63,8 +64,9 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 | skill-urile vii `git-autonom` / `git-install` | `_SYSTEM\Skills_MASTER_Folder\SENTINEL - git-*- Skill\` | copii vii, verificate prin SHA-256 |
 | `arhiva vendor` de skill-uri | `_SYSTEM\Skills_MASTER_Folder\_Skills_BackUp_Archive_2026-07-15\` | **închisă**, nu e motor |
 
-> **Rădăcina nu mai conține documentația, doar `COTOR.md`, `INDEX CENTRAL.md` și
-> `MANUAL DE NAVIGARE - cotor.md`.** Restul a fost mutat în `AI-Kit_guide`. Uneltele
+> **Rădăcina nu mai conține documentația, ci cinci fișiere `.md`:** `COTOR.md`,
+> `INDEX CENTRAL.md`, `MANUAL DE NAVIGARE - cotor.md`, `AGENTS.md` (puntea către
+> LLM Wiki) și raportul de stare al zilei. Restul e în `AI-Kit_guide`. Uneltele
 > trebuie să caute acolo, nu la rădăcină — altfel urlă pe fișiere care există.
 
 ---
@@ -75,22 +77,22 @@ Măsurate pe **19 octombrie 2026**:
 
 | Raft | Fișiere | GB |
 |---|---|---|
-| `01_Projects\Work_Folder (to sort)` | 32.249 | 47,78 |
-| `01_Projects\AP-ID.ro - AI Branding Work and Clients` | 734 | 31,58 |
-| `01_Projects\Alex - AI Work - Colaborations` | 78 | 0,07 |
-| `01_Projects\FORGE - AI JOB Automation` | 7 | 0,00 |
-| `01_Projects\Arhiva Elements - To Monetize` | 0 | 0,00 |
-| `01_Projects\Arhiva Foto - To Monetize` | 0 | 0,00 |
+| `01_Projects\01-6-Work_Folder (to sort)` | 32.181 | 47,78 |
+| `01_Projects\01-2-AP-ID.ro - AI Branding Work and Clients` | 764 | 31,58 |
+| `01_Projects\01-1-Alex - AI Work - Colaborations` | 97 | 0,07 |
+| `01_Projects\01-5-FORGE - AI JOB Automation` | 9 | 0,00 |
+| `01_Projects\01-3-Arhiva Elements - To Monetize` | 1 | 0,00 |
+| `01_Projects\01-4-Arhiva Foto - To Monetize` | 1 | 0,00 |
 
-Total `01_Projects`: **33.069 de fișiere · 79,44 GB.**
+Total `01_Projects`: **33.053 de fișiere în cele 6 rafturi · 79,43 GB.** (cu `00_INDEX.md`-ul bazei: 33.054.)
 
 > **O cifră vie e o obligație, o cifră statică e o minciună cu termen.**
 > Tabelul de mai sus e o fotografie, nu o sursă. **Pentru cifra de azi rulează
 > `AI-Kit\health-check.ps1`**, care numără pe loc și tipărește `TOTAL:`. Nu edita cifrele
 > aici după ureche — rulează o unealtă.
 
-> **`Work_Folder (to sort)` e datoria, și e numele ei.** 32.249 de fișiere într-un singur
-> raft nesortat, adică **97,5% din tot volumul de lucru**. Nu e o rață, e o măsurătoare
+> **`Work_Folder (to sort)` e datoria, și e numele ei.** 32.181 de fișiere într-un singur
+> raft nesortat, adică **97,36% din tot volumul de lucru**. Nu e o rață, e o măsurătoare
 > care spune că raftul acesta nu a fost încă despărțit. Se numește așa deoarece știe că
 > e în așteptare, nu pentru că ar fi o cofăjenie.
 
@@ -103,8 +105,8 @@ Măsurate pe **19 octombrie 2026**, după numerotarea pe trei niveluri:
 | Bază | Fișiere | GB | Ce mai e acolo |
 |---|---|---|---|
 | `00_Inbox` | 30 | 0,00 | rafturi de primire, numerotate `00-1` … `00-9` |
-| `01_Projects` | 33.122 | 79,44 | **proiectele active — aici se lucrează** |
-| `02_Areas` | 3.162 | 1,01 | `02-1-ALEX-SOT` 2.459 · `02-2-AI-SOT` 699 (AI-Kit, punți, transcripturi) · `02-5-SCIENCE-SOT` 3 |
+| `01_Projects` | 33.054 | 79,43 | **proiectele active — aici se lucrează** |
+| `02_Areas` | 3.166 | 1,04 | `02-1-ALEX-SOT` 2.459 · `02-2-AI-SOT` 703 · `02-5-SCIENCE-SOT` 3 (AI-Kit, punți, transcripturi) |
 | `03_Resources` | 912 | 0,90 | personalitate, inspirații, memorie |
 | `04_Archive` | 11 | 0,00 | copiile de site-uri au urcat în `01_Projects` |
 | `05_Attachments` | 1.266 | 0,41 | imagini capturate de tine |
@@ -113,9 +115,7 @@ Măsurate pe **19 octombrie 2026**, după numerotarea pe trei niveluri:
 | `08_Clippings` | 457 | 0,37 | articole tăiate din web |
 | `09_raport-archive` | 2 | 0,00 | rapoartele de stare vechi |
 
-> **`01_Projects`, pe rnduri:** `01-6-Work_Folder (to sort)` 32.249 fișiere / 47,78 GB ·
-> `01-2-AP-ID.ro` 764 / 31,58 GB · `01-1-Alex - AI Work - Colaborations` 97 / 0,07 GB ·
-> `01-5-FORGE` 9 · `01-3` și `01-4` câte 1.
+> **`01_Projects`, pe rnduri:** `01-6-Work_Folder (to sort)` 32.181 fișiere / 47,78 GB · `01-2-AP-ID.ro` 764 fișiere / 31,58 GB · `01-1-Alex` 97 fișiere / 0,07 GB · `01-5-FORGE` 9 · `01-3-Arhiva Elements` 1 · `01-4-Arhiva Foto` 1.
 
 ### Cum se citește un cod
 
@@ -136,9 +136,9 @@ Măsurate pe **19 octombrie 2026**:
 
 | | Ce e | De ce există |
 |---|---|---|
-| `_SYSTEM` | 6.969 fișiere · 0,13 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în vault ca să nu te împiedici |
+| `_SYSTEM` | 6.950 fișiere · 0,11 GB — scripturi, skill-uri, biblioteci de programe | nu-s ale tale, dar stau în vault ca să nu te împiedici |
 | `_ARCHIVE` | 13 fișiere · 0,13 GB | parole și lucruri scoase din calea deschisă |
-| `_QUARANTINE` | 4.778 fișiere · 3,16 GB | tot ce a fost neclar. **Aici decizi tu, nu eu** |
+| `_QUARANTINE` | 4.777 fișiere · 3,16 GB — tot ce a fost neclar | tot ce a fost neclar. **Aici decizi tu, nu eu** |
 
 ---
 
@@ -148,19 +148,19 @@ Măsurate pe **19 octombrie 2026**:
 
 | Ce | Câte |
 |---|---|
-| `00_INDEX.md` pe disc, în tot vaultul | **6.490** |
+| `00_INDEX.md` pe disc, în tot vaultul | **6.491** |
 | din care în `_QUARANTINE` | **4.089** |
-| **utili, în afara carantinei** | **2.401** |
-| pe GitHub, în repo-ul de automatizare | **4.438** |
+| **utili, în afara carantinei** | **2.402** |
+| pe GitHub, în repo-ul de automatizare | **4.439** |
 
 > Cele trei cifre mari sunt adevărate despre lucruri diferite și **niciuna nu o
-> anulează pe cealaltă**. Pe disc sunt 6.490 pentru că `build-index` a scris index și
-> în arborele renumerotat. Pe GitHub sunt 4.438 pentru că acolo nu urcă materialul și
-> nici raftul retras. Diferența dintre 6.490 și 4.438 nu e o pierdere: e **ce a rămas
+> anulează pe cealaltă**. Pe disc sunt 6.491 pentru că `build-index` a scris index și
+> în arborele renumerotat. Pe GitHub sunt 4.439 pentru că acolo nu urcă materialul și
+> nici raftul retras. Diferența dintre 6.491 și 4.439 nu e o pierdere: e **ce a rămas
 > pe Drive anume ca să nu urce** —raftul retras inclusiv, cu numele clientului închis.
 
 > **Nu alege un singur număr: spune cifra la care te referi și spune cum se re-verifică.**
-> 4.665, 4.088 și 577 sunt toate trei adevărate despre trei lucruri diferite.
+> 6.491, 4.089 și 2.402 sunt toate trei adevărate despre trei lucruri diferite.
 > ```powershell
 > $v = 'G:\My Drive\GDrive-Second_Brain_PKMS'
 > (Get-ChildItem $v -Filter '00_INDEX.md' -File -Recurse -Force).Count
@@ -369,8 +369,8 @@ măsurată (2026-10-19):
 
 - **Codul:** `0x91` = 145 = „The directory is not empty" (măsurat: `Win32Exception(145)`).
 - **Mesajul:** `win_util.cc:59:ConvertWin32ErrorToStatus Returning GENERIC_ERROR for unknown Windows Error 0x91`.
-- **Unde:** 8.397 apariții `0x91` în logurile DriveFS — **toate** în loguri scrise azi, **zero** în logurile vechi.
-- **Când:** prima la `00:58:00.061Z`, vârf la `03:xx` (5.235) — și **continuă**: 91 apariții în logul curent, la 20:17.
+- **Unde:** 9.422 apariții `0x91` în logurile DriveFS — **toate** în loguri scrise azi, **zero** în logurile vechi.
+- **Când:** prima la `00:58:00.061Z`, vârf la `03:xx` (5.235) — și **continuă**: 1.116 apariții în logul curent, la 21:09.
 - **Precursor:** la `00:57:36` scrieri Dokan „slow"; la `00:57:53.990` „slow content cache open taking 39.77s"; apoi zece tranzacții `LocalStore::BeginTransaction()` de câte **36.6 s**.
 - **Context:** presiune de memorie la `00:49`/`00:54` — `vmmemWSL` 60,15 GB, `google.exe` 49,6 GB spațiu virtual rezervat.
 
@@ -454,8 +454,40 @@ Toate stau acum în **`AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
 | `START AICI.md` | rafturile de lucru |
 | `AUDIT_RECONCILIERE_FINAL.md` | dovada că nu s-a pierdut nimic |
 
-La rădăcină au rămas **doar trei**: `COTOR.md` (acest fișier), `INDEX CENTRAL.md`
-(generat de `build-index.ps1`) și `MANUAL DE NAVIGARE - cotor.md`.
+La rădăcină au rămas **cinci** fișiere `.md`: `COTOR.md` (acest fișier),
+`INDEX CENTRAL.md` (generat de `build-index.ps1`), `MANUAL DE NAVIGARE - cotor.md`,
+`AGENTS.md` (puntea către LLM Wiki) și raportul de stare al zilei. Raportul de stare
+e un document datat, ca cele din `09_raport-archive` — mutarea lui e decizia lui
+Popy; nu se mută nimic fără R0.
+
+## LLM Wiki — legătura cu stratul de indexuri
+
+Vaultul e un **LLM Wiki**: surse brute, un strat de indexuri generat automat și un
+contract. Puntea dintre ele e `AGENTS.md`, de la rădăcină.
+
+| Strat (LLM Wiki) | În acest vault | Cine îl scrie |
+|---|---|---|
+| **Schema** | `COTOR.md` — contractul sistemului | omul, prin reguli; automatul doar verifică |
+| **Wiki** | `00_INDEX.md` în fiecare folder + `INDEX CENTRAL.md` (totul, pe un ecran) | `build-index.ps1` / `align-index.ps1` |
+| **Log** | istoricul git + `raport-aliniere.log` + jurnalele `*-registru.txt` | append-only; nu se rescrie niciodată |
+| **Raw** | `00_Inbox` … `08_Clippings` | omul |
+
+**`index.md` și `log.md` nu se creează, cu numele alea.** Fiecare ar fi fost **o a
+doua adevăr** despre același lucru: `index.md` ar duplica `INDEX CENTRAL.md` (derivat,
+deci neversionat), iar `log.md` ar duplica istoricul git — care ține și *diferențele*,
+nu doar evenimentele. `AGENTS.md` există: e rampa, iar contractul lung stă în
+`COTOR.md`, ca să nu fie repetat în două locuri.
+
+**Cele trei operații, traduse aici:**
+
+| Operație | Cum arată în acest vault |
+|---|---|
+| **Ingest** (material nou) | intră în `00_Inbox` → alegi raftul → `align-index.ps1 -DoarCargol '<subarbore>'` reface cotorul acelui raft |
+| **Query** | patru citiri, nu scanări: `COTOR.md` → `MANUAL DE NAVIGARE - cotor.md` → `START AICI.md` → `00_INDEX.md` din folderul în care lucrezi |
+| **Lint** | `lint.ps1` (poarta: dă 0 sau nu intri) + `align-index.ps1 -CeVad` (cotorul: câte indexuri nu sunt aliniate) |
+
+**Interdicția care rămâne:** nu scanezi niciodată tot arborele cu
+`Get-ChildItem -Recurse` ca să găsești un fișier. Cotrul răspunde în sub o secundă.
 
 ---
 
@@ -463,4 +495,4 @@ La rădăcină au rămas **doar trei**: `COTOR.md` (acest fișier), `INDEX CENTR
 
 1. **Nu se șterge nimic.** `rm` și `Remove-Item` sunt blocate. Neclarul ajunge în carantină.
 2. **Nu se atinge backup-ul.** Se citește. Dacă lipsește ceva, se copiază **din** el.
-3. **Nu se schimbă baza `00`–`06`.** Se completează și se citește, nu se rearanjează.
+3. **Nu se schimbă baza `00`–`09`.** Se completează și se citește, nu se rearanjează.
