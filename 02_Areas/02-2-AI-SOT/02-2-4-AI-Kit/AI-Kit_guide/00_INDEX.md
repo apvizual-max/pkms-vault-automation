@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide
 
-**13 fișiere · 928 KB · 0 subfoldere**
+**13 fișiere · 929 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
@@ -19,7 +19,7 @@ Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 
 |---|---|---|
 | `arhiva- raport aliniere.log` | 736 KB | 2026-10-09 |
 | `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-08 |
-| `AUTOMATIZARI - scripturi.md` | 36 KB | 2026-10-19 |
+| `AUTOMATIZARI - scripturi.md` | 38 KB | 2026-10-19 |
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
 | `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-12 |
 | `LOGICA - cum se foloseste fiecare baza.md` | 8 KB | 2026-10-19 |

@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual
 
-**De ce e aici:** pachetul de predare al voltului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie `D:\Alex_Knowlege_Vault` fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
+**De ce e aici:** pachetul de predare al voltului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie voltul (`G:\My Drive\GDrive-Second_Brain_PKMS`) fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
 
 **18 fișiere · 284 KB · 0 subfoldere**
 
@@ -38,7 +38,7 @@ Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 
 | `verifica-schema.ps1` | 23 KB | 2026-10-10 |
 | `watch.ps1` | 12 KB | 2026-10-19 |
 
-Cele mai frecvente două extensii sunt `.ps1` (11 din 19 fișiere) și `.md` (4 din 19 fișiere). Cel mai mare element din folder e `align-index.ps1` (46 KB)
+Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 din 18 fișiere). Cel mai mare element din folder e `align-index.ps1` (46 KB)
 
 `AI-Kit` · `align` · `index` · `.ps1` · `.md`
 
