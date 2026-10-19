@@ -212,6 +212,20 @@ function Test-LiniaGenerata([string]$l) {
   if ($l -match '^- \*\*\.')      { return $true }   # grupare pe extensie
   if ($l -match '^- `.*` — \d')     { return $true }   # cele mai mari 20
   if ($l -match '^_\( \d+ fi')     { return $true }   # nota de volum mare
+  # Propozitia de descriere si linia de cuvinte cheie sunt identitatea
+  # generatorului, la fel ca blocurile. Fara ele, un rand generat vechi
+  # supravietuieste in fisier pentru totdeauna: masurat, renumerarea a lasat
+  # in coada 51 de propozitii de descriere si 130 de linii de cuvinte cheie, in
+  # 114 de indexuri, pentru ca se schimbase un nume de raft sau o cifra, iar
+  # forma lor nu era recunoscuta. Plasa de forma exista tocmai pentru asta.
+  # Diacriticele sunt scrise ca escape-uri, ca sa nu depinda de codificarea
+  # in care e citit fisierul: \u0103 = a-breve, \u0219 = s-comma-below (U+0219,
+  # forma in care scrie generatorul), \u021B = t-comma-below, \u00B7 = middle dot.
+  if ($l -match '^Folder gol pe \d{4}-\d{2}-\d{2}: niciun fi[\u0219\u015F]ier, niciun subfolder\.\$') { return $true }
+  if ($l -match '^Nu are fi[\u0219\u015F]iere de con[\u021B\u0163]inut\.') { return $true }
+  if ($l -match '^Singura extensie prezent[\u0103\u0102] e ') { return $true }
+  if ($l -match '^Cele mai frecvente dou[\u0103\u0102] extensii sunt ') { return $true }
+  if ($l -match '^[^]+( \u00B7 [^]+)+\$') { return $true }
   return $false
 }
 
