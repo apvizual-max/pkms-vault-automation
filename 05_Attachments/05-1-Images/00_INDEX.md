@@ -33,7 +33,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Pasted image 20260923152813.png` | 67 KB | 2026-09-23 |
 | `Pasted image 20260925100816.png` | 65 KB | 2026-09-25 |
 
-Cele mai frecvente două extensii sunt `.png` (7 din 9 fișiere) și `.jpeg` (1 din 9 fișiere). Un raft copil: `Screenshots`; cel mai mare element din folder e `Screenshots` (413 MB)
 
-`05_1-Images` · `Screenshots` · `.png` · `.jpeg`
 

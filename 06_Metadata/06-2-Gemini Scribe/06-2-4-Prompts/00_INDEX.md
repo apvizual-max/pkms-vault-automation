@@ -25,5 +25,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `example-expert.md` | 578 B | 2026-07-31 |
 
-`Prompts` · `copilot` · `custom` · `.md` · `copilot-custom-prompts`
 

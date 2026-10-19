@@ -24,7 +24,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`02-2-5-AI-Mem-SOT_Instructions-Folder`](<02-2-5-AI-Mem-SOT_Instructions-Folder/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 - [`02-2-6-AI-Scripts`](<02-2-6-AI-Scripts/00_INDEX.md>) — 0 fișiere · 3 subfoldere
 
-Nu are fișiere de conținut. 10 rafturi copil (primele trei după nume: `AI Chats`, `AI Scripts`, `AI-Kit`); cel mai mare element din folder e `Archive` (27 MB)
 
-`02_2-AI-SOT` · `Archive` · `AI-Kit` · `AI Chats` · `Wisper_Transcripts`
 

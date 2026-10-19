@@ -21,5 +21,4 @@ Singura extensie prezentă e `.md` (3 din 3 fișiere). Cel mai mare element din 
 | `AI NEWS - Full body waifus, Claude Fable is back, LongCat 2.0, mind-reading AI, live video editing AI NEWS.md` | 46 KB | 2026-07-09 |
 | `AI NEWS - Huge AI News Week Fable 5 Returns; NotebookLM Shorts; Gemini Spark Updates; Nano Banana 2 Lite 🤯.md` | 27 KB | 2026-07-09 |
 
-`AI NEWS` · `NEWS` · `Full` · `body` · `.md`
 

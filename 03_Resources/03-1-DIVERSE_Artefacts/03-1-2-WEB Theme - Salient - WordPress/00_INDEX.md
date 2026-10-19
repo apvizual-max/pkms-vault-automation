@@ -19,5 +19,4 @@ Singura extensie prezentă e `.pdf` (1 din 1 fișiere). Cel mai mare element din
 |---|---|---|
 | `SALIENT - Wordpress Theme DOC. FULL.pdf` | 516 KB | 2026-06-04 |
 
-`WEB Theme - Salient - WordPress` · `SALIENT` · `Wordpress` · `Theme` · `.pdf`
 

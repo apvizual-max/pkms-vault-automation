@@ -19,5 +19,4 @@ Singura extensie prezentă e `.md` (1 din 1 fișiere). Cel mai mare element din 
 |---|---|---|
 | `README.md` | 155 B | 2026-10-07 |
 
-`00.5_NotebookLM` · `README` · `.md`
 

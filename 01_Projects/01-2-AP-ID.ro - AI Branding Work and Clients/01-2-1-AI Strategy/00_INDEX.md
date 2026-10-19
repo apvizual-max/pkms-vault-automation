@@ -22,5 +22,4 @@ Singura extensie prezentă e `.gdoc` (4 din 4 fișiere). Cel mai mare element di
 | `RESEARCH - B2B - AI Systems - Strategic Certification  Engineering Risk Mitigation and B2B Deal Excellence.gdoc` | 173 B | 2026-07-18 |
 | `RESEARCH - B2B - AI Systems - The AI Multiplier  Strategic UI UX Systems Architecture.gdoc` | 173 B | 2026-07-18 |
 
-`AI Strategy` · `RESEARCH` · `B2B` · `Systems` · `.gdoc`
 

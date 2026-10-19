@@ -33,7 +33,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `WORKING-File - Remote Jobs.md` | 49 KB | 2026-09-07 |
 | `WORKING-File - Self-Hosted website.md` | 10 KB | 2026-08-18 |
 
-Cele mai frecvente două extensii sunt `.md` (8 din 9 fișiere) și `.ini` (1 din 9 fișiere). 2 rafturi copil: `Images`, `TASTE - Work Folder`; cel mai mare element din folder e `TASTE - Work Folder` (10 MB)
 
-`01_0-WORKING-Files` · `TASTE` · `Work` · `Folder` · `.md` · `.ini`
 

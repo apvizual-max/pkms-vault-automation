@@ -30,7 +30,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `Social Media Content Plan - Pure.xlsx` | 17 KB | 2026-05-26 |
 
-Singura extensie prezentă e `.xlsx` (1 din 1 fișiere). 6 rafturi copil (primele trei după nume: `16 Personalities - imagi descarcate`, `Baze de date - listi expozanti`, `Design`); cel mai mare element din folder e `16 Personalities - imagi descarcate` (410 MB)
 
-`03_3-ALEX_Research` · `Personalities` · `imagi` · `descarcate` · `.xlsx`
 

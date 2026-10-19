@@ -20,5 +20,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`General Selection`](<General Selection/00_INDEX.md>) — 164 fișiere · 0 subfoldere
 - [`SKIN Media - PORTOFOLIU`](<SKIN Media - PORTOFOLIU/00_INDEX.md>) — 0 fișiere · 4 subfoldere
 
-`AP-ID - Portofolio - General Selection` · `SKIN` · `Media` · `PORTOFOLIU` · `SKIN Media - PORTOFOLIU`
 

@@ -32,9 +32,6 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `START AICI.md` | 1 KB | 2026-10-08 |
 
-Singura extensie prezentă e `.md` (1 din 1 fișiere). 8 rafturi copil (primele trei după nume: `Casa`, `Clienti`, `Documentatie AI`); cel mai mare element din folder e `Clienti` (44.57 GB)
 
-`Work_Folder (to sort)` · `Clienti` · `.md` · `Personaj Sentinel` · `Documentatie AI`
 
-`10_Work` · `Clienti` · `.md` · `Personaj Sentinel` · `Documentatie AI`
 

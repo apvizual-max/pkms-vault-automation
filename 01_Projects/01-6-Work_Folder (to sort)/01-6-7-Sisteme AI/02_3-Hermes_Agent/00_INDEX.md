@@ -30,7 +30,5 @@ Singura extensie prezentă e `.md` (12 din 12 fișiere). Cel mai mare element di
 | `Hermes - SESSION - Sentinel Prime Status Check - Extracted Data.md` | 8 KB | 2026-07-10 |
 | `Hermes - SESSION - Sentinel Prime Status Check - RAW Data.md` | 101 KB | 2026-07-10 |
 
-Cele mai frecvente două extensii sunt `.md` (12 din 13 fișiere) și `.ini` (1 din 13 fișiere). Cel mai mare element din folder e `Hermes - ANTIGRAVITY despre Sentinel - RAW Data.md` (605 KB)
 
-`02_3-Hermes_Agent` · `Hermes` · `ANTIGRAVITY` · `despre` · `.md` · `.ini`
 

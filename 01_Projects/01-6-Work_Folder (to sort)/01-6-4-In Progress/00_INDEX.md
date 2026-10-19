@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`01_0-WORKING-Files`](<01_0-WORKING-Files/00_INDEX.md>) — 8 fișiere · 2 subfoldere
 
-`In Progress` · `WORKING` · `Files` · `01_0-WORKING-Files`
 

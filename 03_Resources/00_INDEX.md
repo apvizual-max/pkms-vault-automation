@@ -24,11 +24,7 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`03-5-ALEX_Inspirations`](<03-5-ALEX_Inspirations/00_INDEX.md>) — 152 fișiere · 6 subfoldere
 - [`03-6-AP-ID_Prompts_and_JSON`](<03-6-AP-ID_Prompts_and_JSON/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
-Nu are fișiere de conținut. 6 rafturi copil (primele trei după nume: `03_0-iDEEAS`, `03_1-DIVERSE_Artefacts`, `03_3-ALEX_Research`); cel mai mare element din folder e `03_3-ALEX_Research` (796 MB)
 
-`03_Resources` · `ALEX` · `Research` · `03_3-ALEX_Research` · `03_4-ALEX_Memories`
 
-Singura extensie prezentă e `.nomedia` (1 din 1 fișiere). 6 rafturi copil (primele trei după nume: `03_0-iDEEAS`, `03_1-DIVERSE_Artefacts`, `03_3-ALEX_Research`); cel mai mare element din folder e `03_3-ALEX_Research` (796 MB)
 
-`03_Resources` · `ALEX` · `Research` · `.nomedia` · `03_3-ALEX_Research`
 

@@ -43,9 +43,6 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Sohlara - BRIEF - JobTest.md` | 69 KB | 2026-09-16 |
 | `Untitled.md` | 1 KB | 2026-10-01 |
 
-Singura extensie prezentă e `.md` (11 din 11 fișiere). 9 rafturi copil (primele trei după nume: `00.1_WhatsApp`, `00.2_Daily_Raw_Notes`, `00.3_Email`); cel mai mare element din folder e `Saved from Chrome` (219 KB)
 
-Singura extensie prezentă e `.md` (11 din 11 fișiere). 6 rafturi copil (primele trei după nume: `00.1_WhatsApp`, `00.2_Daily_Raw_Notes`, `00.3_Email`); cel mai mare element din folder e `Life Dental Spa - BRIEF - JobTest.md` (70 KB)
 
-`00_Inbox` · `Life` · `Dental` · `Spa` · `.md`
 

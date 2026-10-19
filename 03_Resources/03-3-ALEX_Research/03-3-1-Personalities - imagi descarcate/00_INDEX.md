@@ -21,5 +21,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`General - MBTI (Myers-Briggs Type Indicator)`](<General - MBTI (Myers-Briggs Type Indicator)/00_INDEX.md>) — 16 fișiere · 0 subfoldere
 - [`Old - 16 Pers`](<Old - 16 Pers/00_INDEX.md>) — 1 fișiere · 4 subfoldere
 
-`16 Personalities - imagi descarcate` · `Old` · `Pers` · `Old - 16 Pers` · `16personalities - Images`
 

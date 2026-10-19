@@ -26,5 +26,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `AGENTS.md - Instructions Template.md` | 10 KB | 2026-08-01 |
 | `Gemini Scribe - Tutorial Video - Scraped.md` | 29 KB | 2026-08-01 |
 
-`Gemini Scribe - Tutorial` · `Gemini` · `Scribe` · `Tutorial` · `.md`
 

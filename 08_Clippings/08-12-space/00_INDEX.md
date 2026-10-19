@@ -20,5 +20,4 @@ Cele mai frecvente două extensii sunt `.json` (1 din 2 fișiere) și `.mdb` (1 
 | `context.mdb` | 20 KB | 2026-07-14 |
 | `def.json` | 216 B | 2026-07-10 |
 
-`space` · `context` · `.json` · `.mdb`
 

@@ -34,7 +34,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `iDEEA - Setari de facut Google.md` | 1 KB | 2026-07-18 |
 | `iDEEA - To copy Gemini discussion about setting up Hermes with Google drive Google Cloud Platform..md` | 100 B | 2026-06-29 |
 
-Singura extensie prezentă e `.md` (10 din 10 fișiere). Un raft copil: `Images`; cel mai mare element din folder e `Images` (2 MB)
 
-`03_0-iDEEAS` · `Images` · `.md`
 

@@ -19,7 +19,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`01-1-1-TASTE - Critique - 1 - DUSK Radio`](<01-1-1-TASTE - Critique - 1 - DUSK Radio/00_INDEX.md>) — 3 fișiere · 13 subfoldere
 
-Nu are fișiere de conținut. Un raft copil: `TASTE - Critique - 1 - DUSK Radio`; cel mai mare element din folder e `TASTE - Critique - 1 - DUSK Radio` (67 MB)
 
-`Alex - AI Work - Colaborations` · `TASTE` · `Critique` · `DUSK` · `TASTE - Critique - 1 - DUSK Radio`
 

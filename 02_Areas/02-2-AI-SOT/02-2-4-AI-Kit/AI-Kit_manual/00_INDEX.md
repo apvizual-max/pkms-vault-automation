@@ -40,5 +40,4 @@ Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 
 
 Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 din 18 fișiere). Cel mai mare element din folder e `align-index.ps1` (46 KB)
 
-`AI-Kit` · `align` · `index` · `.ps1` · `.md`
 

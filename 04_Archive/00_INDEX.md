@@ -26,5 +26,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `.nomedia` | 0 B | 2026-08-01 |
 
-Singura extensie prezentă e `.nomedia` (1 din 1 fișiere). 2 rafturi copil: `04_1-Video_SCRAPE_Archive`, `04_2-Daily_Notes-Archive`; cel mai mare element din folder e `04_1-Video_SCRAPE_Archive` (68 KB)
 

@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`01_1-Alex - JOBS`](<01_1-Alex - JOBS/00_INDEX.md>) — 0 fișiere · 2 subfoldere
 
-`Joburi` · `Alex` · `JOBS` · `01_1-Alex - JOBS`
 

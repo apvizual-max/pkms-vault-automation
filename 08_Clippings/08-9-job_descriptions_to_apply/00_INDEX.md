@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`Bulk`](<Bulk/00_INDEX.md>) — 93 fișiere · 0 subfoldere
 
-`job_descriptions_to_apply` · `Bulk`
 

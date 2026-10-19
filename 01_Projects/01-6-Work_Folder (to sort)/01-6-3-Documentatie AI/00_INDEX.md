@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`03_8-Clippings`](<03_8-Clippings/00_INDEX.md>) — 0 fișiere · 12 subfoldere
 
-`Documentatie AI` · `Clippings` · `03_8-Clippings`
 

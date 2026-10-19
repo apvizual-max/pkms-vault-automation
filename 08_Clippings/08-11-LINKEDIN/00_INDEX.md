@@ -23,5 +23,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`SCRAPE`](<SCRAPE/00_INDEX.md>) — 0 fișiere · 0 subfoldere
 - [`TIPS`](<TIPS/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
-`LINKEDIN` · `Images` · `TIPS` · `SCRAPE`
 

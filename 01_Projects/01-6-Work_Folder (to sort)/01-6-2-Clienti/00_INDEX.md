@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`Knights Tempar`](<Knights Tempar/00_INDEX.md>) — 1 fișiere · 5 subfoldere
 
-`Clienti` · `Knights` · `Tempar` · `Knights Tempar`
 

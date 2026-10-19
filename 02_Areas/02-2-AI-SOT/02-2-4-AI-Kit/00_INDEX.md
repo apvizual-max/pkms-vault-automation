@@ -22,5 +22,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`AI-Kit_guide`](<AI-Kit_guide/00_INDEX.md>) — 13 fișiere · 0 subfoldere
 - [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 18 fișiere · 0 subfoldere
 
-`AI-Kit` · `Kit` · `guide` · `AI-Kit_guide` · `AI-Kit_manual`
 

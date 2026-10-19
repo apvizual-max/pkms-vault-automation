@@ -22,11 +22,7 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`01-2-3-AP-ID - Instruments`](<01-2-3-AP-ID - Instruments/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 - [`01-2-4-AP-ID - Portofolio - General Selection`](<01-2-4-AP-ID - Portofolio - General Selection/00_INDEX.md>) — 0 fișiere · 2 subfoldere
 
-Nu are fișiere de conținut. 4 rafturi copil (primele trei după nume: `AI Strategy`, `AP-ID - Clients`, `AP-ID - Instruments`); cel mai mare element din folder e `AP-ID - Clients` (27.84 GB)
 
-`AP-ID.ro - AI Branding Work and Clients` · `Clients` · `AP-ID - Clients` · `AP-ID - Portofolio - General Selection` · `AP-ID - Instruments`
 
-Nu are fișiere de conținut. 3 rafturi copil: `AP-ID - Clients`, `AP-ID - Instruments`, `AP-ID - Portofolio - General Selection`; cel mai mare element din folder e `AP-ID - Portofolio - General Selection` (3.75 GB)
 
-`AP-ID - B2B` · `Portofolio` · `General` · `Selection` · `AP-ID - Portofolio - General Selection`
 

@@ -25,5 +25,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `scheduled-tasks-state.json` | 2 B | 2026-10-08 |
 
-`Scheduled-Tasks` · `scheduled` · `tasks` · `state` · `.json`
 

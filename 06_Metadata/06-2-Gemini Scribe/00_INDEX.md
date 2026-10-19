@@ -31,7 +31,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `AGENTS.md` | 16 KB | 2026-08-02 |
 | `debug.log` | 5 KB | 2026-10-08 |
 
-Cele mai frecvente două extensii sunt `.log` (1 din 2 fișiere) și `.md` (1 din 2 fișiere). 6 rafturi copil (primele trei după nume: `Agent-Sessions`, `Background-Tasks`, `Hooks`); cel mai mare element din folder e `AGENTS.md` (16 KB)
 
-`Gemini Scribe` · `AGENTS` · `.log` · `.md` · `Agent-Sessions`
 

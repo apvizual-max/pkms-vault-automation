@@ -28,5 +28,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `.nomedia` | 0 B | 2026-08-01 |
 | `AGENTS-Vault_Map.md` | 3 KB | 2026-08-02 |
 
-Cele mai frecvente două extensii sunt `.md` (1 din 2 fișiere) și `.nomedia` (1 din 2 fișiere). 3 rafturi copil: `Agent-Archive`, `Gemini Scribe`, `Templates`; cel mai mare element din folder e `Agent-Archive` (90 KB)
 

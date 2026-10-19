@@ -23,9 +23,6 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`Tony - Dice`](<Tony - Dice/00_INDEX.md>) — 15 fișiere · 0 subfoldere
 - [`Trade Mag`](<Trade Mag/00_INDEX.md>) — 2 fișiere · 4 subfoldere
 
-`AP-ID - Clients` · `Knights` · `Templar` · `Knights Templar` · `Masons - ANDU`
 
-Nu are fișiere de conținut. 4 rafturi copil (primele trei după nume: `Masons - ANDU`, `Shipley International`, `Tony - Dice`); cel mai mare element din folder e `Masons - ANDU` (1.76 GB)
 
-`AP-ID - Clients` · `Masons` · `ANDU` · `Masons - ANDU` · `Trade Mag`
 

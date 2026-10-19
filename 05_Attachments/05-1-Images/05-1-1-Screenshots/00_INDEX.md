@@ -58,9 +58,6 @@ _( 983 fișiere — grupat după tip, pentru nu umfla documentul)_
 - `Screenshot 2026-08-22 023604.png` — 2 MB
 - `Screenshot 2026-08-20 081010.png` — 2 MB
 
-`Screenshots` · `FORGE` · `SCREENS` · `.png` · `FORGE SCREENS`
 
-Cele mai frecvente două extensii sunt `.png` (983 din 984 fișiere) și `.ini` (1 din 984 fișiere). 11 rafturi copil (primele trei după nume: `CLAUDEAPP_Screenshots`, `DESIGN Ai`, `FORGE SCREENS`); cel mai mare element din folder e `FORGE SCREENS` (38 MB)
 
-`Screenshots` · `FORGE` · `SCREENS` · `.png` · `.ini`
 

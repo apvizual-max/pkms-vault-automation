@@ -20,5 +20,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`A.D.A - An Ai Assistant That Can Rewrite Its Own Code`](<A.D.A - An Ai Assistant That Can Rewrite Its Own Code/00_INDEX.md>) — 1 fișiere · 1 subfoldere
 - [`ANTIGRAVITY - Free Tool that Rebuilds ANY Website`](<ANTIGRAVITY - Free Tool that Rebuilds ANY Website/00_INDEX.md>) — 2 fișiere · 1 subfoldere
 
-`AI PROJECTS` · `Assistant` · `That` · `Can` · `A.D.A - An Ai Assistant That Can Rewrite Its Own Code`
 

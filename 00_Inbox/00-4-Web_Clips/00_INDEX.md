@@ -19,5 +19,4 @@ Singura extensie prezentă e `.md` (1 din 1 fișiere). Cel mai mare element din 
 |---|---|---|
 | `README.md` | 88 B | 2026-10-07 |
 
-`00.4_Web_Clips` · `README` · `.md`
 

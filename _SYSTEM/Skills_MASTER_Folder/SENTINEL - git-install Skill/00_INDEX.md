@@ -20,5 +20,4 @@ Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din 
 | `PROMPT git install.md` | 8 KB | 2026-10-10 |
 | `SKILL.md` | 7 KB | 2026-10-10 |
 
-`git-install` · `PROMPT` · `git` · `install` · `.md`
 

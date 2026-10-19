@@ -20,5 +20,4 @@ Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din 
 | `AI BUSINESS - I Tested 5 Claude AI Side Hustles — Only These Actually Made Money.md` | 40 KB | 2026-07-09 |
 | `AI BUSINESS - I Tested Letting Claude Start a YouTube Channel for 20 Minutes And THIS Happened.md` | 20 KB | 2026-07-09 |
 
-`AI BUSINESS` · `BUSINESS` · `Tested` · `Claude` · `.md`
 

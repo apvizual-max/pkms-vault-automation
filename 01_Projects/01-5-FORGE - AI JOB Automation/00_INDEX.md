@@ -29,7 +29,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `FORGE - BUILD GUIDE.md` | 79 KB | 2026-07-02 |
 | `FORGE - Tutorial Transcription.md` | 98 KB | 2026-07-01 |
 
-Singura extensie prezentă e `.md` (5 din 5 fișiere). Un raft copil: `FORGE TEMPLATE - CSS`; cel mai mare element din folder e `-- Bookmarks - 01.07.2026 - GOOGLE Chrome Stack - FORGE.md` (761 KB)
 
-`FORGE - AI JOB Automation` · `Bookmarks` · `GOOGLE` · `Chrome` · `.md`
 

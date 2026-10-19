@@ -57,9 +57,6 @@ _( 152 fișiere — grupat după tip, pentru nu umfla documentul)_
 - `Maquette_de_Rome_(musée_de_la_civilisation_romaine,_Rome)_(5911810278).jpg` — 494 KB
 - `460276167_10161254513745967_4880406608952073466_n.jpg` — 444 KB
 
-Cele mai frecvente două extensii sunt `.jpg` (137 din 152 fișiere) și `.jfif` (9 din 152 fișiere). 6 rafturi copil (primele trei după nume: `diverse`, `Electric`, `Old BookMarks - Yoko Computer`); cel mai mare element din folder e `world-hierarchy-pyramid-image2.png` (11 MB)
 
-`03_5-ALEX_Inspirations` · `world` · `hierarchy` · `pyramid` · `.jpg` · `.jfif`
 
-Cele mai frecvente două extensii sunt `.jpg` (137 din 153 fișiere) și `.jfif` (9 din 153 fișiere). 6 rafturi copil (primele trei după nume: `diverse`, `Electric`, `Old BookMarks - Yoko Computer`); cel mai mare element din folder e `world-hierarchy-pyramid-image2.png` (11 MB)
 

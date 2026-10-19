@@ -33,7 +33,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`08-8-HERMES`](<08-8-HERMES/00_INDEX.md>) — 6 fișiere · 5 subfoldere
 - [`08-9-job_descriptions_to_apply`](<08-9-job_descriptions_to_apply/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 
-Nu are fișiere de conținut. 13 rafturi copil (primele trei după nume: `AI BUSINESS`, `AI MODELS`, `AI NEWS`); cel mai mare element din folder e `AI TOOLS` (355 MB)
 
-`Clippings` · `TOOLS` · `AI TOOLS` · `TRADING` · `LINKEDIN`
 

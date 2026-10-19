@@ -19,5 +19,4 @@ Singura extensie prezentă e `.md` (1 din 1 fișiere). Cel mai mare element din 
 |---|---|---|
 | `AI MODELS - Ornith 1.0 - This NEW AI AGENT is INSANE! 🤯.md` | 1 KB | 2026-07-09 |
 
-`AI MODELS` · `MODELS` · `Ornith` · `This` · `.md`
 

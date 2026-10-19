@@ -20,5 +20,4 @@ Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din 
 | `PROMPT git autonom.md` | 5 KB | 2026-10-10 |
 | `SKILL.md` | 6 KB | 2026-10-10 |
 
-`git-autonom` · `SKILL` · `.md`
 

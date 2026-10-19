@@ -29,7 +29,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `GOOGLE - AI Workflow.md` | 7 KB | 2026-06-30 |
 
-Cele mai frecvente două extensii sunt `.ini` (1 din 2 fișiere) și `.md` (1 din 2 fișiere). 5 rafturi copil (primele trei după nume: `D - Antigravity`, `D - Google Cloud Platform`, `D - Google Colab - Jules - Scripts`); cel mai mare element din folder e `D - Antigravity` (2 MB)
 
-`02_2-Google-AI` · `Antigravity` · `.ini` · `.md` · `D - Antigravity`
 

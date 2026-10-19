@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`03_7-SENTINEL_Character`](<03_7-SENTINEL_Character/00_INDEX.md>) — 2 fișiere · 6 subfoldere
 
-`Personaj Sentinel` · `SENTINEL` · `Character` · `03_7-SENTINEL_Character`
 

@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`Baze de date - Rmxp`](<Baze de date - Rmxp/00_INDEX.md>) — 9 fișiere · 0 subfoldere
 
-`Baze de date - listi expozanti` · `Baze` · `date` · `Rmxp` · `Baze de date - Rmxp`
 

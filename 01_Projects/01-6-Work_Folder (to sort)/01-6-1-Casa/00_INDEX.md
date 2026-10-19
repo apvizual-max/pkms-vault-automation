@@ -19,5 +19,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`02_7-OGLINDA-CASA`](<02_7-OGLINDA-CASA/00_INDEX.md>) — 2 fișiere · 2 subfoldere
 
-`Casa` · `OGLINDA` · `02_7-OGLINDA-CASA`
 

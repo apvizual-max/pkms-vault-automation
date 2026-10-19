@@ -27,7 +27,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `Start Here.md` | 2 KB | 2026-07-07 |
 
-Singura extensie prezentă e `.md` (1 din 1 fișiere). 3 rafturi copil: `Canvases`, `Demo`, `Views`; cel mai mare element din folder e `Views` (3 KB)
 
-`Canvas Bases` · `Views` · `.md` · `Demo` · `Canvases`
 

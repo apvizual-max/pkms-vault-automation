@@ -49,7 +49,6 @@ _( 534 fișiere — grupat după tip, pentru nu umfla documentul)_
 - `estp (1).png` — 160 KB
 - `estp.png` — 160 KB
 
-Cele mai frecvente două extensii sunt `.svg` (424 din 534 fișiere) și `.png` (98 din 534 fișiere). Cel mai mare element din folder e `Guide to Relationships (1)` (1 MB)
 
 - **(fără extensie)** — 1 fișiere · 1 MB
 

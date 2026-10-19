@@ -19,7 +19,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`04-1-1-Gemini Scribe - Tutorial`](<04-1-1-Gemini Scribe - Tutorial/00_INDEX.md>) — 2 fișiere · 1 subfoldere
 
-Nu are fișiere de conținut. Un raft copil: `Gemini Scribe - Tutorial`; cel mai mare element din folder e `Gemini Scribe - Tutorial` (68 KB)
 
-`04_1-Video_SCRAPE_Archive` · `Gemini` · `Scribe` · `Tutorial` · `Gemini Scribe - Tutorial`
 
