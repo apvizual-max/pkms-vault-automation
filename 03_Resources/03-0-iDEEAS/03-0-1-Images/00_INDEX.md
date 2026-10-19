@@ -21,4 +21,3 @@ Singura extensie prezentă e `.png` (3 din 3 fișiere). Cel mai mare element din
 | `Pasted image 20260714231702.png` | 1 MB | 2026-07-14 |
 | `Pasted image 20260730022031.png` | 481 KB | 2026-07-30 |
 
-

@@ -36,4 +36,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `AI TOOLS - HERMES - The Agent That Grows With You.md` | 1 KB | 2026-07-09 |
 | `AI TOOLS - Nous Research - Nous Psyche.md` | 29 KB | 2026-07-09 |
 
-

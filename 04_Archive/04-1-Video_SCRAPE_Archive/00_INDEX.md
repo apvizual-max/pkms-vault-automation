@@ -20,4 +20,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`04-1-1-Gemini Scribe - Tutorial`](<04-1-1-Gemini Scribe - Tutorial/00_INDEX.md>) — 2 fișiere · 1 subfoldere
 
 
-

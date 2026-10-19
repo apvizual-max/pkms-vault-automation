@@ -20,4 +20,3 @@ Singura extensie prezentă e `.pdf` (2 din 2 fișiere). Cel mai mare element din
 | `AP-ID - Logo - Brief - RO.pdf` | 336 KB | 2026-05-14 |
 | `AP-ID - Logo - Brief.pdf` | 176 KB | 2026-05-14 |
 
-

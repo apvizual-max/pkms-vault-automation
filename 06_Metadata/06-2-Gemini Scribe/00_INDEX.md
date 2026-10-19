@@ -31,5 +31,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `AGENTS.md` | 16 KB | 2026-08-02 |
 | `debug.log` | 5 KB | 2026-10-08 |
 
-
-

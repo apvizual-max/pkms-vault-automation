@@ -19,4 +19,3 @@ Singura extensie prezentă e `.md` (1 din 1 fișiere). Cel mai mare element din 
 |---|---|---|
 | `2026-08-02 Setup Wizard Interview.md` | 10 KB | 2026-08-02 |
 
-

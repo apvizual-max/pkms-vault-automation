@@ -19,4 +19,3 @@ Singura extensie prezentă e `.md` (1 din 1 fișiere). Cel mai mare element din 
 |---|---|---|
 | `CV - ATS - How I Landed 10 Interviews in 1 Week (My Exact Job Search Strategy).md` | 20 KB | 2026-07-10 |
 
-

@@ -23,6 +23,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`01-2-4-AP-ID - Portofolio - General Selection`](<01-2-4-AP-ID - Portofolio - General Selection/00_INDEX.md>) — 0 fișiere · 2 subfoldere
 
 
-
-
-

@@ -21,4 +21,3 @@ Singura extensie prezentă e `.md` (3 din 3 fișiere). Cel mai mare element din 
 | `Choose notes with a Base.md` | 356 B | 2026-07-07 |
 | `Create a Canvas snapshot.md` | 448 B | 2026-07-07 |
 
-

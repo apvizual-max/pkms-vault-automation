@@ -25,6 +25,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`03-6-AP-ID_Prompts_and_JSON`](<03-6-AP-ID_Prompts_and_JSON/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
 
-
-
-

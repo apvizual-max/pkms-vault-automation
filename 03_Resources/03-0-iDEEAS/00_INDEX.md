@@ -34,5 +34,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `iDEEA - Setari de facut Google.md` | 1 KB | 2026-07-18 |
 | `iDEEA - To copy Gemini discussion about setting up Hermes with Google drive Google Cloud Platform..md` | 100 B | 2026-06-29 |
 
-
-

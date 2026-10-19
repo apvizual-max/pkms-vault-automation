@@ -29,5 +29,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `FORGE - BUILD GUIDE.md` | 79 KB | 2026-07-02 |
 | `FORGE - Tutorial Transcription.md` | 98 KB | 2026-07-01 |
 
-
-

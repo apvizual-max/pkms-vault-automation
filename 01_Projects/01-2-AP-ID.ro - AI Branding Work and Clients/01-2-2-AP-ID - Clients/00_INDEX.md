@@ -24,5 +24,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`Trade Mag`](<Trade Mag/00_INDEX.md>) — 2 fișiere · 4 subfoldere
 
 
-
-

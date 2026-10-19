@@ -37,5 +37,3 @@ Cele mai frecvente două extensii sunt `.ps1` (11 din 17 fișiere) și `.md` (4 
 | `verifica-schema.ps1` | 23 KB | 2026-10-19 |
 | `watch.ps1` | 12 KB | 2026-10-19 |
 
-Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 din 18 fișiere). Cel mai mare element din folder e `align-index.ps1` (46 KB)
-

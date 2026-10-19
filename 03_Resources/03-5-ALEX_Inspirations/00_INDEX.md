@@ -57,6 +57,3 @@ _( 152 fișiere — grupat după tip, pentru nu umfla documentul)_
 - `Maquette_de_Rome_(musée_de_la_civilisation_romaine,_Rome)_(5911810278).jpg` — 494 KB
 - `460276167_10161254513745967_4880406608952073466_n.jpg` — 444 KB
 
-
-
-

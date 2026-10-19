@@ -20,4 +20,3 @@ Cele mai frecvente două extensii sunt `.html` (1 din 2 fișiere) și `.md` (1 d
 | `FORGE-AI-Job-Hunting-Agent-Template.html` | 310 KB | 2026-06-25 |
 | `FORGE-AI-Job-Hunting-Agent-Template.html.md` | 310 KB | 2026-07-01 |
 
-

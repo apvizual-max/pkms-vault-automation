@@ -22,6 +22,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`02-5-SCIENCE-SOT`](<02-5-SCIENCE-SOT/00_INDEX.md>) — 2 fișiere · 0 subfoldere
 
 
-
-
-

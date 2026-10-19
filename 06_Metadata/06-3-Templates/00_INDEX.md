@@ -20,4 +20,3 @@ Cele mai frecvente două extensii sunt `.md` (1 din 2 fișiere) și `.nomedia` (
 | `.nomedia` | 0 B | 2026-08-01 |
 | `Daily Note.md` | 289 B | 2026-08-01 |
 
-

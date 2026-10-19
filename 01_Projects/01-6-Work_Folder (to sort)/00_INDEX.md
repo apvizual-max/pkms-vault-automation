@@ -32,6 +32,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 |---|---|---|
 | `START AICI.md` | 1 KB | 2026-10-08 |
 
-
-
-

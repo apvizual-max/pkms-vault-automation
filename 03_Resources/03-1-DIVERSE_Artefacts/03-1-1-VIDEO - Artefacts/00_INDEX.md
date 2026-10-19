@@ -20,4 +20,3 @@ Cele mai frecvente două extensii sunt `.md` (1 din 2 fișiere) și `.mp4` (1 di
 | `ab73bf4c-6d94-4b50-bf28-af2252e0c148.mp4` | 2 MB | 2026-06-27 |
 | `Ambiental Video - window frame setting.md` | 63 B | 2026-08-01 |
 
-

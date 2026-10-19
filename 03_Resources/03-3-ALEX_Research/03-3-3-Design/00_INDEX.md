@@ -28,4 +28,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 | `Graphic Design.md` | 2 KB | 2026-05-30 |
 | `Pipeline for creative iterations.md` | 29 KB | 2026-05-28 |
 
-

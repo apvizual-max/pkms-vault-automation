@@ -20,4 +20,3 @@ Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din 
 | `JSON Scripting - Images - AGENT Prompt.md` | 305 B | 2026-06-27 |
 | `LinkedIn Banner AP-ID - Natural Language Scripting - Image Asesment.md` | 4 KB | 2026-06-27 |
 
-

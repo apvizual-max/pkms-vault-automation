@@ -34,4 +34,3 @@ Singura extensie prezentă e `.jpg` (16 din 16 fișiere). Cel mai mare element d
 | `IMG_20220628_202018.jpg` | 4 MB | 2026-06-15 |
 | `IMG-20230910-WA0019-(1).jpg` | 901 KB | 2026-05-26 |
 
-

@@ -21,4 +21,3 @@ Singura extensie prezentă e `.md` (3 din 3 fișiere). Cel mai mare element din 
 | `LEARN AI - J-Space - We just figured out how AI actually works.md` | 25 KB | 2026-07-09 |
 | `LEARN AI - This Skill Makes You Dangerous In The AI Era.md` | 18 KB | 2026-07-09 |
 
-

@@ -34,4 +34,3 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`08-9-job_descriptions_to_apply`](<08-9-job_descriptions_to_apply/00_INDEX.md>) — 0 fișiere · 1 subfoldere
 
 
-

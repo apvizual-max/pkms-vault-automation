@@ -23,3 +23,4 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 - [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 17 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-19`](<HANDOFF-2026-10-19/00_INDEX.md>) — 3 fișiere · 0 subfoldere
 
+
