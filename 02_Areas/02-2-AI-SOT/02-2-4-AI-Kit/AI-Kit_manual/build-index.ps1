@@ -221,11 +221,11 @@ function Test-LiniaGenerata([string]$l) {
   # Diacriticele sunt scrise ca escape-uri, ca sa nu depinda de codificarea
   # in care e citit fisierul: \u0103 = a-breve, \u0219 = s-comma-below (U+0219,
   # forma in care scrie generatorul), \u021B = t-comma-below, \u00B7 = middle dot.
-  if ($l -match '^Folder gol pe \d{4}-\d{2}-\d{2}: niciun fi[\u0219\u015F]ier, niciun subfolder\.\$') { return $true }
+  if ($l -match '^Folder gol pe \d{4}-\d{2}-\d{2}: niciun fi[\u0219\u015F]ier, niciun subfolder\.$') { return $true }
   if ($l -match '^Nu are fi[\u0219\u015F]iere de con[\u021B\u0163]inut\.') { return $true }
-  if ($l -match '^Singura extensie prezent[\u0103\u0102] e ') { return $true }
-  if ($l -match '^Cele mai frecvente dou[\u0103\u0102] extensii sunt ') { return $true }
-  if ($l -match '^[^]+( \u00B7 [^]+)+\$') { return $true }
+  if ($l -match '^Singura extensie prezent[\u0103\u0102] e `') { return $true }
+  if ($l -match '^Cele mai frecvente dou[\u0103\u0102] extensii sunt `') { return $true }
+  if ($l -match '^`[^`]+`( \u00B7 `[^`]+`)+$') { return $true }
   return $false
 }
 
