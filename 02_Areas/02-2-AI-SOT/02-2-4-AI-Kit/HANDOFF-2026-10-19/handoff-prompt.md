@@ -63,7 +63,15 @@ raportul arăta câmpuri goale. Reparat, probat cu o bancă de 3 probe **cu cont
 Detalii în harta §13.
 
 
-1. **Ramurile dublate „Knights Templar" — decizia e a lui Popy.** Inventarul e complet și măsurat (157 + 466 fișiere, 14,09 GB dublare, 92 SHA256 identice / 0 diferite). **NIMIC mutat, NIMIC șters.** El sortează manual, apoi cere actualizarea indexurilor. Calea lui e în `handoff-harta-implementarii.md` §11.7.
+1. **Ramurile dublate „Knights Templar" — decizia e a lui Popy.** Inventarul e complet și măsurat (157 + 466 fișiere, 14,09 GB dublare, 92 SHA256 identice / 0 diferite). **NIMIC mutat, NIMIC șters.** El sortează manual, apoi cere actualizarea indexurilor. Calea lui e în `handoff-harta-implementarii.md` §11.7. **Căile exacte, de deschis direct:**
+
+   - **A** (raftul de clienți): `G:\My Drive\GDrive-Second_Brain_PKMS\01_Projects\01-2-AP-ID.ro - AI Branding Work and Clients\01-2-2-AP-ID - Clients\Knights Templar`
+     → 157 fișiere · 25,65 GB · 42 fișiere doar aici (11,56 GB)
+   - **B** (raftul de lucru): `G:\My Drive\GDrive-Second_Brain_PKMS\01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar`
+     → 466 fișiere · 44,57 GB · 351 fișiere doar aici (30,48 GB)
+
+   Inventarul complet, cu fiecare fișier și SHA256 pe căile comune: `D:\PKMS-tooling\handoff\knights-inventar-2026-10-20.txt` (61.121 B, 491 de rânduri).
+   **Regula pentru sesiunea nouă: deschis, măsurat, și atunci nimic.** Popy sortează manual; până la decizia lui, zero mutări, zero ștergeri.
 2. **Cauza degradărilor DriveFS (fostul „108").** Logurile **nu** sunt curate: milioane de `0x91` (= 145, „The directory is not empty"), toate scrise pe 19–20.10, cu precursor măsurat („slow content cache open taking 39.77s"). **De ce s-a blocat local store-ul: încă necunoscut.** Nu inventa cauza.
 3. **Asimetria `align-index` ↔ `build-index`** (newline final în plus la L853 + blocuri derivate vechi). Nepatchată **prin decizie**: convergența contractuală e intactă (0 NEALINIAT), iar `PKMS-Aliniere` rulează zilnic. Dacă o patching, probă izolată pe `D:` mai întâi.
 4. **Raportul zilnic — REPARAT 20.10.2026, nu mai e punct deschis.** `raport-ultima-rulare.txt` era înghețat la 18.10.2026: cauza era dublă — `watch.ps1` scria raportul **doar la final**, iar `PKMS-Watch` avea `ExecutionTimeLimit PT1H`, mai scurtă decât o rulare pe DriveFS, deci taskul era oprit înainte să scrie. Repar: raportul se rescrie după fiecare treaptă (verdict `IN CURS - N/3` cât timp rulează), limită `PT6H`, bancă de test 15/15 cu proba decisivă „oprire la mijloc → raport proaspăt”. Detalii în harta §12.
