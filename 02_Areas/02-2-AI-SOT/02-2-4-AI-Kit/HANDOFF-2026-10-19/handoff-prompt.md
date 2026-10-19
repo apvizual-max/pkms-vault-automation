@@ -53,6 +53,15 @@ AUTOMAT. PKMS-Aliniere · PKMS-Watch · PKMS-GitAutoCommit · PKMS-DriveFS-AutoR
 ```
 
 ## 4. Punctele deschise, în ordine de prioritate
+**Starea zilnică, după reparul final (20.10.2026, ~02:05).** `watch.ps1` a fost reparat
+**de două ori** în aceeași sesiune: întâi raportul înghețat (punctul 4 de mai jos), apoi
+o **regresie a mea** — obiectul rezultat al fiecărei trepte a pierduse cele patru
+proprietăți `Erori/Atentii/Nota/Detalii`, deci verdictul era **orb** la numărul de erori
+(o treaptă cu 7 erori și cod de ieșire 0 ar fi raportat „Erori deocamdata: 0"), iar
+raportul arăta câmpuri goale. Reparat, probat cu o bancă de 3 probe **cu contra-probă**
+(defectul se reproduce cu codul vechi, deci proba poate eșua) și probat pe vaultul real.
+Detalii în harta §13.
+
 
 1. **Ramurile dublate „Knights Templar" — decizia e a lui Popy.** Inventarul e complet și măsurat (157 + 466 fișiere, 14,09 GB dublare, 92 SHA256 identice / 0 diferite). **NIMIC mutat, NIMIC șters.** El sortează manual, apoi cere actualizarea indexurilor. Calea lui e în `handoff-harta-implementarii.md` §11.7.
 2. **Cauza degradărilor DriveFS (fostul „108").** Logurile **nu** sunt curate: milioane de `0x91` (= 145, „The directory is not empty"), toate scrise pe 19–20.10, cu precursor măsurat („slow content cache open taking 39.77s"). **De ce s-a blocat local store-ul: încă necunoscut.** Nu inventa cauza.

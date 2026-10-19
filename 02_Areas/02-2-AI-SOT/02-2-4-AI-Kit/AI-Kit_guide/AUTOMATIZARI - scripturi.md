@@ -334,7 +334,13 @@ e proaspăt chiar dacă rularea e oprită la mijloc; verdictul are atunci prefix
 `0` = totul bine. `1` = există o abatere. Verdictul e **o singură linie**:
 `OK` sau `ATENȚIE: <ce anume>`.
 
-Un raport care spune „merge bine" fără un număr lângă el nu e raport, e dispoziție.
+
+**Măsurat 2026-10-20: verdictul trebuie să vadă NUMERUL de erori, nu doar codul de ieșire.**
+O regresie a mea (obiectul rezultat al treptelor pierduse `Erori/Atentii/Nota/Detalii`)
+a făcut ca o treaptă cu 7 erori și cod de ieșire 0 să raporteze „Erori deocamdata: 0".
+Reparat, și probat cu o bancă de 3 probe cu contra-probă: câmpurile goale ale raportului
+sunt un semn de alarmă, nu o simplă lipsă de rând.
+
 
 ### Când rulează singur
 

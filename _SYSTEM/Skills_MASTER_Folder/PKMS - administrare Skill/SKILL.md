@@ -232,7 +232,48 @@ măsurătorii, măsurătoarea nu converge.* Exclude cauza, nu doar simptomul.
 `git-autocommit-ignorat.txt` și `git-autocommit-registru.txt`. Era un **typo al meu** —
 numele real are `autocommit`, două litere „m". Măsurătoarea la nivel de cod de caracter a
 infirmat ștergerea, nealinierea cache-ului DriveFS și caracterele Unicode lookalike.
-`git status` curat + `git diff --cached HEAD` gol = nimic pierdut.
+
+### Incidentul al doilea, tot din 20.10.2026 — „verdictul orb"
+
+**Aceasta a fost o regresie a mea, introdusă cu o oră mai devreme, în același segment.**
+La rescrierea lui `watch.ps1` (pentru scrierea raportului după fiecare treaptă), obiectul
+rezultat al fiecărei trepte a rămas cu trei proprietăți în loc de șapte:
+
+```powershell
+# forma REGRESATĂ (L285-287)
+$rez.Add([pscustomobject]@{ Nume = $t.Nume; Durata = ...; Cod = $cod })
+# forma CORECTĂ (pre-fix, L133-136, păstrată în backup)
+$rez.Add([pscustomobject]@{ Nume = ...; Durata = ...; Cod = $cod
+    Erori = $erori; Atentii = $atentii; Nota = $nota; Detalii = $detalii })
+```
+
+Consecința, măsurată pe raportul scris la 01:34:55: `Erori` era `$null`, deci
+`$r.Erori -gt 0` era **fals mereu**. Așadar:
+- verdictul era **orb** la numărul de erori — o treaptă cu 7 erori și cod de ieșire 0
+  ar fi raportat „Erori deocamdata: 0", adică o afirmație **nemasurată**;
+- randurile `erori:` și `attentioni:` rămăneau **goale** la fiecare treaptă;
+- rândul `masura:` (cifra vie a health-check) nu apărea deloc;
+- secțiunea „ATENTII care cer ochiul omului" nu se umplea niciodată.
+
+**Repar:** cele patru proprietăți puse înapoi. `watch.ps1` 14.011 → 14.533 B, parse 0,
+BOM UTF-8 + LF păstrate.
+
+**Proba — bancă de 3 probe, cu contra-probă (3/3):**
+
+| Probe | Ce se impune | Ce se cere | Rezultat |
+|---|---|---|---|
+| 1 — cale fericită | totul 0 | raportul arată NUMERE, verdict `OK`, exit 0 | TRECUT |
+| 2 — **decisivă** | lint: 3 erori + 1 atenție, **cod de ieșire 0** | raportul arată 3 și 1, verdict `ATENȚIE:`, exit 1 | TRECUT |
+| 3 — **contra-probă** | același lint, cu watch.ps1-**ul regresat** | câmpurile goale și verdict `OK` — **defectul se reproduce** | TRECUT |
+
+Proba 3 e cea care contează: ea arată că proba 2 **poate eșua**. Fără ea, „3/3" ar fi
+fost o cifră fără putere de a dezamăgi.
+
+**Lecția transferabilă:** *un automatism care raportează „0" fără să fi măsurat nimic
+e mai periculos decât unul care tace.* Câmpul gol arată repede; câmpul plin cu o
+valoare nereală minte. Deci: **un verdict care nu poate vedea un număr nu e verdict.**
+Verificarea asta intră în §11, la „cum verifici că ai terminat".
+
 
 ## 9. Semne de alarmă — când ceva e rupt
 
@@ -244,7 +285,8 @@ infirmat ștergerea, nealinierea cache-ului DriveFS și caracterele Unicode look
 | `lint` dă erori de encoding | BOM lipsă sau CRLF stricat | verifică primii 3 octeți: `EF BB BF` = BOM |
 | `health-check` raportează `diferenta 0` fals | măsurătoarea nu e stabilă | nu raporta cifra până nu e stabilă |
 | `git status` arată fișiere care „nu există" | typo în nume | citește numele **de pe disc**, nu din memorie |
-| raportul zilnic are `mtime` vechi | automatizarea e oprită înainte să scrie (vezi §5) | citește `mtime`-ul lui `raport-ultima-rulare.txt`; mai vechi de o zi → rulează taskul și urmărește `LastTaskResult` |
+| raportul zilnic are câmpuri **goale** (`erori:`, `attentioni:`) | verdictul nu mai vede numărul de erori — regresie în obiectul rezultat | citește `watch.ps1`, obiectul `$rez.Add([pscustomobject]@{...})`: are `Erori`/`Atentii`/`Nota`/`Detalii`? |
+
 
 ## 10. Save point — repo-ul GitHub ca reconstrucție
 
