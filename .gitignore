@@ -98,6 +98,29 @@
 !/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/
 !/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/**
 
+# ── 3-bis. SKILLURILE PKMS, deschise la 2026-10-20, masurat. ──
+#
+#  CE CEREA: repo-ul trebuie sa fie SAVE POINT — sa permita reconstruirea
+#  SISTEMULUI, nu doar pastrarea lui. Skillurile sunt programarea sistemului:
+#  fara ele, un AI nou are motorul si contractul, dar nu stie CUM se administreaza
+#  vaultul, si nici nu poate reface automatizarile.
+#
+#  MECANICA, masurata cu `git check-ignore -v` (nu presupusa):
+#  deschiderea de DIRECTOR (`!/_SYSTEM/Skills_MASTER_Folder/`) NU ajunge la
+#  fisierele din interior. Proba: fisierele noi au fost raportate ca ignorate
+#  de regula 51 (`**/*`), desi directorul era deschis de la linia 95. Git nu
+#  coboara intr-un director exclus, iar `**/*` exclude si directoarele.
+#  Ce functioneaza e negatia la nivel de FISIER (`!/<cale>/**`) — acelasi tipar
+#  ca regulile 96-99 de mai sus, care de aceea functioneaza.
+#
+#  ATENTIE — REGULA 3b: deschiderea unui director redeschide INTREGUL subarbore
+#  al lui. Cele doua randuri de mai jos redeschid doar cele doua foldere noi;
+#  inchiderile 3c si 3d-bis (de mai jos) raman valabile pentru caile lor. ──
+!/_SYSTEM/Skills_MASTER_Folder/PKMS - administrare Skill/
+!/_SYSTEM/Skills_MASTER_Folder/PKMS - administrare Skill/**
+!/_SYSTEM/Skills_MASTER_Folder/PKMS - indexare Skill/
+!/_SYSTEM/Skills_MASTER_Folder/PKMS - indexare Skill/**
+
 # ── 3b. ATENTIE LA ORDIN (masurat 2026-10-12): deschiderea unui director
 #       redeschide INTREGUL subarbore al lui. Deschiderea lui /_SYSTEM/Skills/
 #       a readus 9.740 de fisiere din Skills_Archive pana cand copiii nedoriti
@@ -137,6 +160,10 @@
 /02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/raport-autocomit.log
 /02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/raport-aliniere.log
 /02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/arhiva- raport aliniere.log
+# 2026-10-20: al patrulea jurnal viu — scris de wrapperul taskurilor. Fara el,
+# se recrea exact bucla reparata in §18.7: jurnalul intra in cifre, indexul
+# devine nealiniat, alinierea scrie indexul, jurnalul creste din nou.
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/raport-wrapper-task.log
 
 # ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
 #       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu

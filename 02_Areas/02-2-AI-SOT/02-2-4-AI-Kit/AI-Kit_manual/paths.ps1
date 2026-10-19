@@ -227,8 +227,9 @@ function Test-PkmsLiveLog([string]$Nume) {
   # lista de excluziune face poarta sa creada la locul gresit.
   return [bool]($Nume -in @(
     'raport-autocomit.log',        # AI-Kit_manual: creste la fiecare comit
-    'raport-aliniere.log',         # radacina vaultului: creste la fiecare aliniere
-    'arhiva- raport aliniere.log'  # radacina vaultului: se adauga, nu se suprascrie
+    'raport-aliniere.log',         # AI-Kit_guide: creste la fiecare aliniere
+    'arhiva- raport aliniere.log', # AI-Kit_guide: se adauga, nu se suprascrie
+    'raport-wrapper-task.log'      # AI-Kit_manual: creste la fiecare rulare de task
   ))
 }
 
