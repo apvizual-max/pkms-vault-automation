@@ -49,6 +49,3 @@ _( 534 fișiere — grupat după tip, pentru nu umfla documentul)_
 - `estp (1).png` — 160 KB
 - `estp.png` — 160 KB
 
-
-- **(fără extensie)** — 1 fișiere · 1 MB
-
