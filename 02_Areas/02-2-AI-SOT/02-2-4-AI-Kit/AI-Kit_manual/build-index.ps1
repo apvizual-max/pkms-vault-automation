@@ -240,7 +240,7 @@ Get-ChildItem -LiteralPath $Vault -Directory -Recurse -Force -EA SilentlyContinu
   # 00_INDEX.md este REGISTRUL, nu continutul. Daca intra in numaratoare, randul de
   # stare ar depinde de marimea indexului scris chiar in el si nu s-ar mai putea ajunge
   # niciodata la CONFORM. Unica definitie a cifrelor e $real — o foloseste TOT scriptul.
-  $real   = @($files | Where-Object { $_.Name -ne '00_INDEX.md' })
+  $real   = @($files | Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) })
   $bytes  = [int64](($real | Measure-Object Length -Sum).Sum)
   $rel    = $dir.FullName.Substring($Vault.Length+1)
 
@@ -283,7 +283,7 @@ Get-ChildItem -LiteralPath $Vault -Directory -Recurse -Force -EA SilentlyContinu
   # --- masuratori pentru blocurile §16 ---
   # 00_INDEX.md e indexul pe care il scriem chiar acum. Daca intra in masuratoare,
   # fiecare index s-ar descrie pe sine, iar 'cel mai mare fisier' ar fi mereu el.
-  $real = @($files | Where-Object { $_.Name -ne '00_INDEX.md' })
+  $real = @($files | Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) })
   $realBytes = [int64](($real | Measure-Object Length -Sum).Sum)
 
   # cele doua extensii care domina dupa numar. ordinea e stabilata explicit
@@ -310,7 +310,7 @@ Get-ChildItem -LiteralPath $Vault -Directory -Recurse -Force -EA SilentlyContinu
     # numara. Fara asta, parintele spune "1 fisier" despre un copil gol, si cele doua
     # generatoare se contrazic pe fiecare folder cu copii.
     $sf    = @(Get-ChildItem -LiteralPath $s.FullName -File -Force -EA SilentlyContinue |
-                 Where-Object { $_.Name -ne '00_INDEX.md' })
+                 Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) })
     $sDirs = @(Get-ChildItem -LiteralPath $s.FullName -Directory -Force -EA SilentlyContinue |
                  Where-Object { -not (Is-Skipped $_.FullName) })
     $subInfos.Add([pscustomobject]@{

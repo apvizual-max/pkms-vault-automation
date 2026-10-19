@@ -267,14 +267,19 @@ try {
     $files = @(Get-ChildItem -LiteralPath $dir.FullName -File -Force -EA SilentlyContinue)
     $subs  = @(Get-ChildItem -LiteralPath $dir.FullName -Directory -Force -EA SilentlyContinue |
                Where-Object { -not (Test-Excluded $_.FullName) -and -not (Test-UnderBackup $_.FullName) })
-    $bytes = [int64](($files | Measure-Object Length -Sum).Sum)
     $rel   = $dir.FullName.Substring($Vault.Length + 1)
 
     # 00_INDEX.md e indexul pe care il scriem chiar acum. Daca intra in
     # masuratoare a blocurilor, fiecare index s-ar descrie pe sine, iar
-    # 'cel mai mare fisier' ar fi mereu el.
-    $real = @($files | Where-Object { $_.Name -ne '00_INDEX.md' })
+    # 'cel mai mare fisier' ar fi mereu el. La fel, jurnalele vii ale
+    # motorului (Test-PkmsLiveLog): se schimba in timpul rularii, deci nu
+    # pot intra in cifre — altfel indexul nu ajunge niciodata CONFORM.
+    $real = @($files | Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) })
     $realBytes = [int64](($real | Measure-Object Length -Sum).Sum)
+    # $bytes masoara ACELASI lucru ca in build-index.ps1: doar fisierele de
+    # continut. O masuratoare care masoara altceva in cele doua generatoare
+    # inseamna ca ele nu se pot verifica una pe cealalta.
+    $bytes = $realBytes
 
     $exts = @()
     foreach ($g in ($real | Group-Object Extension | Sort-Object @{e={$_.Count};d=$true}, @{e={$_.Name};d=$false})) {
@@ -295,7 +300,7 @@ try {
       # masuratoarea s-ar schimba la fiecare rulare si indexul nu-ar ajunge
       # niciodata CONFORM.
       $sf    = @(Get-ChildItem -LiteralPath $s.FullName -File -Force -EA SilentlyContinue |
-                 Where-Object { $_.Name -ne '00_INDEX.md' })
+                 Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) })
       $sDirs = @(Get-ChildItem -LiteralPath $s.FullName -Directory -Force -EA SilentlyContinue |
                  Where-Object { -not (Test-Excluded $_.FullName) })
       $subInfos.Add([pscustomobject]@{

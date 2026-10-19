@@ -150,7 +150,7 @@ function Test-Index {
     $nrSub = @(Get-ChildItem -LiteralPath $Dir -Directory -Force -EA SilentlyContinue |
                Where-Object { -not (Test-Excluded -Rel (Relativ $_.FullName $Radacina)) }).Count
     $nrFis = @(Get-ChildItem -LiteralPath $Dir -File -Force -EA SilentlyContinue |
-               Where-Object { $_.Name -ne '00_INDEX.md' }).Count
+               Where-Object { $_.Name -ne '00_INDEX.md' -and -not (Test-PkmsLiveLog $_.Name) }).Count
   }
 
   # --- cele patru blocuri ---

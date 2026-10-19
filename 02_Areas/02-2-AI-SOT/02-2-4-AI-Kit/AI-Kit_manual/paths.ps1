@@ -206,6 +206,32 @@ function Get-PkmsExclusions {
   )
 }
 
+# Jurnalele vii ale motorului NU sunt continut — masurat 2026-10-19.
+# raport-autocomit.log creste la fiecare comit (Add-Content in
+# git-autocommit.ps1:133), iar indexul folderului AI-Kit_manual il numara:
+# marimea lui intra in randul de stare, in suma de octeti si in tabelul
+# "## Fisier(e)". Rezultatul masurat: indexul era NEALINIAT la fiecare 5
+# minute, pentru totdeauna, si nicio rulare nu-l putea duce la CONFORM —
+# pentru ca masuratoarea se schimba intre doua comparatii. Mai rau: alinierea
+# scria indexul, autocomitul comita, jurnalul crestea, indexul era din nou
+# nealiniat. Bucla nu se oprea niciodata.
+#
+# Regula e aceeasi ca pentru 00_INDEX.md (contractul §18.7): un fisier scris de
+# automat, in timpul automatului, nu se numara. Lista e centralizata AICI, ca
+# cele doua generatoare sa masoare identic (§18.9) — altfel ele se contrazic,
+# si unul rescrie indexurile celuilalt la nesfarsit.
+function Test-PkmsLiveLog([string]$Nume) {
+  if (-not $Nume) { return $false }
+  # Numele sunt scrise EXACT cum sunt pe disc. De aici vine fiecare corectie:
+  # raport-autocommit.log (doua 'm'), nu raport-autocomit.log. Un typo intr-o
+  # lista de excluziune face poarta sa creada la locul gresit.
+  return [bool]($Nume -in @(
+    'raport-autocomit.log',        # AI-Kit_manual: creste la fiecare comit
+    'raport-aliniere.log',         # radacina vaultului: creste la fiecare aliniere
+    'arhiva- raport aliniere.log'  # radacina vaultului: se adauga, nu se suprascrie
+  ))
+}
+
 # ---------------------------------------------------------------------------
 # Treapta 1 a lantului. Rulat DIRECT (nu prin dot-sourcing), trebuie sa spuna
 # ce a gasit si sa poata da rosu — altfel e o treapta goala intr-un lant care se

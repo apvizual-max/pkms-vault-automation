@@ -499,6 +499,21 @@ acel copil în rândul lui de stare: fișiere de conținut, fără `00_INDEX.md`
 subfolderele indexabile, fără zonele interzise. Altfel părintele spune „1
 fișier" despre un copil care nu are niciunul.
 
+**Jurnalele motorului nu sunt conținut.** Un fișier scris de automat *în timpul
+automatului* — `raport-autocomit.log`, `raport-aliniere.log`,
+`arhiva- raport aliniere.log` — își schimbă dimensiunea fără ca un om să fi
+atins vreun folder. Măsurat 2026-10-19: `raport-autocomit.log` crește la
+fiecare commit, deci indexul lui `AI-Kit_manual` era `NEALINIAT` la fiecare
+5 minute, pentru totdeauna, și nicio rulare nu-l putea duce la `CONFORM` — mai
+rău, alinierea scria indexul, autocomitul comita, jurnalul creștea, indexul
+era din nou nealiniat. Bucla nu se oprea niciodată.
+
+Prin urmare, în orice index, un jurnal al motorului **nu intră** în numărătoare:
+nu în `**N fișiere · X · M subfoldere**`, nu în `X`, nu în tabelul din
+`## Fișiere`, nu în „Cele mai mari 20". Lista lor stă într-un singur loc
+(`paths.ps1` → `Test-PkmsLiveLog`), ca ambele generatoare să măsoare identic
+(§18.9) — altfel unul rescrie indexurile celuilalt la nesfârșit.
+
 ### 18.8 Un folder gol are o singură descriere
 
 `LIPSA` și `INCOMPLET` se hotărâsc după **structură** — îi lipsește un bloc. Nu
