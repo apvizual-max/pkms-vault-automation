@@ -18,10 +18,10 @@ Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
 | `arhiva- raport aliniere.log` | 736 KB | 2026-10-09 |
-| `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-08 |
+| `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-19 |
 | `AUTOMATIZARI - scripturi.md` | 38 KB | 2026-10-19 |
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
-| `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-12 |
+| `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-19 |
 | `LOGICA - cum se foloseste fiecare baza.md` | 8 KB | 2026-10-19 |
 | `ONBOARDING AI - cum preia un AI vaultul.md` | 18 KB | 2026-10-19 |
 | `PROCESE - flux de la captură la utilizare.md` | 6 KB | 2026-10-19 |
