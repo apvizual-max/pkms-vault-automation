@@ -7,7 +7,7 @@
 
 ## Ce e aici
 
-Nu are fișiere de conținut. 2 rafturi copil: `AI-Kit_guide`, `AI-Kit_manual`; cel mai mare element din folder e `AI-Kit_guide` (925 KB)
+Nu are fișiere de conținut. 2 rafturi copil: `AI-Kit_guide`, `AI-Kit_manual`; cel mai mare element din folder e `AI-Kit_guide` (928 KB)
 
 ## Cuvinte cheie
 
