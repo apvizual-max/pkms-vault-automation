@@ -47,7 +47,7 @@ nu la folderul `AI-Kit` în care se află acest fișier.
 | 5 | `WORKFLOW - ce faci concret.md` | ce faci într-o zi |
 | 6 | `AUTOMATIZARI - scripturi.md` | ce rulezi și în ce ordine |
 | 7 | `INDEX CENTRAL.md` | tot voltul, pe un ecran |
-| 8 | `10_Work\START AICI.md` | rafturile de lucru |
+| 8 | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md` | rafturile de lucru |
 
 ### Despre indexuri — și de ce nu ai un număr, ci o regulă
 
@@ -261,13 +261,13 @@ rulând `.\health-check.ps1`. Cifra vie e o obligație: **măsoară, nu copia.**
 | Fișiere de lucru | **50.970** — tot ce e în volt, **mai puțin** `.obsidian` și `.git` |
 | Fișiere pe disc, cu tot | **52.239** — dacă numărăm și folderele programelor |
 | Backup | alături voltului, pe `D:` — **imutabil**. Îl descoperă `paths.ps1`, nu-l scrie |
-| Nivel de lucru | `10_Work` — 8 rafturi, aici intri |
+| Nivel de lucru | `01_Projects\01-6-Work_Folder (to sort)` — 8 rafturi, aici intri |
 | Bază | `00`–`06` — fondul, nu se rearanjează |
 | Mașină | `_SYSTEM`, `_ARCHIVE`, `_QUARANTINE` — fără numerotare |
 | Nu se atinge | folderele cu punct, `Site\01_Theme_Salient`, media WordPress |
 
-**Peste trei sferturi din tot voltul sunt în `10_Work\Clienti\Knights Tempar`** (44,57 GB).
-**În `10_Work\Site` sunt 29.748 de fișiere**, dintre care **27.881 cu extensie de imagine**
+**Peste trei sferturi din tot voltul sunt în `01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar`** (44,57 GB).
+**În `01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site` sunt 29.748 de fișiere**, dintre care **27.881 cu extensie de imagine**
 (`.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.svg`), măsurate pe **8 octombrie 2026**.
 
 **„din 2010" nu mai e o cifră — era una, și era greșită.** Din cele 27.881 de imagini,

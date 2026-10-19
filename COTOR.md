@@ -9,7 +9,7 @@ Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
 
 > **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici voltul, nici backupul. Ce a rămas pe
 > `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
-> **lucrezi** a fost `10_Work` și acum e **`01_Projects`** — același volum, redenumit;
+> **lucrezi** a fost `01_Projects\01-6-Work_Folder (to sort)` și acum e **`01_Projects`** — același volum, redenumit;
 > **backupul** a fost lângă volt pe `D:` și acum e pe **`H:`**.
 
 ---
@@ -36,7 +36,7 @@ G:\My Drive\GDrive-Second_Brain_PKMS\
 │
 ├── 00 … 06          BAZA — fondul. Nu se rearanjează. Aici stă ce nu e treabă curentă.
 │
-├── 01_Projects      LUCRU — aici intri. A fost `10_Work` pe D:. 6 rafturi.
+├── 01_Projects      LUCRU — aici intri. A fost `01_Projects\01-6-Work_Folder (to sort)` pe D:. 6 rafturi.
 │
 ├── Clippings        TAIE — e locul în care programele trimit ce taie, iar Obsidian
 │                   e programat să-l caute la rădăcină. De aceea **NU se mută**
@@ -111,7 +111,7 @@ Măsurate pe **19 octombrie 2026**:
 | `06_Metadata` | 43 | 0,00 | ținte, șabloane, agenți |
 | `Clippings` | 457 | 0,37 | articole tăiate din web |
 
-> **`01_Projects` a absorbit `10_Work` și a crescut.** Pe 8 octombrie `10_Work` avea
+> **`01_Projects` a absorbit `01_Projects\01-6-Work_Folder (to sort)` și a crescut.** Pe 8 octombrie `01_Projects\01-6-Work_Folder (to sort)` avea
 > 32.998 de fișiere; azi `01_Projects` are 33.069. Diferența e exact ce a mai venit.
 > Volumul a sărit de la 59,28 GB la **86,26 GB** — deci **+26,98 GB**, în principal
 > `AP-ID.ro` (31,58 GB) și `Work_Folder` (47,78 GB).

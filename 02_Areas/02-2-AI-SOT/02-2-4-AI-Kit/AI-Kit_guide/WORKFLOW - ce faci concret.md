@@ -7,10 +7,10 @@ Nu teorie. Ce apeși, dimineață.
 ## Dimineața — 2 minute
 
 ```
-1. Deschide voltul. Apeși 10_Work\START AICI.md
+1. Deschide voltul. Apeși 02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md
 2. Look la raftul In Progress. Ce e acolo e ce lucrezi acum.
-3. Nimic? → 10_Work\Joburi dacă e săptămâna de job-uri
-           → 10_Work\Clienti dacă ai o livrare
+3. Nimic? → 01_Projects\01-6-Work_Folder (to sort)\01-6-5-Joburi dacă e săptămâna de job-uri
+           → 01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti dacă ai o livrare
            → altceva nu e treabă de azi
 ```
 
@@ -28,7 +28,7 @@ Nu teorie. Ce apeși, dimineață.
 → 00_Inbox\00.2_Daily_Raw_Notes  (notița zilei)
 ```
 
-Când ai timp: decizi dacă e în vreun raft din `10_Work`, sau stă în Inbox până găsești locul.
+Când ai timp: decizi dacă e în vreun raft din `01_Projects\01-6-Work_Folder (to sort)`, sau stă în Inbox până găsești locul.
 **Inbox gol e starea bună.**
 
 ---
@@ -37,11 +37,11 @@ Când ai timp: decizi dacă e în vreun raft din `10_Work`, sau stă în Inbox p
 
 ```
 1. Se creează folderul LA BAZĂ, cu numele lui corect.
-2. Când începe efectiv lucrul la el  →  urcă în 10_Work\raftul potrivit
+2. Când începe efectiv lucrul la el  →  urcă în 01_Projects\01-6-Work_Folder (to sort)\raftul potrivit
 3. Când se termină                  →  coboară înapoi la bază
 ```
 
-**De ce contează:** dacă `10_Work` are 30 de rafturi, nu mai e strat de lucru, e altă mizerie.
+**De ce contează:** dacă `01_Projects\01-6-Work_Folder (to sort)` are 30 de rafturi, nu mai e strat de lucru, e altă mizerie.
 Rafturile se umplu și se goleesc. Baza e cea care ține.
 
 ---
@@ -50,7 +50,7 @@ Rafturile se umplu și se goleesc. Baza e cea care ține.
 
 ```
 brief primit → 02_Areas\...\AP-ID - Clients\<Client>\   (creezi la bază)
-            → când livrezi: urcă în 10_Work\Clienti\
+            → când livrezi: urcă în 01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\
             → când se încheie: coboară
 ```
 
@@ -59,7 +59,7 @@ brief primit → 02_Areas\...\AP-ID - Clients\<Client>\   (creezi la bază)
 ## Când aplici la un job
 
 ```
-10_Work\Joburi\01_1-Alex - JOBS\CV AUTOMATION PROCESS\
+01_Projects\01-6-Work_Folder (to sort)\01-6-5-Joburi\01_1-Alex - JOBS\CV AUTOMATION PROCESS\
     _job_descriptions_to_apply\
         JOB Applications\
             BACH_1_LinkedIn\
@@ -99,7 +99,7 @@ brief primit → 02_Areas\...\AP-ID - Clients\<Client>\   (creezi la bază)
 
 ```
 00_Inbox gol?           → bine, ai procesat tot
-10_Work\In Progress gol → bine, nu ai nimic neterminat
+01_Projects\01-6-Work_Folder (to sort)\01-6-4-In Progress gol → bine, nu ai nimic neterminat
 ```
 
 Dacă vreuna nu e goală, **nu e un eșec.** E o listă de mâine.

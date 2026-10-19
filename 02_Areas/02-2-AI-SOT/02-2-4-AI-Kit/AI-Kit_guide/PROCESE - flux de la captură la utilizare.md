@@ -15,7 +15,7 @@ articol de pe web ──┼──►  00_Inbox\00.X  ──►  TU DECIZI
 clip de pe Gmail ───┤                                    │
 dintr-un NotebookLM ┘                                    │
                                                           ↓
-                                    mută în raftul potrivit din 10_Work
+                                    mută în raftul potrivit din 01_Projects\01-6-Work_Folder (to sort)
                                        Clienti · Joburi · Site · Casa
                                                           ↓
                                           lucrezi ──► termină ──► COBÓRÂ îNAPOI în bază
@@ -60,13 +60,13 @@ brief sau comandă
     ↓
 02_Areas\...\AP-ID - Clients\   (baza)
     ↓  urcă în Work când devine activ
-10_Work\Clienti\
+01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\
     ├── Knights Tempar\  → Ordinul Sfantului Bernard (284 fiș)
     │                   → Ordinul Dragonilor – Juramant Cavaler (104 fiș)
     └── raft retras\    → clienți, brief-uri, artwork (client închis)
 ```
 
-**Regulă:** proiectul **urcă** în `10_Work` când începe, **coboară** în bază când se închide.
+**Regulă:** proiectul **urcă** în `01_Projects\01-6-Work_Folder (to sort)` când începe, **coboară** în bază când se închide.
 `Clienti` nu e arhivă. Dacă plănești să nu-l vezi 2 ani, coboară-l.
 
 ---
@@ -74,8 +74,8 @@ brief sau comandă
 ## PROCESUL 4 — Website
 
 ```
-fișier de editat (salient-child)  ──►  10_Work\Site\01_Theme_Salient\
-media încărcate în WordPress     ──►  10_Work\Site\02_Media_Uploads\ (27.689)
+fișier de editat (salient-child)  ──►  01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site\01_Theme_Salient\
+media încărcate în WordPress     ──►  01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site\02_Media_Uploads\ (27.689)
 ```
 
 Era împărțit în trei locuri înainte. Acum e într-un singur raft.

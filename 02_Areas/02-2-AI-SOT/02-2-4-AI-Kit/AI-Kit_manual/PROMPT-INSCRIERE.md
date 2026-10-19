@@ -47,7 +47,7 @@ La început:
    - dacă backupul e neatins
    - dacă linterul a găsit ceva: spune separat **erori** (blochează) de
      **atenționări** (se citesc și se raportează, dar nu blochează)
-   - unde lucrezi: 10_Work, cu ce rafturi
+   - unde lucrezi: 01_Projects\01-6-Work_Folder (to sort), cu ce rafturi
    - ce nu ai înțeles
 
 5. Faci un PLAN pe care îl scrii undeva unde poate fi citit înapoi
@@ -63,7 +63,7 @@ REGULI, pe scurt:
 - Nu ceri voie. Dacă ceva e neclar, DECIDI și scri motivul în _QUARANTINE.
   Doar te oprești dacă: (a) ai nevoie de ceva ce numai eu îți pot da — o parolă, un cod,
   o plată; (b) nu mai poți trece pe plan; (c) repeți același lucru și nu iese nimic.
-- Nu schimbi numele folderului de lucru. Este 10_Work.
+- Nu schimbi numele folderului de lucru. Este 01_Projects\01-6-Work_Folder (to sort).
 - Măsuri înainte și după. Dacă după măsurare dosarul arată la fel, planul e greșit.
 - Bifezi fiecare pas când îl termini și continui. Nu te oprești la jumătate.
 

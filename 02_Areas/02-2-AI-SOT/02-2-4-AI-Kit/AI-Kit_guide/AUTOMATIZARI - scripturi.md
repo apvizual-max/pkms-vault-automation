@@ -97,7 +97,7 @@ Verifică:
 - backupul există, e neatins, și e în rădăcina lui `D:` (nu în interiorul voltului)
 - `_SYSTEM` / `_ARCHIVE` / `_QUARANTINE` n-au numerotare
 - cuvântul interzis `LUCURARE` nu apare în **nume** (nu și în conținut)
-- stratul se numește `10_Work`
+- stratul se numește `01_Projects\01-6-Work_Folder (to sort)`
 - fiecare folder de conținut are `00_INDEX.md`
 - documentația din rădăcină există
 - **niciun script și niciun document nu scrie calea de backup tare**

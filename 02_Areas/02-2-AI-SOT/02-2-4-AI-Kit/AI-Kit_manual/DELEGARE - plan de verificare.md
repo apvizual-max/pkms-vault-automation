@@ -23,10 +23,10 @@ Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.
 
 Întreabă la care trebuie răspuns **da / nu**, cu dovezi:
 
-1. Bazele `00`–`06` sunt 7 la rădăcină și **nu au fost renumerotate**. `10_Work` e raft,
+1. Bazele `00`–`06` sunt 7 la rădăcină și **nu au fost renumerotate**. `01_Projects\01-6-Work_Folder (to sort)` e raft,
    nu bază. Verifică **explicit** că fiecare număr 00…06 apare o singură dată ca prim
    segment la rădăcină.
-2. `10_Work` există la rădăcină și are exact cele 8 rafturi: `Joburi`, `In Progress`, `Clienti`,
+2. `01_Projects\01-6-Work_Folder (to sort)` există la rădăcină și are exact cele 8 rafturi: `Joburi`, `In Progress`, `Clienti`,
    `Sisteme AI`, `Site`, `Personaj Sentinel`, `Documentatie AI`, `Casa`.
 3. Cele 3 rafturi ale mașinii — `_SYSTEM`, `_ARCHIVE`, `_QUARANTINE` — **nu** încep cu cifră.
    La fel `AI-Kit` și `Canvas Bases`.
@@ -38,7 +38,7 @@ Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.
 6. `Canvas Bases` este încă la rădăcină.
 7. Backup-ul există la `D:\Alex_Knowlege_Vault - Backup - 10-08-2026`, este **în afara** vault-ului
    și cel mai recent fișier din el are data `2026-10-07 15:12:25` (dovadă că nu a fost atins).
-8. Niciun folder nou numerotat nu a apărut la rădăcină după `10_Work` (deci nu s-a numerotat
+8. Niciun folder nou numerotat nu a apărut la rădăcină după `01_Projects\01-6-Work_Folder (to sort)` (deci nu s-a numerotat
    rațional în baza veche).
 
 ---

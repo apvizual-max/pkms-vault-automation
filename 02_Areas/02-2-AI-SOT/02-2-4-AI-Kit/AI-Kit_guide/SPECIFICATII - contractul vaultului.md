@@ -7,7 +7,7 @@ Regulile care **nu se încalcă**. Fără excepții, fără „de data asta".
 > a trecut de la *voltului* la *vaultului*. Titlul de mai sus a rămas cu grafsia veche:
 > un document care nu-și spune propriul nume în propria titulatură nu e corect.
 >
-> **`10_Work` nu mai există.** Măsurat: pe 8 octombrie avea 32.998 de fișiere; azi
+> **`01_Projects\01-6-Work_Folder (to sort)` nu mai există.** Măsurat: pe 8 octombrie avea 32.998 de fișiere; azi
 > `01_Projects` are **33.069 de fișiere · 79,44 GB**. E aceeași masă, redenumită.
 > §3, §4, §5 și §6 au fost actualizate în consecință.
 
@@ -124,14 +124,14 @@ Verificat automat de `AI-Kit\lint.ps1`.
   așa nu.
 
 **Excepție reală, măsurată:** 9 nume de fișiere din
-`10_Work\Casa\02_7-OGLINDA-CASA\HERMES - browser-agent\test_run\Email_Archives\`
+`01_Projects\01-6-Work_Folder (to sort)\01-6-1-Casa\02_7-OGLINDA-CASA\HERMES - browser-agent\test_run\Email_Archives\`
 (subiecte de e-mail salvate, printre care `locuri de munca`) și un `Incetare contract de munca`
 în `02_Areas\`. Sunt **titluri de documente primite de la terți**, nu vocabular de structură
 ales de sistem. Nu au fost redenumite: redenumirea ar schimba titlul unui act real.
 Dacă Alex cere vreodată redenumirea, se face **cu repararea legăturilor**, nu orbește.
 
 > **Măsurătoare dinaintea mutării pe Drive (2026-10-19).** Calea de mai sus conține
-> `10_Work`, care nu mai există — măsurarea e istorică, **regula nu e**. Cuvântul rămâne
+> `01_Projects\01-6-Work_Folder (to sort)`, care nu mai există — măsurarea e istorică, **regula nu e**. Cuvântul rămâne
 > interzis în nume oriunde s-ar afla acum. Nu se rescrie istoria unei măsurători ca să
 > pară actuală: se marchează data ei.
 
@@ -553,7 +553,7 @@ backup. Ordinea, fixă:
 
 ```
 === align-index.ps1 · 2026-10-08 08:12:33 ===
-[NEALINIAT] 10_Work/Site/07_Site_Build/02_Media_Uploads
+[NEALINIAT] 01_Projects\01-6-Work_Folder (to sort)/Site/07_Site_Build/02_Media_Uploads
     masura: 27791 fișiere, 13 subfoldere
     indexul spunea: 27500 fișiere, 12 subfoldere
     reparat: blocurile derivate rescrise, motivul pastrat

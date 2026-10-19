@@ -406,15 +406,15 @@ lăsa să îmbătrânească: într-un folder viu, orice cifră statică are term
 - `E:\` — nu e discul lui Popy. Nu se citește, nu se scrie, nu se copiază.
 - Backupul — scris, mutare, redenumire, ștergere, **predare**. Doar citire.
 - Folderele cu punct: `.obsidian`, `.trash`, `.vault-intelligence`, `.claudian`, `.neural_memory`, `.sentinel_temp`, `.wwebjs_cache`. Plus `Canvas Bases` și `.git` din proiecte.
-- Cuvântul interzis `LUCURARE` în orice nume de folder, fișier sau drum de script. În conținut e permis. Stratul de lucru se numește `10_Work`.
+- Cuvântul interzis `LUCURARE` în orice nume de folder, fișier sau drum de script. În conținut e permis. Stratul de lucru se numește `01_Projects\01-6-Work_Folder (to sort)`.
 - Ștergerea oricărui lucru. Vezi secțiunea 3.
 
 **Interzis prin regulă:**
-- Să cauți prin baza `00`–`06` ca să lucrezi. singurul nivel de lucru e `10_Work`.
+- Să cauți prin baza `00`–`06` ca să lucrezi. singurul nivel de lucru e `01_Projects\01-6-Work_Folder (to sort)`.
 - Să muți ceva între baze. Baza se completează și se citește.
 - Să redenumești fișere fără să repari întâi legăturile. Obsidian se leagă de ele prin nume.
 - Să dezarhivezi bibliotecile de programe. Copiile repetate sunt artefacte de build, nu mizerie.
-- Să ieși din `10_Work` cu peste 30 de rafturi. Semnalul e numărul de rafturi, nu volumul.
+- Să ieși din `01_Projects\01-6-Work_Folder (to sort)` cu peste 30 de rafturi. Semnalul e numărul de rafturi, nu volumul.
 - Să atingi `_ARCHIVE\Secrets\`. Se mută doar după nume. Conținutul nu s-a deschis niciodată, nu se deschide.
 - Să normalizezi fișiere de pe `D:`. E un subdomeniu, nu o regulă a voltului.
 

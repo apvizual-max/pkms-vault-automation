@@ -2,7 +2,7 @@
 
 Harta voltului tău. Un singur loc unde vezi tot ce ai.
 **Cifrele de mai jos sunt măsurate pe 8 octombrie 2026, după reorganizarea care a dus
-`07_Site_Build` în `10_Work` și pe după ștergerile făcute în aceeași zi.**
+`07_Site_Build` în `01_Projects\01-6-Work_Folder (to sort)` și pe după ștergerile făcute în aceeași zi.**
 
 > **O cifră vie e o obligație, o cifră statică e o minciună cu termen.** Nu schimba
 > cifrele aici după ureche — rulează `AI-Kit\health-check.ps1`, care numără pe loc și
@@ -25,8 +25,8 @@ Harta voltului tău. Un singur loc unde vezi tot ce ai.
 **Numărătoarele de mai sus sunt fișiere de conținut** — `00_INDEX.md` nu intră în ele,
 fiindcă indexul e registrul, nu conținutul (contractul §18.7).
 
-**`07_Site_Build` nu mai e la rădăcină.** Site-ul a urcat în `10_Work`, unde e singurul
-loc în care intri ca să lucrezi: `10_Work\Site` are **29.720 de fișiere de conținut**.
+**`07_Site_Build` nu mai e la rădăcină.** Site-ul a urcat în `01_Projects\01-6-Work_Folder (to sort)`, unde e singurul
+loc în care intri ca să lucrezi: `01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site` are **29.720 de fișiere de conținut**.
 
 **Regula:** numerele cresc. Nu schimbi numerele, adaugi următorul.
 
@@ -67,13 +67,13 @@ la rădăcină, `Clippings` are 12 fișiere `00_INDEX.md`.
 
 **Cele două locuri care țin aproape tot voltul.**
 
-1. **`10_Work\Clienti\Knights Tempar` — 44,57 GB**
+1. **`01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar` — 44,57 GB**
    396 de fișiere, în două comenzi: *Ordinul Sfantului Bernard* (284 fișiere, 30,94 GB)
    și *Ordinul Dragonilor – Juramant Cavaler* (104 fișiere, 13,61 GB).
    ~~`02_Areas\02_1-ALEX-Folder\AP-ID - B2B\AP-ID - Clients\Knights Tempar`~~ — drumul
-   acesta nu mai există: raftul a urcat în `10_Work` la reorganizare.
+   acesta nu mai există: raftul a urcat în `01_Projects\01-6-Work_Folder (to sort)` la reorganizare.
 
-2. **`10_Work\Site\07_Site_Build\02_Media_Uploads` — 27.689 de imagini, 1,9 GB**
+2. **`01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site\07_Site_Build\02_Media_Uploads` — 27.689 de imagini, 1,9 GB**
    Site-ul, din 2010. Nu s-a atins niciun nume.
 
 Restul: **raftul retras** — 660 de fișiere (clienți, brief-uri, artwork). Client închis:
@@ -162,7 +162,7 @@ plus 30** — **23 de fișiere scrise de mine** (hărțile, acest raport, raftur
 **+ 7 capturi de ecran făcute de tine** între 20:12 și 22:58, în timp ce lucram.
 
 > **Aceasta e o socoteală din 7 octombrie, nu de azi.** De atunci s-a mutat `07_Site_Build`
-> în `10_Work`, s-a mutat `Clippings` înapoi la rădăcină și s-au șters, pe 2026-10-08,
+> în `01_Projects\01-6-Work_Folder (to sort)`, s-a mutat `Clippings` înapoi la rădăcină și s-au șters, pe 2026-10-08,
 > cele 92 de descrieri de job identice, cele 6 rafturi goale din carantină și
 > `H hotarare foldere goale.md`. **Cifra de azi** se obține cu
 > `AI-Kit\reconcile.ps1` (raportează, nu scrie) — și se citește rândul

@@ -32,11 +32,11 @@ Gmail nu trimite, nu șterge, nu marchează. NotebookLM se citește.
 
 ---
 
-## 10_Work — masa de lucru
+## 01_Projects\01-6-Work_Folder (to sort) — masa de lucru
 
 **Scop:** singurul nivel în care intri ca să lucrezi.
 
-**Mecanism:** proiectele active **urcă** din bază în `10_Work`, pe raftul lor. Când se termină, coboară înapoi.
+**Mecanism:** proiectele active **urcă** din bază în `01_Projects\01-6-Work_Folder (to sort)`, pe raftul lor. Când se termină, coboară înapoi.
 
 **Cele 8 rafturi** — vezi `COTOR.md` pentru cifre.
 
@@ -164,7 +164,7 @@ conțineau doar baza locală a unui program și un log gol. **Numele tehnic nu d
                     ÎN CE FACI LUCRU ACUM
                               ↓
                         ┌─────────────┐
-                        │  10_Work    │  ← singurul nivel de lucru
+                        │  01_Projects\01-6-Work_Folder (to sort)    │  ← singurul nivel de lucru
                         └─────────────┘
                               ↓
         ┌───────┬─────────┬─────┴────┬──────────┬─────────┐
@@ -175,4 +175,4 @@ conțineau doar baza locală a unui program și un log gol. **Numele tehnic nu d
               website   aplicare   Sentinel    din web     automatezări
 ```
 
-Nu ai nevoie de niciun desen. Ai nevoie să apeși `10_Work` și alegi raftul.
+Nu ai nevoie de niciun desen. Ai nevoie să apeși `01_Projects\01-6-Work_Folder (to sort)` și alegi raftul.
