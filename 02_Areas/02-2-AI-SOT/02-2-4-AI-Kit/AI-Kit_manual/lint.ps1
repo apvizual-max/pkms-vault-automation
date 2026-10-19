@@ -262,6 +262,57 @@ if ((Test-Path $onb1) -and (Test-Path $onb2)) {
   } else { $ok.Add("cele doua copii ale onboarding-ului sunt identice") }
 } else { $warn.Add("lipseste una dintre cele doua copii ale onboarding-ului (cautate in AI-Kit_guide si AI-Kit_manual)") }
 
+# --- 9. encoding: BOM pe orice script care contine caractere ne-ASCII ---
+# MASURAT 2026-10-19. watch.ps1 era singurul script al motorului fara BOM. Parse-ul
+# raporta 0 erori — si totusi scriptul era stricat: parserul citeste UTF-8, dar
+# interpreterul executa ANSI (Windows-1252). Codepoint-ul 021A (Ț) ajungea la
+# rulare ca 00C8 0161, iar verdictul 'ATENȚIE' se afisa corupt.
+#
+# Deci verificarea care prinde defectul NU e parse-ul. E o comparatie de octeti:
+# ce scrie Get-Content (cum citeste PS 5.1) contra unei decodari UTF-8 stricte.
+# Un script doar-ASCII NU are nevoie de BOM — citit ca ANSI sau ca UTF-8 da
+# acelasi text. Poarta urla doar cand non-ASCII exista SI BOM lipseste, pentru ca
+# acolo chiar se pierde un caracter. O poarta care urluieste pe scripturi sanatoase
+# e mai rea decat o poarta care tace: invata sa nu fie ascultata.
+$encDefecte = New-Object System.Collections.Generic.List[string]
+$encBune = 0
+$encCitiri = 0
+$encStrict = New-Object System.Text.UTF8Encoding($false, $true)
+foreach ($f in @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter *.ps1 -File -EA SilentlyContinue)) {
+  $bytes = $null
+  try { $bytes = [System.IO.File]::ReadAllBytes($f.FullName) }
+  catch {
+    $script:citiriEsuate++
+    $script:citiriPicate.Add("encoding " + $f.Name)
+    continue
+  }
+  $encCitiri++
+  if ($bytes.Length -eq 0) {
+    $encDefecte.Add("script $($f.Name) are 0 octeti — nu are ce verifica")
+    continue
+  }
+  $areBom = ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)
+  $peste = @($bytes | Where-Object { $_ -gt 0x7F }).Count
+  if ($peste -gt 0 -and -not $areBom) {
+    $primele = ($bytes | Where-Object { $_ -gt 0x7F } | Select-Object -First 6) -join ' '
+    $encDefecte.Add("script $($f.Name) are $peste octeti peste 0x7F si NU are BOM UTF-8. " +
+                    "PowerShell 5.1 il citeste ca ANSI si il corupe la rulare. Octeti non-ascii gasiti: $primele. " +
+                    "Reparare: adauga EF BB BF in fata fisierului, fara a atinge continutul.")
+  } else {
+    # cu BOM, verifica si ca ce e DUPA BOM e UTF-8 valid — altfel BOM-ul minte
+    if ($areBom) {
+      try { $null = $encStrict.GetString($bytes, 3, $bytes.Length - 3) }
+      catch { $encDefecte.Add("script $($f.Name) are BOM, dar continutul de dupa el nu e UTF-8 valid") }
+    }
+    $encBune++
+  }
+}
+if ($encDefecte.Count -gt 0) {
+  foreach ($d in $encDefecte) { $errors.Add("encoding: $d") }
+} else {
+  $ok.Add("encoding: $encBune/$encCitiri scripturi — fiecare cu caractere ne-ASCII are BOM UTF-8")
+}
+
 # --- raport ---
 Write-Output "=== PKMS LINT ==="
 foreach ($o in $ok)     { Write-Output "  OK      $o" }
