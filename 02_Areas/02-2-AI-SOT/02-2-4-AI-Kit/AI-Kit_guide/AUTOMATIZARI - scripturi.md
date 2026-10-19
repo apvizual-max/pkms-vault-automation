@@ -26,11 +26,14 @@ cd D:\Alex_Knowlege_Vault\AI-Kit
 nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din document:
 
 ```powershell
-(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count
+(Get-ChildItem .\AI-Kit_manual -Filter *.ps1).Count
 ```
 
-**La data de 2026-10-10: 11** — cu `git-autocommit.ps1` adăugat peste `verifica-schema.ps1`
-și `inchide-log.ps1`.
+**La data de 2026-10-19: 11**, măsurat pe calea nouă
+`02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`. *Cifra veche din acest
+document spunea `D:\Alex_Knowlege_Vault\AI-Kit` — o cale care nu mai există de
+când voltul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
+calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 
 ---
 
@@ -517,6 +520,32 @@ pushul rămâne decizia lui Alex. Cum se oprește:
 ```powershell
 Unregister-ScheduledTask -TaskName 'PKMS-GitAutoCommit' -Confirm:$false
 ```
+
+
+### Întreținerea automată a obiectelor git e OPRITĂ pe acest repo — și de ce
+
+Măsurat 2026-10-19. **Nu activa `gc.auto` înapoi fără să citești asta.**
+
+```powershell
+git -C '<volumul>' config gc.auto 0
+git -C '<volumul>' config maintenance.auto 0
+```
+
+Măsurătoarea care a dus la decizie: **fiecare** comit care a picat în acea zi s-a oprit
+la aceeași linie, `task 'geometric-repack' failed`, urmată de
+`couldn't read .git/packed-refs: Invalid argument` și
+`unable to resolve HEAD after creating commit`. Nu era o coincidență și nici o
+problemă de logică — git declanșa repack-ul automat la comit, pe un volum
+DriveFS, și repack-ul cădea la mijloc.
+
+Costul măsurat al opririi: obiectele se acumulează. La oprire, `.git` avea
+**11.462 fișiere, 21,1 MB** — neglijabil pentru ritmul acestui repo. Când
+DriveFS e stabil și vrei să compactezi, rulează `git gc` **cu mâna**, nu
+lăsa gitul să o facă singur.
+
+Ce **nu** e demonstrat: că repack-ul e cauza degradărilor DriveFS. Ce e
+demonstrat: că el e punctul în care se rupe comitul, de 3 ori în aceeași zi,
+pe rând. Cauza degradărilor rămâne necunoscută — nu se inventează una.
 
 
 ### De ce logul plasei NU intră în git
