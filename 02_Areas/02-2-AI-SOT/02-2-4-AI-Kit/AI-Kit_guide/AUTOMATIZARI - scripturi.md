@@ -93,15 +93,30 @@ Verifică că voltul și backupul există, și îți tipărește documentația �
 .\lint.ps1
 ```
 
-Verifică:
-- backupul există, e neatins, și e în rădăcina lui `D:` (nu în interiorul voltului)
+Verifică, în ordine:
+- **backupul există și e neatins** — pragul e ancorat la *data copierii backupului însuși*, nu la o
+  cifră scrisă tare. Măsurat 2026-10-19: backupul e pe **`H:`**, nu pe `D:`, și e descoperit din
+  `$env:PKMS_BACKUP`, apoi pe toate volumele. **Mesajele poarții nu numesc un volum** — un mesaj
+  care trimite la volumul greșit e mai rău decât unul care nu trimite deloc.
+- backupul e **în afara voltului** (altfel ar fi o copie care se șterge odată cu originalul)
 - `_SYSTEM` / `_ARCHIVE` / `_QUARANTINE` n-au numerotare
 - cuvântul interzis `LUCURARE` nu apare în **nume** (nu și în conținut)
-- stratul se numește `01_Projects\01-6-Work_Folder (to sort)`
+- stratul de lucru se numește **`01_Projects`** (nu `10_Work` — reapariția lui e o regresie)
 - fiecare folder de conținut are `00_INDEX.md`
-- documentația din rădăcină există
+- documentația există, căutată **după nume** în rădăcină sau în `AI-Kit_guide`
 - **niciun script și niciun document nu scrie calea de backup tare**
 - **cele două copii ale onboarding-ului sunt octet cu octet identice**
+- **encoding: orice script al motorului cu caractere ne-ASCII are BOM UTF-8** (secțiunea 9)
+
+Ultima a fost adăugată 2026-10-19, după ce `watch.ps1` s-a dovedit singurul script fără BOM:
+PowerShell 5.1 îl citea ca ANSI și afișa `ATENȚIE` corupt (`021A` → `00C8 0161`), **în timp ce
+parse-ul raporta 0 erori**. Deci poarea compară **octeți**, nu parseză. Un script doar-ASCII fără
+BOM e sănătos și nu e acuzat — o poartă care urluiește pe fișiere sănătoase învață omul s-o
+ignoreze.
+
+Poarta are și o **gardă de citibilitate**: dacă DriveFS se degradează *în timpul* rulării, citirile
+picate se numără și se raportează ca „voltul nu a putut fi citit complet". Altfel poarta ar da
+`0` pentru ceva ce n-a citit.
 
 Iese cu `1` dacă sunt erori, `0` dacă totul e curat.
 **Nu corectează nimic** — corectia e decizia lui Alex.

@@ -21,7 +21,7 @@ $ok     = New-Object System.Collections.Generic.List[string]
 # --- 1. backup descoperit si neatins ---
 $B = Get-PkmsBackup
 if (-not $B) {
-  $errors.Add("BACKUP NU A FOST GASIT in radacina lui D:")
+  $errors.Add("BACKUP NU A FOST GASIT. Get-PkmsBackup cauta in \$env:PKMS_BACKUP, apoi pe TOATE volumele. Verifica ca backupul e montat si ca numele lui contine unul din: BKUP / BACKUP / copy / copia / salvat / rezerva / vechi / old. Mesajul NU spune pe ce volum sa se uite, pentru ca un mesaj care trimite la volumul gresit e mai rau decat un mesaj care nu trimite deloc.")
 } else {
   $ok.Add("backup: $B")
   # PRAGUL, MASURAT IN LOC, NU SCRIS TARE. MUTARE 2026-10-19.
@@ -72,7 +72,7 @@ if (-not $B) {
   # backupul nu trebuie sa fie in interiorul voltului
   # (comparație pe cale completa, cu separator - altfel 'Vault - Backup' da match pe prefix)
   $vPrefix = $Vault.TrimEnd('\') + '\'
-  if ($B.TrimEnd('\').StartsWith($vPrefix)) { $errors.Add("copia de backup e INSIDE voltului. trebuie sa stea in radacina lui D:") }
+  if ($B.TrimEnd('\').StartsWith($vPrefix)) { $errors.Add("copia de backup e INSIDE voltului. trebuie sa stea PE ALT VOLUM, in afara voltului. Calea gasita: $B") }
 }
 
 # --- 2. rafturile masinii fara numerotare ---
