@@ -163,7 +163,7 @@ $Guide = @(Get-ChildItem -LiteralPath $Vault -Recurse -Directory -Force -Depth 6
            Where-Object { $_.Name -eq 'AI-Kit_guide' } | Select-Object -First 1)
 $Guide = if ($Guide.Count -ge 1) { $Guide[0].FullName } else { Join-Path $Vault 'AI-Kit\AI-Kit_guide' }
 # Contractul s-a numit mereu SPECIFICATII - contractul <...>.md, dar in 10-11 i s-a
-# schimbat grafia din "vaultului" in "vaultului" in nume, iar H1 a ramas cu vechea.
+# schimbat grafia din "voltului" in "vaultului" in nume, iar H1 a ramas cu vechea.
 # Poarta nu are voie sa retina o grafie ca regula: cerinta reala e "contractul
 # EXISTA", nu "are exact acest nume". Se cauta dupa tipar, la radacina sau in ghid,
 # si daca nu apare niciuna dintre grafii, atunci chiar lipseste.

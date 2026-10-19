@@ -364,7 +364,20 @@ reporniri se scrie în `state.json` — nu se deduce din nimic.
 `PT5M`, `StartWhenAvailable`.
 
 **Limita, spusă limpede:** cârligul tratează **simptomul**. Cauza degradărilor
-DriveFS e necunoscută — logurile n-au nicio eroare, în 94.133 de rânduri.
+DriveFS **nu e stabilită** — dar logurile **nu sunt curate**, iar semnătura e
+măsurată (2026-10-19):
+
+- **Codul:** `0x91` = 145 = „The directory is not empty" (măsurat: `Win32Exception(145)`).
+- **Mesajul:** `win_util.cc:59:ConvertWin32ErrorToStatus Returning GENERIC_ERROR for unknown Windows Error 0x91`.
+- **Unde:** 8.397 apariții `0x91` în logurile DriveFS — **toate** în loguri scrise azi, **zero** în logurile vechi.
+- **Când:** prima la `00:58:00.061Z`, vârf la `03:xx` (5.235) — și **continuă**: 91 apariții în logul curent, la 20:17.
+- **Precursor:** la `00:57:36` scrieri Dokan „slow"; la `00:57:53.990` „slow content cache open taking 39.77s"; apoi zece tranzacții `LocalStore::BeginTransaction()` de câte **36.6 s**.
+- **Context:** presiune de memorie la `00:49`/`00:54` — `vmmemWSL` 60,15 GB, `google.exe` 49,6 GB spațiu virtual rezervat.
+
+Ce **nu** e dovedit: de ce s-a blocat local store-ul. Presiunea de memorie e
+suspectul principal, dar legătura cauză→efect nu e măsurată. Cârligul rămâne
+tratament de simptom — spus limpede, nu ascuns.
+
 ### Regula de blocaj: mutex, nu fișier-pid
 
 Un singur automat poate scrie în vault odată. Dacă o aliniere e deja pornită și se
