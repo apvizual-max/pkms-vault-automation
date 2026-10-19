@@ -15,6 +15,7 @@
 | `COTOR.md`, `AGENTS.md`, `MANUAL DE NAVIGARE - cotor.md` | fișierele atașate |
 | **skillurile** (`_SYSTEM\Skills_MASTER_Folder\`) | arhiva `_QUARANTINE` |
 | **XML-urile celor 4 taskuri** | `INDEX CENTRAL.md` — derivat, se regenerează |
+| **pachetul de handoff** (`handoff-prompt.md` + `handoff-harta-implementarii.md`) | transcriptul sesiunii (30.412.803 B) — rămâne pe Drive |
 | `.gitignore` cu motivele fiecărei reguli | jurnalele vii — stare, nu sistem |
 
 ## 1. Ordinea restaurării
@@ -127,6 +128,19 @@ repo — se reconstruiesc din conținut:
 **Testul că reconstrucția e completă:** dacă `INDEX CENTRAL.md` regenereat are aceleași
 cifre ca cel raportat înainte de incident, sistemul e reconstituit. Dacă diferă, motivul
 e în conținut, nu în programare.
+
+### 1.8. Pachetul de handoff — portul de intrare
+
+```powershell
+$HD = "$V\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\HANDOFF-2026-10-19"
+New-Item -ItemType Directory -Path $HD -Force | Out-Null
+Copy-Item 'C:\temp\pkms-restore\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\HANDOFF-2026-10-19\*.md' $HD
+```
+
+`handoff-prompt.md` e promptul de inițiere al sesiunii noi; `handoff-harta-implementarii.md`
+e harta construcției sistemului, §1–§12. **Transcriptul (`transcript-complet.json`,
+30.412.803 B) NU e în repo** — rămâne pe Drive, fiindcă e dovada unei sesiuni, nu
+programarea sistemului.
 
 ## 2. Ce NU se face la restaurare
 

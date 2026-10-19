@@ -266,6 +266,7 @@ poartă motivul ei, măsurat** — o regulă fără motiv e o presupunere, nu o 
 5. **XML-urile celor 4 taskuri** — altfel automatizările nu se pot reface
 6. `.gitignore` cu motivele lui
 7. procedura de restaurare: `RESTORE - reconstructia sistemului.md`
+8. **pachetul de handoff** — `handoff-prompt.md` (portul de intrare pentru o sesiune nouă, cu 0 memorie) și `handoff-harta-implementarii.md` (harta construcției, §1–§12). **Măsurat 20.10.2026: erau ABSENȚI din repo** — `git ls-files` dădea 0 intrări, închise de regula `**/*`. Fără ei, restore-ul dădea motor fără doctrină. Deschise prin regula 4c a `.gitignore`; transcriptul (30.412.803 B) rămâne închis, fiindcă e dovada unei sesiuni, nu programarea sistemului.
 
 ## 11. Cum verifici că ai terminat
 
