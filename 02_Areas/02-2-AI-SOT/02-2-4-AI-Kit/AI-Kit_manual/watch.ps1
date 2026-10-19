@@ -5,6 +5,11 @@
      2. health-check  - numerele vii ale vaultului
      3. reconcile     - socoteala cu backupul, doar informativ
   Scrie UN SINGUR fisier: _SYSTEM\rapoarte\raport-ultima-rulare.txt
+  Il rescrie la FIECARE treapta, nu doar la final: masurat 2026-10-20, pe
+  vaultul de pe DriveFS, treapta 3 (reconcile) dureaza peste 50 de minute,
+  iar taskul era oprit de limita lui de 1 ora INAINTE sa ajunga la scriere.
+  Asa ca raportul zilnic ramanea inghezat. Scris dupa fiecare treapta, el
+  ramane proaspet chiar daca rularea se opreste la mijloc.
 
   CE NU INTRA, si de ce:
   - build-index.ps1 NU ruleaza aici. Scrie 694 de indexuri. Se ruleaza cu mana.
@@ -71,6 +76,153 @@ function Get-Detalii([string[]]$linii, [string[]]$modele, [switch]$Blocuri) {
 $rez = New-Object System.Collections.Generic.List[object]
 $swTotal = [System.Diagnostics.Stopwatch]::StartNew()
 
+# --- functia raportului: definita INAINTE de bucla, apelata dupa FIECARE treapta ---
+# Masurat 2026-10-20: raportul zilnic era inghetat la 18.10 pentru ca se
+# scria DOAR la final, iar taskul era oprit de limita lui de 1 ora inainte
+# sa ajunga acolo (reconcile peste 50 de minute pe DriveFS). Functia
+# rescrie raportul la fiecare treapta: ramane proaspet chiar daca rularea
+# e oprit la mijloc. Sursa unica de adevar ramane $rez.
+function Actualizeaza-Raport {
+  # --- verdictul: o singura linie ---
+  # DOAR ERORILE ridica verdictul. ATENTIILE se raporteaza, dar NU ridica nimic
+  # si NU schimba codul de iesire.
+  # motivul e chiar in lint: faptul cu folderele atinse in backup e etichetat acolo
+  # "fapt, nu verdict", pentru ca o copie pastreaza data fisierelor dar stampileaza
+  # folderele cu ora copierii. Daca watch ar ridica verdictul pe un fapt pe care
+  # insusi lint spune ca nu e dovada, automatismul ar urlui in fiecare zi fara
+  # motiv, iar un automatism care urla permanent nu e un automatism, e zgomot.
+  # ATENTIA nu dispare de aici: ramane scrisa in raport, la randul ei, cu ochiul
+  # omului cerut explicit. Dispare doar din verdict.
+  $probleme   = New-Object System.Collections.Generic.List[string]
+  $observatii = New-Object System.Collections.Generic.List[string]
+  foreach ($r in $rez) {
+    $buc = New-Object System.Collections.Generic.List[string]
+    if ($r.Cod -ne 0)  { $buc.Add("cod de iesire $($r.Cod)") }
+    if ($r.Erori -gt 0) { $buc.Add("$($r.Erori) erori") }
+
+    if ($r.Atentii -gt 0) {
+      $o = "$($r.Nume): $($r.Atentii) atentioni"
+      if ($r.Detalii.Count -gt 0) {
+        $t = $r.Detalii[0]
+        if ($t.Length -gt 220) { $t = $t.Substring(0, 220) + '...' }
+        $o += ' - ' + $t
+      }
+      $observatii.Add($o)
+    }
+
+    if ($buc.Count -eq 0) { continue }
+    $d = ''
+    if ($r.Detalii.Count -gt 0) {
+      $d = ' - ' + $r.Detalii[0]
+      if ($d.Length -gt 220) { $d = $d.Substring(0, 220) + '...' }
+    }
+    $probleme.Add($r.Nume + ': ' + ($buc -join ', ') + $d)
+  }
+
+  if ($probleme.Count -eq 0) {
+    if ($observatii.Count -gt 0) {
+      if ($observatii.Count -eq 1) {
+        $verdict = "OK - $($rez.Count) trepte rulate, toate cele $($rez.Count) coduri de iesire 0, 0 erori. " +
+                  '1 treapta are ATENTII, scrise in raport, si NU ridica verdictul.'
+      } else {
+        $verdict = "OK - $($rez.Count) trepte rulate, toate cele $($rez.Count) coduri de iesire 0, 0 erori. " +
+                  "$($observatii.Count) trepte au ATENTII, scrise in raport, si NU ridica verdictul."
+      }
+    } else {
+      $verdict = "OK - $($rez.Count) trepte rulate, toate cele $($rez.Count) coduri de iesire 0, 0 erori, 0 atentioni."
+    }
+  } else {
+    $verdict = 'ATENȚIE: ' + ($probleme -join ' | ')
+  }
+
+  # --- raportul ---
+  $backup = Get-PkmsBackup
+
+    # verdictul AFISAT. Daca nu s-au terminat toate treptele, primeste
+    # prefixul 'IN CURS': altfel un raport pe jumatate ar parea 'OK'.
+    $verdictFinal = $verdict
+    if ($rez.Count -lt $trepte.Count) {
+      $urm = $trepte[$rez.Count].Nume
+      $verdictFinal = "IN CURS - $($rez.Count)/$($trepte.Count) trepte rulate, " +
+                     "urmatorul: $urm. Erori deocamdata: $($probleme.Count)."
+    }
+    $script:raportVerdict = $verdictFinal
+
+  $L = New-Object System.Collections.Generic.List[string]
+  $L.Add('================================================================')
+  $L.Add('VAULTUL - VERIFICARE ZILNIEARA')
+  $L.Add('================================================================')
+  $L.Add("Data si ora rularii:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')")
+  $L.Add("Trepte rulate:       $($rez.Count)/$($trepte.Count)")
+  $L.Add("Durata totala:        $(Fmt-Durata $swTotal.Elapsed.TotalSeconds)")
+  $L.Add("Vault verificat:       $Vault")
+  $L.Add("Backup comparat:      $(if ($backup) { $backup } else { 'NU A FOST GASIT' })")
+  $L.Add('Ce a scris:           doar acest raport (si folderul lui, daca lipsea). nimic altceva.')
+  $L.Add('Ce NU a rulat:        build-index (NU ruleaza la verificare) si orice restaurare.')
+  $L.Add('                     build-index rescrie toate indexurile; ruleaza doar dupa mutari in masa.')
+  $L.Add('')
+
+  foreach ($r in $rez) {
+    $titlu = switch ($r.Nume) {
+      'lint'         { 'PASUL 1 - lint (regulile de denumire)' }
+      'health-check' { 'PASUL 2 - health-check (masura vaultului)' }
+      'reconcile'    { 'PASUL 3 - reconcile (socoteala cu backupul)' }
+    }
+    $L.Add($titlu)
+    $L.Add("  durata:        $(Fmt-Durata $r.Durata)")
+    $L.Add("  cod de iesire: $($r.Cod)")
+    $L.Add("  erori:         $($r.Erori)")
+    $L.Add("  atentioni:     $($r.Atentii)")
+    if ($r.Nota) { $L.Add("  masura:        $($r.Nota)") }
+    $L.Add('')
+  }
+
+  $L.Add('')
+
+  # randul care cere ochiul omului. ATENTIILE NU sterg nimic de aici: ele raman
+  # scrise, cu continutul lor, chiar cand nu ridica verdictul.
+  $totE = 0; $totA = 0
+  foreach ($r in $rez) { $totE += $r.Erori; $totA += $r.Atentii }
+  $L.Add('----------------------------------------------------------------')
+  $L.Add('ERORI vs ATENTII - cele doua nu sunt acelasi lucru')
+  $L.Add("  EROARE   = blocheaza. Ridica verdictul si intoarce cod de iesire 1.   -> $totE")
+  $L.Add("  ATENTIE  = informeaza. Se scrie aici, dar NU ridica verdictul si NU schimba codul de iesire. -> $totA")
+  $L.Add('  De ce: o eroare e o abatere de reparat. O atentie e un fapt care cere citit,')
+  $L.Add('  nu o abatere - iar lint insusi eticheteaza unele fapte ca "nu e dovada".')
+  $L.Add('  Atentii care cer ochiul omului:')
+  if ($observatii.Count -gt 0) {
+    foreach ($o in $observatii) { $L.Add('   ' + $o) }
+  } else {
+    $L.Add('   (niciuna)')
+  }
+  $L.Add('')
+
+  $ceAbia = @($rez | Where-Object { $_.Erori -gt 0 -or $_.Atentii -gt 0 -or $_.Cod -ne 0 })
+  if ($ceAbia.Count -gt 0) {
+    $L.Add('----------------------------------------------------------------')
+    $L.Add('CE ANUME, PE SCURT')
+    foreach ($r in $ceAbia) {
+      $L.Add("$($r.Nume): $($r.Erori) erori, $($r.Atentii) atentioni, cod de iesire $($r.Cod)")
+      foreach ($d in @($r.Detalii | Select-Object -First 6)) { $L.Add('   ' + $d) }
+    }
+    $L.Add('')
+  }
+
+  $L.Add('----------------------------------------------------------------')
+  $L.Add('SUMAR')
+  $L.Add("  lint:         $($rez[0].Cod) iesire, $($rez[0].Erori) erori, $($rez[0].Atentii) atentioni")
+  $L.Add("  health-check: $($rez[1].Cod) iesire, $($rez[1].Erori) erori, $($rez[1].Atentii) atentioni")
+  $L.Add("  reconcile:    $($rez[2].Cod) iesire, $($rez[2].Erori) lipsuri reale, $($rez[2].Atentii) atentioni")
+  $L.Add('')
+  $L.Add('VERDICT')
+  $L.Add($verdictFinal)
+
+  if (-not (Test-Path -LiteralPath $raportDir)) {
+    New-Item -ItemType Directory -Path $raportDir -Force | Out-Null
+  }
+  [System.IO.File]::WriteAllText($raportFile, ($L -join "`r`n"), (New-Object System.Text.UTF8Encoding $true))
+}
+
 foreach ($t in $trepte) {
   $sw = [System.Diagnostics.Stopwatch]::StartNew()
   $rand = New-Object System.Collections.Generic.List[string]
@@ -132,137 +284,18 @@ foreach ($t in $trepte) {
 
   $rez.Add([pscustomobject]@{
     Nume = $t.Nume; Durata = $sw.Elapsed.TotalSeconds; Cod = $cod
-    Erori = $erori; Atentii = $atentii; Nota = $nota; Detalii = $detalii
   })
+
+  # raportul se rescrie acum, cu starea de pana acum. Daca treapta urmatoare
+  # ori limitatorul taskului omoara rularea, ramane un raport proaspet.
+  Actualizeaza-Raport
 }
 $swTotal.Stop()
 
-# --- verdictul: o singura linie ---
-# DOAR ERORILE ridica verdictul. ATENTIILE se raporteaza, dar NU ridica nimic
-# si NU schimba codul de iesire.
-# motivul e chiar in lint: faptul cu folderele atinse in backup e etichetat acolo
-# "fapt, nu verdict", pentru ca o copie pastreaza data fisierelor dar stampileaza
-# folderele cu ora copierii. Daca watch ar ridica verdictul pe un fapt pe care
-# insusi lint spune ca nu e dovada, automatismul ar urlui in fiecare zi fara
-# motiv, iar un automatism care urla permanent nu e un automatism, e zgomot.
-# ATENTIA nu dispare de aici: ramane scrisa in raport, la randul ei, cu ochiul
-# omului cerut explicit. Dispare doar din verdict.
-$probleme   = New-Object System.Collections.Generic.List[string]
-$observatii = New-Object System.Collections.Generic.List[string]
-foreach ($r in $rez) {
-  $buc = New-Object System.Collections.Generic.List[string]
-  if ($r.Cod -ne 0)  { $buc.Add("cod de iesire $($r.Cod)") }
-  if ($r.Erori -gt 0) { $buc.Add("$($r.Erori) erori") }
 
-  if ($r.Atentii -gt 0) {
-    $o = "$($r.Nume): $($r.Atentii) atentioni"
-    if ($r.Detalii.Count -gt 0) {
-      $t = $r.Detalii[0]
-      if ($t.Length -gt 220) { $t = $t.Substring(0, 220) + '...' }
-      $o += ' - ' + $t
-    }
-    $observatii.Add($o)
-  }
 
-  if ($buc.Count -eq 0) { continue }
-  $d = ''
-  if ($r.Detalii.Count -gt 0) {
-    $d = ' - ' + $r.Detalii[0]
-    if ($d.Length -gt 220) { $d = $d.Substring(0, 220) + '...' }
-  }
-  $probleme.Add($r.Nume + ': ' + ($buc -join ', ') + $d)
-}
-
-if ($probleme.Count -eq 0) {
-  if ($observatii.Count -gt 0) {
-    if ($observatii.Count -eq 1) {
-      $verdict = "OK - 3 trepte rulate, toate cele 3 coduri de iesire 0, 0 erori. " +
-                '1 treapta are ATENTII, scrise in raport, si NU ridica verdictul.'
-    } else {
-      $verdict = "OK - 3 trepte rulate, toate cele 3 coduri de iesire 0, 0 erori. " +
-                "$($observatii.Count) trepte au ATENTII, scrise in raport, si NU ridica verdictul."
-    }
-  } else {
-    $verdict = "OK - 3 trepte rulate, toate cele 3 coduri de iesire 0, 0 erori, 0 atentioni."
-  }
-} else {
-  $verdict = 'ATENȚIE: ' + ($probleme -join ' | ')
-}
-
-# --- raportul ---
-$backup = Get-PkmsBackup
-$L = New-Object System.Collections.Generic.List[string]
-$L.Add('================================================================')
-$L.Add('VAULTUL - VERIFICARE ZILNIEARA')
-$L.Add('================================================================')
-$L.Add("Data si ora rularii:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')")
-$L.Add("Durata totala:        $(Fmt-Durata $swTotal.Elapsed.TotalSeconds)")
-$L.Add("Vault verificat:       $Vault")
-$L.Add("Backup comparat:      $(if ($backup) { $backup } else { 'NU A FOST GASIT' })")
-$L.Add('Ce a scris:           doar acest raport (si folderul lui, daca lipsea). nimic altceva.')
-$L.Add('Ce NU a rulat:        build-index (NU ruleaza la verificare) si orice restaurare.')
-$L.Add('                     build-index scrie 694 de indexuri; ruleaza doar dupa mutari in masa.')
-$L.Add('')
-
-foreach ($r in $rez) {
-  $titlu = switch ($r.Nume) {
-    'lint'         { 'PASUL 1 - lint (regulile de denumire)' }
-    'health-check' { 'PASUL 2 - health-check (masura vaultului)' }
-    'reconcile'    { 'PASUL 3 - reconcile (socoteala cu backupul)' }
-  }
-  $L.Add($titlu)
-  $L.Add("  durata:        $(Fmt-Durata $r.Durata)")
-  $L.Add("  cod de iesire: $($r.Cod)")
-  $L.Add("  erori:         $($r.Erori)")
-  $L.Add("  atentioni:     $($r.Atentii)")
-  if ($r.Nota) { $L.Add("  masura:        $($r.Nota)") }
-  $L.Add('')
-}
-
-$L.Add('')
-
-# randul care cere ochiul omului. ATENTIILE NU sterg nimic de aici: ele raman
-# scrise, cu continutul lor, chiar cand nu ridica verdictul.
-$totE = 0; $totA = 0
-foreach ($r in $rez) { $totE += $r.Erori; $totA += $r.Atentii }
-$L.Add('----------------------------------------------------------------')
-$L.Add('ERORI vs ATENTII - cele doua nu sunt acelasi lucru')
-$L.Add("  EROARE   = blocheaza. Ridica verdictul si intoarce cod de iesire 1.   -> $totE")
-$L.Add("  ATENTIE  = informeaza. Se scrie aici, dar NU ridica verdictul si NU schimba codul de iesire. -> $totA")
-$L.Add('  De ce: o eroare e o abatere de reparat. O atentie e un fapt care cere citit,')
-$L.Add('  nu o abatere - iar lint insusi eticheteaza unele fapte ca "nu e dovada".')
-$L.Add('  Atentii care cer ochiul omului:')
-if ($observatii.Count -gt 0) {
-  foreach ($o in $observatii) { $L.Add('   ' + $o) }
-} else {
-  $L.Add('   (niciuna)')
-}
-$L.Add('')
-
-$ceAbia = @($rez | Where-Object { $_.Erori -gt 0 -or $_.Atentii -gt 0 -or $_.Cod -ne 0 })
-if ($ceAbia.Count -gt 0) {
-  $L.Add('----------------------------------------------------------------')
-  $L.Add('CE ANUME, PE SCURT')
-  foreach ($r in $ceAbia) {
-    $L.Add("$($r.Nume): $($r.Erori) erori, $($r.Atentii) atentioni, cod de iesire $($r.Cod)")
-    foreach ($d in @($r.Detalii | Select-Object -First 6)) { $L.Add('   ' + $d) }
-  }
-  $L.Add('')
-}
-
-$L.Add('----------------------------------------------------------------')
-$L.Add('SUMAR')
-$L.Add("  lint:         $($rez[0].Cod) iesire, $($rez[0].Erori) erori, $($rez[0].Atentii) atentioni")
-$L.Add("  health-check: $($rez[1].Cod) iesire, $($rez[1].Erori) erori, $($rez[1].Atentii) atentioni")
-$L.Add("  reconcile:    $($rez[2].Cod) iesire, $($rez[2].Erori) lipsuri reale, $($rez[2].Atentii) atentioni")
-$L.Add('')
-$L.Add('VERDICT')
-$L.Add($verdict)
-
-if (-not (Test-Path -LiteralPath $raportDir)) {
-  New-Item -ItemType Directory -Path $raportDir -Force | Out-Null
-}
-[System.IO.File]::WriteAllText($raportFile, ($L -join "`r`n"), (New-Object System.Text.UTF8Encoding $true))
+# ultima scriere: raportul complet, dupa toate cele 3 trepte
+Actualizeaza-Raport
 
 # --- ARHIVA, ca o EROARE sa nu poata disparea prin urmatoarea rulare reusita ---
 # Masurat 2026-10-11: PKMS-Watch a terminat cu cod 1 la 12:50, iar rularea
@@ -277,5 +310,5 @@ try { Copy-Item -LiteralPath $raportFile -Destination $arhivaFile -Force }
 catch { Write-Output ('ATENTIE: raport scris, dar nu arhivat: ' + $_.Exception.Message) }
 Write-Output "arhiva:       $arhivaFile"
 Write-Output "raport scris: $raportFile"
-Write-Output $verdict
-if ($verdict -like 'ATENȚIE:*') { exit 1 } else { exit 0 }
+Write-Output $script:raportVerdict
+if ($script:raportVerdict -like 'ATENȚIE:*') { exit 1 } else { exit 0 }
