@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide
 
-**13 fișiere · 929 KB · 0 subfoldere**
+**13 fișiere · 927 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
@@ -28,6 +28,6 @@ Cele mai frecvente două extensii sunt `.md` (11 din 13 fișiere) și `.log` (2 
 | `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-11 01-35.md` | 4 KB | 2026-10-11 |
 | `raport-aliniere.log` | 64 KB | 2026-10-18 |
 | `SPECIFICATII - contractul vaultului.md` | 26 KB | 2026-10-19 |
-| `START AICI.md` | 9 KB | 2026-10-19 |
+| `START AICI.md` | 7 KB | 2026-10-19 |
 | `WORKFLOW - ce faci concret.md` | 3 KB | 2026-10-19 |
 

@@ -2,7 +2,7 @@
 
 **De ce e aici:** pachetul de predare al vaultului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie vaultul (`G:\My Drive\GDrive-Second_Brain_PKMS`) fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
 
-**18 fișiere · 286 KB · 0 subfoldere**
+**18 fișiere · 287 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
@@ -25,14 +25,14 @@ Cele mai frecvente două extensii sunt `.ps1` (11 din 18 fișiere) și `.md` (4 
 | `git-autocommit.ps1` | 17 KB | 2026-10-19 |
 | `git-autocommit-ignorat.txt` | 615 B | 2026-10-11 |
 | `git-autocommit-registru.txt` | 2 KB | 2026-10-19 |
-| `health-check.ps1` | 5 KB | 2026-10-19 |
+| `health-check.ps1` | 6 KB | 2026-10-19 |
 | `inchide-log.ps1` | 14 KB | 2026-10-19 |
 | `lint.ps1` | 18 KB | 2026-10-19 |
 | `MANUAL DE OPERARE - Hermes.md` | 23 KB | 2026-10-19 |
 | `ONBOARDING.md` | 18 KB | 2026-10-19 |
 | `paths.ps1` | 10 KB | 2026-10-19 |
 | `PROMPT-INSCRIERE.md` | 4 KB | 2026-10-19 |
-| `raport-autocomit.log` | 16 KB | 2026-10-19 |
+| `raport-autocomit.log` | 17 KB | 2026-10-19 |
 | `reconcile.ps1` | 28 KB | 2026-10-19 |
 | `setup.ps1` | 4 KB | 2026-10-19 |
 | `verifica-schema.ps1` | 23 KB | 2026-10-19 |
