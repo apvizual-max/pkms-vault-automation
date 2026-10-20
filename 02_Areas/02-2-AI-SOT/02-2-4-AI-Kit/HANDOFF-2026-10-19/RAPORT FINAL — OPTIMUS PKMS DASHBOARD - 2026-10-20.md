@@ -14,7 +14,7 @@
 
 **Al doilea, și acesta e al meu: când am reparat primul defect, am introdus o regresie care a golit raportul și a orb verdictul.** La rescrierea lui `watch.ps1` am pierdut patru proprietăți din obiectul rezultat al fiecărei trepte (`Erori`, `Atentii`, `Nota`, `Detalii`). Consecința: o treaptă cu 7 erori și cod de ieșire 0 ar fi raportat „Erori deocamdata: 0" — o afirmație **nemasurată**, scrisă cu calm de un automatism care trebuia să poată da roșu. L-am găsit citind raportul scris de o rulare reală, l-am reparat, și l-am probat cu o bancă de **3 probe cu contra-probă** (3/3): ultima arată că proba decisivă *poate* eșua.
 
-Totul e măsurat acum, în această sesiune: **lint 0 erori / 2 atenționi**, **census 0 LIPSA · 0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2519 CONFORM**, **50745 fișiere · 85.75 GB**, backup neatins, copii centrale **24/24** identice cu vaultul.
+Totul e măsurat acum, în această sesiune: **lint 0 erori / 2 atenționi**, **census 0 LIPSA · 0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2519 CONFORM**, **50745 fișiere · 85.75 GB**, backup neatins, copii centrale **26/26** identice cu vaultul.
 
 **Singurul lucru care rămâne de făcut de tine: sortarea manuală a ramurilor dublate „Knights Templar".** Nu am mutat nimic și nu voi muta nimic acolo fără hotărârea ta.
 
@@ -109,7 +109,7 @@ se atinge" a fost încălcată de un proces, nu de mine.
 proces de captare pornit **înainte** de re-point a păstrat calea veche în memorie. Trei
 măsurători:
 - `SHGetKnownFolderPath` pentru GUID-ul de mai sus rezolvă **acum** spre
-  `G:\...\05-Attachments\05-1-Images\05-1-1-Screenshots` — registry-ul e corect;
+  `G:\...\05_Attachments\05-1-Images\05-1-1-Screenshots` — registry-ul e corect;
 - la ora capturii nu rulează niciun proces de captare — condiția a trecut;
 - ultimul fișier scris în backup e exact acesta; tot restul e din 19.10.
 
@@ -128,12 +128,12 @@ după mutare trebuie făcută **pe contorul fișierelor**, nu pe „am reparat r
 
 | Poartă | Rezultat |
 |---|---|
-| `build-index.ps1 -Quiet` | exit **0** · `INDEX CENTRAL.md` 962972 B (pe disc) · masura tiparita: 962972 B |
+| `build-index.ps1 -Quiet` | exit **0** · `INDEX CENTRAL.md` 962972 B la momentul măsurătorii (cifra e regenerată la fiecare rulare și crește cu dimensiunea acestui raport, care e adăugat după măsurare) |
 | `align-index.ps1 -CeVad` (census) | exit **0** · **0 LIPSA · 0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2519 CONFORM** · 2519 nemodificate |
 | `lint.ps1` | exit **0** · **0 erori / 2 atenționi** — cele două atenționi sunt „fapt, nu verdict" (folderele din backup poartă ora copierii) |
 | `health-check.ps1` | **50745 fișiere · 85.75 GB**, drift 0 — sursa cifrei: raportul zilnic viu (treapta 2 a rularii de acum) |
 | backup `H:` | **snapshot curat — 0 fișiere peste prag** (52.519) · un fișier a aterizat azi în el (screenshot cu calea veche cache-uită) și a fost **mutat înapoi în vault**, hash identic — vezi §3.5 |
-| copii centrale ale skillurilor | **24/24 perechi** SHA256 identice cu vaultul |
+| copii centrale ale skillurilor | **26/26 perechi** SHA256 identice cu vaultul · măsurat de instrumentul independent de verificare |
 
 ### 5. Skillurile — create, extinse, propagate
 
@@ -146,14 +146,14 @@ Conțin: convenția `NN-Name`, cele șase porți, procedura de creștere a vault
 
 ### 6. Handofful, raportul, arhivarea
 
-- `handoff-prompt.md` — 10643 B (promptul de inițiere a sesiunii noi)
-- `handoff-harta-implementarii.md` — 38143 B, cu **§11** (segmentul 2), **§12** (segmentul 3) și **§13** (regresia „verdictul orb")
-- `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` — 17634 B, în `02-2-4-AI-Kit`, cu §7 = linkurile exacte la A și B
+- `handoff-prompt.md` — 10763 B (promptul de inițiere a sesiunii noi)
+- `handoff-harta-implementarii.md` — 41467 B, cu **§11** (segmentul 2), **§12** (segmentul 3) și **§13** (regresia „verdictul orb")
+- `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` — 17674 B, în `02-2-4-AI-Kit`, cu §7 = linkurile exacte la A și B
 - rapoartele de stare vechi **mutate** (nu șterse) în `09_raport-archive` — SHA256 identic înainte/după, corecție datată adăugată în copia arhivată
 
 ### 7. Git
 
-`f9745707a1347fb530ccbb1a869454d161424f7e` local · remote `2c80e1c5d5b2289edb21af8284d59e7b4beedd1f` · **4491 fișiere urmărite** · arborele la momentul raportului: 0 intrări necomitate (comitarea automată rulează la 5 minute).
+`28d76373faebb1155e059af98ed866f058123686` local · remote `2c80e1c5d5b2289edb21af8284d59e7b4beedd1f` · **4491 fișiere urmărite** · arborele la momentul raportului: 0 intrări necomitate (comitarea automată rulează la 5 minute).
 
 ---
 
@@ -313,7 +313,7 @@ Detalii în harta §13.
 
    Inventarul complet, cu fiecare fișier și SHA256 pe căile comune: `D:\PKMS-tooling\handoff\knights-inventar-2026-10-20.txt` (61.121 B, 491 de rânduri).
    **Regula pentru sesiunea nouă: deschis, măsurat, și atunci nimic.** Popy sortează manual; până la decizia lui, zero mutări, zero ștergeri.
-2. **Cauza degradărilor DriveFS (fostul „108").** Logurile **nu** sunt curate: milioane de `0x91` (= 145, „The directory is not empty"), toate scrise pe 19–20.10, cu precursor măsurat („slow content cache open taking 39.77s"). **De ce s-a blocat local store-ul: încă necunoscut.** Nu inventa cauza.
+2. **Cauza degradărilor DriveFS (fostul „108").** Logurile **nu** sunt curate: **67.874** apariții `0x91` (= 145, „The directory is not empty") măsurate la 2026-10-20 04:28 — 10.011 în logurile din 19.10 și 57.863 în logul curent `drive_fs.txt` (scris pe 20.10; cifra crește), cu precursor măsurat („slow content cache open taking 39.77s"). **De ce s-a blocat local store-ul: încă necunoscut.** Nu inventa cauza.
 3. **Asimetria `align-index` ↔ `build-index`** (newline final în plus la L853 + blocuri derivate vechi). Nepatchată **prin decizie**: convergența contractuală e intactă (0 NEALINIAT), iar `PKMS-Aliniere` rulează zilnic. Dacă o patching, probă izolată pe `D:` mai întâi.
 4. **Raportul zilnic — REPARAT 20.10.2026, nu mai e punct deschis.** `raport-ultima-rulare.txt` era înghețat la 18.10.2026: cauza era dublă — `watch.ps1` scria raportul **doar la final**, iar `PKMS-Watch` avea `ExecutionTimeLimit PT1H`, mai scurtă decât o rulare pe DriveFS, deci taskul era oprit înainte să scrie. Repar: raportul se rescrie după fiecare treaptă (verdict `IN CURS - N/3` cât timp rulează), limită `PT6H`, bancă de test 15/15 cu proba decisivă „oprire la mijloc → raport proaspăt”. Detalii în harta §12.
 5. **Logarea DriveFS fără rotație** (~1 rând/5 min ≈ 105k rânduri/an).
