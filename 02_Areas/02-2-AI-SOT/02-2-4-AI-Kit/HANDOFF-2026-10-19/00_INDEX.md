@@ -21,6 +21,6 @@ Cele mai frecvente două extensii sunt `.md` (3 din 4 fișiere) și `.json` (1 d
 |---|---|---|
 | `handoff-harta-implementarii.md` | 40 KB | 2026-10-20 |
 | `handoff-prompt.md` | 11 KB | 2026-10-20 |
-| `RAPORT FINAL — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` | 27 KB | 2026-10-20 |
+| `RAPORT FINAL — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` | 28 KB | 2026-10-20 |
 | `transcript-complet.json` | 29 MB | 2026-10-19 |
 
