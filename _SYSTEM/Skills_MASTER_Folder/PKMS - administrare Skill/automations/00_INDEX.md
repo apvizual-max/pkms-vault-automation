@@ -7,7 +7,7 @@
 
 ## Ce e aici
 
-Cele mai frecvente două extensii sunt `.xml` (4 din 5 fișiere) și `.ps1` (1 din 5 fișiere). Cel mai mare element din folder e `auto-repair-drivefs.ps1` (9 KB)
+Cele mai frecvente două extensii sunt `.xml` (4 din 5 fișiere) și `.ps1` (1 din 5 fișiere). Cel mai mare element din folder e `auto-repair-drivefs.ps1` (10 KB)
 
 ## Cuvinte cheie
 
@@ -17,7 +17,7 @@ Cele mai frecvente două extensii sunt `.xml` (4 din 5 fișiere) și `.ps1` (1 d
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `auto-repair-drivefs.ps1` | 9 KB | 2026-10-20 |
+| `auto-repair-drivefs.ps1` | 10 KB | 2026-10-20 |
 | `PKMS-Aliniere.xml` | 2 KB | 2026-10-20 |
 | `PKMS-DriveFS-AutoRepair.xml` | 2 KB | 2026-10-20 |
 | `PKMS-GitAutoCommit.xml` | 2 KB | 2026-10-20 |

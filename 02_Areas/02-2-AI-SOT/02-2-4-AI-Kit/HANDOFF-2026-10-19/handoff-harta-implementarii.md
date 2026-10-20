@@ -554,3 +554,55 @@ trece identic, cu push sau fără push. Singura probă care prinde abaterea e
 **comparația de conținut** (`git diff origin/master..HEAD`). O poartă care numără
 fișiere în loc să compare conținut nu poate da roșu — și tocmai de aceea n-a dat
 roșu nici când trebuia.
+
+## 16. Al doilea audit: 6 afirmații false, închise (20.10.2026, ~04:30)
+
+**Ce a fost verificat.** Un al doilea verificator independent (agent nou, fără
+context) a primit sarcina să compare **fiecare cifră și fiecare cale** din
+raportul de stare și din raportul final cu ceea ce e efectiv pe disc. Rezultat:
+**38 de elemente individuale — 32 confirmate octet cu octet, 6 afirmații false**,
+plus un element parțial (hasharea completă a celor 92 de perechi comune dintre
+ramurile „Knights Templar", ~28 GB de citiri pe DriveFS, ~6 MB/s).
+
+**Cele 6, cu valoarea corectă.** Niciuna nu era invenție: erau cifre **reale**,
+luate din momente depășite sau transcrise greșit.
+
+| # | În raport | Real pe disc | Corectat |
+|---|---|---|---|
+| 1 | `SKILL.md` 16.224 B | **21.104 B** | da |
+| 2 | `RESTORE` 5.972 B | **7.625 B** | da |
+| 3 | copii centrale „7 fișiere / 2" (și „7+2") | **10 / 3** | da |
+| 4 | calea `05-Attachments\05-1-Images\05-1-1-Screenshots` | **`05_Attachments\...`** — `05-Attachments` nu există | da |
+| 5 | „milioane de `0x91`", „toate scrise pe 19–20.10" | **67.874** la 04:28: 10.011 în logurile din 19.10 + **57.863 în logul curent `drive_fs.txt`** (20.10) | da |
+| 6 | „4.484 fișiere urmărite" | **4.491** la 04:28 (cifra crește la fiecare comitare) | da |
+
+**La #5 n-am preluat numărul verificatorului: l-am remăsurat.** El a raportat
+10.011 — corect pentru logurile din 19.10, dar **a omis logul curent**
+`drive_fs.txt`, care conține 57.863 de apariții și e scris pe 20.10. Concluzia
+e identică în sensul care contează („milioane" e fals de ~100×), dar cifra
+corectă e 67.874, nu 10.011. Regula: **cifra bună poate deveni falsă prin chiar
+actul care o însoțește** — aici, prin trecerea zilei.
+
+**Elementul parțial, închis.** Hasharea completă a celor 92 de perechi comune
+dintre ramurile „Knights Templar" a fost reluată cu coada de fișiere mari
+(6 PDF-uri de ~540 MB, TIFF-uri de ~500 MB) și terminată: **92/92 identice,
+0 diferite**. Frontieră de tool, nu defect de produs — DriveFS citește la
+~6 MB/s, deci 28,2 GB de citiri nu încap într-o oră.
+
+**O regresie proprie, prinsă înainte de livrare.** După ce `build-index` a rescris
+indexurile din vault, copiile centrale ale skillurilor au rămas în urmă: verificarea
+a dat **22 din 26 perechi identice, 4 diferite** — toate `00_INDEX.md`. Reparat
+prin resincronizare vault → central și reverificat prin SHA256.
+
+**Lecția, pentru orice cifră care intră într-un raport.** O cifră măsurată la
+momentul T nu e corectă și la momentul T+n. Singurele care supraviețuiesc sunt
+cele **măsurate din nou pe starea finală, de un instrument independent**, cu
+ora măsurătorii scrisă în text. Așa e scris acum, în `handoff-prompt.md`:
+„4.491 fișiere urmărite (măsurat la 2026-10-20 04:28; comitarea automată rulează
+la 5 minute, deci cifra crește)".
+
+**Starea rapoartelor după corecții.** `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD -
+2026-10-20.md` (17.634 → 17.674 B) are §3.2 corectat; `handoff-prompt.md`
+(10.643 → 10.763 B) are afirmația `0x91` corectată; `auto-repair-drivefs.ps1`
+(9.582 → 9.750 B) are în antet cifra remăsurată, iar copia de pe `C:` a fost
+resincronizată **octet cu octet** cu cea din vault (parse 0 în ambele).
