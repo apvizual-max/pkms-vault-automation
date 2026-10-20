@@ -153,7 +153,9 @@ Conțin: convenția `NN-Name`, cele șase porți, procedura de creștere a vault
 
 ### 7. Git
 
-`bbc583bf7bb760144135504b812341b1a568ebe0` local · remote `2c80e1c5d5b2289edb21af8284d59e7b4beedd1f` · **4491 fișiere urmărite** · arborele la momentul raportului: 2 intrări necomitate (comitarea automată rulează la 5 minute).
+Repo-ul e save point: tot ce ține de sistem e urmărit de git, deci se poate reconstrui. **4491 fișiere urmărite** (măsurat la 2026-10-20 05:18).
+
+**De ce nu sunt SHA-urile aici:** un raport nu își poate conține propriul comit — orice SHA scris aici ar fi depășit de comitarea lui. Verificarea finală a push-ului (`git ls-remote origin master` = HEAD local) e în **mesajul de predare** și în istoricul git. Starea la generarea acestui raport: local `1d70e91f5d6fb4553e363c1df36c61cf4ad86416` · remote `1d70e91f5d6fb4553e363c1df36c61cf4ad86416` · 0 intrări necomitate (comitarea automată rulează la 5 minute).
 
 ---
 
