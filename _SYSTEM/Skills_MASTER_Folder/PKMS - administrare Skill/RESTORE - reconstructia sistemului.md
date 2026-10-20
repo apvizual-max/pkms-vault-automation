@@ -15,6 +15,7 @@
 | `COTOR.md`, `AGENTS.md`, `MANUAL DE NAVIGARE - cotor.md` | fișierele atașate |
 | **skillurile** (`_SYSTEM\Skills_MASTER_Folder\`) | arhiva `_QUARANTINE` |
 | **XML-urile celor 4 taskuri** | `INDEX CENTRAL.md` — derivat, se regenerează |
+| **scriptul cârligului DriveFS** (`auto-repair-drivefs.ps1`) | fișierele atașate |
 | **pachetul de handoff** (`handoff-prompt.md` + `handoff-harta-implementarii.md`) | transcriptul sesiunii (30.412.803 B) — rămâne pe Drive |
 | `.gitignore` cu motivele fiecărei reguli | jurnalele vii — stare, nu sistem |
 
@@ -89,6 +90,21 @@ Copy-Item "$M\rula-din-task.ps1" $W -Force
 Lansatorul e și în repo (la `...\AI-Kit_manual\rula-din-task.ps1`, deschis de
 `.gitignore`), deci save point-ul e complet fără el.
 
+**Apoi scriptul cârligului DriveFS** — fără el, al patrulea task (`PKMS-DriveFS-AutoRepair`)
+se înregistrează, dar moare imediat, fiindcă XML-ul pornește exact acest fișier:
+
+```powershell
+$D = 'C:\Users\apviz\.minimax\drivefs'
+New-Item -ItemType Directory -Path $D -Force | Out-Null
+Copy-Item "$V\_SYSTEM\Skills_MASTER_Folder\PKMS - administrare Skill\automations\auto-repair-drivefs.ps1" $D -Force
+```
+
+**De ce e în vault și nu doar pe `C:`:** măsurat 2026-10-2026 — scriptul exista doar
+la `C:\Users\apviz\.minimax\drivefs\`, `git ls-files` nu returna nimic pentru
+`*auto-repair*`, iar RESTORE nu conținea mențiunea `drivefs`. Așadar save point-ul
+refăcea **3 din 4** automatizări. Scriptul e acum în folderul `automations\` al
+skillului (deschis de `.gitignore` la nivel de fișier), deci se reface din repo.
+
 XML-urile sunt în
 `_SYSTEM\Skills_MASTER_Folder\PKMS - administrare Skill\automations\`. Se înregistrează
 cu:
@@ -138,7 +154,7 @@ Copy-Item 'C:\temp\pkms-restore\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\HANDOFF-2026-
 ```
 
 `handoff-prompt.md` e promptul de inițiere al sesiunii noi; `handoff-harta-implementarii.md`
-e harta construcției sistemului, §1–§12. **Transcriptul (`transcript-complet.json`,
+e harta construcției sistemului, §1–§14. **Transcriptul (`transcript-complet.json`,
 30.412.803 B) NU e în repo** — rămâne pe Drive, fiindcă e dovada unei sesiuni, nu
 programarea sistemului.
 

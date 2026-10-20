@@ -142,6 +142,16 @@ configurare a taskului** — rularea manuală a *exact* acelei comenzi a ieșit 
 Probă reală: rulat prin Task Scheduler la **00:48:56**, jurnalul a scris „rulez
 watch.ps1". `PKMS-DriveFS-AutoRepair` nu e afectat — scriptul lui e deja pe `C:`.
 
+**Gol de save point, găsit și închis 20.10.2026.** Scriptul cârligului
+(`auto-repair-drivefs.ps1`, 9.582 B) exista **doar** pe `C:`. XML-ul lui
+`PKMS-DriveFS-AutoRepair` pornește exact acest fișier, deci un restore din repo
+înregistra 4 XML-uri, dar al patrulea task murea imediat — save pointul refăcea
+**3 din 4** automatizări. Măsurat: `git ls-files` nu returna nimic pentru
+`*auto-repair*`, iar RESTORE nu conținea mențiunea `drivefs` (0 potriviri).
+**Repar:** scriptul e acum în `automations\` al acestui skill (deschis de
+`.gitignore` la nivel de fișier), iar RESTORE §1.6 are pasul care îl copiază în
+`C:\Users\apviz\.minimax\drivefs\` **înainte** de înregistrarea XML-urilor.
+
 **Regula:** un `LastTaskResult` nenul la o automatizare e un incident de urmărit, chiar
 dacă porțile manuale sunt verzi. Porțile manuale nu acoperă automatizările.
 
@@ -308,7 +318,7 @@ poartă motivul ei, măsurat** — o regulă fără motiv e o presupunere, nu o 
 5. **XML-urile celor 4 taskuri** — altfel automatizările nu se pot reface
 6. `.gitignore` cu motivele lui
 7. procedura de restaurare: `RESTORE - reconstructia sistemului.md`
-8. **pachetul de handoff** — `handoff-prompt.md` (portul de intrare pentru o sesiune nouă, cu 0 memorie) și `handoff-harta-implementarii.md` (harta construcției, §1–§12). **Măsurat 20.10.2026: erau ABSENȚI din repo** — `git ls-files` dădea 0 intrări, închise de regula `**/*`. Fără ei, restore-ul dădea motor fără doctrină. Deschise prin regula 4c a `.gitignore`; transcriptul (30.412.803 B) rămâne închis, fiindcă e dovada unei sesiuni, nu programarea sistemului.
+8. **pachetul de handoff** — `handoff-prompt.md` (portul de intrare pentru o sesiune nouă, cu 0 memorie) și `handoff-harta-implementarii.md` (harta construcției, §1–§14). **Măsurat 20.10.2026: erau ABSENȚI din repo** — `git ls-files` dădea 0 intrări, închise de regula `**/*`. Fără ei, restore-ul dădea motor fără doctrină. Deschise prin regula 4c a `.gitignore`; transcriptul (30.412.803 B) rămâne închis, fiindcă e dovada unei sesiuni, nu programarea sistemului.
 
 ## 11. Cum verifici că ai terminat
 
