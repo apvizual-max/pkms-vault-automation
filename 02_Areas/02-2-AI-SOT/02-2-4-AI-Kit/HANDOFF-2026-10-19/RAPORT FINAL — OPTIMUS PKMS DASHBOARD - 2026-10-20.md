@@ -14,7 +14,7 @@
 
 **Al doilea, și acesta e al meu: când am reparat primul defect, am introdus o regresie care a golit raportul și a orb verdictul.** La rescrierea lui `watch.ps1` am pierdut patru proprietăți din obiectul rezultat al fiecărei trepte (`Erori`, `Atentii`, `Nota`, `Detalii`). Consecința: o treaptă cu 7 erori și cod de ieșire 0 ar fi raportat „Erori deocamdata: 0" — o afirmație **nemasurată**, scrisă cu calm de un automatism care trebuia să poată da roșu. L-am găsit citind raportul scris de o rulare reală, l-am reparat, și l-am probat cu o bancă de **3 probe cu contra-probă** (3/3): ultima arată că proba decisivă *poate* eșua.
 
-Totul e măsurat acum, în această sesiune: **lint NOT_MEASURED erori / NOT_MEASURED atenționi**, **census NOT_MEASURED LIPSA · NOT_MEASURED CORUPT · NOT_MEASURED INCOMPLET · NOT_MEASURED NEALINIAT · NOT_MEASURED CONFORM**, **50745 fișiere · 85.75 GB**, backup neatins, copii centrale **24/24** identice cu vaultul.
+Totul e măsurat acum, în această sesiune: **lint 0 erori / 2 atenționi**, **census 0 LIPSA · 0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2519 CONFORM**, **50745 fișiere · 85.75 GB**, backup neatins, copii centrale **24/24** identice cu vaultul.
 
 **Singurul lucru care rămâne de făcut de tine: sortarea manuală a ramurilor dublate „Knights Templar".** Nu am mutat nimic și nu voi muta nimic acolo fără hotărârea ta.
 
@@ -128,9 +128,9 @@ după mutare trebuie făcută **pe contorul fișierelor**, nu pe „am reparat r
 
 | Poartă | Rezultat |
 |---|---|
-| `build-index.ps1 -Quiet` | exit **NOT_MEASURED** · `INDEX CENTRAL.md` 962971 B (pe disc) · masura tiparita: 962971 B |
-| `align-index.ps1 -CeVad` (census) | exit **NOT_MEASURED** · **NOT_MEASURED LIPSA · NOT_MEASURED CORUPT · NOT_MEASURED INCOMPLET · NOT_MEASURED NEALINIAT · NOT_MEASURED CONFORM** · NOT_MEASURED nemodificate |
-| `lint.ps1` | exit **NOT_MEASURED** · **NOT_MEASURED erori / NOT_MEASURED atenționi** — cele două atenționi sunt „fapt, nu verdict" (folderele din backup poartă ora copierii) |
+| `build-index.ps1 -Quiet` | exit **0** · `INDEX CENTRAL.md` 962972 B (pe disc) · masura tiparita: 962972 B |
+| `align-index.ps1 -CeVad` (census) | exit **0** · **0 LIPSA · 0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2519 CONFORM** · 2519 nemodificate |
+| `lint.ps1` | exit **0** · **0 erori / 2 atenționi** — cele două atenționi sunt „fapt, nu verdict" (folderele din backup poartă ora copierii) |
 | `health-check.ps1` | **50745 fișiere · 85.75 GB**, drift 0 — sursa cifrei: raportul zilnic viu (treapta 2 a rularii de acum) |
 | backup `H:` | **snapshot curat — 0 fișiere peste prag** (52.519) · un fișier a aterizat azi în el (screenshot cu calea veche cache-uită) și a fost **mutat înapoi în vault**, hash identic — vezi §3.5 |
 | copii centrale ale skillurilor | **24/24 perechi** SHA256 identice cu vaultul |
@@ -139,21 +139,21 @@ după mutare trebuie făcută **pe contorul fișierelor**, nu pe „am reparat r
 
 | Skill | Unde | Mărime |
 |---|---|---|
-| `PKMS - administrare Skill` | vault + 2 copii centrale | SKILL.md 20397 B |
+| `PKMS - administrare Skill` | vault + 2 copii centrale | SKILL.md 21104 B |
 | `PKMS - indexare Skill` | vault + 2 copii centrale | SKILL.md 10390 B |
 
 Conțin: convenția `NN-Name`, cele șase porți, procedura de creștere a vaultului, incidentul „jurnalul viu intră în cifre", incidentul „raportul zilnic înghețat", **incidentul „verdictul orb" (nou)**, semne de alarmă (nou: raport cu câmpuri goale), save pointul, și procedura RESTORE cu test de acceptanță.
 
 ### 6. Handofful, raportul, arhivarea
 
-- `handoff-prompt.md` — 10551 B (promptul de inițiere a sesiunii noi)
-- `handoff-harta-implementarii.md` — 35508 B, cu **§11** (segmentul 2), **§12** (segmentul 3) și **§13** (regresia „verdictul orb")
-- `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` — 15536 B, în `02-2-4-AI-Kit`, cu §7 = linkurile exacte la A și B
+- `handoff-prompt.md` — 10643 B (promptul de inițiere a sesiunii noi)
+- `handoff-harta-implementarii.md` — 38143 B, cu **§11** (segmentul 2), **§12** (segmentul 3) și **§13** (regresia „verdictul orb")
+- `RAPORT DE STARE — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` — 17634 B, în `02-2-4-AI-Kit`, cu §7 = linkurile exacte la A și B
 - rapoartele de stare vechi **mutate** (nu șterse) în `09_raport-archive` — SHA256 identic înainte/după, corecție datată adăugată în copia arhivată
 
 ### 7. Git
 
-`6eda3fe3afe696c1f568f478ec8abcbae0979ad2` local · remote `2c80e1c5d5b2289edb21af8284d59e7b4beedd1f` · **4489 fișiere urmărite** · arborele la momentul raportului: 0 intrări necomitate (comitarea automată rulează la 5 minute).
+`f9745707a1347fb530ccbb1a869454d161424f7e` local · remote `2c80e1c5d5b2289edb21af8284d59e7b4beedd1f` · **4491 fișiere urmărite** · arborele la momentul raportului: 0 intrări necomitate (comitarea automată rulează la 5 minute).
 
 ---
 
@@ -224,7 +224,7 @@ Sesiunea a avut trei scopuri, toate închise:
 
 ## VERDICT
 
-**GATA** — segmentele 2 și 3 sunt închise, măsurat și împins: lint NOT_MEASURED erori, census NOT_MEASURED NEALINIAT, backup neatins, copii centrale identice, raportul zilnic din nou viu **și cu numere**, nu doar cu verdict.
+**GATA** — segmentele 2 și 3 sunt închise, măsurat și împins: lint 0 erori, census 0 NEALINIAT, backup neatins, copii centrale identice, raportul zilnic din nou viu **și cu numere**, nu doar cu verdict.
 
 **Rămâne un singur lucru de la tine: sortarea manuală a ramurilor dublate.** Nu e blocaj — e o decizie care cere ochii tăi pe fișiere, nu o măsurătoare.
 
@@ -283,7 +283,7 @@ Ai primit **continuitatea unei sesiuni încheiate pe 2026-10-20 01:0x**. Tot ce 
 
 ```
 VAULT   G:\My Drive\GDrive-Second_Brain_PKMS   ramură master
-        4.484 fișiere urmărite în git · backup H: neatins
+        4490 fișiere urmărite în git (măsurat la 2026-10-20 03:32; comitarea automată rulează la 5 minute, deci cifra crește) · backup H: neatins
 MOTOR   02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\   (12 scripturi)
         + rula-din-task.ps1 = lansatorul taskurilor, stă pe C:
 GHID    02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\
