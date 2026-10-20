@@ -14,8 +14,10 @@
 
   CE NU FACE (pe masura):
     - NU cauta si NU inventeaza cauza degradarii. Logurile DriveFS arata o
-      semnatura, masurata pe 2026-10-19: 8.397 erori "0x91" (= 145, "The
-      directory is not empty"), toate in loguri scrise in ziua aceea, cu un
+      semnatura, masurata pe 2026-10-19: 8.397 aparitii "0x91" (= 145, "The
+      directory is not empty") in logurile scrise in ziua aceea. REMASURAT pe
+      2026-10-20 04:28: 67.874 aparitii in total - 10.011 in logurile din 19.10
+      si 57.863 in logul curent drive_fs.txt (scris pe 20.10; cifra creste). Cu un
       precursor de stalling al cache-ului (local store: tranzactii de 36,6 s).
       Legatura cauza->efect NU e masurata. Cârligul trateaza SIMPTOMUL.
     - NU se auto-amplifica: cooldown, plafon de restarturi pe ora, si
