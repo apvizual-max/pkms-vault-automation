@@ -515,3 +515,42 @@ Dovada de anulare: `D:\PKMS-tooling\handoff\undo-proof-2026-10-20-screenshot-021
 registrului nu ajunge la procesele deja pornite.* Ele rezolvă calea o dată, la pornire.
 Reparul e relogare sau repornirea procesului — și verificarea de după mutare trebuie
 făcută **pe contorul fișierelor**, nu pe „am reparat registry-ul".
+
+## 15. Audit independent + golul de save point închis (20.10.2026, ~03:00)
+
+**De ce a existat acest audit.** Un verificator independent (agent nou, fără
+context) a primit două sarcini: (a) să verifice dacă fiecare nume, cale și cifră
+din cele două rapoarte există așa cum sunt scrise pe disc; (b) să verifice dacă
+pachetul de handoff poate fi reconstuit din repo. Verdictul lui a fost **FAIL** pe
+criteriul save point — nu pe conținut, care era complet și consistent.
+
+**Golul, măsurat.** `auto-repair-drivefs.ps1` (9.582 B) exista **doar** pe
+`C:\Users\apviz\.minimax\drivefs\`. XML-ul lui `PKMS-DriveFS-AutoRepair` pornește
+exact acest fișier. Așadar, un restore din repo înregistra 4 XML-uri, dar al
+patrulea task murea imediat: **save pointul refăcea 3 din 4 automatizări**.
+Probe: `git ls-files -- "*auto-repair*"` → 0 intrări; `grep drivefs` în RESTORE →
+0 potriviri; `git ls-files -- "*rula-din-task*"` → 1 intrare (lansatorul era deja
+în vault, la `AI-Kit_manual\`, deci acolo nu era gol).
+
+**Repar (DRAG — integrare în vault, sursa de adevăr).**
+1. Scriptul a intrat în vault: `_SYSTEM\Skills_MASTER_Folder\PKMS - administrare
+   Skill\automations\auto-repair-drivefs.ps1`, octet cu octet identic cu cel de
+   pe `C:` (SHA256 `6004FA3C787807FC4BD8CD52D5D1E61FFCBFB0A5AA64B1CE764035E80695E10B`).
+   Folderul `automations\` e deschis de `.gitignore` la nivel de **fișier**, deci
+   intră în repo.
+2. `RESTORE - reconstructia sistemului.md` (6.703 → 7.625 B) are acum, în §1.6, pasul
+   care copiază scriptul în `C:\Users\apviz\.minimax\drivefs\` **înainte** de
+   înregistrarea XML-urilor, plus rândul nou în tabela §0.
+3. `SKILL.md` (20.397 → 21.104 B) are nota datată în §5 și corectările de
+   consistență: harta e „§1–§14", nu „§1–§12" (era în RESTORE §1.8 și SKILL.md §10).
+4. Copiile centrale ale skillului au fost resincronizate și reverificate prin
+   SHA256: **26/26 perechi identice** (24 + cele 2 ale scriptului nou).
+
+**Lecția, pentru orice verificare de save point de acum înainte.** Diferența de
+conținut dintre `origin/master` și HEAD **nu se vede la numărarea fișierelor**:
+`git ls-tree -r origin/master` dă același număr ca HEAD, fiindcă cele 2 comituri
+nepushuite doar au *modificat* fișiere existente. Verificarea prin număr de fișiere
+trece identic, cu push sau fără push. Singura probă care prinde abaterea e
+**comparația de conținut** (`git diff origin/master..HEAD`). O poartă care numără
+fișiere în loc să compare conținut nu poate da roșu — și tocmai de aceea n-a dat
+roșu nici când trebuia.

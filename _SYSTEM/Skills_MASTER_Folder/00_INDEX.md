@@ -1,4 +1,4 @@
-﻿# 00_INDEX — _SYSTEM/Skills_MASTER_Folder
+# 00_INDEX — _SYSTEM/Skills_MASTER_Folder
 
 **0 fișiere · 0 B · 5 subfoldere**
 
