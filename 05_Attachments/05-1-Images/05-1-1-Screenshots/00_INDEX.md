@@ -1,13 +1,13 @@
 ﻿# 00_INDEX — 05_Attachments/05-1-Images/05-1-1-Screenshots
 
-**991 fișiere · 316 MB · 11 subfoldere**
+**992 fișiere · 316 MB · 11 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Singura extensie prezentă e `.png` (991 din 991 fișiere). 11 rafturi copil (primele trei după nume: `CLAUDEAPP_Screenshots`, `DESIGN Ai`, `FORGE SCREENS`); cel mai mare element din folder e `FORGE SCREENS` (38 MB)
+Singura extensie prezentă e `.png` (992 din 992 fișiere). 11 rafturi copil (primele trei după nume: `CLAUDEAPP_Screenshots`, `DESIGN Ai`, `FORGE SCREENS`); cel mai mare element din folder e `FORGE SCREENS` (38 MB)
 
 ## Cuvinte cheie
 
@@ -31,9 +31,9 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 ## Fișiere
 
-_( 991 fișiere — grupat după tip, pentru nu umfla documentul)_
+_( 992 fișiere — grupat după tip, pentru nu umfla documentul)_
 
-- **.png** — 991 fișiere · 316 MB
+- **.png** — 992 fișiere · 316 MB
 
 ### Cele mai mari 20
 

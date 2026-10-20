@@ -1,13 +1,13 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide
 
-**10 fișiere · 124 KB · 0 subfoldere**
+**10 fișiere · 126 KB · 0 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element din folder e `AUTOMATIZARI - scripturi.md` (38 KB)
+Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element din folder e `AUTOMATIZARI - scripturi.md` (39 KB)
 
 ## Cuvinte cheie
 
@@ -18,7 +18,7 @@ Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element di
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
 | `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-19 |
-| `AUTOMATIZARI - scripturi.md` | 38 KB | 2026-10-20 |
+| `AUTOMATIZARI - scripturi.md` | 39 KB | 2026-10-20 |
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
 | `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-19 |
 | `LOGICA - cum se foloseste fiecare baza.md` | 8 KB | 2026-10-19 |

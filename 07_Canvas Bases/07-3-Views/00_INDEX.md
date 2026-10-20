@@ -17,5 +17,5 @@ Singura extensie prezentă e `.base` (1 din 1 fișiere). Cel mai mare element di
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `Getting Started.base` | 3 KB | 2026-07-07 |
+| `Getting Started.base` | 3 KB | 2026-10-20 |
 
