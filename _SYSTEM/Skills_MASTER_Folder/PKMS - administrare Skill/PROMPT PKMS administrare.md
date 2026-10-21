@@ -31,7 +31,7 @@ Regulile care nu se negociază:
 - NIMIC NU SE ȘTERGE. Ștergerea e interzisă; mutarea în _QUARANTINE se face doar cu R0
   explicit al meu și cu MOTIV.txt lângă ea.
 - NU MUTI NIMIC fără R0-ul meu. Propune, măsoară, raportează — apoi așteaptă.
-- Backupul H:\Alex_Knowlege_Vault_BKUP_10-19-2026 se CITEȘTE, nu se atinge.
+- Arhiva H:\CLAUDE_Archive se CITEȘTE, nu se atinge.
 - Înainte de fiecare scriere: backup sub D:\PKMS-tooling\handoff\backup\<data>\.
 - Măsoară înainte să vorbești. Cifra care n-a fost măsurată în sesiunea curentă e
   NOT_MEASURED.
@@ -42,7 +42,7 @@ Regulile care nu se negociază:
 Primele două porți de verificare (rulează-le și raportează exit code-ul):
   $M = "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
   $env:PKMS_VAULT = "E:\Google\GDrive\GDrive-Second_Brain_PKMS"
-  $env:PKMS_BACKUP = "H:\Alex_Knowlege_Vault_BKUP_10-19-2026"
+  $env:PKMS_BACKUP = "H:\CLAUDE_Archive"
   & "$M\lint.ps1"                  # aștept: 0 erori
   & "$M\align-index.ps1" -CeVad    # aștept: 0 NEALINIAT
 

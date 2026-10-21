@@ -21,17 +21,17 @@ Eu decid ce facem, tu execuți și îmi raportezi ce ai făcut, pe scurt, în ro
 La început:
 
 1. Rulează:  cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
-               .\paths.ps1     (verifică drumul către backup; nu scrie)
+               .\paths.ps1     (verifică reperul: oglinda cloud; nu scrie)
                .\setup.ps1     (verificare de preluare; nu scrie)
 
-2. Citește, în ordine, fără să sari:
-   - SPECIFICATII - contractul vaultului.md
-   - COTOR.md
-   - LOGICA - cum se foloseste fiecare baza.md
-   - PROCESE - flux de la captură la utilizare.md
-   - WORKFLOW - ce faci concret.md
-   - AI-Kit\ONBOARDING.md
-   - INDEX CENTRAL.md
+2. Citește, în ordine, fără să sari (locația e după nume):
+   - SPECIFICATII - contractul vaultului.md     (AI-Kit_guide)
+   - COTOR.md                                  (rădăcina vaultului)
+   - LOGICA - cum se foloseste fiecare baza.md  (AI-Kit_guide)
+   - PROCESE - flux de la captură la utilizare.md (AI-Kit_guide)
+   - WORKFLOW - ce faci concret.md              (AI-Kit_guide)
+   - ONBOARDING.md                             (AI-Kit_manual)
+   - INDEX CENTRAL.md                          (rădăcina vaultului)
 
 3. Apoi rulează:
    .\lint.ps1
@@ -51,7 +51,7 @@ La început:
    - ce nu ai înțeles
 
 5. Faci un PLAN pe care îl scrii undeva unde poate fi citit înapoi
-   (widget de progres, sau AI-Kit\PLAN.md) și mi îl arăți.
+   (widget de progres, sau AI-Kit_manual\PLAN.md) și mi îl arăți.
    Un plan care rămâne doar în conversație nu contează.
 
 6. Nu începi să execuți până nu-mi spui „am înțeles" și nu-mi arăți planul.

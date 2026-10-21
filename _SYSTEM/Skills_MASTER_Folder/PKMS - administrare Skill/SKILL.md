@@ -25,7 +25,7 @@ license: Proprietar — Popy / OPTIMUS PRIME
 |---|---|
 | **Unde** | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — oglinda locală NVMe a Google Drive Cloud |
 | **Reper** | **oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în cloud și local, iar egalitatea se verifică **per fișier**, cu `verifica-oglinda.ps1` |
-| **Arhivă** | `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` — **se citește, nu se atinge**; e ultimul rând de rezervă, nu reperul |
+| **Arhivă** | `H:\CLAUDE_Archive` (711.821 fișiere · 180,77 GB, măsurat 21-10-2026) — **se citește, nu se atinge**; e ultimul rând de rezervă, nu reperul |
 | **Motor** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` — 13 scripturi + 1 cititor read-only |
 | **Ghid** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\` — contractul + documentația |
 | **Cotor** | `COTOR.md` la rădăcină (25.735 B) · `AGENTS.md` (4.357 B) · `INDEX CENTRAL.md` (derivat, neversionat) |
@@ -98,7 +98,7 @@ Toate se rulează din `AI-Kit_manual` și au nevoie de `PKMS_VAULT`. `PKMS_BACKU
 $V = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
 $M = "$V\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 $env:PKMS_VAULT = $V
-# $env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'   # doar dacă există
+# $env:PKMS_BACKUP = 'H:\CLAUDE_Archive'   # doar dacă există
 ```
 
 | Poartă | Comandă | Ce verifică | Verde |
@@ -212,7 +212,7 @@ rescris la următoarea rulare a generatorului.
    Mutarea se face, ștergerea nu. Dacă ceva trebuie să dispară, se mută în `_QUARANTINE`
    **cu `MOTIV.txt`**, și numai cu R0 explicit.
 2. **NU MUTI NIMIC fără R0.** (Popy, 19.10.2026) Mutările se propun, nu se execută.
-3. **Backupul se citește, nu se atinge.** `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` e
+3. **Arhiva se citește, nu se atinge.** `H:\CLAUDE_Archive` e
    reperul de comparație, nu o țintă de lucru.
 4. **Backup înainte de fiecare scriere**, sub `D:\PKMS-tooling\handoff\backup\<data>\`.
 5. **Encodingul e parte din contract:**

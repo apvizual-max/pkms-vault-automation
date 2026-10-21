@@ -147,9 +147,9 @@ un AI nou, fără memorie
     ↓
 citește  COTOR.md
     ↓
-citește  AI-Kit\ONBOARDING.md
+citește  AI-Kit_manual\ONBOARDING.md
     ↓
-rulează  AI-Kit\setup.ps1
+rulează  AI-Kit_manual\setup.ps1
     ↓
 audea  libere? ── nu ──► cere numai informații de fapt
        │ da
@@ -160,6 +160,6 @@ execută, bifează, execută
 ```
 
 **Regulă:** un AI fără memorie nu poate primi un plan în conversație.
-Planul trebuie **scris undeva unde se citește înapoi** — widget, sau `AI-Kit\PLAN.md`.
+Planul trebuie **scris undeva unde se citește înapoi** — widget, sau `AI-Kit_manual\PLAN.md`.
 
 Aceasta e cauza pentru care cinci runde anterioare s-au pierdut: planul exista doar în conversație.

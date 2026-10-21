@@ -5,7 +5,7 @@
 Ultima actualizare: **21 octombrie 2026**. 51.157 de fișiere de conținut · 88,72 GiB conținut util · 95,86 GB brut zecimal (100% bit-parity).
 Vaultul trăiește fizic ca oglindă locală NVMe pe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** — oglinda locală a Google Drive Cloud, sincronizată permanent cu cloud-ul.
 Baza de date Git este **decuplată fizic** la **`E:\Google\GitData-PKMS`**, lăsând în rădăcina vaultului doar un pointer scalar de 31 octeți (`.git`).
-**Reperul de siguranță este oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în două locuri, iar starea lor se verifică **per fișier**, local↔cloud. Backupul extern de pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`) rămâne **arhivă neatinsă** — nu mai e reperul, e ultimul rând de rezervă, și se citește doar când e nevoie.
+**Reperul de siguranță este oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în două locuri, iar starea lor se verifică **per fișier**, local↔cloud. Arhiva externă de pe **`H:`** — `H:\CLAUDE_Archive` (**711.821 fișiere · 180,77 GB**, măsurat 21-10-2026) — rămâne **arhivă neatinsă** — nu mai e reperul, e ultimul rând de rezervă, și se citește doar când e nevoie.
 **Calea vaultului, a mountului și a reperului nu se scriu tare nicăieri:** le descoperă dinamic `AI-Kit\paths.ps1`.
 
 > **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici vaultul, nici backupul. Ce a rămas pe
@@ -268,7 +268,7 @@ Nimic altceva în vault. Backupul primește citiri și atât.
 
 ```powershell
 $env:PKMS_VAULT  = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
-$env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'   # doar dacă există
+$env:PKMS_BACKUP = 'H:\CLAUDE_Archive'   # doar dacă există
 ```
 
 **Fără niciun drum scris tare în scripturi.** `Get-PkmsReference` întoarce reperul

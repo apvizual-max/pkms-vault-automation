@@ -15,8 +15,8 @@ e **suprafața de integrare**: cine răspunde de ce și în ce ordine.
 
 | | unde stă | răspunde de |
 |---|---|---|
-| conținut | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` | backup local, **nu** GitHub |
-| motor | acest repo | GitHub |
+| conținut | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` | **oglinda Google Drive Cloud**, **nu** GitHub — repo-ul e de automatizare, nu de conținut (4.524 urmărite din 51.295 fișiere) |
+| motor | același repo (`02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`) | GitHub — contract, motor, indexuri, skill-uri |
 | punte, skill-uri, plan | `C:\Users\apviz\.minimax-agent\projects\Mavis-Optimus-Continuous-Integration\` | proces |
 | sursa Cloud | `cloud-ingest\MAVIS-CLOUD\` (clonă read-only) | citit, **nu** modificat |
 
@@ -45,8 +45,8 @@ găsește un verb interzis.
 |---|---|
 | ce **e** sistemul | `COTOR.md` (rădăcină) |
 | cum **se caută** în el | `MANUAL DE NAVIGARE - cotor.md` (rădăcină) |
-| contractul unui index | `COTOR.md` §16, verificat de `AI-Kit\verifica-schema.ps1` |
-| măsurătorile | `AI-Kit\health-check.ps1` |
+| contractul unui index | `COTOR.md` §16, verificat de `AI-Kit_manual\verifica-schema.ps1` |
+| măsurătorile | `AI-Kit_manual\health-check.ps1` |
 
 **Regulă:** cifrele din documente sunt **vii**. Nu se copiază într-un raport ca
 număr fix — se spune data și se spune cum se re-verifică.

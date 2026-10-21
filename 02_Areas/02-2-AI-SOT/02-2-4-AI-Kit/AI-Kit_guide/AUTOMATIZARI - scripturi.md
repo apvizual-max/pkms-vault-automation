@@ -1,6 +1,6 @@
 # AUTOMATIZĂRI — scripturile
 
-Sunt în `AI-Kit\`. **Douăsprezece scripturi.** Rulează-le din PowerShell:
+Sunt în `AI-Kit_manual\`. **Treisprezece scripturi `.ps1`** (plus cititorul `drivefs-oglinda.js`). Rulează-le din PowerShell:
 
 ```powershell
 cd "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
@@ -31,9 +31,9 @@ nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din do
 (Get-ChildItem .\AI-Kit_manual -Filter *.ps1).Count
 ```
 
-**La data de 2026-10-20: 12**, măsurat pe calea nouă
+**La data de 2026-10-21: 13**, măsurat pe calea nouă
 `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`. *Cifra veche din acest
-document spunea `E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual` — o cale care nu mai există de
+document spunea `D:\Alex_Knowlege_Vault\AI-Kit` — o cale care nu mai există de
 când vaultul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
 calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 
@@ -44,7 +44,7 @@ calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 ```powershell
 cd "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 
-powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica reperul (oglinda)     (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
@@ -516,9 +516,9 @@ Plasa răspunde la asta **fără să atingă interfața**: comită singur.
 
 | Fișier | Ce e |
 |---|---|
-| `AI-Kit\git-autocommit-registru.txt` | repo-ul de supravegheat, o cale pe rând |
-| `AI-Kit\git-autocommit-ignorat.txt` | căi care nu se comită niciodată (wildcard) |
-| `AI-Kit\raport-autocomit.log` | urma fiecărui eveniment — scris **doar la eveniment**. **NU intră în git** (măsurat 2026-10-11) |
+| `AI-Kit_manual\git-autocommit-registru.txt` | repo-ul de supravegheat, o cale pe rând |
+| `AI-Kit_manual\git-autocommit-ignorat.txt` | căi care nu se comită niciodată (wildcard) |
+| `AI-Kit_manual\raport-autocomit.log` | urma fiecărui eveniment — scris **doar la eveniment**. **NU intră în git** (măsurat 2026-10-11) |
 
 **Cele patru porți, în ordine:** secrete pe **nume** → secrete pe **conținut** → căi
 **interzise** → **timp de așezare** (implicit 60 s, ca să nu prindă o scriere la jumătate).
@@ -587,7 +587,7 @@ pe rând. Cauza degradărilor rămâne necunoscută — nu se inventează una.
 ### De ce logul plasei NU intră în git
 
 Măsurat pe 2026-10-11, pe istoricul real al repo-ului: **55 de comituri consecutive**,
-fiecare conținând doar `AI-Kit\raport-autocomit.log`, între 13:11 și 17:46. Cauza nu era
+fiecare conținând doar `AI-Kit_manual\raport-autocomit.log`, între 13:11 și 17:46. Cauza nu era
 o greșeală de logică, ci o consecință: plasa scrie o intrare în log → intrarea schimbă
 fișierul → fișierul schimbat apare ca „modificat" la următoarea rundă → plasa îl comită.
 
@@ -597,7 +597,7 @@ care se rescrie singur în afara istoricului, care e locul lucrurilor care nu se
 Două greșeli de-aici au fost și ele ale mele, închise laolaltă:
 
 1. **Regula `.gitignore` deschidea o cale care nu există** (`/raport-autocomit.log`),
-   pentru că logul mutase în `AI-Kit\`. Era o regulă **moartă**. Logul intra oricum în
+   pentru că logul mutase în `AI-Kit_manual\`. Era o regulă **moartă**. Logul intra oricum în
    git prin deschiderea `!/AI-Kit/**`.
 2. **Fixul de urgență a fost greșit, deși oprea bucla.** Logul a fost adăugat în
    `git-autocommit-ignorat.txt` — adică în lista de căi *interzise*. Orice rundă s-ar

@@ -18,7 +18,7 @@ Vreau sa realiniez un subarbore, fara sa ating restul vaultului.
 2. Rularea de diagnostic, ÎNTOTDEAUNA înainte de orice scriere:
      $M = "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
      $env:PKMS_VAULT = "E:\Google\GDrive\GDrive-Second_Brain_PKMS"
-     $env:PKMS_BACKUP = "H:\Alex_Knowlege_Vault_BKUP_10-19-2026"
+     $env:PKMS_BACKUP = "H:\CLAUDE_Archive"
      & "$M\align-index.ps1" -CeVad
    Citește ultima linie: «rezumat: ... · N NEALINIAT · ...».
 3. Scrierea, DOAR pe subarborele vizat:

@@ -95,3 +95,26 @@ Nu s-a șters nimic. Tot ce era neclar sau redundant stă în `_QUARANTINE`:
 | `resturi de sistem` | baza locală a unui program, un `.DS_Store`, folderul `Tags` gol |
 
 Fiecare se întoarce într-o secundă, din `REVERT.csv`.
+
+---
+
+## Corecție de context — 21 octombrie 2026
+
+Cifrele de mai sus au fost măsurate pe **7 octombrie 2026**, pe structura de atunci
+(`D:\Alex_Knowlege_Vault`, cu backupul `D:\Alex_Knowlege_Vault - CopyBACKUP`).
+Structura s-a schimbat de atunci, de mai multe ori, iar cifrele nu mai mai descriu nimic:
+
+- **Vaultul nu mai e pe `D:`.** Acum e `E:\Google\GDrive\GDrive-Second_Brain_PKMS` —
+  oglinda locală a Google Drive Cloud.
+- **Backupul de pe `D:` nu mai există.** `D:\Alex_Knowlege_Vault`,
+  `D:\Alex_Knowlege_Vault - CopyBACKUP` și
+  `D:\Alex_Knowlege_Vault - Backup - 10-08-2026` — toate măsurate absente pe 21-10-2026.
+- **Reperul nu mai e o copie locală.** E **oglinda Google Drive Cloud**, verificată per
+  fișier local↔cloud cu `verifica-oglinda.ps1` (`DIVERGENTA LOCAL<->CLOUD: N`,
+  `MASURAT OGLINDA: da`).
+- **Arhiva externă** e `H:\CLAUDE_Archive` — 711.821 fișiere, 180,77 GB (măsurat
+  21-10-2026). Se citește, nu se atinge. Numele `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`
+  care apare în unele documente vechi **nu există**.
+
+**Cifra de azi** se obține cu `AI-Kit_manual\health-check.ps1` (raportează, nu scrie).
+Nu copia cifrele de mai sus în niciun plan: ele descriu o structură care a fost înlocuită.

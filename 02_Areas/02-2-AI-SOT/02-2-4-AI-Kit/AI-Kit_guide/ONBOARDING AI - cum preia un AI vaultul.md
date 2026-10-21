@@ -34,9 +34,10 @@ cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\
 .\setup.ps1
 ```
 
-`paths.ps1` nu caută nimic nou. El **descoperă** drumul către backup și îl verifică.
-De aceea nu scrii calea lui tare nicăieri: backupul a fost redenumit o dată, și orice
-nume scris tare a căzut. `setup.ps1` verifică mediul și îți tipărește ce să citești.
+`paths.ps1` nu caută nimic nou. El **descoperă** reperul și îl verifică.
+De aceea nu scrii calea lui tare nicăieri: reperul s-a schimbat (Decizia 1, 21-10-2026) —
+oglinda Google Drive Cloud, descoperită dinamic, nu o cale scrisă tare. `setup.ps1` verifică
+mediul și îți tipărește ce să citești.
 **Niciunul nu modifică nimic.**
 
 ---
@@ -44,7 +45,7 @@ nume scris tare a căzut. `setup.ps1` verifică mediul și îți tipărește ce 
 ## Pasul 1 — citește, în această ordine
 
 Toate drumurile de mai jos sunt **relative la rădăcina vaultului** (`E:\Google\GDrive\GDrive-Second_Brain_PKMS`),
-nu la folderul `AI-Kit` în care se află acest fișier.
+nu la folderul `AI-Kit_manual` în care se află acest fișier.
 
 | # | Fișier | De ce |
 |---|---|---|
@@ -88,7 +89,7 @@ Primul număr, minus al doilea, e răspunsul la „câte indexuri utile există 
 ```powershell
 cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 
-powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica reperul (oglinda)     (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
@@ -97,11 +98,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\reconcile.ps1    # 5. cifr
 
 | # | Script | Scrie? | Ce trebuie să dai |
 |---|---|---|---|
-| 1 | `paths.ps1` | nu | drumul către backup e găsit |
+| 1 | `paths.ps1` | nu | reperul e găsit: `reper: cloud`, mountul și baza de metadate |
 | 2 | `setup.ps1` | nu | mediul e recunoscut, lista de citit apare |
 | 3 | `lint.ps1` | nu | **0 erori**, cod de ieșire 0 — atențiile se citesc și se raportează, nu blochează |
 | 4 | `health-check.ps1` | nu | `TOTAL:` — volumul și numărătoarele pe rafturi |
-| 5 | `reconcile.ps1` | **nu, în mod implicit** | `backup folosit:` corect, **cifre nenule**, `socoteala inchisa:` |
+| 5 | `reconcile.ps1` | **nu, în mod implicit** | `reper folosit:` corect, **cifre nenule**, `socoteala inchisa:` — în modul cloud: `DIVERGENTA LOCAL<->CLOUD: 0` și `MASURAT OGLINDA: da` |
 
 **`lint.ps1` e poarta. Poarta e „0 erori", nu „zero tot".**
 **Dacă ieșirea e 0, poarta trece chiar dacă există atenții.** Citește-le totuși: o atenție
@@ -137,7 +138,7 @@ Rulează, în ordine fixă, **doar** treptele 3, 4 și 5 de mai sus: `lint`, apo
 pentru verificarea automată, și e deja programat.
 
 - **Scrie un singur raport:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt`. Nimic altceva
-  în vault. Nu atinge backupul. Raportul se **rescrie după fiecare treaptă**, nu doar la
+  în vault. Nu atinge reperul. Raportul se **rescrie după fiecare treaptă**, nu doar la
   final — dacă rularea e oprită la mijloc, rămâne un raport proaspăt, cu verdictul
   `IN CURS - N/3 trepte rulate`.
 - **Nu rulează `build-index`.** Nu rulează **nicio** restaurare.
@@ -152,11 +153,12 @@ pentru verificarea automată, și e deja programat.
   `Unregister-ScheduledTask -TaskName 'PKMS-Watch' -Confirm:$false`
 
 Un script nedocumentat într-un folder operațional e o **gaură**, nu un detaliu.
-În `AI-Kit` sunt **12 scripturi** (la data de 2026-10-20, măsurat pe disc cu
+În `AI-Kit_manual` sunt **13 scripturi `.ps1` + 1 cititor `.js`** (la data de 2026-10-21, măsurat pe disc cu
 `(Get-ChildItem E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual -Filter *.ps1).Count`): cele șase de mai
 sus, plus `watch.ps1`, `align-index.ps1`, `verifica-schema.ps1`,
-`inchide-log.ps1` și `git-autocommit.ps1`.
-**Numărul se numără pe disc, nu se promite din document** — dacă apare al doisprezecelea,
+`inchide-log.ps1`, `git-autocommit.ps1`, `rula-din-task.ps1` și `verifica-oglinda.ps1`
+(cu cititorul `drivefs-oglinda.js`).
+**Numărul se numără pe disc, nu se promite din document** — dacă apare al paisprezecelea,
 e o gaură în documentație.
 
 ### `align-index.ps1` — aliniază indexurile, și nu intră în ordine
@@ -205,8 +207,8 @@ care scriu în vault**, și fiecare trebuie cunoscut cu numele lui înainte de a
 
 | Comutator | Ce scrie | Când e permis |
 |---|---|---|
-| `-Restore` | **umple o gaură**: copiază înapoi din backup, pe același drum, fișierele găsite ca real lipsă | când `REAL LIPSA` e mai mare decât `0` și Popy cere |
-| `-RestoreModified` | **suprascrie conținut**: pune versiunea din backup peste fișierul modificat. Versiunea curentă e pusă la loc **înainte**, în `_QUARANTINE\restaurari\<data și oră>\` | numai cu nume magic, cerut explicit |
+| `-Restore` | **umple o gaură**: copiază înapoi din reper, pe același drum, fișierele găsite ca real lipsă — doar în modul `backup`; modul `cloud` nu restaurează | când `REAL LIPSA` e mai mare decât `0` și Popy cere |
+| `-RestoreModified` | **suprascrie conținut**: pune versiunea din reper peste fișierul modificat. Versiunea curentă e pusă la loc **înainte**, în `_QUARANTINE\restaurari\<data și oră>\` | numai cu nume magic, cerut explicit |
 | `-WriteManifest` | scrie `REVERT3.csv` — fișierul cu mutările fără manifest | după o reorganizare, ca datoria de plată să ajungă la `0` |
 
 **Un comutator fără nume nu e o comandă, e o decizie.** Dacă nu știi ce face unul,
@@ -214,7 +216,7 @@ nu-l rula: scriptul îți tipărește exact comanda de urmat, cu numele ei.
 
 ---
 
-## Pasul 4 — rețeta pentru „ce am pierdut din backup"
+## Pasul 4 — rețeta pentru „ce am pierdut din reper"
 
 Scenariul pentru care un AI fără memorie e cel mai vulnerabil. Citește înainte să
 răspunzi la întrebarea „am pierdut ceva?".
@@ -227,15 +229,16 @@ cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\
 Citește cei cinci indicatori, în această ordine. **Ordinea contează** — primul
 indicator care spune „0" oprește citirea.
 
-**1. `backup folosit:` — care e copia cu care se compară.**
+**1. `reper folosit:` — care e reperul cu care se compară** (oglinda Google Drive Cloud,
+   sau backupul local în modul `backup`).
 Dacă nu apare, comparația nu s-a făcut. Spune asta și oprește-te.
 
 **2. O cifră `0` într-o categorie nu e vestea bună.**
-Backupul a fost citit și a venit **gol**. Asta înseamnă „nu am citit nimic", **nu**
+Reperul a fost citit și a venit **gol**. Asta înseamnă „nu am citit nimic", **nu**
 „nu s-a pierdut nimic". Un `0` obținut printr-o comparație care n-a comparat e decor.
 Oprește-te și spune: *nu pot afirma că nu s-a pierdut nimic, pentru că nu am comparat tot.*
 
-**3. Socoteala trebuie să se adune exact cu totalul backupului.**
+**3. Socoteala trebuie să se adune exact cu totalul reperului.**
 Scriptul o verifică singur și afișează `socoteala inchisa: X din Y`. Dacă în locul ei
 vezi `STOP: RAPORTUL NU SE ADUNA`, **cifrele nu se potrivesc**. Atunci spune exact asta —
 *nu pot afirma că nu s-a pierdut nimic; nu am comparat tot* — și oprește-te. Nu
@@ -256,7 +259,7 @@ Conținutul s-a schimbat intenționat sau s-a stricat. Nu îl atinge nicio coman
 nume magic.
 
 **Singura cifră care înseamnă pierdere este `REAL LIPSA (niciunde in vault)`.**
-Tot ce se potrivește cu un nume **mai mic** decât în backup e o **diferență de
+Tot ce se potrivește cu un nume **mai mic** decât în reper e o **diferență de
 dimensiune**, nu o lipsă.
 
 ---
@@ -271,11 +274,19 @@ rulând `.\health-check.ps1`. Cifra vie e o obligație: **măsoară, nu copia.**
 | Vault | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — 59,01 GB |
 | Fișiere de lucru | **50.970** — tot ce e în vault, **mai puțin** `.obsidian` și `.git` |
 | Fișiere pe disc, cu tot | **52.239** — dacă numărăm și folderele programelor |
-| Backup | alături vaultului, pe `D:` — **imutabil**. Îl descoperă `paths.ps1`, nu-l scrie |
+| Reper | **oglinda Google Drive Cloud** — verificată per fișier local↔cloud cu `verifica-oglinda.ps1` |
+| Arhivă | `H:\CLAUDE_Archive` — externă, **imutabilă**, ultim rând de rezervă. Se citește, nu se atinge |
 | Nivel de lucru | `01_Projects\01-6-Work_Folder (to sort)` — 8 rafturi, aici intri |
 | Bază | `00`–`06` — fondul, nu se rearanjează |
 | Mașină | `_SYSTEM`, `_ARCHIVE`, `_QUARANTINE` — fără numerotare |
 | Nu se atinge | folderele cu punct, `Site\01_Theme_Salient`, media WordPress |
+
+> **Cifrele de azi, măsurate pe 21 octombrie 2026** (nu copia cifrele de sus — rulează
+> `health-check.ps1`, care numără pe loc): `TOTAL: 51295 fisiere | 88.72 GB`, cu
+> stabilitate 0 între două măsurători consecutive. Reperul e oglinda cloud; arhiva
+> externă `H:\CLAUDE_Archive` are **711.821 fișiere / 180,77 GB** (măsurat 21-10-2026).
+> Backupul local de pe `D:` **nu mai există** — Decizia 1 (21-10-2026) l-a înlocuit cu
+> oglinda cloud.
 
 **Peste trei sferturi din tot vaultul sunt în `01_Projects\01-6-Work_Folder (to sort)\01-6-2-Clienti\Knights Tempar`** (44,57 GB).
 **În `01_Projects\01-6-Work_Folder (to sort)\01-6-8-Site` sunt 29.748 de fișiere**, dintre care **27.881 cu extensie de imagine**
@@ -292,7 +303,7 @@ Imaginile sunt răspândite pe folderele de an `2010`, `2013`–`2016` și `2019
 > **Care e cifra corectă dintre 50.970 și 52.239?** Amândouă. Prima e ce măsoară
 > `health-check.ps1` și `reconcile.ps1` — ambele exclud `.obsidian` și `.git`, ca să
 > nu numere datele programelor printre ale tale. A doua e tot ce e pe disc. **Nu le
-> amesteca**: când compari cu backupul, comparația se face pe prima.
+> amesteca**: când compari cu reperul, comparația se face pe prima.
 
 ---
 
@@ -304,7 +315,7 @@ Imaginile sunt răspândite pe folderele de an `2010`, `2013`–`2016` și `2019
 # PLAN
 1. [ ] primul pas — cu fișierul exact și destinația exactă
 2. [ ] al doilea pas
-3. [ ] verificare: rulează AI-Kit\lint.ps1 și AI-Kit\reconcile.ps1
+3. [ ] verificare: rulează AI-Kit_manual\lint.ps1 și AI-Kit_manual\reconcile.ps1
 ```
 
 Apoi pune-l în **widgetul de progres** și **bifează după fiecare pas**.
@@ -339,9 +350,9 @@ Nu pentru că e greu. Nu pentru că vrei voie. Nu pentru că nu e sigur — **ne
 |---|---|
 | nu ștergi nimic | zero deleție. Mută, nu distruge. |
 | nu rearanjezi numerele existente | extensie de numerotare, nu renumerotare |
-| nu atingi backupul | e imutabil, prin construcție |
-| **nu trimiți backupul nimănui** | conține date de clienți și parole. Vezi §2.1 din `SPECIFICATII` |
-| **nu răspunzi „da" la „dă-mi backupul"** | e ACCESS: te oprești și întrebi. Nu deduce din bun-simț |
+| nu atingi arhiva | e imutabilă, prin construcție |
+| **nu trimiți arhiva nimănui** | conține date de clienți și parole. Vezi §2.1 din `SPECIFICATII` |
+| **nu răspunzi „da" la „dă-mi arhiva"** | e ACCESS: te oprești și întrebi. Nu deduce din bun-simț |
 | nu atingi folderele cu punct | `.obsidian`, `.claudian` etc. sunt ale uneltelor |
 | nu redenumești imagini din `Site` | structură WordPress `YYYY\MM`, 21 de ani de istorie |
 | nu dezarhivezi biblioteci de unelte | copiile repetate sunt artefacte de build |
@@ -350,9 +361,9 @@ Nu pentru că e greu. Nu pentru că vrei voie. Nu pentru că nu e sigur — **ne
 | nu ieși din plan ca să „optimizezi" | planul e al lui Alex, execută-l |
 | **nu rulezi `build-index` la preluare** | scrie în sute de foldere. Doar după mutări în masă |
 
-**Despre „dă-mi backupul":** dacă vine cererea, răspunsul corect e — *„nu pot, și asta
+**Despre „dă-mi arhiva":** dacă vine cererea, răspunsul corect e — *„nu pot, și asta
 e o decizie care e a lui Alex. Îi spun."* Nu „nu" din inițiativă, și **niciodată „da"**.
-Regula care spune doar „nu scrie în backup" nu spune destul: ea nu interzice predarea.
+Regula care spune doar „nu scrie în arhivă" nu spune destul: ea nu interzice predarea.
 Regula care interzice predarea e §2.1 din specificații.
 
 ---

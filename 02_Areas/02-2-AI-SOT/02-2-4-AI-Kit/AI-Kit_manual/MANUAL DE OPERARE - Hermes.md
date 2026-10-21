@@ -18,14 +18,15 @@ Nu cere aprobare pentru ceva ce ți-a cerut. Nu opri lucrul pentru că e greu sa
 | | |
 |---|---|
 | Vault de lucru | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — aici se lucrează, aici se mută |
-| Backup | alături vaultului, în rădăcina lui `D:` — **imutabil**. Nu-i scriem calea: o descoperă `AI-Kit\paths.ps1` |
+| Reper | **oglinda Google Drive Cloud** — verificată per fișier local↔cloud cu `verifica-oglinda.ps1` |
+| Arhivă | `H:\CLAUDE_Archive` — externă, **imutabilă**. Nu-i scriem calea: o descoperă `paths.ps1` |
 
-**Backupul nu i se scrie niciodată.** Citește din el, copiază din el. Nu scrie, nu mută, nu redenumește, nu șterge.
-Dacă o comandă l-ar atinge, comanda e greșită, nu backupul.
+**Arhiva nu i se scrie niciodată.** Citește din ea, copiază din ea. Nu scrie, nu mută, nu redenumește, nu șterge.
+Dacă o comandă l-ar atinge, comanda e greșită, nu arhiva.
 
-Verifică la fiecare sesiune: cel mai recent fișier din backup trebuie să fie `Screenshot 2026-10-07 151225.png`, din 15:12:25. Dacă e altceva, cineva a scris acolo. Oprește-te și spune.
+Verifică la fiecare sesiune: reperul trebuie să fie **oglinda cloud**, măsurată cu `verifica-oglinda.ps1` — `DIVERGENTA LOCAL<->CLOUD: 0` și `MASURAT OGLINDA: da`. Dacă apare `MASURAT OGLINDA: NU`, măsurătoarea **n-a măsurat**: nu e „0 divergente", e necunoscut.
 
-Backupul a fost redenumit o dată (`CopyBACKUP` → `Backup - 10-08-2026`). Nu fixa calea lui în cod. `AI-Kit\paths.ps1` îl descoperă.
+Reperul s-a schimbat o dată (Decizia 1, 21-10-2026): backupul local de pe `D:` a fost înlocuit cu oglinda Google Drive Cloud. Arhiva externă se numește acum `H:\CLAUDE_Archive` (711.821 fișiere · 180,77 GB, măsurat 21-10-2026) — **nu** `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`, care nu există. Nu fixa calea în cod: `paths.ps1` o descoperă.
 
 ### Și nu iese de pe mașină. niciodată
 
@@ -59,7 +60,7 @@ Singurul motiv real de ștergere e decizia lui Popy, luată în `_QUARANTINE`.
 
 ## 4. Ordinea canonică a comenzilor
 
-În `AI-Kit` sunt **11 scripturi** (la data de 2026-10-10, măsurate pe disc cu
+În `AI-Kit_manual` sunt **13 scripturi `.ps1` + 1 cititor `.js`** (la data de 2026-10-21, măsurate pe disc cu
 `(Get-ChildItem E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual -Filter *.ps1).Count`). Cele 6 din
 ordinea canonică se rulează într-o singură ordine, scrisă identic în `ONBOARDING.md`, în
 `MANUAL DE OPERARE - Hermes.md` și în `AUTOMATIZARI - scripturi.md`. Nu o schimba.
@@ -74,7 +75,7 @@ cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\
 La fiecare sesiune, în această ordine:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica reperul (oglinda)     (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\lint.ps1         # 3. POARTA: regulile               (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\health-check.ps1 # 4. masoara vaultul                 (nu scrie)
@@ -224,7 +225,7 @@ face pe prima cifră. Nu amesteca cele două.
 
 Înainte să spui „gata", rulează din nou `lint.ps1` și `reconcile.ps1`, și pune-ți întrebarea: **ar vedea un utilizator că funcționează asta?** Dacă răspunsul e nu, nu ai terminat.
 
-Planul stă scris unde se citește înapoi — widgetul de progres, bifat pas cu pas, sau `AI-Kit\PLAN.md`. Un plan din conversație se pierde la turele următoare.
+Planul stă scris unde se citește înapoi — widgetul de progres, bifat pas cu pas, sau `AI-Kit_manual\PLAN.md`. Un plan din conversație se pierde la turele următoare.
 
 ---
 

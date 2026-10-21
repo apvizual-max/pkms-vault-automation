@@ -3,7 +3,8 @@
 Regulile care **nu se încalcă**. Fără excepții, fără „de data asta".
 
 > **Actualizat 2026-10-19, după mutarea vaultului pe Google Drive.** Contractul a fost
-> mutat odată cu `AI-Kit` în `02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_guide\`, iar numele lui
+> mutat odată cu `AI-Kit_manual` în `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\`
+> (calea veche, `02_Areas\02_2-AI-SOT\AI-Kit\AI-Kit_guide\`, nu mai există), iar numele lui
 > a trecut de la *vaultului* la *vaultului*. Titlul de mai sus a rămas cu grafsia veche:
 > un document care nu-și spune propriul nume în propria titulatură nu e corect.
 >
@@ -25,21 +26,27 @@ Coliziuni de nume: `nume_v2`, `nume_v3`. **Niciodată suprascriere.**
 
 ---
 
-## 2. Backupul e imutabil
+## 2. Arhiva e imutabilă
 
 ```
-E:\Google\GDrive\GDrive-Second_Brain_PKMS - Backup - 10-08-2026
+H:\CLAUDE_Archive
 ```
 
-**Citește. Copiază din el. Nu scrie, nu mută, nu redenumește, nu șterge.**
+**Citește. Copiază din ea. Nu scrie, nu mută, nu redenumește, nu șterge.**
 
-Dacă o comandă ar atinge backupul, **comanda e greșită**, nu backupul.
+Dacă o comandă ar atinge arhiva, **comanda e greșită**, nu arhiva.
 
-Backupul a fost redenumit o dată (`CopyBACKUP` → `Backup - 10-08-2026`).
-De aceea scripturile **nu mai scriu numele lui niciunde** — îl descoperă singure, cu `AI-Kit\paths.ps1`.
+Arhiva a fost redenumită de mai multe ori (`CopyBACKUP` → `Backup - 10-08-2026` →
+`H:\CLAUDE_Archive`). Numele `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`, care apare în
+documentele vechi, **nu există** — măsurat pe 21 octombrie 2026. De aceea scripturile
+**nu mai scriu numele ei nicăieri** — îl descoperă singure, cu `paths.ps1`.
 
-**Dovada că e neatins:** cel mai recent fișier din backup trebuie să fie
-`Screenshot 2026-10-07 151225.png`, din 15:12:25. Dacă e altceva, cineva a scris acolo. STOP.
+**Dovada că e neatinsă:** măsurată pe 21 octombrie 2026 — **711.821 fișiere, 180,77 GB**.
+Dacă cifra se schimbă, cineva a scris acolo. STOP.
+
+> **Reperul nu e arhiva.** Reperul e **oglinda Google Drive Cloud**, verificată per fișier
+> local↔cloud cu `verifica-oglinda.ps1`. Arhiva e ultimul rând de rezervă, nu reperul
+> (Decizia 1, Popy, 21-10-2026).
 
 ### 2.1 Backupul nu părăsește niciodată mașina, pe cont propriu
 
@@ -111,7 +118,7 @@ Un folder fără cifră în față spune imediat „asta nu e conținutul tău".
 `LUCURARE` nu apare nicăieri în numele de foldere, de fișiere și de scripturi.
 **Folosirea e `01_Projects`.** În română: *de lucru*.
 
-Verificat automat de `AI-Kit\lint.ps1`.
+Verificat automat de `AI-Kit_manual\lint.ps1`.
 
 **Ce scanează verificatorul, mai exact:**
 
@@ -194,7 +201,7 @@ Măsurătoarea care nu a produs schimbare, de cinci ori la rând, se numește **
 Un AI fără memorie **nu poate primi un plan într-o conversație**.
 
 - planul stă în **widgetul de progres**, bifat pas cu pas, sau
-- în `AI-Kit\PLAN.md`
+- în `AI-Kit_manual\PLAN.md`
 
 Fără asta: cinci runde pierdute, pentru că planul exista doar în conversație, iar conversația
 conținea doar constatări de eșec.
@@ -277,7 +284,7 @@ Numele e o măsurtoare; el nu dovedește conținut.
 
 ### Cine le scrie
 
-Generatorul — `AI-Kit\build-index.ps1` — la fiecare rulare, înlocuind blocul vechi.
+Generatorul — `AI-Kit_manual\build-index.ps1` — la fiecare rulare, înlocuind blocul vechi.
 Astea sunt singurele două blocuri generate care se suprascriu.
 
 **Nu se suprascrie niciodată:** rândul `**De ce e aici:**` scris de mână.
@@ -299,7 +306,7 @@ fișierul înainte să-l mute.
 
 ### Un singur punct de intrare
 
-`AI-Kit\watch.ps1` rulează, în ordine fixă, doar lucruri care **nu scriu în vault**:
+`AI-Kit_manual\watch.ps1` rulează, în ordine fixă, doar lucruri care **nu scriu în vault**:
 
 1. `lint` — regulile de denumire, cuvântul interzis, legăturile, copiile de onboarding.
 2. `health-check` — numerele vii ale vaultului.
@@ -548,7 +555,7 @@ să însemne că arborele s-a modificat.
 
 ### 19.1 Scriptul
 
-`AI-Kit\align-index.ps1`. Fără AI, fără cost, fără internet, fără scriere în
+`AI-Kit_manual\align-index.ps1`. Fără AI, fără cost, fără internet, fără scriere în
 backup. Ordinea, fixă:
 
 1. **Închide ușa în urma lui.** Dacă mai rulează o aliniere, iese tăcut.

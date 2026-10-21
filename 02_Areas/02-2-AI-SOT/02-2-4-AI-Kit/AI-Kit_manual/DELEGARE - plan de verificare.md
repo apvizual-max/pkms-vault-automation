@@ -36,8 +36,10 @@ Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.
 5. Folders-ele cu punct la început (`.obsidian`, `.claudian`, `.neural_memory`, `.sentinel_temp`,
    `.trash`, `.vault-intelligence`, `.wwebjs_cache`) sunt încă la rădăcină și **neatinse**.
 6. `Canvas Bases` este încă la rădăcină.
-7. Backup-ul există la `E:\Google\GDrive\GDrive-Second_Brain_PKMS - Backup - 10-08-2026`, este **în afara** vault-ului
-   și cel mai recent fișier din el are data `2026-10-07 15:12:25` (dovadă că nu a fost atins).
+7. Reperul e **oglinda Google Drive Cloud**: se verifică per fișier local↔cloud cu
+   `verifica-oglinda.ps1` (`DIVERGENTA LOCAL<->CLOUD: 0` + `MASURAT OGLINDA: da`).
+   Arhiva externă e `H:\CLAUDE_Archive` (711.821 fișiere · 180,77 GB, măsurat 21-10-2026) —
+   **în afara** vault-ului; se citește, nu se atinge. Backupul local de pe `D:` nu mai există.
 8. Niciun folder nou numerotat nu a apărut la rădăcină după `01_Projects\01-6-Work_Folder (to sort)` (deci nu s-a numerotat
    rațional în baza veche).
 
