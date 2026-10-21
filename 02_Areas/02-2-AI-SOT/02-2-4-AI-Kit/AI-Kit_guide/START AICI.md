@@ -1,8 +1,9 @@
 # START AICI
 
 Harta vaultului tău. Un singur loc unde vezi tot ce ai.
-**Cifrele de mai jos sunt măsurate pe 19 octombrie 2026, pe `G:\My Drive\GDrive-Second_Brain_PKMS`,
-după mutarea pe Drive și după renumerarea rafturilor.**
+**Cifrele de mai jos sunt măsurate pe 21 octombrie 2026, pe `E:\Google\GDrive\GDrive-Second_Brain_PKMS`
+(oglinda locală NVMe sincronizată cu Google Drive Cloud și mapată pe `G:\My Drive`).
+Baza de date Git este decuplată la `E:\Google\GitData-PKMS`, iar backend-ul este administrat de Antigravity Sentinel.**
 
 > **O cifră vie e o obligație, o cifră statică e o minciună cu termen.** Nu schimba
 > cifrele aici după ureche — rulează `AI-Kit_manual\health-check.ps1`, care numără pe loc.

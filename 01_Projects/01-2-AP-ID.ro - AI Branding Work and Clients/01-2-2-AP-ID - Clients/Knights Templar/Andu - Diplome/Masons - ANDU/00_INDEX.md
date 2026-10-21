@@ -23,7 +23,7 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `desktop.ini` | 352 B | 2026-10-19 |
+| `desktop.ini` | 106 B | 2026-10-21 |
 | `Masons - Investire - Doamna.pdf` | 11 MB | 2026-09-07 |
 | `Masons - Investire - Domn.pdf` | 11 MB | 2026-09-07 |
 | `Masons - Investire.psd` | 1.13 GB | 2026-09-07 |

@@ -1,4 +1,4 @@
-﻿# 00_INDEX — _SYSTEM/Skills_MASTER_Folder/PKMS - administrare Skill/automations
+﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/PKMS-tooling/handoff/backup/2026-10-20/skill-central-sync/mavis-pkms-vault-administration-skill/mavis-pkms-vault-administration-skill/automations
 
 **4 fișiere · 8 KB · 0 subfoldere**
 

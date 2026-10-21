@@ -204,7 +204,7 @@ function Get-PkmsExclusions {
     '\\\.git\\', '\\node_modules\\', '\\01_Theme_Salient\\',
     '\\02_Media_Uploads\\20\d\d\\',
     'Skills_Archive\\', 'HERMES-Skills\\', '_Skills_BackUp',
-    'indexuri generate in gresit\\'
+    'indexuri generate in gresit\\', 'PKMS-tooling\\'
   )
 }
 

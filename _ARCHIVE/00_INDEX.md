@@ -26,5 +26,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `transcribe-wisper.ipynb` | 258 B | 2026-06-21 |
+| `transcribe-wisper.ipynb` | 258 B | 2026-06-30 |
 

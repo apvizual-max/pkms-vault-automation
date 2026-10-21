@@ -23,7 +23,7 @@ Singura extensie prezentă e `.tif` (10 din 10 fișiere). Cel mai mare element d
 | `Investire Doamna - Domn - A4 - BilingvRO - Domn - Fata.tif` | 511 MB | 2026-06-16 |
 | `Investire Edi - A4 - BilingvENG - Investire - Edi - Fata.tif` | 547 MB | 2026-06-16 |
 | `Investire Edi - A4 - BilingvRO - Investire - Edi - Fata.tif` | 547 MB | 2026-06-16 |
-| `Juramant - A4 - BilingvENG - Juramant - Verso.tif` | 505 MB | 2026-06-16 |
+| `Juramant - A4 - BilingvENG - Juramant - Verso.tif` | 505 MB | 2026-10-19 |
 | `Juramant - A4 - BilingvRO - Juramant - Verso.tif` | 505 MB | 2026-06-16 |
 | `Juramant - Edi - BilingvENG - Juramant - Edi - Verso.tif` | 507 MB | 2026-06-16 |
 | `Juramant - Edi - BilingvRO - Juramant - Edi - Verso.tif` | 507 MB | 2026-06-16 |

@@ -17,7 +17,7 @@ Cele mai frecvente două extensii sunt `.jpg` (4 din 6 fișiere) și `.ini` (1 d
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `desktop.ini` | 352 B | 2026-10-19 |
+| `desktop.ini` | 106 B | 2026-10-21 |
 | `Gemini_Generated_Image_ (1).jpg` | 532 KB | 2026-09-07 |
 | `Gemini_Generated_Image_.jpg` | 713 KB | 2026-09-07 |
 | `Gemini_Generated_Image_e2oq63e2oq63e2oq.jpg` | 2 MB | 2026-09-07 |

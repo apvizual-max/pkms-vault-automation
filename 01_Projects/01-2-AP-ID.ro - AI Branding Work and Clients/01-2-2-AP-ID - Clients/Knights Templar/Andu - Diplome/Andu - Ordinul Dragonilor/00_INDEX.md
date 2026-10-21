@@ -22,5 +22,5 @@ Cele mai frecvente două extensii sunt `.pdf` (4 din 6 fișiere) și `.ini` (1 d
 | `Andu_OD - Investire_RO.psd` | 1.54 GB | 2026-09-07 |
 | `Andu_OD - Investire_RO_Doamna.pdf` | 8 MB | 2026-09-07 |
 | `Andu_OD - Investire_RO_Domn.pdf` | 7 MB | 2026-09-07 |
-| `desktop.ini` | 352 B | 2026-10-19 |
+| `desktop.ini` | 106 B | 2026-10-21 |
 

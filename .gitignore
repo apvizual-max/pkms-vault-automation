@@ -18,8 +18,9 @@
 # (D:\_OPTIMUS-SNAPSHOT). Motorul se versionează; datele nu.
 #
 # ATENTIE: NU rula `git clean -fdx` si NU rula `git reset --hard` in acest repo.
-# `.git` este IN interiorul vaultului. Un clean sterge continutul lui, nu doar
-# fisierele neversionate. Incident dovedit pe 2026-10-12.
+# UPDATE 2026-10-21: `.git` a fost decuplat fizic la `E:\Google\GitData-PKMS`, iar în
+# radacina exista doar pointerul scalar de 31 octeti. Google Drive e protejat.
+# Interdictia `git clean -fdx` / `reset --hard` ramane valabila pentru siguranta continutului.
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── 1. Totul e interzis. Se deschide doar motorul, mai jos. ──
@@ -164,6 +165,8 @@
 # se recrea exact bucla reparata in §18.7: jurnalul intra in cifre, indexul
 # devine nealiniat, alinierea scrie indexul, jurnalul creste din nou.
 /02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/raport-wrapper-task.log
+# 2026-10-21: Tooling de regresie si teste scratch — inchis DUPA deschiderea 2b
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/PKMS-tooling/
 
 # ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
 #       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu
@@ -246,6 +249,11 @@
 !/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/
 !/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/**
 /02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-19/transcript-complet.json
+
+# ── 4d. PACHETUL DE HANDOFF, 2026-10-21 (Antigravity Sentinel -> Mavis Local) ──
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-21/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-21/**
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/HANDOFF-2026-10-21/transcript-complet.json
 
 # ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
 #       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)

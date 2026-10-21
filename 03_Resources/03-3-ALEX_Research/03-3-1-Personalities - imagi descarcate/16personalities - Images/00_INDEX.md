@@ -7,7 +7,7 @@
 
 ## Ce e aici
 
-Cele mai frecvente două extensii sunt `.svg` (424 din 534 fișiere) și `.png` (98 din 534 fișiere). Cel mai mare element din folder e `Guide to Relationships (1).pdf` (1 MB)
+Cele mai frecvente două extensii sunt `.svg` (424 din 534 fișiere) și `.png` (98 din 534 fișiere). Cel mai mare element din folder e `Guide to Relationships (1)` (1 MB)
 
 ## Cuvinte cheie
 
@@ -24,11 +24,11 @@ _( 534 fișiere — grupat după tip, pentru nu umfla documentul)_
 - **.zip** — 1 fișiere · 1,000 KB
 - **.txt** — 1 fișiere · 43 KB
 - **.jpeg** — 1 fișiere · 87 KB
-- **.pdf** — 1 fișiere · 1 MB
+- **(fără extensie)** — 1 fișiere · 1 MB
 
 ### Cele mai mari 20
 
-- `Guide to Relationships (1).pdf` — 1 MB
+- `Guide to Relationships (1)` — 1 MB
 - `images-assets.zip` — 1,000 KB
 - `image - 2026-06-04T121235.955.svg` — 336 KB
 - `image - 2026-06-04T122348.526.svg` — 300 KB

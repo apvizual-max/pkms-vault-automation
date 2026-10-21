@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 01_Projects/01-2-AP-ID.ro - AI Branding Work and Clients/01-2-2-AP-ID - Clients/Knights Templar/Andu - Diplome
 
-**1 fișiere · 352 B · 2 subfoldere**
+**1 fișiere · 106 B · 2 subfoldere**
 
 > Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
@@ -24,5 +24,5 @@ _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `desktop.ini` | 352 B | 2026-10-19 |
+| `desktop.ini` | 106 B | 2026-10-21 |
 

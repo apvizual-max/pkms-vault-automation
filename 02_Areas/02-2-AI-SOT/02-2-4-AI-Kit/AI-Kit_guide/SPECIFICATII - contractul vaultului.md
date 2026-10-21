@@ -1,4 +1,4 @@
-﻿# SPECIFICATII — contractul vaultului
+# SPECIFICATII — contractul vaultului
 
 Regulile care **nu se încalcă**. Fără excepții, fără „de data asta".
 
@@ -218,10 +218,12 @@ Un fișier gol, al cărui nume arată că e o parolă (`WP Account - …`), se m
 
 ---
 
-## 15. `E:\` nu se atinge
+## 15. `E:\` — Partiția AI & Oglinda Locală (Actualizat 2026-10-21)
 
-Nu e discul lui Alex. Nu se citește, nu se scrie, nu se copiază.
-Arhiva de 2 TB de poze nu e atașată.
+În topologia actualizată a sistemului pe 3 discuri (`C: System`, `D: Archive`, `E: AI Drive`), **`E:\` este acum discul de lucru NVMe pentru AI și sisteme locale**:
+- Aici trăiește oglinda fizică locală a Google Drive: **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** (sincronizată bidirecțional cu Google Drive Cloud).
+- Aici trăiește baza de date decuplată Git: **`E:\Google\GitData-PKMS`**.
+- Restul volumelor externe vechi (ex: backupul imutabil) au fost consolidate pe **`H:\`** (`H:\CLAUDE_Archive` - 180,77 GB și copia de siguranță `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`), iar fotografiile personale/arhivele reci stau pe `D:\` sau pe storage extern.
 
 ---
 
@@ -626,3 +628,17 @@ Unregister-ScheduledTask -TaskName 'PKMS-Aliniere' -Confirm:$false
 
 Asta e tot. Indexurile deja scrise rămân; se văd în
 `_SYSTEM\arhiva-indexe\`, iar logul rămâne la rădăcină ca istoric.
+
+---
+
+## 20. Arhitectura Git Decuplat și Rolul Antigravity Sentinel (Adăugat 2026-10-21)
+
+### 20.1 Decuplarea Bazei de Date Git
+- Baza de date Git (`HEAD`, `config`, `objects`, `refs`, `logs`, `index`) este stocată exclusiv la **`E:\Google\GitData-PKMS`**.
+- În rădăcina vault-ului, `.git` este strict un fișier text scalar de **31 de octeți**: `gitdir: E:/Google/GitData-PKMS`.
+- Această izolare fizică garantează că Google Drive for Desktop nu sincronizează fișierele interne Git, eliminând complet eroarea `0x91 ERROR_DIR_NOT_EMPTY` și blocajele `index.lock`.
+
+### 20.2 Rolurile Mavis Local & Antigravity Sentinel
+- **Mavis Local (MiniMax Code):** Operator de primă linie pe conținut, sarcini curente de sortare, redactare note și aliniere incrementală.
+- **Antigravity (Sentinel Orchestrator / Google Deepmind):** Arhitect de backend, administrator de sistem, inginer de baze de date Git și instanță supremă de salvare (rescue operator). În cazul oricărei stări de avarie sau limitare a lui Mavis Local, Antigravity intervine pentru remediere.
+- **SOT Centralizat:** Orice planificare structurală, checklist de sarcini și raport de parcurs Antigravity se arhivează în indexul central SOT (`Antigravity_Projects`).

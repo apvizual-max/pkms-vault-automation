@@ -5,6 +5,14 @@ Citește tot, în ordine. Nu sari.
 
 ---
 
+## Rolurile de Operare: Mavis Local & Antigravity Sentinel (21 Octombrie 2026)
+
+- **Mavis Local (MiniMax Code):** Co-pilotul de zi cu zi, lucrează local pe stocarea fizică NVMe `E:\Google\GDrive\GDrive-Second_Brain_PKMS`.
+- **Antigravity (Sentinel Orchestrator / Google Deepmind):** Arhitect de backend și rescue operator. În caz de blocaje, erori de disc, lock-uri sau degradări de sistem, Antigravity preia comanda pentru audit și depanare.
+- **Git Decuplat:** Depozitul `.git` trăiește în `E:\Google\GitData-PKMS`, iar în vault există doar pointerul scalar de 31 de octeți (`gitdir: E:/Google/GitData-PKMS`). Google Drive este complet protejat de erorile `0x91` și `index.lock`.
+
+---
+
 ## De ce există acest document
 
 Un AI fără memorie primește în ture, nu un proiect. În fiecare ture vede doar ce i-a fost scris.

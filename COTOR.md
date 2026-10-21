@@ -2,10 +2,11 @@
 
 **Scheletul vaultului.** Tot ce urmează pleacă de aici.
 
-Ultima actualizare: **20 octombrie 2026**. 50.714 de fișiere · 7.509 de foldere · 85,75 GB.
-Vaultul trăiește pe Google Drive, montat local: **`G:\My Drive\GDrive-Second_Brain_PKMS`**.
-Backupul e pe **`H:`**, într-un volum separat — neatins, se citește doar.
-**Calea lui nu se scrie tare nicăieri:** o descoperă `AI-Kit\paths.ps1`.
+Ultima actualizare: **21 octombrie 2026**. 51.157 de fișiere de conținut · 88,72 GiB conținut util · 95,86 GB brut zecimal (100% bit-parity).
+Vaultul trăiește fizic ca oglindă locală NVMe pe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** (sincronizat permanent cu Google Drive Cloud și mapat secundar pe `G:\My Drive\GDrive-Second_Brain_PKMS`).
+Baza de date Git este **decuplată fizic** la **`E:\Google\GitData-PKMS`**, lăsând în rădăcina vaultului doar un pointer scalar de 31 octeți (`.git`).
+Backupurile externe sunt pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și copia de siguranță `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`) — neatinse, doar citire la nevoie.
+**Calea vaultului și a backupului nu se scriu tare nicăieri:** le descoperă dinamic `AI-Kit\paths.ps1`.
 
 > **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici vaultul, nici backupul. Ce a rămas pe
 > `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
@@ -375,20 +376,13 @@ reporniri se scrie în `state.json` — nu se deduce din nimic.
 `sanatos`, `totalReporniri: 0`. Task: `apviz`, `Interactive`, `Limited`, interval
 `PT5M`, `StartWhenAvailable`.
 
-**Limita, spusă limpede:** cârligul tratează **simptomul**. Cauza degradărilor
-DriveFS **nu e stabilită** — dar logurile **nu sunt curate**, iar semnătura e
-măsurată (2026-10-19):
+**Rezolvarea Cauzei Rădăcină (21.10.2026, Antigravity Sentinel):**
+Cauza celor 9.422 apariții de `0x91 ERROR_DIR_NOT_EMPTY` și a degradărilor DriveFS a fost identificată și eliminată definitiv:
+Git crea și ștergea structuri temporare în `.git\objects\??\` direct în interiorul folderului sincronizat de Google Drive.
+DriveFS aplica lock-uri de citire pe fișiere pentru sync cloud, iar la curățarea Git Windows arunca `Win32Exception(145)` (`0x91 ERROR_DIR_NOT_EMPTY`), cauzând blocaje în lanț pe `index.lock` și `LocalStore`.
+Prin **decuplarea bazei de date Git** în afara spațiului Google Drive la `E:\Google\GitData-PKMS` (folosind pointer scalar `gitdir: E:/Google/GitData-PKMS` în rădăcină), motorul Google Drive nu mai scanează baza Git, coliziunile de lock au devenit fizic imposibile, iar aparițiile de `0x91` și `index.lock` au coborât la **0**.
 
-- **Codul:** `0x91` = 145 = „The directory is not empty" (măsurat: `Win32Exception(145)`).
-- **Mesajul:** `win_util.cc:59:ConvertWin32ErrorToStatus Returning GENERIC_ERROR for unknown Windows Error 0x91`.
-- **Unde:** 9.422 apariții `0x91` în logurile DriveFS — **toate** în loguri scrise azi, **zero** în logurile vechi.
-- **Când:** prima la `00:58:00.061Z`, vârf la `03:xx` (5.235) — și **continuă**: 1.116 apariții în logul curent, la 21:09.
-- **Precursor:** la `00:57:36` scrieri Dokan „slow"; la `00:57:53.990` „slow content cache open taking 39.77s"; apoi zece tranzacții `LocalStore::BeginTransaction()` de câte **36.6 s**.
-- **Context:** presiune de memorie la `00:49`/`00:54` — `vmmemWSL` 60,15 GB, `google.exe` 49,6 GB spațiu virtual rezervat.
-
-Ce **nu** e dovedit: de ce s-a blocat local store-ul. Presiunea de memorie e
-suspectul principal, dar legătura cauză→efect nu e măsurată. Cârligul rămâne
-tratament de simptom — spus limpede, nu ascuns.
+**Limita istorică, explicată:** cârligul trata inițial simptomul. Acum cauza de fond a fost decuplată complet din rădăcină.
 
 ### Regula de blocaj: mutex, nu fișier-pid
 

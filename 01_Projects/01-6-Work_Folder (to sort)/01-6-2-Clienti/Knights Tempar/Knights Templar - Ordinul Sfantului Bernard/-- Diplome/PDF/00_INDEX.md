@@ -25,7 +25,7 @@ Singura extensie prezentă e `.pdf` (16 din 16 fișiere). Cel mai mare element d
 | `Diploma - Comanderie Crux Lucis 3_Update.pdf` | 10 MB | 2026-01-25 |
 | `Diploma - Comanderie Sf Nicolae 2_Update.pdf` | 10 MB | 2026-01-25 |
 | `Diploma - Invesmantare si Juramant_Update.pdf` | 504 MB | 2026-01-25 |
-| `Diploma - Mare Baliv al Poloniei_Update_ENG.pdf` | 509 MB | 2026-02-02 |
+| `Diploma - Mare Baliv al Poloniei_Update_ENG.pdf` | 509 MB | 2026-10-19 |
 | `Diploma - Mare Baliv al Poloniei_Update_RO.pdf` | 509 MB | 2026-02-02 |
 | `Diploma - Mare Baliv International_Update.pdf` | 11 MB | 2026-01-25 |
 | `Diploma - Mare Herald_Update.pdf` | 10 MB | 2026-01-25 |

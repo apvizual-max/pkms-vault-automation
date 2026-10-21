@@ -1,4 +1,4 @@
-﻿# 00_INDEX — _SYSTEM/Skills_MASTER_Folder/PKMS - indexare Skill
+﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/PKMS-tooling/handoff/backup/2026-10-20/skill-central-sync/pkms-vault-index/pkms-vault-index
 
 **2 fișiere · 14 KB · 0 subfoldere**
 
@@ -11,7 +11,7 @@ Singura extensie prezentă e `.md` (2 din 2 fișiere). Cel mai mare element din 
 
 ## Cuvinte cheie
 
-`PKMS - indexare Skill` · `SKILL` · `.md`
+`pkms-vault-index` · `SKILL` · `.md`
 
 ## Fișiere
 
