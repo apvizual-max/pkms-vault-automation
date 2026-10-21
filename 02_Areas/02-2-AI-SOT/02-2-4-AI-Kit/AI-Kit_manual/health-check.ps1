@@ -103,3 +103,13 @@ if ($prgDir.Count -ge 1) {
 }
 Write-Output ""
 Write-Output "=========================================================="
+
+# COD DE IESIRE EXPLICIT - masurat 2026-10-21.
+# Fara un 'exit' propriu, scriptul NU seteaza $LASTEXITCODE, deci mosteneste codul
+# treptei anterioare a lantului. Probe: cu $LASTEXITCODE=1 inainte, health-check
+# raporta "cod de iesire 1" cu 0 erori si 0 atentioni, desi masura lui era corecta
+# (51.286 fisiere / 88,72 GB / diferenta 0). Cu 0 inainte, raporta 0. Rularea
+# nativa raporta 0. lint.ps1:323 are deja 'exit 1 / exit 0'; era singura poarta
+# fara exit. O poarta care raporteaza codul altui instrument nu masoara nimic
+# despre ea - si zicea 'cod de iesire 1' despre o masuratoare care nu esuase.
+exit 0
