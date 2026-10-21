@@ -25,7 +25,7 @@ Cele mai frecvente două extensii sunt `.ps1` (12 din 18 fișiere) și `.md` (4 
 | `git-autocommit.ps1` | 17 KB | 2026-10-19 |
 | `git-autocommit-ignorat.txt` | 615 B | 2026-10-11 |
 | `git-autocommit-registru.txt` | 2 KB | 2026-10-21 |
-| `health-check.ps1` | 6 KB | 2026-10-19 |
+| `health-check.ps1` | 6 KB | 2026-10-21 |
 | `inchide-log.ps1` | 14 KB | 2026-10-19 |
 | `lint.ps1` | 18 KB | 2026-10-19 |
 | `MANUAL DE OPERARE - Hermes.md` | 23 KB | 2026-10-19 |
