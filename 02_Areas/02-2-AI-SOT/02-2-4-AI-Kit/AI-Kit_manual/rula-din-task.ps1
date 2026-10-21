@@ -32,7 +32,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$Vault    = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+$Vault    = if (Test-Path -LiteralPath 'E:\Google\GDrive\GDrive-Second_Brain_PKMS') { 'E:\Google\GDrive\GDrive-Second_Brain_PKMS' } else { 'G:\My Drive\GDrive-Second_Brain_PKMS' }
 $Manual   = Join-Path $Vault '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual'
 $Jurnal   = Join-Path $Manual 'raport-wrapper-task.log'
 $script:Start = Get-Date

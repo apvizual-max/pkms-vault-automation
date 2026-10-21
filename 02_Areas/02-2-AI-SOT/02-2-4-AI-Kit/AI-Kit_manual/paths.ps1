@@ -106,6 +106,8 @@ function Get-PkmsVaultCandidates {
   #  siguranta, si plansa nu are voie sa indice spre o copie.
   $rez = New-Object System.Collections.Generic.List[string]
   # indiciu rapid, daca exista
+  $hintE = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
+  if (Test-Path -LiteralPath $hintE) { $rez.Add((Normalize-PkmsPath $hintE)) }
   $hint = 'G:\My Drive\GDrive-Second_Brain_PKMS'
   if (Test-Path -LiteralPath $hint) { $rez.Add((Normalize-PkmsPath $hint)) }
   foreach ($vol in @(Get-PSDrive -PSProvider FileSystem -EA SilentlyContinue)) {

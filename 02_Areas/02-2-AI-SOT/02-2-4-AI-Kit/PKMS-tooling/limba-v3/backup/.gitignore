@@ -1,0 +1,295 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# PKMS — REPO DE AUTOMATIZARE. NU DE CONȚINUT.
+#
+# Măsurat 2026-10-12, pe `D:\Alex_Knowlege_Vault`.
+#
+# CE E ÎN ISTORIC: doar motorul. Scripturi, scheme, indexuri de cotor, skill-uri
+# vii, documentația de la rădăcină.
+# CE NU E ÎN ISTORIC: 52.949 de fișiere, 59,82 GB — date, documente, imagini,
+# dosare de clienți, CV-uri, fișiere de proiect.
+#
+# DE CE A FOST SCHIMBAT REGIMUL LA 2026-10-12: varianta anterioară urmărea 36
+# de fișiere dintre 52.949, iar auto-salvarea raporta succes pentru conținut care
+# nu intra niciodată în istoric — un sistem lent NU, unul FALS. Azi urmăritele
+# sunt 41, toate fiind motorul, deci orice raport de succes înseamnă ceva real.
+#
+# DE CE NU SE MAI TRIMITE VAULT-UL PE GITHUB (R0 Popy, 2026-10-12): conținutul
+# e personal, `.git` ar ajunge la ~10 GB, iar backupul e sovereign pe disc
+# (D:\_OPTIMUS-SNAPSHOT). Motorul se versionează; datele nu.
+#
+# ATENTIE: NU rula `git clean -fdx` si NU rula `git reset --hard` in acest repo.
+# `.git` este IN interiorul voltului. Un clean sterge continutul lui, nu doar
+# fisierele neversionate. Incident dovedit pe 2026-10-12.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── 1. Totul e interzis. Se deschide doar motorul, mai jos. ──
+/*
+
+# ── 1b. STRATUL DE INDEXARE, deschis la 2026-10-19, masurat. ──
+#
+#  CE CEREA: pe GitHub trebuie sa ajunga tot ce are nevoie un AI cu 0 memorie
+#  si 0 context. Stratul de indexare ESTE harta vaultului — fara el, un cititor
+#  nou vede 942 de foldere fara nicio relatie intre ele.
+#
+#  DE CE ERA INCHIS: regula 3e si regula 6 inchideau fiecare 00_INDEX.md cu
+#  motivul „artefact derivat, rescris de build-index la fiecare rulare". Motivul
+#  e adevarat despre SCIRIERE, si fals despre TINE: un derivat se regenereaza,
+#  dar un derivat pe care nu-l vezi nu iti spune nimic pana nu-l cauti in Drive.
+#
+#  MECANICA, masurata intr-un repo de proba, nu presupusa:
+#  Gitul NU coboara intr-un director ignorat, deci o negatie pe fisier
+#  (`!*/00_INDEX.md`) nu ajunge la nimic: proba a dat 0 intrari. Ca un fisier
+#  adanc sa poata fi urmarit, directorii trebuie deschisi.
+#  Sandwich-ul de mai jos deschide directorii, inchide continutul, redeschide
+#  directorii, si abia apoi deschide indexurile. Ordinea conteaza: ultima
+#  regula care se potriveste castiga.
+#
+#  ATENTIE: acest sandwich se apune INAINTE de deschiderile specifice de mai jos
+#  (2, 2b, 3, 4, 4b), ca acelea sa castige peste `**/*`. Daca l-as pune la
+#  sfarsit, ar inchide motorul, contractul si skill-urile.
+!*/
+**/*
+!*/
+!**/00_INDEX.md
+
+# ── 2. Motorul: scripturile care construiesc si verifica cotorul ──
+!/.gitignore
+!/AI-Kit/
+!/AI-Kit/**
+
+# ── 2b. MOTORUL LA CALEA NOUA, masurat 2026-10-19. AI-Kit a urcat in
+#       02_Areas\02_2-AI-SOT\, iar .gitignore deschidea in continuare doar
+#       /AI-Kit/ de la radacina — cale care nu mai exista. Rezultat: TOATE cele
+#       11 scripturi, contractul si documentatia au devenit INVIZIBILE pentru git,
+#       deci plasa de siguranta nu mai veghea motorul pe care ea insasi il apara.
+#
+#       ATENTIE — REGULA 3b, APLICATA INTAIA DATA LA RAMURA 02_Areas.
+#       Prima incercare a fost doar `!/02_Areas/` + coborare pe strigate. Probe:
+#       `git add -A` trecea la 166 de fisiere, cu CV-uri, diplome, Certificate
+#       Google si documente de client. Fiecare deschidere de pe drum redeschide
+#       INTREGUL subarbore al acelui director, deci dupa deschideri trebuie
+#       INCHISE explicit fratii. Inchiderile sunt la 3e, mai jos. ──
+!/02_Areas/
+!/02_Areas/02-2-AI-SOT/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/**
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/
+!/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/**
+
+# ── 3. Skill-urile vii. Arhiva vendor ramane inchisa:
+#       e copie de arhiva, nu mecanism.
+# ── MUTARE 2026-10-19: skillurile vii NU mai sunt la /_SYSTEM/Skills/, ci la
+#       /_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-*- Skill/. Ca urmare a
+#       regulii 3b de mai jos, !/_SYSTEM/ redeschidea oricum intregul subarbore,
+#       iar Skills_MASTER_Folder/ ramanea deschis: masurat, 523 de fisiere
+#       peste prag, dintre care un repo git inglobat. Corectat mai jos, cu
+#       inchiderea arhivei PE NOAUA REALA. ──
+!/_SYSTEM/
+!/_SYSTEM/Skills/
+!/_SYSTEM/Skills/git-autonom/
+!/_SYSTEM/Skills/git-autonom/**
+!/_SYSTEM/Skills/git-install/
+!/_SYSTEM/Skills/git-install/**
+
+!/_SYSTEM/Skills_MASTER_Folder/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-autonom Skill/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-autonom Skill/**
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/
+!/_SYSTEM/Skills_MASTER_Folder/SENTINEL - git-install Skill/**
+
+# ── 3b. ATENTIE LA ORDIN (masurat 2026-10-12): deschiderea unui director
+#       redeschide INTREGUL subarbore al lui. Deschiderea lui /_SYSTEM/Skills/
+#       a readus 9.740 de fisiere din Skills_Archive pana cand copiii nedoriti
+#       au fost inchisi explicit, DUPA deschideri. Ultima regula care se
+#       potriveste castiga. ──
+/_SYSTEM/Skills/Skills_Archive/
+/_SYSTEM/arhiva-indexe/
+/_SYSTEM/rapoarte/
+/_SYSTEM/resturi de unelte/
+/_SYSTEM/Wisper Transcripts/
+# ── 3c. Inchiderea arhivei vendor pe NOUA cale, DUPA deschideri (regula 3b).
+#       Fara asta, /_SYSTEM/Skills_MASTER_Folder/ ramane deschis prin regula 3. ──
+/_SYSTEM/Skills_MASTER_Folder/_Skills_BackUp_Archive_2026-07-15/
+
+# ── 3d-bis. MATERIAL, NU AUTOMATIZARE — inchis la 2026-10-19, gasit de proba
+#         uscata (nu de citire, nu de banuiala). ──
+#       /_SYSTEM/Skills_MASTER_Folder/ era deschis prin regula 3b, dar lista
+#       de inchideri de mai sus acoperea doar 3 subfoldere. Au ramas doua deschise
+#       care NU sunt automatizare:
+#
+#       OPTIMUS_Skills_ARCHIVE/  4.502 de fisiere, 126,65 MB, skilluri third-party
+#         (LICENSE-uri, README-uri, cod sursa straina). Material. In plus, contine
+#         un REPO GIT INGROPAT la _Sentinel-SKILLS_HERMES\agent-browser — proba
+#         uscata l-a raportat ca warning „adding embedded git repository", adica
+#         ar fi intrat ca GITLINK, exact clasa de gura descoperita la PLATEFUL.
+#
+#       SKILLS - SOT Folder/  76 de fisiere .gdoc (shortcut-uri Google Docs), 0,01 MB.
+#         Material. Iar aici proba uscata a PICAT, nu a trecut usor:
+#         „error: unable to index file .../SKILLS - SOT Folder/00_INDEX.md —
+#          No such file or directory", apoi „fatal: adding files failed".
+#         Un `git add -A` care esueaza asa e candidat la codul 1 al plasei.
+#         Deci inchiderea asta nu e doar higiena: repara o cale de esecare.
+/_SYSTEM/Skills_MASTER_Folder/OPTIMUS_Skills_ARCHIVE/
+/_SYSTEM/Skills_MASTER_Folder/SKILLS - SOT Folder/
+# ── 3d. Logul plasei, la calea noua. Inchis DUPA deschiderea 2b (regula 3b).
+#       Era inchis doar la calea veche /AI-Kit/raport-autocomit.log. ──
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/raport-autocomit.log
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/raport-aliniere.log
+/02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide/arhiva- raport aliniere.log
+
+# ── 3e. FRATII INCHISI, pentru ca 2b sa nu deschida 02_Areas cu totul.
+#       Fiecare rand de aici exista pentru ca linia deschisa de mai sus sa nu
+#       devina o gaura. Stergerea unuia din ele trebuie probata cu `git add -An`
+#       si cu cifra: 2.796 de fisiere NU trebuie sa intre in istoric.
+#       2026-10-19: randul /02_Areas/00_INDEX.md a fost SCOS, nu sters — il
+#       deschide acum regula 1b. Indexul e hartă, nu gunoi derivat. ──
+/02_Areas/02-1-ALEX-SOT/
+/02_Areas/02-5-SCIENCE-SOT/
+
+# ── 3e-bis. RENUMERAREA 2026-10-19 a schimbat numele, nu s-a schimbat granita. ──
+#       Randurile de mai jos erau scrise pe numele VECHI. Cum renumerarea le-a
+#       mutat, ele au incetat sa inchida ceva — iar folderele NOI s-au deschis.
+#       Corectia e sa se inchida numele NOU. Masurat pe disc: sub 02-2-AI-SOT
+#       exista exact 6 foldere, 02-2-1 .. 02-2-6. Singurul care ramane deschis
+#       e 02-2-4-AI-Kit (motorul), deschis mai sus, la randul 74.
+/02_Areas/02-2-AI-SOT/02-2-1-AI-Archive/
+/02_Areas/02-2-AI-SOT/02-2-2-AI-Bridges/
+/02_Areas/02-2-AI-SOT/02-2-3-AI-Chats/
+/02_Areas/02-2-AI-SOT/02-2-5-AI-Mem-SOT_Instructions-Folder/
+/02_Areas/02-2-AI-SOT/02-2-6-AI-Scripts/
+#
+# Randurile VECHI, pastrate ca istoric al granitei, INACTIVE de la 2026-10-19:
+#   /02_Areas/02_2-AI-SOT/SKILLS - SOT Folder/       -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/Hermes_GNotebook-COMS/      -> 02-2-2-AI-Bridges
+#   /02_Areas/02_2-AI-SOT/AI Chats/                   -> 02-2-3-AI-Chats
+#   /02_Areas/02_2-AI-SOT/Archive/                    -> 02-2-1-AI-Archive
+#   /02_Areas/02_2-AI-SOT/AI Scripts/                 -> 02-2-6-AI-Scripts
+#   /02_Areas/02_2-AI-SOT/Mem Instructions - SOT folder/ -> 02-2-5-AI-Mem-SOT_Instructions-Folder
+#   /02_Areas/02_2-AI-SOT/Wisper_Transcripts/         -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/GORDON - Docker AI/         -> 02-2-? (contopit in cod)
+#   /02_Areas/02_2-AI-SOT/OpenWisper AI - Transcripts/ -> 02-2-? (contopit in cod)
+# Stergerea lor ar fi o stergere; mutarea lor inapoi ar reintroduce o gaura.
+# 2026-10-19: randul /02_Areas/02-2-AI-SOT/00_INDEX.md a fost SCOS, nu sters —
+#       deschis de regula 1b, la fel ca cel de la 02_Areas.
+
+# ── 4. Documentatia de la radacina: contractul sistemului ──
+!/*.md
+
+# ── 4b. ARHIVA DE RAPOARTE, deschisa la 2026-10-19, masurat.
+#       Motivul inchiderii nu era scris: 09_raport-archive era doar enumerat la
+#       cotele de la final, fara niciun „de ce". Fara motiv, orice schimbare
+#       aici e o presupunere, nu o corectie — si atunci nimeni nu stie ce
+#       inseamna sa atingi regula.
+#
+#       CE SCHIMBA: raportul din RADACINA este urmarit (regula 4, `!/*.md`),
+#       deci un raport e artefact de sistem. Arhiva contine tot un raport de
+#       sistem, de 4.182 B. Nu e material de client, nu e derivat, nu se
+#       rescrie. Excluderea lui era o consecinta de faptul ca se numeste
+#       „arhiva", nu o decizie.
+#
+#       INCHIDERE DUPA DESCHIDERE (regula 3b): a ramas inchis doar
+#       00_INDEX.md din arhiva, fiindca regula 1b nu se aplica la ea — arhiva
+#       nu e un folder de lucru, e o coletie de rapoarte, iar indexul ei era
+#       singurul motiv pentru care deschideam un director intreg. ──
+!/09_raport-archive/
+!/09_raport-archive/**
+/09_raport-archive/00_INDEX.md
+
+# ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
+#       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
+/AI-Kit/raport-autocomit.log
+/AI-Kit/git-autocomit-registru.txt
+
+# ── 6. INDEX CENTRAL.md — RAMANE INCHIS. ──
+#       Era inchis cu doua motive: „artefact derivat" si „contine nume personale
+#       de foldere". Al doilea s-a dovedit mult mai tare decat parea, masurat:
+#       fiindca indexul central AGREGĂ toate celelalte, el enumera raftul retras
+#       de 567 de ori. Era singurul fisier care ar fi dus in repo numele clientului
+#       inchis, in timp ce cele 88 de indexuri din raft se sterg prin regula 7b.
+#       Pericolul acesta a fost posibil doar pentru ca fisierul sa fie mare si
+#       sa NU fie un 00_INDEX.md — deci scanarea pe indexuri nu l-ar fi prins.
+#
+#       CE RAMANE IN SCHIMB: 4.431 de indexuri individuale, COTOR.md si
+#       documentatia. Un AI cu 0 memorie are navigatie completa prin ele.
+#       Masterul e pe Drive, unde e folosit; nu are rost sa fie si in istoric,
+#       iar duplicatul ar mentine doua adevaruri care oricum nu coincid.
+/INDEX CENTRAL.md
+
+# ── 6b. Repo-uri git IMBRICATE (3, masurate) ──
+# Git nu coboara intr-un director care e el insusi repo: il trateaza ca gitlink
+# si nu parcurge nimic din interior. Fara regula asta, 588 de fisiere raman
+# in afara listei de urmarire fara niciun mesaj.
+/10_Work/Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+# ── 6b-bis. MUTARE 2026-10-19: 10_Work a devenit 01_Projects. Repo-ul imbricat
+#       se deplaseaza cu raftul, iar inchiderea de mai sus a ramas pe cale moarta.
+#       Masurat: `git add -An` oferea '01_Projects/01-6-Work_Folder (to sort)/Sisteme
+#       AI/.../PLATEFUL - DTC - Niv/' ca intrare — adica git ar fi adaugat un
+#       repo strain drept GITLINK, exact ceea ce 6b exista sa previna. ──
+/01_Projects/01-6-Work_Folder (to sort)/01-6-7-Sisteme AI/01_2-AP-ID - AI Systems/- AI Rresearch Folder - Client Data sets/PLATEFUL - DTC - Niv/
+
+# ── 6c. FOLDERE CU PUNCT, in orice adancime. ──
+#       Deschiderea 1b face orice director traversabil, deci si cele cu punct
+#       intrau in scanare. Dar voltul le EXCLUDE din indexare (Get-PkmsExclusions
+#       lista .obsidian, .trash, .vault-intelligence, .claudian, ...), deci un
+#       00_INDEX.md de acolo e un artefact pe care build-index nu l-ar scrie
+#       niciodata — ar ramane orfan in istoric. Masurat: 8 astfel de intrari
+#       la prima proba. Coada `/` inseamna „doar directoare": nu atinge
+#       `.gitignore` de la radacina, care trebuie urmarit. ──
+**/.*/
+/_QUARANTINE/indexuri generate in gresit/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
+/_SYSTEM/Skills/Skills_Archive/_Skills_BackUp_Archive_2026-07-15/agent-browser/
+
+# ── 7. SECRETE. Un secret intrat in istoric nu se mai scoate curat. ──
+_ARCHIVE/Secrets/
+**/credentials.json
+**/client_secret*.json
+*.pem
+*.key
+id_rsa*
+
+# ── 7b. RAFTUL RETRAS, inchis la 2026-10-19. Ultima regula care se potriveste
+#       castiga, deci asta se aplica PESTRE regula 1b care deschide indexurile.
+#
+#       Ce este: _QUARANTINE\retirat-2026-10-10\ — 88 de indexuri, 0,09 MB.
+#       De ce e inchis: singurul loc din volt unde apare un nume de client pe
+#       care operatorul l-a inchis definitiv („subiect definitiv inchis, nu
+#       vom lucra cu ei niciodata"). Masurat, nu banuit: cautare cu -LiteralPath
+#       peste toate cele 5.031 de indexuri — 88 de potriviri, TOATE sub acest
+#       raft. In afara lui: 0. Deci inchiderea asta nu lasa nimic deoparte.
+#
+#       Ce ramane deschis: _QUARANTINE\00_INDEX.md, care descrie cele 7 rafturi
+#       si motivele lor. Un AI cu 0 memorie trebuie sa stie CA exista o carantina
+#       si DE CE — nu sa navigheze prin rafturi de material retras. Verificat:
+#       acel index NU mentioneaza numele clientului, ci doar raftul. ──
+/_QUARANTINE/retirat-2026-10-10/
+
+# ── 7c. RAPOARTE DE STARE DATATE — inchise la 2026-10-19. ──
+#       Ce este: rapoartele cu data in titlu, plus arhiva de rapoarte din radacina.
+#       De ce inchise: un AI cu 0 memorie nu are nevoie de ele — descriu o stare
+#       care a trecut, nu o procedura reutilizabila. Procedura ramane in ghid.
+#       Iar masurat: dupa curatarea documentatiei de ghid (4 fisiere, numele
+#       clientului inchis scris ca „raft retras"), AU RAMAS 2 potriviri — exact
+#       rapoartele de stare. Era deci ele, nu ghidul, tinea numele viu.
+#       Nu se sterg si nu se rescriu: JURNAL_OGLINDA e append-only. Raman pe
+#       Drive, in istoric. Doar nu urca in repo.
+**/RAPORT DE STARE*.md
+/09_raport-archive/
+
+# ── 8. Cote ──
+# tot ce nu este deschis mai sus ramane in afara, intentionat:
+#   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
+#   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
+#   10_Work 32.252 · 07_Canvas Bases 9 · 08_Clippings 457 · Wisper_Transcripts 6
+#   09_raport-archive: INCHISA din 2026-10-19 (regula 7c). Ramane pe Drive, in
+#     istoric; nu urca, fiindca tinea numele clientului inchis.
+#   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — 4.543 de indexuri care
+#     intra in istoric. Excepții: raftul retras _QUARANTINE\retirat-2026-10-10
+#     (regula 7b, 88 de indexuri) si 09_raport-archive/00_INDEX.md (regula 4b, ca
+#     artefact derivat).
+#   _ARCHIVE 7 · _QUARANTINE 4.789
+#   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
+#   resturi de unelte (derivate)
+#   .obsidian 1.174 · .vault-intelligence 14 · .trash · .sentinel_temp ·
+#   .wwebjs_cache · .claudian · .git
+#   106 fisiere peste 100 MB in total, pe care GitHub le respinge oricum.
