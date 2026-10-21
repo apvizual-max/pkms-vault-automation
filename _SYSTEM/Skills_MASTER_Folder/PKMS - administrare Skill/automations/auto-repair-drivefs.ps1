@@ -31,12 +31,34 @@
   RULARE: task programat 'PKMS-DriveFS-AutoRepair', la fiecare 5 minute.
 #>
 param(
-  [string]$Vault = 'G:\My Drive\GDrive-Second_Brain_PKMS',
+  [string]$Vault = '',
   [string]$Baza  = 'C:\Users\apviz\.minimax\drivefs',
   [int]$CooldownSecunde = 600,
   [int]$MaxPeOra = 3
 )
 $ErrorActionPreference = 'Continue'   # NU 'Stop': cârligul nu poate arunca
+
+# --- REPERUL VAULTULUI ---
+# MASURAT 2026-10-21 22:26: calea 'G:\My Drive\GDrive-Second_Brain_PKMS' NU exista
+# pe aceasta masina (G: e un scurtator spre E:\Google\GDrive). Carligul o folosea
+# ca implicit, deci Test-MountMort raspundea "MOUNT MORT" la FIECARE rulare, iar
+# el reporni DriveFS: 104 reporniri, 410 verdicte "MOUNT MORT", 0 recuperari, si
+# jurnalul arata "NERECUPERAT" de fiecare data.
+# Adica: un instrument de sanatate care se apara singur pe o cale pe care nu se
+# afla nimic, si care reporneste exact lucrul pe care trebuia sa-l urmareasca.
+#
+# REPARAT: calea se rezolva (oglinda NVMe pe E: primul, G: doar ca alternativa),
+# iar o cale fara amprenta de vault (COTOR.md) e CONFIG, nu MOUNT MORT.
+$VaultCandidati = @(
+  'E:\Google\GDrive\GDrive-Second_Brain_PKMS',
+  'G:\My Drive\GDrive-Second_Brain_PKMS'
+)
+if (-not $Vault) {
+  foreach ($c in $VaultCandidati) {
+    if ([System.IO.Directory]::Exists($c)) { $Vault = $c; break }
+  }
+  if (-not $Vault) { $Vault = $VaultCandidati[0] }
+}
 
 $logFile  = Join-Path $Baza 'auto-repair.log'
 $stateFile = Join-Path $Baza 'state.json'
@@ -100,6 +122,16 @@ function Test-MountMort {
   return ''
 }
 
+# CONFIG, nu MOUNT MORT: radacina exista, dar nu e vaultul (lipseste COTOR.md).
+# In acest caz DriveFS e SANATOS si calea e gresita. Repornirea lui aici e
+# exact lecuitura care a produs 104 de reporniri pe o cale moarta.
+function Test-CaleGresita([string]$Cale) {
+  if (-not $Cale) { return $false }
+  if (-not [System.IO.Directory]::Exists($Cale)) { return $false }
+  if ([System.IO.File]::Exists([System.IO.Path]::Combine($Cale, 'COTOR.md'))) { return $false }
+  return $true
+}
+
 function Test-Citibilitate {
   $picate  = New-Object System.Collections.Generic.List[string]
   $lipsuri = New-Object System.Collections.Generic.List[string]
@@ -131,6 +163,17 @@ $mountMort = Test-MountMort
 $r = Test-Citibilitate
 $picate  = @($r.picate)
 $lipsuri = @($r.lipsuri)
+
+# --- gard 0: calea e gresita? (nu e MOUNT MORT) ---
+# Un instrument de sanatate care se apara singur pe o cale pe care nu se afla
+# nimic e cel mai periculos tip de instrument: distruge exact ce trebuia sa
+# urmareasca. Masurat 2026-10-21: 104 reporniri, zero recuperari.
+if (Test-CaleGresita $Vault) {
+  $st.ultimaVerdict = 'config-eroare'
+  Save-State $st
+  Log "CONFIG: calea '$Vault' exista dar NU e vaultul (lipseste COTOR.md). DriveFS e sanatos; calea e gresita. NU repornesc."
+  exit 0
+}
 
 # D4: jurnalul spunea "4 santinele citite" chiar daca 0 erau citite.
 # Acum se raporteaza numarul REAL.
