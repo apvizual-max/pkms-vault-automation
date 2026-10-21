@@ -3,11 +3,12 @@
 
   Cârligul de auto-repair pentru DriveFS.
   R0 dat de Popy pe 2026-10-19. Defect D2/D3/D4/D5 reparat 2026-10-19.
+  Reperul de backup adaptat la oglinda Google Drive Cloud pe 2026-10-21 (Decizia 1).
+  Silent failure reparat pe 2026-10-21: 104 reporniri pe o cale moarta.
 
   CE FACE:
-    1. verifica EXISTENTA radacinii vaultului si procesul DriveFS
-       (daca mountul e mort, santinelele lipsesc -> asta e semnal, nu motiv
-       sa fim linistiti)
+    1. rezolva REPERUL VAULTULUI din sursa dinamica (shortcutul creat de DriveFS)
+       si verifica daca procesul DriveFS ruleaza
     2. citeste, de fapt (ReadAllBytes), cateva fisiere santinela din vault
     3. daca citirea pica cu er specifica DriveFS, repornește DriveFS
     4. verifica dupa restart ca s-a recuperat, si scrie totul intr-un jurnal
@@ -16,10 +17,8 @@
     - NU cauta si NU inventeaza cauza degradarii. Logurile DriveFS arata o
       semnatura, masurata pe 2026-10-19: 8.397 aparitii "0x91" (= 145, "The
       directory is not empty") in logurile scrise in ziua aceea. REMASURAT pe
-      2026-10-20 04:28: 67.874 aparitii in total - 10.011 in logurile din 19.10
-      si 57.863 in logul curent drive_fs.txt (scris pe 20.10; cifra creste). Cu un
-      precursor de stalling al cache-ului (local store: tranzactii de 36,6 s).
-      Legatura cauza->efect NU e masurata. Cârligul trateaza SIMPTOMUL.
+      19->20.10: 67.874 aparitii in total. Legatura cauza->efect NU e masurata.
+      Cârligul trateaza SIMPTOMUL.
     - NU se auto-amplifica: cooldown, plafon de restarturi pe ora, si
       verificare ca restartul chiar a ajutat. Daca nu ajuta, nu reincearca
       imediat.
@@ -40,25 +39,81 @@ $ErrorActionPreference = 'Continue'   # NU 'Stop': cârligul nu poate arunca
 
 # --- REPERUL VAULTULUI ---
 # MASURAT 2026-10-21 22:26: calea 'G:\My Drive\GDrive-Second_Brain_PKMS' NU exista
-# pe aceasta masina (G: e un scurtator spre E:\Google\GDrive). Carligul o folosea
-# ca implicit, deci Test-MountMort raspundea "MOUNT MORT" la FIECARE rulare, iar
-# el reporni DriveFS: 104 reporniri, 410 verdicte "MOUNT MORT", 0 recuperari, si
-# jurnalul arata "NERECUPERAT" de fiecare data.
+# pe aceasta masina. 'G:\My Drive' nici nu e director (doar shortcutul
+# 'G:\My Drive.lnk' -> 'E:\Google\GDrive'). Carligul o folosea ca implicit, deci
+# Test-MountMort raspundea "MOUNT MORT" la FIECARE rulare, iar el reporni
+# DriveFS: 104 reporniri, 410 verdicte "MOUNT MORT", 0 recuperari reale.
 # Adica: un instrument de sanatate care se apara singur pe o cale pe care nu se
 # afla nimic, si care reporneste exact lucrul pe care trebuia sa-l urmareasca.
 #
-# REPARAT: calea se rezolva (oglinda NVMe pe E: primul, G: doar ca alternativa),
-# iar o cale fara amprenta de vault (COTOR.md) e CONFIG, nu MOUNT MORT.
-$VaultCandidati = @(
-  'E:\Google\GDrive\GDrive-Second_Brain_PKMS',
-  'G:\My Drive\GDrive-Second_Brain_PKMS'
-)
+# REPARAT (2026-10-21): reperul se rezolva din sursa dinamica (shortcutul pe
+# care DriveFS il creeaza), iar o cale fara amprenta de vault (COTOR.md) e
+# CONFIG, nu MOUNT MORT.
+$MountRoot = ''
+
+# Sursa dinamica a mountpoint-ului: shortcutul pe care DriveFS il creeaza la
+# prima rulare. MASURAT 2026-10-21 22:5x: 'G:\My Drive.lnk' -> 'E:\Google\GDrive'.
+# Daca DriveFS se remonteaza pe alt volum, shortcutul se actualizeaza singur,
+# iar reperul urmeaza mountul fara sa fie editat manual.
+function Get-DriveFsMountRoot {
+  try {
+    $sh = New-Object -ComObject WScript.Shell
+    foreach ($lnk in @('G:\My Drive.lnk', (Join-Path $env:USERPROFILE 'Desktop\My Drive.lnk'))) {
+      try {
+        if ([System.IO.File]::Exists($lnk)) {
+          $t = $sh.CreateShortcut($lnk).TargetPath
+          if ($t -and [System.IO.Directory]::Exists($t)) { return $t }
+        }
+      } catch { }
+    }
+  } catch { }
+  return ''
+}
+
+# Amprenta de mount DriveFS: 'desktop.ini' cu icoana GoogleDriveFS.
+# MASURAT 2026-10-21: prezent DOAR la radacina mountului (E:\Google\GDrive),
+# absent la E:\Google si absent in vault. Deci discriminator, nu noroc.
+function Test-MountDriveFs([string]$Cale) {
+  if (-not $Cale) { return $false }
+  if (-not [System.IO.Directory]::Exists($Cale)) { return $false }
+  $di = [System.IO.Path]::Combine($Cale, 'desktop.ini')
+  try {
+    if (-not [System.IO.File]::Exists($di)) { return $false }
+    $txt = [System.IO.File]::ReadAllText($di)
+    return ($txt -like '*GoogleDriveFS.exe*')
+  } catch { return $false }
+}
+
+# Cel mai apropiat stramos al unei cai care e radacina unui mount DriveFS.
+function Find-MountRootAncestor([string]$Cale) {
+  $d = $Cale
+  while ($d) {
+    if (Test-MountDriveFs $d) { return $d }
+    $parent = [System.IO.Path]::GetDirectoryName($d)
+    if (-not $parent -or $parent -eq $d) { break }
+    $d = $parent
+  }
+  return ''
+}
+
+$VaultCandidati = @()
+$mnt = Get-DriveFsMountRoot
+if ($mnt) { $VaultCandidati += ([System.IO.Path]::Combine($mnt, 'GDrive-Second_Brain_PKMS')) }
+$VaultCandidati += 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
+$VaultCandidati += 'G:\My Drive\GDrive-Second_Brain_PKMS'
+
 if (-not $Vault) {
   foreach ($c in $VaultCandidati) {
     if ([System.IO.Directory]::Exists($c)) { $Vault = $c; break }
   }
   if (-not $Vault) { $Vault = $VaultCandidati[0] }
 }
+
+# Radacina de mount folosita la proba "mountul e viu?". Se cauta intai printre
+# stramosii reperului (ca sa functioneze si cand -Vault e pasat explicit), apoi
+# se cade inapoi pe sursa dinamica (shortcut).
+$MountRoot = Find-MountRootAncestor $Vault
+if (-not $MountRoot) { $MountRoot = (Get-DriveFsMountRoot) }
 
 $logFile  = Join-Path $Baza 'auto-repair.log'
 $stateFile = Join-Path $Baza 'state.json'
@@ -107,29 +162,51 @@ $santinel = @(
   ([System.IO.Path]::Combine($Vault, '02_Areas\00_INDEX.md'))
 )
 
+$procDriveFs = (@(Get-Process GoogleDriveFS -EA SilentlyContinue).Count -gt 0)
+
+# --- mountul DriveFS e viu? ---
+# Independent de reper: verificam radacina de mount (amprenta desktop.ini +
+# e enumerabila). Daca mountul e viu dar reperul nu exista, atunci problema
+# e CALEA, nu mountul -- si repornirea ar distruge exact ce trebuie urmarit.
+function Test-MountRootViabil {
+  if (-not $script:MountRoot) { return $false }
+  if (-not (Test-MountDriveFs $script:MountRoot)) { return $false }
+  try {
+    $entries = @([System.IO.Directory]::GetFileSystemEntries($script:MountRoot))
+    return ($entries.Count -gt 0)
+  } catch { return $false }
+}
+
 # --- mountul e mort? ---
 # D2 (defect real, masurat): santinelele LIPSA erau SALTATE (continue), deci
 # $picate.Count era 0 si carligul loga SANATOS exact cand vaultul disparea.
-# Discriminantul: daca procesul DriveFS nu ruleaza SAU radacina vaultului nu
-# exista, mountul e mort -> lipsa santinelelor e un SIMPTOM, nu o lipsa de
-# continut. Daca radacina exista (se poate citi arborele), iar o santinela
-# lipseste, e vorba despre continut (fisier renumat) -> se raporteaza, dar
-# NU se reporneste DriveFS (altfel bucla de restarturi la o redenumire).
+# Discriminantul: daca procesul DriveFS nu ruleaza, mountul e mort -> lipsa
+# santinelelor e un SIMPTOM, nu o lipsa de continut. Daca procesul ruleaza si
+# radacina exista, iar o santinela lipseste, e vorba despre continut
+# (fisier renumat) -> se raporteaza, dar NU se reporneste DriveFS (altfel
+# bucla de restarturi la o redenumire).
 function Test-MountMort {
-  $proc = @(Get-Process GoogleDriveFS -EA SilentlyContinue)
-  if ($proc.Count -eq 0) { return 'procesul DriveFS nu ruleaza' }
-  if (-not [System.IO.Directory]::Exists($Vault)) { return "radacina vaultului nu exista: $Vault" }
+  if (-not $procDriveFs) { return 'procesul DriveFS nu ruleaza' }
+  if (-not [System.IO.Directory]::Exists($Vault)) {
+    # Mountul e viu, dar reperul lipseste -> cale gresita, tratata de gard 0.
+    if (Test-MountRootViabil) { return '' }
+    return "radacina vaultului nu exista: $Vault"
+  }
   return ''
 }
 
-# CONFIG, nu MOUNT MORT: radacina exista, dar nu e vaultul (lipseste COTOR.md).
+# CONFIG, nu MOUNT MORT: calea exista, dar nu e vaultul (lipseste COTOR.md);
+# sau calea lipseste, dar mountul DriveFS e demonstrat viu.
 # In acest caz DriveFS e SANATOS si calea e gresita. Repornirea lui aici e
 # exact lecuitura care a produs 104 de reporniri pe o cale moarta.
 function Test-CaleGresita([string]$Cale) {
   if (-not $Cale) { return $false }
-  if (-not [System.IO.Directory]::Exists($Cale)) { return $false }
-  if ([System.IO.File]::Exists([System.IO.Path]::Combine($Cale, 'COTOR.md'))) { return $false }
-  return $true
+  if ([System.IO.Directory]::Exists($Cale)) {
+    return (-not [System.IO.File]::Exists([System.IO.Path]::Combine($Cale, 'COTOR.md')))
+  }
+  # calea nu exista: daca mountul e viu, e cale gresita. Daca nici mountul nu
+  # poate fi dovedit viu, e ambiguu -> ramane MOUNT MORT (nu pierdem capacitatea).
+  return (Test-MountRootViabil)
 }
 
 function Test-Citibilitate {
@@ -168,10 +245,12 @@ $lipsuri = @($r.lipsuri)
 # Un instrument de sanatate care se apara singur pe o cale pe care nu se afla
 # nimic e cel mai periculos tip de instrument: distruge exact ce trebuia sa
 # urmareasca. Masurat 2026-10-21: 104 reporniri, zero recuperari.
-if (Test-CaleGresita $Vault) {
+# Daca procesul DriveFS e mort, gardul 0 NU se declanseaza: atunci e nevoie
+# reala de repornire, chiar daca calea configurata e gresita.
+if ($procDriveFs -and (Test-CaleGresita $Vault)) {
   $st.ultimaVerdict = 'config-eroare'
   Save-State $st
-  Log "CONFIG: calea '$Vault' exista dar NU e vaultul (lipseste COTOR.md). DriveFS e sanatos; calea e gresita. NU repornesc."
+  Log "CONFIG: calea '$Vault' nu e vaultul (lipseste COTOR.md sau nu exista, dar mountul DriveFS e viu). DriveFS e sanatos; calea e gresita. NU repornesc."
   exit 0
 }
 
@@ -251,7 +330,7 @@ try {
   Start-Process -FilePath $launchBat -WindowStyle Hidden
 } catch {
   Log "ACTION IMPOSIBIL: nu pot porni launch.bat: $($_.Exception.Message)"
-  $st.ultimaVerdict = 'pornire esuata'
+  $st.ultimaVerdict = 'pornire esuita'
   Save-State $st
   exit 0
 }
