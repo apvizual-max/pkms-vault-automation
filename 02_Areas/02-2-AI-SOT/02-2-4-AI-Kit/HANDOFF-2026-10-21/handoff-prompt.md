@@ -106,3 +106,26 @@ CONȚINUT AUDITAT:       51.152 fișiere | 88,72 GiB conținut util | Stabilitat
    git status
    ```
 3. Raportează-i lui Popy starea inițială pe cei trei piloni (**RUCSAC · LOGICĂ · STRATEGIE**) și solicită-i primul obiectiv de lucru pentru noua sesiune.
+
+---
+
+## CORECTARE DE REFERINȚĂ — 2026-10-21 (nu modifică istoricul de mai sus)
+
+Rândurile de mai sus descriu starea de la momentul redactării și **rămân istoric**.
+Dar **referința s-a schimbat între timp** (Decizia 1, Popy, 21-10-2026), deci cine citește
+acest pachet azi trebuie să știe două lucruri:
+
+1. **Calea** `G:\My Drive\GDrive-Second_Brain_PKMS` **nu există** pe mașina de azi.
+   `G:\My Drive` nici nu e director — doar shortcutul `G:\My Drive.lnk`, care indică
+   `E:\Google\GDrive`. Calea reală e `E:\Google\GDrive\GDrive-Second_Brain_PKMS`,
+   și se **descoperă dinamic** (`paths.ps1` → `Get-PkmsVault` / `Get-PkmsDriveFsMount`),
+   nu se scrie tare în mână.
+
+2. **Reperul** nu mai e o copie locală pe `D:` / `H:`. Reperul e **oglinda Google
+   Drive Cloud**: fiecare fișier există în cloud și în oglinda locală, iar egalitatea lor
+   se verifică **per fișier** (md5 + dimensiune + starea DriveFS) prin
+   `verifica-oglinda.ps1`. `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` rămâne arhivă
+   neatinsă, **nu reper** — e ultimul rând de rezervă.
+
+Verifică starea de azi, nu starea de atunci: `paths.ps1` (treapta 1) și
+`verifica-oglinda.ps1`.

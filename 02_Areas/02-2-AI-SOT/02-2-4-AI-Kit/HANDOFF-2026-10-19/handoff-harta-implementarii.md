@@ -606,3 +606,26 @@ la 5 minute, deci cifra crește)".
 (10.643 → 10.763 B) are afirmația `0x91` corectată; `auto-repair-drivefs.ps1`
 (9.582 → 9.750 B) are în antet cifra remăsurată, iar copia de pe `C:` a fost
 resincronizată **octet cu octet** cu cea din vault (parse 0 în ambele).
+
+---
+
+## CORECTARE DE REFERINȚĂ — 2026-10-21 (nu modifică istoricul de mai sus)
+
+Rândurile de mai sus descriu starea de la momentul redactării și **rămân istoric**.
+Dar **referința s-a schimbat între timp** (Decizia 1, Popy, 21-10-2026), deci cine citește
+acest pachet azi trebuie să știe două lucruri:
+
+1. **Calea** `G:\My Drive\GDrive-Second_Brain_PKMS` **nu există** pe mașina de azi.
+   `G:\My Drive` nici nu e director — doar shortcutul `G:\My Drive.lnk`, care indică
+   `E:\Google\GDrive`. Calea reală e `E:\Google\GDrive\GDrive-Second_Brain_PKMS`,
+   și se **descoperă dinamic** (`paths.ps1` → `Get-PkmsVault` / `Get-PkmsDriveFsMount`),
+   nu se scrie tare în mână.
+
+2. **Reperul** nu mai e o copie locală pe `D:` / `H:`. Reperul e **oglinda Google
+   Drive Cloud**: fiecare fișier există în cloud și în oglinda locală, iar egalitatea lor
+   se verifică **per fișier** (md5 + dimensiune + starea DriveFS) prin
+   `verifica-oglinda.ps1`. `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` rămâne arhivă
+   neatinsă, **nu reper** — e ultimul rând de rezervă.
+
+Verifică starea de azi, nu starea de atunci: `paths.ps1` (treapta 1) și
+`verifica-oglinda.ps1`.

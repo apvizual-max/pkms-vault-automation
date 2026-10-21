@@ -116,8 +116,11 @@ face corect, cu repararea legăturilor.
 Fiecare mutare e într-un tabel cu adresa veche și adresa nouă:
 `C:\Users\apviz\.minimax\vault-manifest\REVERT.csv`
 
-Backup-ul tău e la **`H:\Alex_Knowlege_Vault_BKUP_10-19-2026`** — neatins, nu am
-scris niciodată în el. Se citește.
+**Reperul tău e oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier
+există în cloud și în oglinda locală, iar egalitatea se verifică **per fișier**, cu
+`verifica-oglinda.ps1`. Arhiva de pe **`H:\Alex_Knowlege_Vault_BKUP_10-19-2026`**
+rămâne neatinsă — nu am scris niciodată în ea, și nici nu e reperul: e ultimul rând
+de rezervă, citit doar când e nevoie.
 
 ## Actul care dovedește că nu s-a pierdut nimic
 

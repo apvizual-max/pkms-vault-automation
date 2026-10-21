@@ -21,7 +21,8 @@ cd "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit
 | `verifica-schema.ps1` | **verifică forma**, nu existența: titlu, motiv, cele patru blocuri, 2—12 cuvinte cheie | **nu** — doar citește |
 | `inchide-log.ps1` | recitește logul, re-măsoară fiecare folder și spune ce e **DESCHIS acum**; cu `-Arhiveaza` mută rezolvatele în arhivă | implicit **nu** — doar cu `-Arhiveaza` |
 | `git-autocommit.ps1` | comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta | **da, în git** — patru porți înainte: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare |
-| `rula-din-task.ps1` | **lansatorul** taskurilor: stă pe `C:`, așteaptă ca `G:` să fie montat, apoi rulează alt script și îi propagă codul | **da** — rulează scriptul însuși, cu `PKMS_VAULT` și `PKMS_BACKUP` setate |
+| `rula-din-task.ps1` | **lansatorul** taskurilor: stă pe `C:`, așteaptă ca vaultul să fie accesibil (max 300 s), apoi rulează alt script și îi propagă codul. Rezolvă reperul **dinamic**, din shortcutul DriveFS | **da** — rulează scriptul însuși, cu `PKMS_VAULT` setat și `PKMS_BACKUP` setat **numai dacă arhiva există** |
+| `verifica-oglinda.ps1` | **poarta reperului**: starea oglinzii local↔cloud per fișier + sănătatea DriveFS (proces, cozi de upload/ștergere) | **nu** — doar citește baza de metadate DriveFS, READ-ONLY |
 
 **Dacă în `AI-Kit` apare un script pe care tabelul nu îl numește, e o gaură în documentație,
 nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din document:
@@ -99,11 +100,17 @@ Verifică că vaultul și backupul există, și îți tipărește documentația 
 ```
 
 Verifică, în ordine:
-- **backupul există și e neatins** — pragul e ancorat la *data copierii backupului însuși*, nu la o
-  cifră scrisă tare. Măsurat 2026-10-19: backupul e pe **`H:`**, nu pe `D:`, și e descoperit din
-  `$env:PKMS_BACKUP`, apoi pe toate volumele. **Mesajele poarții nu numesc un volum** — un mesaj
-  care trimite la volumul greșit e mai rău decât unul care nu trimite deloc.
-- backupul e **în afara vaultului** (altfel ar fi o copie care se șterge odată cu originalul)
+- **reperul e rezolvabil** — întâi oglinda Google Drive Cloud (mountul, descoperit din
+  shortcutul DriveFS, și baza de metadate `mirror_sqlite.db`), apoi backupul local, ca
+  **fallback**. Dacă nu există niciunul, e **eroare** — nu un „OK" mascate.
+  Mesajul poarții spune ACUM ce a căutat și ce a găsit: un mesaj care trimite la
+  volumul greșit e mai rău decât unul care nu trimite deloc, dar un mesaj care nu
+  spune nimic nici nu e mai bun.
+- **arhiva locală e neatinsă**, *dacă există* — pragul e ancorat la *data copierii
+  arhivei însuși*, nu la o cifră scrisă tare. Măsurat 2026-10-19: arhiva e pe **`H:`**,
+  nu pe `D:`, și e descoperită din `$env:PKMS_BACKUP`, apoi pe toate volumele.
+  Lipsa ei **nu mai e o eroare** când oglinda e sănătoasă.
+- arhiva e **în afara vaultului** (altfel ar fi o copie care se șterge odată cu originalul)
 - `_SYSTEM` / `_ARCHIVE` / `_QUARANTINE` n-au numerotare
 - cuvântul interzis `LUCURARE` nu apare în **nume** (nu și în conținut)
 - stratul de lucru se numește **`01_Projects`** (nu `10_Work` — reapariția lui e o regresie)
@@ -290,9 +297,13 @@ nici în scripturi, nici în documentele de predare — `lint.ps1` urmărește e
 Se poate forța:
 
 ```powershell
-$env:PKMS_VAULT  = 'D:\Alex_Knowlege_Vault'
-$env:PKMS_BACKUP = '<drumul descoperit de paths.ps1>'
+$env:PKMS_VAULT  = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
+$env:PKMS_BACKUP = '<drumul descoperit de paths.ps1>'   # opțional: doar fallback
 ```
+
+`PKMS_BACKUP` e **opțional** de la Decizia 1 (21-10-2026): reperul e oglinda cloud.
+Dacă e setat pe o cale care nu există, `paths.ps1` îl ignoră — și `rula-din-task.ps1`
+nu îl mai setează deloc în mediu dacă arhiva nu e montată.
 
 ---
 
@@ -307,12 +318,18 @@ sau de ceas. Rulează în ordine fixă trei trepte care **nu scriu în vault**:
 
 1. `lint` — regulile de denumire, cuvântul interzis, legăturile, copiile de onboarding.
 2. `health-check` — numerele vii ale vaultului.
-3. `reconcile` — socoteala cu backupul, în modul informativ, fără restaurări.
+3. `reconcile` — socoteala cu **reperul**: oglinda Google Drive Cloud (per fisier,
+   local↔cloud) sau, ca fallback, arhiva locală. Fără restaurări.
+
+**Măsurat 2026-10-21:** treapta 3 a durat **50+ de minute** pe DriveFS (plimbare cu
+`Get-ChildItem` prin doi arbori) și taskul era oprit de limita lui de 1 oră înainte să
+scrie raportul. Pe oglindă, aceeași treaptă durează **3 secunde** — pentru că
+comparația se face pe baza de metadate DriveFS, nu pe două parcurgeri de disc.
 
 ### Ce scrie
 
 **Un singur fișier:** `_SYSTEM\rapoarte\raport-ultima-rulare.txt` (și folderul lui, dacă lipsea).
-**Nimic altceva în vault.** Backupul primește citiri și atât.
+**Nimic altceva în vault.** Arhiva primește citiri și atât.
 
 **Raportul se rescrie după fiecare treaptă, nu doar la final.** Măsurat 2026-10-20: pe
 vaultul de pe DriveFS, `reconcile` (treapta 3) durează peste 50 de minute, iar taskul era

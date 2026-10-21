@@ -74,12 +74,13 @@ Motorul stă în `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` (12 scriptu
 ## Reguli care nu se încalcă
 
 1. **Nu se șterge nimic.** `rm` și `Remove-Item` sunt blocate. Neclarul ajunge în `_QUARANTINE`, cu motiv scris în indexul lui.
-2. **Nu se atinge backupul extern** (`H:\CLAUDE_Archive` și `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`). Se citesc doar la nevoie.
+2. **Nu se atinge arhiva externă** (`H:\CLAUDE_Archive` și `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`). Se citește doar la nevoie. **Ea nu mai e reperul**: reperul e oglinda Google Drive Cloud, verificată per fișier local↔cloud cu `verifica-oglinda.ps1`.
 3. **Nu se scrie o cale cu un folder numerotat în mână.** Numerotarea este poziție, nu etichetă, și se oprește la al treilea nivel în adâncime.
 4. **`00_INDEX.md` nu se editează manual** — se regenerează. Singura excepție: rândul `**De ce e aici:**`, scris de om.
-5. **Rădăcinile care încep cu `_`** (`_SYSTEM`, `_ARCHIVE`, `_QUARANTINE`) nu primesc cod numeric: sublinierea spune deja „sunt sistem, nu conținut”.
+5. **Rădăcinile care încep cu `_`** (`_SYSTEM`, `_ARCHIVE`, `_QUARANTINE`) nu primesc cod numeric: sublinierea spune deja „sunt sistem, nu conținut".
 6. **Zero ștergeri și zero mutări fără R0.** Mutarea conținutului este decizia suverană a lui Popy.
 7. **Ramura Knights Templar** (cele două directoare identice de 14,09 GB din `01_Projects`) rămâne neatinsă până la organizarea manuală de către Popy.
+8. **Nu se scrie nicio cale de reper în mână, nicăieri.** `G:\My Drive\GDrive-Second_Brain_PKMS` nu există pe această mașină — `G:\My Drive` nici nu e director. Calea reală e `E:\Google\GDrive\GDrive-Second_Brain_PKMS` și se **descoperă** dinamic (`paths.ps1` → `Get-PkmsVault` / `Get-PkmsDriveFsMount`).
 
 ---
 

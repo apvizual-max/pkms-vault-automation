@@ -223,7 +223,8 @@ Un fișier gol, al cărui nume arată că e o parolă (`WP Account - …`), se m
 În topologia actualizată a sistemului pe 3 discuri (`C: System`, `D: Archive`, `E: AI Drive`), **`E:\` este acum discul de lucru NVMe pentru AI și sisteme locale**:
 - Aici trăiește oglinda fizică locală a Google Drive: **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** (sincronizată bidirecțional cu Google Drive Cloud).
 - Aici trăiește baza de date decuplată Git: **`E:\Google\GitData-PKMS`**.
-- Restul volumelor externe vechi (ex: backupul imutabil) au fost consolidate pe **`H:\`** (`H:\CLAUDE_Archive` - 180,77 GB și copia de siguranță `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`), iar fotografiile personale/arhivele reci stau pe `D:\` sau pe storage extern.
+- **Reperul de siguranță este oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în cloud și local, iar egalitatea lor se verifică **per fișier**, cu `verifica-oglinda.ps1` (md5 + dimensiune + starea DriveFS). Latența de sincronizare e un fapt acceptat; divergența reală (peste 48h) e o eroare.
+- Restul volumelor externe vechi (ex: arhiva imutabilă) au fost consolidate pe **`H:\`** (`H:\CLAUDE_Archive` - 180,77 GB și copia de siguranță `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`), iar fotografiile personale/arhivele reci stau pe `D:\` sau pe storage extern. **`H:` nu mai e reperul** — e ultimul rând de rezervă, neatins, citit doar la nevoie.
 
 ---
 
