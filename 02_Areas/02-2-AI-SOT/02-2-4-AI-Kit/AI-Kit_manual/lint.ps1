@@ -183,7 +183,7 @@ if ($noIdx.Count -gt 0) {
 # Deci se cauta după NUME, adica dupa adevarul pe care poarta chiar il verifica.
 $Guide = @(Get-ChildItem -LiteralPath $Vault -Recurse -Directory -Force -Depth 6 -EA SilentlyContinue |
            Where-Object { $_.Name -eq 'AI-Kit_guide' } | Select-Object -First 1)
-$Guide = if ($Guide.Count -ge 1) { $Guide[0].FullName } else { Join-Path $Vault 'AI-Kit\AI-Kit_guide' }
+$Guide = if ($Guide.Count -ge 1) { $Guide[0].FullName } else { Join-Path $Vault '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide' }
 # Contractul s-a numit mereu SPECIFICATII - contractul <...>.md, dar in 10-11 i s-a
 # schimbat grafia din "voltului" in "vaultului" in nume, iar H1 a ramas cu vechea.
 # Poarta nu are voie sa retina o grafie ca regula: cerinta reala e "contractul
