@@ -33,7 +33,7 @@ nu un detaliu.** Numărul de scripturi se numără pe disc, nu se promite din do
 
 **La data de 2026-10-20: 12**, măsurat pe calea nouă
 `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\`. *Cifra veche din acest
-document spunea `D:\Alex_Knowlege_Vault\AI-Kit` — o cale care nu mai există de
+document spunea `E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual` — o cale care nu mai există de
 când vaultul a fost mutat pe Drive. Numărul de scripturi se numără pe disc, la
 calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 
@@ -473,7 +473,7 @@ ar rescrie indexuri în interiorul caruia n-are voie să scrie.
 > **La data de 2026-10-08 logul există și e gol de tot: 3 octeți** — doar BOM-ul.
 > 1.315 evenimente au fost mutate în `arhiva- raport aliniere.log` (733.417 caractere),
 > toate rezolvate. **Logul gol e rezultatul dorit**: înseamnă că nu e treabă deschisă.
-> Verifică: `Get-Item D:\Alex_Knowlege_Vault\raport-aliniere.log | Select-Object Length`
+> Verifică: `Get-Item E:\Google\GDrive\GDrive-Second_Brain_PKMS\raport-aliniere.log | Select-Object Length`
 
 ### Cele trei automate, cu riscuri diferite
 
@@ -768,7 +768,7 @@ după luni.
 **Un log de 3 octeți e starea de repaus, nu o pierdere.** Se verifică într-o secundă:
 
 ```powershell
-Get-Item D:\Alex_Knowlege_Vault\raport-aliniere.log | Select-Object Length, LastWriteTime
+Get-Item E:\Google\GDrive\GDrive-Second_Brain_PKMS\raport-aliniere.log | Select-Object Length, LastWriteTime
 ```
 
 ### Ritualul, o dată pe săptămână
@@ -821,7 +821,7 @@ generate se înlocuiesc.
 
 Cifra e vie — se schimbă la fiecare ștergere și la fiecare raft nou. Verifică:
 ```powershell
-Get-ChildItem 'D:\Alex_Knowlege_Vault\_QUARANTINE' -Filter '00_INDEX.md' -File -Recurse -Force |
+Get-ChildItem 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\_QUARANTINE' -Filter '00_INDEX.md' -File -Recurse -Force |
   Where-Object { $_.FullName -notlike '*indexuri generate in gresit*' } |
   Select-String -Pattern '\*\*De ce e aici:\*\*' -Encoding UTF8 | Measure-Object | Select-Object -Expand Count
 ```

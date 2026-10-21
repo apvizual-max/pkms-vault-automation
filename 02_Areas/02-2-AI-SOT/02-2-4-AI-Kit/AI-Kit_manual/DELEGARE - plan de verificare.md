@@ -36,7 +36,7 @@ Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.
 5. Folders-ele cu punct la început (`.obsidian`, `.claudian`, `.neural_memory`, `.sentinel_temp`,
    `.trash`, `.vault-intelligence`, `.wwebjs_cache`) sunt încă la rădăcină și **neatinse**.
 6. `Canvas Bases` este încă la rădăcină.
-7. Backup-ul există la `D:\Alex_Knowlege_Vault - Backup - 10-08-2026`, este **în afara** vault-ului
+7. Backup-ul există la `E:\Google\GDrive\GDrive-Second_Brain_PKMS - Backup - 10-08-2026`, este **în afara** vault-ului
    și cel mai recent fișier din el are data `2026-10-07 15:12:25` (dovadă că nu a fost atins).
 8. Niciun folder nou numerotat nu a apărut la rădăcină după `01_Projects\01-6-Work_Folder (to sort)` (deci nu s-a numerotat
    rațional în baza veche).
@@ -45,7 +45,7 @@ Niciun agent nu atinge `E:\`, nu atinge backup-ul, nu atinge `.git`.
 
 ## V2 — Scripturi (agent `verifier`)
 
-Rulările permise, în această ordine, din `D:\Alex_Knowlege_Vault\AI-Kit`:
+Rulările permise, în această ordine, din `E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual`:
 
 ```
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1

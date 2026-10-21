@@ -29,7 +29,7 @@ acțiune cu randament sigur e măsurătoarea — care arată ca muncă și nu sc
 ## Pasul 0 — verifică drumul, apoi mediul
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 .\paths.ps1
 .\setup.ps1
 ```
@@ -43,7 +43,7 @@ nume scris tare a căzut. `setup.ps1` verifică mediul și îți tipărește ce 
 
 ## Pasul 1 — citește, în această ordine
 
-Toate drumurile de mai jos sunt **relative la rădăcina vaultului** (`D:\Alex_Knowlege_Vault`),
+Toate drumurile de mai jos sunt **relative la rădăcina vaultului** (`E:\Google\GDrive\GDrive-Second_Brain_PKMS`),
 nu la folderul `AI-Kit` în care se află acest fișier.
 
 | # | Fișier | De ce |
@@ -73,8 +73,8 @@ Cele două cifre sunt amândouă adevărate și înseamnă lucruri diferite: **4
 e pe disc, **661** e ce e util. Nu copia niciuna într-un plan ca număr fix — **măsoară:**
 
 ```powershell
-(Get-ChildItem 'D:\Alex_Knowlege_Vault' -Filter '00_INDEX.md' -File -Recurse -Force).Count
-(Get-ChildItem 'D:\Alex_Knowlege_Vault\_QUARANTINE\indexuri generate in gresit' -Filter '00_INDEX.md' -File -Recurse -Force).Count
+(Get-ChildItem 'E:\Google\GDrive\GDrive-Second_Brain_PKMS' -Filter '00_INDEX.md' -File -Recurse -Force).Count
+(Get-ChildItem 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\_QUARANTINE\indexuri generate in gresit' -Filter '00_INDEX.md' -File -Recurse -Force).Count
 ```
 
 Primul număr, minus al doilea, e răspunsul la „câte indexuri utile există acum".
@@ -86,7 +86,7 @@ Primul număr, minus al doilea, e răspunsul la „câte indexuri utile există 
 **Șase scripturi, o singură ordine. Nu improviza ordinea.** Aceasta este ordinea:
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)
@@ -153,7 +153,7 @@ pentru verificarea automată, și e deja programat.
 
 Un script nedocumentat într-un folder operațional e o **gaură**, nu un detaliu.
 În `AI-Kit` sunt **12 scripturi** (la data de 2026-10-20, măsurat pe disc cu
-`(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`): cele șase de mai
+`(Get-ChildItem E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual -Filter *.ps1).Count`): cele șase de mai
 sus, plus `watch.ps1`, `align-index.ps1`, `verifica-schema.ps1`,
 `inchide-log.ps1` și `git-autocommit.ps1`.
 **Numărul se numără pe disc, nu se promite din document** — dacă apare al doisprezecelea,
@@ -220,7 +220,7 @@ Scenariul pentru care un AI fără memorie e cel mai vulnerabil. Citește înain
 răspunzi la întrebarea „am pierdut ceva?".
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 .\reconcile.ps1
 ```
 
@@ -268,7 +268,7 @@ rulând `.\health-check.ps1`. Cifra vie e o obligație: **măsoară, nu copia.**
 
 | | |
 |---|---|
-| Vault | `D:\Alex_Knowlege_Vault` — 59,01 GB |
+| Vault | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — 59,01 GB |
 | Fișiere de lucru | **50.970** — tot ce e în vault, **mai puțin** `.obsidian` și `.git` |
 | Fișiere pe disc, cu tot | **52.239** — dacă numărăm și folderele programelor |
 | Backup | alături vaultului, pe `D:` — **imutabil**. Îl descoperă `paths.ps1`, nu-l scrie |
@@ -360,7 +360,7 @@ Regula care interzice predarea e §2.1 din specificații.
 ## Pasul 8 — înainte de a spune „gata"
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 
 .\lint.ps1          # regulile. daca nu da 0, nu ai terminat
 .\health-check.ps1  # masoara

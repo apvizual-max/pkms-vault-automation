@@ -15,7 +15,7 @@ e **suprafața de integrare**: cine răspunde de ce și în ce ordine.
 
 | | unde stă | răspunde de |
 |---|---|---|
-| conținut | `D:\Alex_Knowlege_Vault` | backup local, **nu** GitHub |
+| conținut | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` | backup local, **nu** GitHub |
 | motor | acest repo | GitHub |
 | punte, skill-uri, plan | `C:\Users\apviz\.minimax-agent\projects\Mavis-Optimus-Continuous-Integration\` | proces |
 | sursa Cloud | `cloud-ingest\MAVIS-CLOUD\` (clonă read-only) | citit, **nu** modificat |

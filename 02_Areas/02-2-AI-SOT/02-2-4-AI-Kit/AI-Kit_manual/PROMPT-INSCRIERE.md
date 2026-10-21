@@ -20,7 +20,7 @@ Eu decid ce facem, tu execuți și îmi raportezi ce ai făcut, pe scurt, în ro
 
 La început:
 
-1. Rulează:  cd D:\Alex_Knowlege_Vault\AI-Kit
+1. Rulează:  cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
                .\paths.ps1     (verifică drumul către backup; nu scrie)
                .\setup.ps1     (verificare de preluare; nu scrie)
 
@@ -90,8 +90,8 @@ Ascunzi un ochi dacă ceva nu ți-a ieșit. Îmi spui exact.
 ## Varianta scurtă, pentru AI cu context mare
 
 ```
-Citește D:\Alex_Knowlege_Vault\SPECIFICATII - contractul vaultului.md și
-D:\Alex_Knowlege_Vault\COTOR.md. Rulează D:\Alex_Knowlege_Vault\AI-Kit\lint.ps1.
+Citește E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\SPECIFICATII - contractul vaultului.md și
+E:\Google\GDrive\GDrive-Second_Brain_PKMS\COTOR.md. Rulează E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\lint.ps1.
 Scrie-ți planul unde poate fi citit înapoi și arată-mi-l. Nu executa până nu aprob.
 Nu șterge nimic. Nu scrie în backup. Nu atinge folderele cu punct.
 Caută informații pe disc înainte să mă întrebi ceva.

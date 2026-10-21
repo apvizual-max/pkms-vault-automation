@@ -28,7 +28,7 @@ Coliziuni de nume: `nume_v2`, `nume_v3`. **Niciodată suprascriere.**
 ## 2. Backupul e imutabil
 
 ```
-D:\Alex_Knowlege_Vault - Backup - 10-08-2026
+E:\Google\GDrive\GDrive-Second_Brain_PKMS - Backup - 10-08-2026
 ```
 
 **Citește. Copiază din el. Nu scrie, nu mută, nu redenumește, nu șterge.**

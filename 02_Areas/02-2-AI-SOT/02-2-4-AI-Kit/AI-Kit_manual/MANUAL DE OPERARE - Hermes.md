@@ -17,7 +17,7 @@ Nu cere aprobare pentru ceva ce ți-a cerut. Nu opri lucrul pentru că e greu sa
 
 | | |
 |---|---|
-| Vault de lucru | `D:\Alex_Knowlege_Vault` — aici se lucrează, aici se mută |
+| Vault de lucru | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — aici se lucrează, aici se mută |
 | Backup | alături vaultului, în rădăcina lui `D:` — **imutabil**. Nu-i scriem calea: o descoperă `AI-Kit\paths.ps1` |
 
 **Backupul nu i se scrie niciodată.** Citește din el, copiază din el. Nu scrie, nu mută, nu redenumește, nu șterge.
@@ -60,7 +60,7 @@ Singurul motiv real de ștergere e decizia lui Popy, luată în `_QUARANTINE`.
 ## 4. Ordinea canonică a comenzilor
 
 În `AI-Kit` sunt **11 scripturi** (la data de 2026-10-10, măsurate pe disc cu
-`(Get-ChildItem D:\Alex_Knowlege_Vault\AI-Kit -Filter *.ps1).Count`). Cele 6 din
+`(Get-ChildItem E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual -Filter *.ps1).Count`). Cele 6 din
 ordinea canonică se rulează într-o singură ordine, scrisă identic în `ONBOARDING.md`, în
 `MANUAL DE OPERARE - Hermes.md` și în `AUTOMATIZARI - scripturi.md`. Nu o schimba.
 `build-index.ps1` și `align-index.ps1` sunt în afara ei — pentru că scriu.
@@ -68,7 +68,7 @@ ordinea canonică se rulează într-o singură ordine, scrisă identic în `ONBO
 Intră în pachet:
 
 ```powershell
-cd D:\Alex_Knowlege_Vault\AI-Kit
+cd E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual
 ```
 
 La fiecare sesiune, în această ordine:
@@ -394,8 +394,8 @@ spunea care.
 cele din carantină" — **și spune cum se re-verifică.** Nu alege un singur număr și nu-l
 lăsa să îmbătrânească: într-un folder viu, orice cifră statică are termen.
 ```powershell
-(Get-ChildItem 'D:\Alex_Knowlege_Vault' -Filter '00_INDEX.md' -File -Recurse -Force).Count
-(Get-ChildItem 'D:\Alex_Knowlege_Vault\_QUARANTINE\indexuri generate in gresit' -Filter '00_INDEX.md' -File -Recurse -Force).Count
+(Get-ChildItem 'E:\Google\GDrive\GDrive-Second_Brain_PKMS' -Filter '00_INDEX.md' -File -Recurse -Force).Count
+(Get-ChildItem 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\_QUARANTINE\indexuri generate in gresit' -Filter '00_INDEX.md' -File -Recurse -Force).Count
 ```
 
 ---
