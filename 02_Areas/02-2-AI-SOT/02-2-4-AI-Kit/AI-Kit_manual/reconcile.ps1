@@ -25,28 +25,84 @@ param(
   # cifra de pierderi e atat de mare incat cel mai probabil NU e o pierdere, ci un
   # vault partial (copie de test, dosar nou, replica). Fara el, comanda refuza sa
   # scrie ceva ce nimeni nu si-a cerut.
-  [switch]$RestoreConfirmat
+  [switch]$RestoreConfirmat,
+  # REPERUL cu care se compara (Decizia 1, Popy, 2026-10-21).
+  #   auto   = cloud daca oglinda DriveFS e masurabila, backup local altfel
+  #   cloud  = compara localul cu CLOUDUL, per fisier, pe baza de metadate
+  #            DriveFS. Asta e comparatia pe care o cere modelul nou.
+  #   backup = compara vaultul cu backupul local, exact cum s-a facut pana acum
+  # 'auto' e implicit: reperul de rezerva se foloseste doar cand oglinda nu
+  # poate fi masurata. Modul 'backup' ramane disponibil la comanda, ca
+  # capacitate pastrata.
+  [ValidateSet('auto','cloud','backup')]
+  [string]$Referinta = 'auto'
 )
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\paths.ps1"
-if (-not $Backup) { $Backup = Get-PkmsBackup }
 if (-not $Vault)  { $Vault  = Get-PkmsVault }
-$Backup = Normalize-PkmsPath $Backup
 $Vault  = Normalize-PkmsPath $Vault
-# Poarta de cale reala: reconcile compara backupul CU vaultul, deci o cale
+# Poarta de cale reala: reconcile compara reperul CU vaultul, deci o cale
 # gresita l-ar face sa raporteze pierderi inexistente sau sa nu compare nimic.
 Assert-PkmsVaultReal -Vault $Vault -Cine 'reconcile'
-if (-not $Backup) { Write-Output 'BACKUP NU A FOST GASIT'; exit 1 }
-if (-not (Test-Path -LiteralPath $Backup)) {
-  Write-Output "BACKUP INEXISTENT: $Backup"
+# aceeasi regula pentru vaultul: daca nu exista, comparatia nu are obiect.
+# fara asta, Get-ChildItem ar intoarce 0 fisiere si scriptul ar raporta
+# "lipsa reala" pentru tot reperul, fara sa stie ca n-a citit nimic.
+if (-not (Test-Path -LiteralPath $Vault)) {
+  Write-Output "VAULT INEXISTENT: $Vault"
   Write-Output 'Nu s-a comparat nimic. Nu pot spune ca nu s-a pierdut nimic.'
   exit 1
 }
-# aceeasi regula pentru vaultul: daca nu exista, comparatia nu are obiect.
-# fara asta, Get-ChildItem ar intoarce 0 fisiere si scriptul ar raporta
-# "lipsa reala" pentru tot backupul, fara sa stie ca n-a citit nimic.
-if (-not (Test-Path -LiteralPath $Vault)) {
-  Write-Output "VAULT INEXISTENT: $Vault"
+
+# --- REPERUL: oglinda Google Drive Cloud (Decizia 1), backup local ca fallback ---
+# Modul 'cloud' compara LOCALUL cu CLOUDUL, per fisier, pe baza de metadate
+# DriveFS. E cu doua ordine de marime mai rapid decat plimbarea cu
+# Get-ChildItem prin doi arbori pe DriveFS, si e comparatia pe care o cere
+# modelul nou: reperul e cloud-ul, nu o copie locala.
+# Modul 'backup' ramane INTACT — e capacitatea pastrata.
+$ref = Get-PkmsReference
+$mod = $Referinta
+if ($mod -eq 'auto') {
+  if ($ref.Tip -eq 'cloud') { $mod = 'cloud' }
+  elseif ($ref.Cale)       { $mod = 'backup' }
+  else                     { $mod = 'niciunul' }
+}
+if ($mod -eq 'cloud') {
+  $oglinda = Join-Path $PSScriptRoot 'verifica-oglinda.ps1'
+  Write-Output "=== RECONCILIERE ==="
+  Write-Output "reper folosit: oglinda Google Drive Cloud (comparatie per fisier local <-> cloud)"
+  Write-Output "vault:  $Vault"
+  Write-Output "mount:  $($ref.Mount)"
+  Write-Output "baza:   $($ref.Baza)"
+  if (-not (Test-Path -LiteralPath $oglinda)) {
+    Write-Output "POARTA DE OGLINDA LIPSA: $oglinda"
+    Write-Output 'Nu am masurat nimic. Nu pot afirma ca nu s-a pierdut nimic.'
+    exit 1
+  }
+  $out = @()
+  $cod = 0
+  try {
+    $out = & powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $oglinda -Vault $Vault 2>&1
+    $cod = [int]$LASTEXITCODE
+  } catch {
+    Write-Output "EXCEPTIE: $($_.Exception.Message)"
+    Write-Output 'Nu am masurat nimic. Nu pot afirma ca nu s-a pierdut nimic.'
+    exit 1
+  }
+  foreach ($l in $out) { Write-Output $l }
+  exit $cod
+}
+if ($mod -eq 'niciunul') {
+  Write-Output 'NICIUN REPER: nici oglinda Google Drive Cloud, nici backup local.'
+  Write-Output 'Nu s-a comparat nimic. Nu pot spune ca nu s-a pierdut nimic.'
+  exit 1
+}
+
+# --- modul backup: exact cum a fost ---
+if (-not $Backup) { $Backup = Get-PkmsBackup }
+$Backup = Normalize-PkmsPath $Backup
+if (-not $Backup) { Write-Output 'BACKUP NU A FOST GASIT'; exit 1 }
+if (-not (Test-Path -LiteralPath $Backup)) {
+  Write-Output "BACKUP INEXISTENT: $Backup"
   Write-Output 'Nu s-a comparat nimic. Nu pot spune ca nu s-a pierdut nimic.'
   exit 1
 }

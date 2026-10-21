@@ -18,11 +18,33 @@ $errors = New-Object System.Collections.Generic.List[string]
 $warn   = New-Object System.Collections.Generic.List[string]
 $ok     = New-Object System.Collections.Generic.List[string]
 
-# --- 1. backup descoperit si neatins ---
-$B = Get-PkmsBackup
-if (-not $B) {
-  $errors.Add("BACKUP NU A FOST GASIT. Get-PkmsBackup cauta in \$env:PKMS_BACKUP, apoi pe TOATE volumele. Verifica ca backupul e montat si ca numele lui contine unul din: BKUP / BACKUP / copy / copia / salvat / rezerva / vechi / old. Mesajul NU spune pe ce volum sa se uite, pentru ca un mesaj care trimite la volumul gresit e mai rau decat un mesaj care nu trimite deloc.")
+# --- 1. REPERUL: oglinda Google Drive Cloud (Decizia 1) ---
+# Backupul local nu mai e reperul. E FALLBACK: e folosit doar cand oglinda nu
+# poate fi masurata. Deci lipsa backupului NU mai ridica verdictul daca oglinda
+# e sanatoasa.
+#
+# MASURAT 2026-10-21: backupul de pe H: nu mai exista, iar lint raporta EROARE
+# in fiecare zi pentru un reper pe care nimeni nu l-a mai cerut. O poarta care
+# urluieste zilnic pe o realitate care a fost inlocuita nu mai e o poarta: e
+# zgomot, si omul invata sa nu o mai citeasca.
+#
+# Mesajul de mai jos spune ACUM ce cauta si ce a gasit, pentru ca oglinda si
+# backupul se cauta in locuri CONCRETE — nu se mai trimite omul la intuneric.
+$ref = Get-PkmsReference
+$B = $null
+if ($ref.Tip -eq 'cloud') {
+  $ok.Add("reper: oglinda Google Drive Cloud (mount: $($ref.Mount))")
+  $ok.Add("baza de metadate DriveFS: $($ref.Baza)")
+  $ok.Add("starea per-fisier local<->cloud o masoara verifica-oglinda.ps1 (poarta dedicata)")
+} elseif ($ref.Cale) {
+  $B = $ref.Cale
+  $warn.Add("oglinda DriveFS nu e masurabila ($($ref.Motiv)); reperul e backupul local: $B")
 } else {
+  $mountGasit = if ($ref.Mount) { $ref.Mount } else { 'nu a fost gasit (nici shortcutul DriveFS, nici amprenta desktop.ini in stramosii)' }
+  $dbGasit = if ($ref.Baza) { $ref.Baza } else { 'nu a fost gasita (mirror_sqlite.db lipseste sub %LOCALAPPDATA%\Google\DriveFS)' }
+  $errors.Add("NU S-A GASIT REPER. S-au cautat, in ordine: (1) oglinda Google Drive Cloud - mountul DriveFS: $mountGasit; baza de metadate: $dbGasit; (2) backup local - \$env:PKMS_BACKUP, apoi numele vechi de pe D:, apoi toate volumele. REPERUL OBLIGATORIU e oglinda cloud: e ea ce se actualizeaza singura si singura care poate fi masurata per fisier. Fara oglinda si fara backup nu se compara nimic, iar 'nu s-a pierdut nimic' ar fi o minciuna.")
+}
+if ($B) {
   $ok.Add("backup: $B")
   # PRAGUL, MASURAT IN LOC, NU SCRIS TARE. MUTARE 2026-10-19.
   # Era o data scrisa tare (2026-10-07 15:13), calibrata pe BACKUPUL VECHI de pe D:.

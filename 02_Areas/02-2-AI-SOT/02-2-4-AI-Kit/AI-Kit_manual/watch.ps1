@@ -3,7 +3,8 @@
   Ruleaza, in ordine fixa, trei trepte care NU scriu in vault:
      1. lint          - regulile de denumire, legaturi, documentatia
      2. health-check  - numerele vii ale vaultului
-     3. reconcile     - socoteala cu backupul, doar informativ
+     3. reconcile     - socoteala cu reperul: oglinda Google Drive Cloud (Decizia 1,
+                        2026-10-21) sau, ca fallback, backupul local
   Scrie UN SINGUR fisier: _SYSTEM\rapoarte\raport-ultima-rulare.txt
   Il rescrie la FIECARE treapta, nu doar la final: masurat 2026-10-20, pe
   vaultul de pe DriveFS, treapta 3 (reconcile) dureaza peste 50 de minute,
@@ -17,9 +18,10 @@
     nu distinge; un om distinge.
   - backupul nu se atinge. Se citeste, atat.
 
-  Calea de backup nu e scrisa nici aici: vine din paths.ps1 (Get-PkmsBackup).
-  Motivul e real: backupul a fost redenumit o data, iar o cale scrisa tare intr-un
-  parametru implicit dezactiveaza in tacut descoperirea.
+  Calea de reper nu e scrisa nici aici: vine din paths.ps1 (Get-PkmsReference).
+  Motivul e real: reperul a fost schimbat o data (copie locala -> oglinda
+  Drive Cloud), iar o cale scrisa tare intr-un parametru implicit dezactiveaza
+  in tacut descoperirea.
 
   COD DE IESIRE AL SCRIPTULUI: 0 = nicio EROARE, 1 = exista o EROARE.
   ATENTIILE NU schimba codul de iesire. Ele se raporteaza, nu blocheaza.
@@ -136,7 +138,12 @@ function Actualizeaza-Raport {
   }
 
   # --- raportul ---
-  $backup = Get-PkmsBackup
+  $ref = Get-PkmsReference
+  $refText = switch ($ref.Tip) {
+    'cloud'        { "oglinda Google Drive Cloud (mount: $($ref.Mount))" }
+    'backup-local' { "backup local: $($ref.Cale)" }
+    default        { 'NU A FOST GASIT (nici oglinda, nici backup)' }
+  }
 
     # verdictul AFISAT. Daca nu s-au terminat toate treptele, primeste
     # prefixul 'IN CURS': altfel un raport pe jumatate ar parea 'OK'.
@@ -156,7 +163,7 @@ function Actualizeaza-Raport {
   $L.Add("Trepte rulate:       $($rez.Count)/$($trepte.Count)")
   $L.Add("Durata totala:        $(Fmt-Durata $swTotal.Elapsed.TotalSeconds)")
   $L.Add("Vault verificat:       $Vault")
-  $L.Add("Backup comparat:      $(if ($backup) { $backup } else { 'NU A FOST GASIT' })")
+  $L.Add("Reper folosit:        $refText")
   $L.Add('Ce a scris:           doar acest raport (si folderul lui, daca lipsea). nimic altceva.')
   $L.Add('Ce NU a rulat:        build-index (NU ruleaza la verificare) si orice restaurare.')
   $L.Add('                     build-index rescrie toate indexurile; ruleaza doar dupa mutari in masa.')
@@ -166,7 +173,7 @@ function Actualizeaza-Raport {
     $titlu = switch ($r.Nume) {
       'lint'         { 'PASUL 1 - lint (regulile de denumire)' }
       'health-check' { 'PASUL 2 - health-check (masura vaultului)' }
-      'reconcile'    { 'PASUL 3 - reconcile (socoteala cu backupul)' }
+      'reconcile'    { 'PASUL 3 - reconcile (socoteala cu reperul)' }
     }
     $L.Add($titlu)
     $L.Add("  durata:        $(Fmt-Durata $r.Durata)")
@@ -210,9 +217,12 @@ function Actualizeaza-Raport {
 
   $L.Add('----------------------------------------------------------------')
   $L.Add('SUMAR')
-  $L.Add("  lint:         $($rez[0].Cod) iesire, $($rez[0].Erori) erori, $($rez[0].Atentii) atentioni")
-  $L.Add("  health-check: $($rez[1].Cod) iesire, $($rez[1].Erori) erori, $($rez[1].Atentii) atentioni")
-  $L.Add("  reconcile:    $($rez[2].Cod) iesire, $($rez[2].Erori) lipsuri reale, $($rez[2].Atentii) atentioni")
+  # Sumarul se scrie DIN LISTA, nu pe pozitii fixe. Pe pozitii fixe, orice
+  # treapta noua sau orice reordonare ar face raportul sa numere cifrele
+  # altei trepte. O cifra atribuita gresit e mai raua decat o cifra lipsa.
+  foreach ($r in $rez) {
+    $L.Add("  $($r.Nume.PadRight(13)): $($r.Cod) iesire, $($r.Erori) erori, $($r.Atentii) atentioni")
+  }
   $L.Add('')
   $L.Add('VERDICT')
   $L.Add($verdictFinal)
@@ -268,17 +278,36 @@ foreach ($t in $trepte) {
       $detalii = @(Get-Detalii $rand @('LIPSA'))
     }
     'reconcile' {
+      # Treapta 3 are doua forme, si parserul trebuie sa le stie pe amandoua.
+      # Forma 1 (reper = backup local): 'REAL LIPSA (niciunde in vault): N'.
+      # Forma 2 (reper = oglinda cloud):  'DIVERGENTA LOCAL<->CLOUD: N'.
+      # Daca niciuna n-a fost recunoscuta, treapta a esuat sa se termine — si
+      # atunci RIDICA, pentru ca un pas care nu s-a citit nu e un pas curat.
       $m = [regex]::Match($text, 'REAL LIPSA \(niciunde in vault\):\s*(\d+)')
-      if ($m.Success) { $erori = [int]$m.Groups[1].Value }
-      elseif ($text -match 'BACKUP NU A FOST GASIT|BACKUP INEXISTENT|NU SE ADUNA') {
-        $erori = 1; $nota = 'comparatia cu backupul nu a putut fi facuta'
+      if ($m.Success) {
+        $erori = [int]$m.Groups[1].Value
+        $nota = 'comparatie cu backupul local'
+      } else {
+        $m2 = [regex]::Match($text, 'DIVERGENTA LOCAL<->CLOUD:\s*(\d+)')
+        if ($m2.Success) {
+          $erori = [int]$m2.Groups[1].Value
+          $nota = 'comparatie cu oglinda cloud'
+          # o masuratoare care nu a masurat NU e o masuratoare de zero
+          if ($text -match 'MASURAT OGLINDA:\s*NU') { $erori = 1; $nota = 'oglinda nu a putut fi masurata' }
+          $lat = [regex]::Match($text, 'LATENTA LOCAL<->CLOUD:\s*(\d+)')
+          if ($lat.Success) { $nota += "; latenta $($lat.Groups[1].Value)" }
+        } elseif ($text -match 'BACKUP NU A FOST GASIT|BACKUP INEXISTENT|NU SE ADUNA|NICIUN REPER|POARTA DE OGLINDA LIPSA') {
+          $erori = 1; $nota = 'comparatia cu reperul nu a putut fi facuta'
+        } else {
+          $erori = 1; $nota = 'nu am putut citi randul de rezultat al reconcilierii'
+        }
       }
       $atentii = @($rand | Where-Object { $_ -match 'ATENTIE:' }).Count
       # '==>' prinde relocarile, 'POTRIVIRE FALSA' prinde potrivirile respinse
       # pentru continut diferit. Fara ele,exact informatia care cere ochiul
       # omului era cea care se pierdea: se vedea pe consola si nu ajungea in
       # raportul zilnic.
-      $detalii = @(Get-Detalii $rand @('^ATENTIE:', '^STOP:', 'BACKUP (INEXISTENT|NU A FOST GASIT)', 'Nu pot afirma', '==>', 'POTRIVIRE FALSA') -Blocuri)
+      $detalii = @(Get-Detalii $rand @('^ATENTIE:', '^STOP:', 'BACKUP (INEXISTENT|NU A FOST GASIT)', 'NICIUN REPER', 'POARTA DE OGLINDA LIPSA', 'Nu pot afirma', '==>', 'POTRIVIRE FALSA') -Blocuri)
     }
   }
 

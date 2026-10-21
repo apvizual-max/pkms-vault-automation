@@ -134,6 +134,107 @@ function Test-PkmsNumeleDeCopie([string]$Nume) {
   return [bool]($Nume -match '(?i)(bkup|backup|copy|copia|salvat|rezerva|vechi|old)')
 }
 
+# ---------------------------------------------------------------------------
+# REPERUL NOU — DECIZIA 1 (Popy, 2026-10-21)
+#
+# Reperul de backup nu mai e o copie locala pe D:/H:. Reperul e OGLINDA GOOGLE
+# DRIVE CLOUD: fisierele exista in doua locuri (oglinda locala NVMe + cloud),
+# iar starea lor se verifica PER FISIER, din baza de metadate a DriveFS.
+#
+# Backupul local NU dispare: ramane CAPABILITATE. Devine FALLBACK — reperul
+# al doilea, folosit doar cand oglinda nu poate fi masurata. Ordinea e
+# cloud PRIMA, pentru ca oglinda e cea care se actualizeaza singura.
+# ---------------------------------------------------------------------------
+
+# Radacina de montare DriveFS, din sursa DINAMICA: shortcutul pe care DriveFS
+# il creeaza la prima rulare. MASURAT 2026-10-21: 'G:\My Drive.lnk' ->
+# 'E:\Google\GDrive'. Daca DriveFS se remonteaza pe alt volum, shortcutul se
+# actualizeaza singur, iar reperul urmeaza mountul fara editare de manual.
+#
+# Amprenta de mount: 'desktop.ini' cu icoana GoogleDriveFS. MASURAT: prezent
+# DOAR la radacina mountului, absent la 'E:\Google' si absent in vault. Deci
+# e discriminator, nu noroc.
+function Test-PkmsDriveFsMountRoot([string]$Path) {
+  if (-not $Path) { return $false }
+  if (-not (Test-Path -LiteralPath $Path -PathType Container)) { return $false }
+  $di = [System.IO.Path]::Combine($Path, 'desktop.ini')
+  try {
+    if (-not [System.IO.File]::Exists($di)) { return $false }
+    $txt = [System.IO.File]::ReadAllText($di)
+    return ($txt -like '*GoogleDriveFS.exe*')
+  } catch { return $false }
+}
+
+function Get-PkmsDriveFsMount {
+  try {
+    $sh = New-Object -ComObject WScript.Shell
+    foreach ($lnk in @('G:\My Drive.lnk', (Join-Path $env:USERPROFILE 'Desktop\My Drive.lnk'))) {
+      try {
+        if ([System.IO.File]::Exists($lnk)) {
+          $t = $sh.CreateShortcut($lnk).TargetPath
+          if ($t -and (Test-PkmsDriveFsMountRoot -Path $t)) { return (Normalize-PkmsPath $t) }
+        }
+      } catch { }
+    }
+  } catch { }
+  # fallback: primul stramos al vaultului care poarta amprenta DriveFS
+  $v = Get-PkmsVault
+  if ($v) {
+    $d = $v
+    while ($d) {
+      if (Test-PkmsDriveFsMountRoot -Path $d) { return (Normalize-PkmsPath $d) }
+      $parent = [System.IO.Path]::GetDirectoryName($d)
+      if (-not $parent -or $parent -eq $d) { break }
+      $d = $parent
+    }
+  }
+  return $null
+}
+
+# Baza de metadate a DriveFS: singurul instrument autorizat de contract pentru
+# starea local<->cloud. ('metadata_sqlite_db' e cealalta, dar nu contine
+# local_md5_checksum / cloud_md5_checksum pe pereche.)
+function Get-PkmsDriveFsDb {
+  $base = Join-Path $env:LOCALAPPDATA 'Google\DriveFS'
+  if (-not (Test-Path -LiteralPath $base)) { return $null }
+  $found = @(Get-ChildItem -LiteralPath $base -Directory -Force -EA SilentlyContinue |
+             Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'mirror_sqlite.db') } |
+             Sort-Object LastWriteTime -Desc)
+  if ($found.Count -eq 0) { return $null }
+  return (Join-Path $found[0].FullName 'mirror_sqlite.db')
+}
+
+function Get-PkmsNode {
+  $c = Get-Command node -ErrorAction SilentlyContinue
+  if ($c -and $c.Source) { return $c.Source }
+  return $null
+}
+
+# REPERUL UNIFICAT: cloud PRIMA, backup local ca fallback.
+# Returneaza un obiect, nu o cale goala — pentru ca "nu am niciun reper" si
+# "reperul e backupul local" sunt doua raspunsuri diferite, si primul e o
+# abatere, iar al doilea e o degradare acceptata.
+function Get-PkmsReference {
+  $m = Get-PkmsDriveFsMount
+  $db = Get-PkmsDriveFsDb
+  if ($m -and $db) {
+    return [pscustomobject]@{
+      Tip = 'cloud'; Cale = $null; Baza = $db; Mount = $m; Motiv = $null
+    }
+  }
+  $b = Get-PkmsBackup
+  if ($b) {
+    return [pscustomobject]@{
+      Tip = 'backup-local'; Cale = $b; Baza = $db; Mount = $m
+      Motiv = 'oglinda DriveFS nu e masurabila (mount sau baza de metadate lipseste)'
+    }
+  }
+  return [pscustomobject]@{
+    Tip = 'niciunul'; Cale = $null; Baza = $db; Mount = $m
+    Motiv = 'nici oglinda DriveFS, nici backup local'
+  }
+}
+
 function Get-PkmsBackup {
   # 1. mediu
   if ($env:PKMS_BACKUP -and (Test-Path $env:PKMS_BACKUP)) { return $env:PKMS_BACKUP }
@@ -247,9 +348,16 @@ function Test-PkmsLiveLog([string]$Nume) {
 # ---------------------------------------------------------------------------
 if ($MyInvocation.InvocationName -ne '.') {
   $v = Get-PkmsVault
-  $b = Get-PkmsBackup
+  $r = Get-PkmsReference
   Write-Output "vault:   $v"
-  Write-Output "backup: $b"
+  Write-Output "reper:   $($r.Tip)"
+  if ($r.Tip -eq 'cloud') {
+    Write-Output "mount:   $($r.Mount)"
+    Write-Output "baza:    $($r.Baza)"
+  } elseif ($r.Cale) {
+    Write-Output "backup:  $($r.Cale)"
+  }
+  if ($r.Motiv) { Write-Output "motiv:   $($r.Motiv)" }
 
   # VAULTUL INEXISTENT. O cale care exista nu e neaparat vaultul — vezi Get-PkmsVault.
   # Scrierea e interzisa pe orice cale nerecunoscuta: pe D: sta un stub de un
@@ -257,10 +365,15 @@ if ($MyInvocation.InvocationName -ne '.') {
   if (-not $v) { Write-Output 'VAULTUL REAL NU A FOST GASIT. nu s-a scris nimic.'; exit 1 }
   if (-not (Test-PkmsVaultReal -Path $v)) { Write-Output "CALEA NU E UN VAULT REAL: $v"; exit 1 }
 
-  if ($b) {
-    Write-Output 'ambele la loc. nu s-a scris nimic.'
+  # REPERUL. Decizia 1: reperul e oglinda Drive Cloud, nu o copie locala.
+  # Backupul local ramane fallback, nu cerinta. Deci lipsa backupului NU mai
+  # e o eroare daca oglinda e masurabila; lipsa ambelor e.
+  if ($r.Tip -eq 'cloud') {
+    Write-Output 'oglinda Google Drive e reperul. nu s-a scris nimic.'
+  } elseif ($r.Cale) {
+    Write-Output 'oglinda nu e masurabila; reperul e backupul local. nu s-a scris nimic.'
   } else {
-    Write-Output 'BACKUP NU A FOST GASIT. comparatia cu backupul nu e posibila.'
+    Write-Output 'NICIUN REPER: nici oglinda DriveFS, nici backup local. comparatia nu e posibila.'
     exit 1
   }
 }
