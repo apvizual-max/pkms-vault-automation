@@ -1,7 +1,7 @@
 # MANUAL DE NAVIGARE PRIN COTOR
 
 **Cum găsești ceva în vault fără să scanezi tot volumul.**
-Măsurat 2026-10-19 pe `G:\My Drive\GDrive-Second_Brain_PKMS`.
+Măsurat 2026-10-19 pe `E:\Google\GDrive\GDrive-Second_Brain_PKMS`.
 
 > Acest document nu repetă `COTOR.md` (acolo e *ce* e sistemul).
 > Aici e *cum se navighează*. Diferența e tot ce contează: un agent care știe
@@ -54,7 +54,7 @@ Nu căuta. Deschide.
 Caută **în cotor**, nu în conținut:
 
 ```powershell
-$V = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+$V = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
 git -C $V grep -l -i 'termen' -- '*/00_INDEX.md'
 ```
 

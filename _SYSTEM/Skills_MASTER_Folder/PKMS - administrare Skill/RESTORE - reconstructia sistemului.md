@@ -30,7 +30,7 @@ git clone https://github.com/apvizual-max/pkms-vault-automation.git C:\temp\pkms
 ### 1.2. Motorul — în locul lui, pe calea nouă
 
 ```powershell
-$V = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+$V = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
 $M = "$V\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 New-Item -ItemType Directory -Path $M -Force | Out-Null
 # copiază DOAR scripturile (.ps1) și cele două .txt de registru

@@ -3,7 +3,7 @@
 Sunt în `AI-Kit\`. **Douăsprezece scripturi.** Rulează-le din PowerShell:
 
 ```powershell
-cd "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
+cd "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 ```
 
 ---
@@ -41,7 +41,7 @@ calea de acum; un număr corect, spus la o cale moartă, nu ajută pe nimeni.*
 ## Ordinea canonică — o singură, scrisă identic în toate documentele de predare
 
 ```powershell
-cd "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
+cd "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\paths.ps1        # 1. verifica drumul catre backup   (nu scrie)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1        # 2. verifica mediul                (nu scrie)

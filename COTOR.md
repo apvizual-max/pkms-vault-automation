@@ -3,10 +3,10 @@
 **Scheletul vaultului.** Tot ce urmează pleacă de aici.
 
 Ultima actualizare: **21 octombrie 2026**. 51.157 de fișiere de conținut · 88,72 GiB conținut util · 95,86 GB brut zecimal (100% bit-parity).
-Vaultul trăiește fizic ca oglindă locală NVMe pe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** (sincronizat permanent cu Google Drive Cloud și mapat secundar pe `G:\My Drive\GDrive-Second_Brain_PKMS`).
+Vaultul trăiește fizic ca oglindă locală NVMe pe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** — oglinda locală a Google Drive Cloud, sincronizată permanent cu cloud-ul.
 Baza de date Git este **decuplată fizic** la **`E:\Google\GitData-PKMS`**, lăsând în rădăcina vaultului doar un pointer scalar de 31 octeți (`.git`).
-Backupurile externe sunt pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și copia de siguranță `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`) — neatinse, doar citire la nevoie.
-**Calea vaultului și a backupului nu se scriu tare nicăieri:** le descoperă dinamic `AI-Kit\paths.ps1`.
+**Reperul de siguranță este oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în două locuri, iar starea lor se verifică **per fișier**, local↔cloud. Backupul extern de pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și `H:\Alex_Knowlege_Vault_BKUP_10-19-2026`) rămâne **arhivă neatinsă** — nu mai e reperul, e ultimul rând de rezervă, și se citește doar când e nevoie.
+**Calea vaultului, a mountului și a reperului nu se scriu tare nicăieri:** le descoperă dinamic `AI-Kit\paths.ps1`.
 
 > **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici vaultul, nici backupul. Ce a rămas pe
 > `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
@@ -19,8 +19,9 @@ Backupurile externe sunt pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și copia 
 
 | Cuvânt | Ce înseamnă aici | Nu e |
 |---|---|---|
-| **vault** | `G:\My Drive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
-| **backup** | copia de pe `H:`, **imutabilă**. Citește, copiază din ea. Nu scrie niciodată | nu e raft |
+| **vault** | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — singurul loc unde se lucrează | — |
+| **backup** | arhiva de pe `H:`, **imutabilă** și **nu e reperul**. Citește, copiază din ea. Nu scrie niciodată | nu e raft, nu e reper |
+| **oglindă** | perechea local↔cloud a aceluiași fișier. **Se verifică per fișier** — asta e reperul | nu e copie locală |
 | **bază** | nivelul `00`–`09` (10 baze). Rămâne neatins, ca un fond de bibliotecă | nu e locul de lucru |
 | **proiect** | `01_Projects` — singurul nivel în care intri ca să lucrezi | nu e o bază |
 | **raft** | un folder din `01_Projects`, pe un subiect de muncă | — |
@@ -33,7 +34,7 @@ Backupurile externe sunt pe **`H:`** (`H:\CLAUDE_Archive` - 180,77 GB și copia 
 ## Cele două niveluri
 
 ```
-G:\My Drive\GDrive-Second_Brain_PKMS\
+E:\Google\GDrive\GDrive-Second_Brain_PKMS\
 │
 ├── 00 … 09          BAZA — fondul. Nu se rearanjează. Aici stă ce nu e treabă curentă.
 │
@@ -165,7 +166,7 @@ Măsurate pe **19 octombrie 2026**:
 > **Nu alege un singur număr: spune cifra la care te referi și spune cum se re-verifică.**
 > 6.491, 4.089 și 2.402 sunt toate trei adevărate despre trei lucruri diferite.
 > ```powershell
-> $v = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+> $v = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
 > (Get-ChildItem $v -Filter '00_INDEX.md' -File -Recurse -Force).Count
 > (Get-ChildItem "$v\_QUARANTINE" -Filter '00_INDEX.md' -File -Recurse -Force).Count
 > ```
@@ -261,13 +262,18 @@ Nimic altceva în vault. Backupul primește citiri și atât.
 
 ### Calea, pe mașina de azi
 
-`paths.ps1` ia calea din `$env:PKMS_VAULT` dacă e setată, și caută backupul în
-`$env:PKMS_BACKUP`. Pe structura de pe Drive se rulează așa, **fără niciun drum scris tare**:
+`paths.ps1` ia calea din `$env:PKMS_VAULT` dacă e setată, **descoperă** mountul DriveFS
+(din shortcutul `G:\My Drive.lnk` → `E:\Google\GDrive`) și baza de metadate
+(`mirror_sqlite.db`), și abia apoi se uită la backupul local — **ca fallback**.
 
 ```powershell
-$env:PKMS_VAULT  = 'G:\My Drive\GDrive-Second_Brain_PKMS'
-$env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'
+$env:PKMS_VAULT  = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
+$env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'   # doar dacă există
 ```
+
+**Fără niciun drum scris tare în scripturi.** `Get-PkmsReference` întoarce reperul
+curent: `cloud` (oglinda), `backup-local` (fallback) sau `niciunul` — și ultima
+variantă e o **eroare**, nu un „OK" mascate.
 
 ### Raportul
 
@@ -414,14 +420,16 @@ Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-K
 | `setup.ps1` | verifică mediul, nu modifică nimic |
 | `lint.ps1` | **poarta** — dacă nu dă 0, nu începi |
 | `health-check.ps1` | **măsoară** |
-| `reconcile.ps1` | **singurul care produce cifre despre pierderi** |
+| `reconcile.ps1` | **singurul care produce cifre despre pierderi** — cu `-Referinta auto` compară cu **oglinda cloud** (per fisier), iar cu `-Referinta backup` păstrează comparația cu backupul local |
+| `verifica-oglinda.ps1` | **poarta reperului**: starea oglinzii local↔cloud + sănătatea DriveFS (proces, cozi). EROARE doar pe divergență reală (peste 48h); latența e ATENȚIE |
+| `drivefs-oglinda.js` | cititorul READ-ONLY al bazei de metadate DriveFS (`mirror_sqlite.db`). Nu scrie nimic; raportează verdict ca JSON |
 | `build-index.ps1` | scrie indexurile — **doar după mutări în masă** |
 | `watch.ps1` | verificarea automată: `lint` → `health-check` → `reconcile` |
 | `align-index.ps1` | **aliniază** indexurile existente — nu le creează din zero |
 | `verifica-schema.ps1` | **verifică** dacă indexurile sunt pe schema §18.1 — nu dacă există (asta e treaba lui `lint`) |
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
 | `git-autocommit.ps1` | **NU atinge vaultul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
-| `rula-din-task.ps1` | **lansatorul taskurilor**, nu o treaptă: stă pe `C:` (`C:\Users\apviz\.minimax\pkms\`), **așteaptă** ca `G:` să fie montat (max 300 s), apoi rulează un script din `AI-Kit_manual` și îi propagă codul de ieșire. Există pentru că la logon `G:` poate fi încă nemontat | **da** — rulează scriptul însuși, cu `PKMS_VAULT` și `PKMS_BACKUP` setate |
+| `rula-din-task.ps1` | **lansatorul taskurilor**, nu o treaptă: stă pe `C:` (`C:\Users\apviz\.minimax\pkms\`), **așteaptă** ca vaultul să fie accesibil (max 300 s), apoi rulează un script din `AI-Kit_manual` și îi propagă codul de ieșire. Rezolvă reperul **dinamic**, din shortcutul DriveFS — nu din `G:`, care nu există ca director | **da** — rulează scriptul însuși, cu `PKMS_VAULT` setat și `PKMS_BACKUP` setat **numai dacă backupul există** |
 
 **Ordinea canonică rămâne cea de 5 trepte** (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.

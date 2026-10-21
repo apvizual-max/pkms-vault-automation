@@ -7,7 +7,7 @@
 ## Prompt: aliniere sigură (operația de zi cu zi)
 
 ```
-Vaultul meu PKMS e pe G:\My Drive\GDrive-Second_Brain_PKMS.
+Vaultul meu PKMS e pe E:\Google\GDrive\GDrive-Second_Brain_PKMS.
 Indexatorul e la:
 02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\align-index.ps1
 
@@ -16,8 +16,8 @@ Vreau sa realiniez un subarbore, fara sa ating restul vaultului.
 1. Citește întâi _SYSTEM\Skills_MASTER_Folder\PKMS - indexare Skill\SKILL.md
    (contractul de navigare, cele cinci stări, regula «jurnalele vii nu sunt conținut»).
 2. Rularea de diagnostic, ÎNTOTDEAUNA înainte de orice scriere:
-     $M = "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
-     $env:PKMS_VAULT = "G:\My Drive\GDrive-Second_Brain_PKMS"
+     $M = "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
+     $env:PKMS_VAULT = "E:\Google\GDrive\GDrive-Second_Brain_PKMS"
      $env:PKMS_BACKUP = "H:\Alex_Knowlege_Vault_BKUP_10-19-2026"
      & "$M\align-index.ps1" -CeVad
    Citește ultima linie: «rezumat: ... · N NEALINIAT · ...».

@@ -23,9 +23,10 @@ license: Proprietar — Popy / OPTIMUS PRIME
 
 | | |
 |---|---|
-| **Unde** | `G:\My Drive\GDrive-Second_Brain_PKMS` — DriveFS, volum virtual, cu latență mare |
-| **Backup** | `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` — **se citește, nu se atinge** |
-| **Motor** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` — 12 scripturi |
+| **Unde** | `E:\Google\GDrive\GDrive-Second_Brain_PKMS` — oglinda locală NVMe a Google Drive Cloud |
+| **Reper** | **oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în cloud și local, iar egalitatea se verifică **per fișier**, cu `verifica-oglinda.ps1` |
+| **Arhivă** | `H:\Alex_Knowlege_Vault_BKUP_10-19-2026` — **se citește, nu se atinge**; e ultimul rând de rezervă, nu reperul |
+| **Motor** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` — 13 scripturi + 1 cititor read-only |
 | **Ghid** | `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\` — contractul + documentația |
 | **Cotor** | `COTOR.md` la rădăcină (25.735 B) · `AGENTS.md` (4.357 B) · `INDEX CENTRAL.md` (derivat, neversionat) |
 
@@ -88,15 +89,16 @@ mașină.
 5. **Spațiile sunt permise**; caracterele interzise în numele de folder nu există
    (`lint.ps1` verifică explicit).
 
-## 4. Cele șase porți — ce măsoară fiecare, și ce înseamnă exit code
+## 4. Cele șapte porți — ce măsoară fiecare, și ce înseamnă exit code
 
-Toate se rulează din `AI-Kit_manual` și au nevoie de `PKMS_VAULT` și `PKMS_BACKUP`:
+Toate se rulează din `AI-Kit_manual` și au nevoie de `PKMS_VAULT`. `PKMS_BACKUP` e
+**opțional**: e doar fallback-ul, folosit când oglinda cloud nu poate fi măsurată.
 
 ```powershell
-$V = 'G:\My Drive\GDrive-Second_Brain_PKMS'
+$V = 'E:\Google\GDrive\GDrive-Second_Brain_PKMS'
 $M = "$V\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
 $env:PKMS_VAULT = $V
-$env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'
+# $env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'   # doar dacă există
 ```
 
 | Poartă | Comandă | Ce verifică | Verde |
@@ -104,6 +106,7 @@ $env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'
 | **lint** | `lint.ps1` | convenția, indexurile prezente, encoding, backup neatins, documente cheie | `0 erori, 2 atenționi` + exit 0 |
 | **census** | `align-index.ps1 -CeVad` | starea fiecărui index: LIPSA / CORUPT / INCOMPLET / **NEALINIAT** / CONFORM | `0 NEALINIAT` |
 | **health** | `health-check.ps1` | cifrele vii: fișiere, octeți, pe bază/raft/mașină + stabilitatea măsurătorii | `diferenta 0` între două măsurători |
+| **oglindă** | `verifica-oglinda.ps1` | starea reperului: local↔cloud per fișier (md5, dimensiune), sănătatea DriveFS (proces, cozi) | `0 divergente` + exit 0 |
 | **build** | `build-index.ps1 [-Quiet]` | regenerează **toți** cei ~2.516 indexuri + `INDEX CENTRAL.md`. **Nu poate fi scoped** | exit 0 |
 | **align** | `align-index.ps1 [-DoarCargol '<subarbore>']` | aliniază **doar blocurile derivate**; rândurile omului rămân. Scoped = uneltă sigură | `0 NEALINIAT` |
 | **schema** | `verifica-schema.ps1` | contractul §18 — blocurile obligatorii, `De ce e aici`, cuvintele cheie | exit 0 |
@@ -111,6 +114,15 @@ $env:PKMS_BACKUP = 'H:\Alex_Knowlege_Vault_BKUP_10-19-2026'
 **Regula de aur a porților:** o poartă care nu poate eșua nu e poartă. `lint.ps1` dă
 `0 erori, 2 atenționi` — **atențiunea e fapt, nu verdict** (3.727 foldere au
 `LastWriteTime` după pragul backupului; e consecința copierii, nu dovezi de conținut atins).
+
+**A doua regulă de aur, a reperului:** *„md5 diferit" NU e divergență.* Măsurat pe
+2026-10-21, cu experiment controlat: un fișier modificat local și încă neîncărcat în
+cloud arată **exact** ca o divergență (md5 diferit, dimensiune diferită) — și se
+rezolvă singur în ~5 secunde. Divergența reală e doar: md5 diferit, **nu** în coada de
+upload, mtime-uri egale, și veche de peste 48h. Latența e ATENȚIE, nu EROARE — Popy a
+acceptat-o explicit ca fiind normală a sistemului bidirectional. Iar o măsurătoare care
+**nu a măsurat** (baza nu s-a deschis, arborele nu conține vaultul) raportează
+„nemăsurat" și iese cu cod 2 — **niciodată** „0 divergente".
 
 **Ce NU porțile fac:** nu șterg, nu mută, nu redenumesc conținut, nu ating backupul.
 

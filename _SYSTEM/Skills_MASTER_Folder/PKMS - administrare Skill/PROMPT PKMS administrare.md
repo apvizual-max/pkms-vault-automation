@@ -1,7 +1,7 @@
 # PROMPT — inițierea unei sesiuni noi pe vaultul PKMS
 
 > Copiază blocul de mai jos într-o sesiune nouă, cu proiectul setat pe
-> `G:\My Drive\GDrive-Second_Brain_PKMS`. E scris ca să funcționeze **fără memorie
+> `E:\Google\GDrive\GDrive-Second_Brain_PKMS`. E scris ca să funcționeze **fără memorie
 > despre conversația anterioară**.
 
 ---
@@ -10,7 +10,7 @@
 
 ```
 Lucrez pe vaultul meu personal de knowledge management, pe Google Drive:
-G:\My Drive\GDrive-Second_Brain_PKMS
+E:\Google\GDrive\GDrive-Second_Brain_PKMS
 
 Sistemul e administrat de un motor de scripturi PowerShell, aflat la:
 02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\
@@ -40,8 +40,8 @@ Regulile care nu se negociază:
 - Commitul git e automat și nu cere R0. Push-ul cere acordul meu.
 
 Primele două porți de verificare (rulează-le și raportează exit code-ul):
-  $M = "G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
-  $env:PKMS_VAULT = "G:\My Drive\GDrive-Second_Brain_PKMS"
+  $M = "E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual"
+  $env:PKMS_VAULT = "E:\Google\GDrive\GDrive-Second_Brain_PKMS"
   $env:PKMS_BACKUP = "H:\Alex_Knowlege_Vault_BKUP_10-19-2026"
   & "$M\lint.ps1"                  # aștept: 0 erori
   & "$M\align-index.ps1" -CeVad    # aștept: 0 NEALINIAT

@@ -11,6 +11,17 @@
 //   e "nemapaturat" si cod de iesire 2. NICIODATA "0 divergente" pentru un
 //   arbore gol sau pentru o baza care nu s-a citit.
 //
+// REGULA CARE SEPARA LATENTA DE DIVERGENTA (masurata, nu ghicita):
+//   "md5 diferit" NU e divergenta. Experiment controlat 2026-10-21 (fisier
+//   creat si modificat in afara vaultului, urmarit in DB la fiecare 2.5s):
+//     - fisier MODIFICAT local, inainte de incarcare: md5 diferit, dimensiune
+//       diferita, local_size = -1, local_mtime > cloud_mtime, si fisierul in
+//       queued_uploads. Se rezolva singur in ~5s.
+//     - fisier NOU creat: cloud_md5 gol, cloud_version = -1, queued_uploads = 1.
+//   Deci divergenta REALA e doar: md5 diferit, NU in coada, mtime-uri egale,
+//   si veche de peste 48h (pragul de escaladare al sistemului).
+//   Popy a acceptat explicit latenta ca fiind normala a sistemului bidirectional.
+//
 // Iesire: JSON pe stdout cu --json, altfel text lizibil pentru om.
 // Cod de iesire: 0 = oglinda identica (sau doar latenta), 1 = divergenta reala,
 //                 2 = nu s-a putut masura.
@@ -33,6 +44,7 @@ const VAULT_ABS = getArg('--vault');
 const MOUNT_ABS = getArg('--mount');
 const VAULT_REL_OVERRIDE = getArg('--vault-rel');
 const DB_OVERRIDE = getArg('--db');
+const PRAG_ESCALADARE_H = 48;   // acelasi prag pe care il foloseste si Test-Activ din reconcile
 
 function emit(obj, text) {
   if (JSON_OUT) {
@@ -122,7 +134,7 @@ try {
 }
 const rootName = (rootRow && rootRow.local_filename) ? rootRow.local_filename : '';
 
-// --- 4. calea relativă a vaultului in arbore ---
+// --- 4. calea relativa a vaultului in arbore ---
 function caleRelativa(vaultAbs, mountAbs, rootLabel) {
   if (VAULT_REL_OVERRIDE) return VAULT_REL_OVERRIDE;
   if (!vaultAbs) return null;
@@ -180,27 +192,9 @@ if (inVault.length === 0) {
 const files = inVault.filter((r) => r.local_type === 1 || r.cloud_type === 1);
 const folders = inVault.filter((r) => r.local_type === 0 && r.cloud_type === 0);
 
-const md5Identice = [], md5Diferite = [], md5Lipsa = [], dimDiferita = [];
-const doarLocal = [], doarCloud = [];
-
-for (const f of files) {
-  const l = f.local_md5_checksum, c = f.cloud_md5_checksum;
-  if (l && c) {
-    if (l === c) md5Identice.push(f); else md5Diferite.push(f);
-  } else if (l && !c) {
-    doarLocal.push(f);
-  } else if (!l && c) {
-    doarCloud.push(f);
-  } else {
-    md5Lipsa.push(f);
-  }
-  if (f.local_size !== null && f.cloud_size !== null && f.local_size !== f.cloud_size) {
-    dimDiferita.push(f);
-  }
-}
-
-// --- 6. cozile ---
+// --- 6. cozile: se citesc INAINTE de clasificare, pentru ca sunt discriminatorul ---
 const cozi = {};
+const inPending = new Set();
 for (const t of ['pending_uploads', 'queued_uploads', 'pending_deletes']) {
   try {
     cozi[t] = db.prepare('SELECT COUNT(*) AS n FROM ' + t).get().n;
@@ -208,20 +202,66 @@ for (const t of ['pending_uploads', 'queued_uploads', 'pending_deletes']) {
     cozi[t] = null;
   }
 }
-
-// --- 7. verdict ---
-// EROARE reala = continut divergent SAU o coada de stergeri/incarcari care nu
-// se misca. Latenta de sincronizare (doarLocal/doarCloud) e ATENTIE, nu EROARE:
-// Popy a acceptat explicit latenta ca fiind normala a sistemului bidirectional.
-const divergenta = md5Diferite.length + dimDiferita.length;
-let verdict;
-if (divergenta > 0) {
-  verdict = 'divergent';
-} else if (doarLocal.length > 0 || doarCloud.length > 0) {
-  verdict = 'pending';
-} else {
-  verdict = 'identic';
+for (const t of ['pending_uploads', 'queued_uploads']) {
+  try {
+    for (const r of db.prepare('SELECT local_stable_id FROM ' + t).all()) {
+      if (r.local_stable_id !== null && r.local_stable_id !== undefined) inPending.add(String(r.local_stable_id));
+    }
+  } catch (e) { /* coada nu s-a citit: se trateaza ca vida, dar verdictul ramane masurat */ }
 }
+
+// --- 7. clasificarea: latenta SAU divergenta ---
+const identice = [];
+const pendingUpload = [];
+const pendingDownload = [];
+const neobservate = [];
+const divergente = [];
+const md5Lipsa = [];
+const dimDiferita = [];
+const acumMs = Date.now();
+
+for (const f of files) {
+  const l = f.local_md5_checksum, c = f.cloud_md5_checksum;
+  const inCoada = inPending.has(String(f.lsid));
+  const sizeLocalNecunoscut = (f.local_size === -1);
+  const areTimpuri = (f.local_mtime_ms !== null && f.local_mtime_ms !== undefined &&
+                      f.cloud_mtime_ms !== null && f.cloud_mtime_ms !== undefined);
+  const localMaiNou = areTimpuri && f.local_mtime_ms > f.cloud_mtime_ms;
+  const cloudMaiNou = areTimpuri && f.cloud_mtime_ms > f.local_mtime_ms;
+
+  if (l && c && l === c) {
+    identice.push(f);
+  } else if (l && !c) {
+    pendingUpload.push(f);          // nou local, inca neincarcat in cloud
+  } else if (!l && c) {
+    pendingDownload.push(f);       // in cloud, inca neadus local
+  } else if (!l && !c) {
+    md5Lipsa.push(f);
+  } else {
+    // md5 diferit: intrebarea NU e 'diferit?', ci 'e o divergenta sau o latenta?'
+    const pending = inCoada || sizeLocalNecunoscut || localMaiNou || cloudMaiNou;
+    if (pending) {
+      if (cloudMaiNou && !localMaiNou) pendingDownload.push(f);
+      else pendingUpload.push(f);
+    } else {
+      // nu e pending, dar n-a trecut pragul: DriveFS n-a prins inca modificarea
+      const varstaH = (acumMs - Math.max(f.local_mtime_ms || 0, f.cloud_mtime_ms || 0)) / 3600000;
+      if (varstaH > PRAG_ESCALADARE_H) divergente.push(f);
+      else neobservate.push(f);
+    }
+  }
+  if (f.local_size !== null && f.cloud_size !== null && f.local_size !== f.cloud_size) {
+    dimDiferita.push(f);
+  }
+}
+
+const latentaTotala = pendingUpload.length + pendingDownload.length + neobservate.length;
+
+// --- 8. verdict ---
+let verdict;
+if (divergente.length > 0) verdict = 'divergent';
+else if (latentaTotala > 0) verdict = 'pending';
+else verdict = 'identic';
 
 const sub = (f) => ({
   cale: String(f.rel).slice(vaultRel.length + 1),
@@ -240,6 +280,7 @@ const rezultat = {
   vault: VAULT_ABS,
   vaultRel: vaultRel,
   radacinaArbore: rootName,
+  pragEscaladareOre: PRAG_ESCALADARE_H,
   itemi: {
     total: inVault.length,
     fisiere: files.length,
@@ -247,19 +288,21 @@ const rezultat = {
     inArbore: rows.length,
   },
   identitate: {
-    md5Identice: md5Identice.length,
-    md5Diferite: md5Diferite.length,
+    md5Identice: identice.length,
+    divergentaReala: divergente.length,
+    pendingUpload: pendingUpload.length,
+    pendingDownload: pendingDownload.length,
+    neobservate: neobservate.length,
     md5Lipsa: md5Lipsa.length,
     dimensiuneDiferita: dimDiferita.length,
-    doarLocal: doarLocal.length,
-    doarCloud: doarCloud.length,
+    latentaTotala: latentaTotala,
   },
   cozi,
   exemple: {
-    md5Diferite: md5Diferite.slice(0, 20).map(sub),
-    dimensiuneDiferita: dimDiferita.slice(0, 20).map(sub),
-    doarLocal: doarLocal.slice(0, 20).map(sub),
-    doarCloud: doarCloud.slice(0, 20).map(sub),
+    divergente: divergente.slice(0, 20).map(sub),
+    pendingUpload: pendingUpload.slice(0, 20).map(sub),
+    pendingDownload: pendingDownload.slice(0, 20).map(sub),
+    neobservate: neobservate.slice(0, 20).map(sub),
   },
   motiv: null,
 };
@@ -274,12 +317,13 @@ linii.push('vault:       ' + (VAULT_ABS || '(necunoscut)'));
 linii.push('baza:        ' + profil.db);
 linii.push('');
 linii.push('itemi in vault: ' + inVault.length + '  (fisiere ' + files.length + ', foldere ' + folders.length + ')');
-linii.push('  md5 identice      : ' + md5Identice.length);
-linii.push('  md5 DIFERITE      : ' + md5Diferite.length);
-linii.push('  dimensiune dif.   : ' + dimDiferita.length);
-linii.push('  md5 lipsa (ambele) : ' + md5Lipsa.length);
-linii.push('  doar local (inca neincarcat): ' + doarLocal.length);
-linii.push('  doar cloud (inca neadus local): ' + doarCloud.length);
+linii.push('  md5 identice (oglinda identica) : ' + identice.length);
+linii.push('  DIVERGENTA REALA (eroare)       : ' + divergente.length);
+linii.push('  pending upload (latenza)        : ' + pendingUpload.length);
+linii.push('  pending download (latenza)      : ' + pendingDownload.length);
+linii.push('  neobservate de DriveFS (latenza): ' + neobservate.length);
+linii.push('  md5 lipsa (ambele)              : ' + md5Lipsa.length);
+linii.push('  dimensiune diferita (fapt)      : ' + dimDiferita.length);
 linii.push('');
 linii.push('cozi: pending_uploads=' + cozi.pending_uploads +
            ' queued_uploads=' + cozi.queued_uploads +
@@ -289,9 +333,9 @@ linii.push('VERDICT: ' + verdict.toUpperCase());
 if (verdict === 'identic') {
   linii.push('  oglinda locala si cea din cloud sunt identice, per fisier.');
 } else if (verdict === 'pending') {
-  linii.push('  latenta de sincronizare. Nu e divergenta; se raporteaza, nu blocheaza.');
+  linii.push('  latenta de sincronizare (' + latentaTotala + '). Nu e divergenta; se raporteaza, nu blocheaza.');
 } else {
-  linii.push('  DIVERGENTA REALA. Continut diferit intre local si cloud.');
+  linii.push('  DIVERGENTA REALA (' + divergente.length + '). Continut diferit intre local si cloud, peste pragul de ' + PRAG_ESCALADARE_H + 'h.');
 }
 
 emit(rezultat, linii.join('\n'));

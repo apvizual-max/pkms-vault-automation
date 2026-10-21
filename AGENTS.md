@@ -4,7 +4,7 @@ Acesta este un **LLM Wiki**: surse brute, un strat de indexuri generat automat, 
 un contract de sistem. Patternul (raw / wiki / schema) este cel descris în arhitectura
 generală de AI Knowledge Management; aici este cum se traduce **în acest vault**,
 pe stocarea locală NVMe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** (oglindită permanent
-în Google Drive Cloud și accesibilă secundar prin montura virtuală `G:\My Drive\GDrive-Second_Brain_PKMS`).
+în Google Drive Cloud și accesibilă secundar prin montura virtuală `E:\Google\GDrive\GDrive-Second_Brain_PKMS`).
 
 ---
 

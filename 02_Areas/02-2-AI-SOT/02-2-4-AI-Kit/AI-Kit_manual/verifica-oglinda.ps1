@@ -106,21 +106,29 @@ if ($rez) {
     $ok.Add("oglinda masurata la $($rez.masuratLa) — $($it.fisiere) fisiere, $($it.foldere) foldere in vault")
     $ok.Add("md5 identice local<->cloud: $($id.md5Identice)")
 
-    if ($id.md5Diferite -gt 0) {
-      $errors.Add("DIVERGENTA REALA: $($id.md5Diferite) fisiere au md5 diferit intre local si cloud. Exemple: " +
-                  (($rez.exemple.md5Diferite | Select-Object -First 5 | ForEach-Object { $_.cale }) -join '; '))
+    # EROARE = divergenta REALA. Nu "md5 diferit" — masurat 2026-10-21, un
+    # fisier modificat local si neincarcat inca arata exact ca o divergenta
+    # (md5 diferit, dimensiune diferita) si se rezolva singur in ~5 secunde.
+    # Divergenta reala e: md5 diferit, NU in coada, mtime-uri egale, veche de
+    # peste 48h. Popy a acceptat explicit latenta ca fiind normala.
+    if ($id.divergentaReala -gt 0) {
+      $errors.Add("DIVERGENTA REALA: $($id.divergentaReala) fisiere au continut diferit intre local si cloud, peste pragul de $($rez.pragEscaladareOre)h. Exemple: " +
+                  (($rez.exemple.divergente | Select-Object -First 5 | ForEach-Object { $_.cale }) -join '; '))
     }
-    if ($id.dimensiuneDiferita -gt 0) {
-      $errors.Add("DIVERGENTA REALA: $($id.dimensiuneDiferita) fisiere au dimensiune diferita intre local si cloud.")
+    if ($id.pendingUpload -gt 0) {
+      $warn.Add("$($id.pendingUpload) fisiere sunt doar local (inca neincarcate in cloud). Latenta e acceptata; se raporteaza.")
+    }
+    if ($id.pendingDownload -gt 0) {
+      $warn.Add("$($id.pendingDownload) fisiere sunt doar in cloud (inca neaduse local). Recuperabile din cloud.")
+    }
+    if ($id.neobservate -gt 0) {
+      $warn.Add("$($id.neobservate) fisiere au md5 diferit, dar nu sunt in coada si nu au depasit pragul de $($rez.pragEscaladareOre)h. Fapt, nu verdict: DriveFS n-a prins inca modificarea.")
     }
     if ($id.md5Lipsa -gt 0) {
       $warn.Add("$($id.md5Lipsa) fisiere nu au md5 nici local, nici in cloud. Fapt, nu verdict: pot fi in flux de upload.")
     }
-    if ($id.doarLocal -gt 0) {
-      $warn.Add("$($id.doarLocal) fisiere sunt doar local (inca neincarcate in cloud). Latenta e acceptata; se raporteaza.")
-    }
-    if ($id.doarCloud -gt 0) {
-      $warn.Add("$($id.doarCloud) fisiere sunt doar in cloud (inca neaduse local). Recuperabile din cloud.")
+    if ($id.dimensiuneDiferita -gt 0) {
+      $warn.Add("$($id.dimensiuneDiferita) fisiere au dimensiune diferita intre local si cloud. Fapt, nu verdict.")
     }
 
     $cozi = $rez.cozi
@@ -135,7 +143,7 @@ if ($rez) {
     }
 
     if ($rez.verdict -eq 'identic') { $ok.Add("VERDICT OGLINDA: IDENTICA per fisier") }
-    elseif ($rez.verdict -eq 'pending') { $warn.Add("VERDICT OGLINDA: latenta de sincronizare, fara divergenta") }
+    elseif ($rez.verdict -eq 'pending') { $warn.Add("VERDICT OGLINDA: latenta de sincronizare ($($id.latentaTotala)), fara divergenta") }
   }
 }
 
@@ -152,8 +160,8 @@ Write-Output ""
 $divLocalCloud = 0
 $latLocalCloud = 0
 if ($rez -and $rez.ok) {
-  $divLocalCloud = [int]$rez.identitate.md5Diferite + [int]$rez.identitate.dimensiuneDiferita
-  $latLocalCloud = [int]$rez.identitate.doarLocal + [int]$rez.identitate.doarCloud
+  $divLocalCloud = [int]$rez.identitate.divergentaReala
+  $latLocalCloud = [int]$rez.identitate.latentaTotala
 }
 Write-Output "DIVERGENTA LOCAL<->CLOUD: $divLocalCloud"
 Write-Output "LATENTA LOCAL<->CLOUD: $latLocalCloud"

@@ -132,13 +132,13 @@ se adună, scriptul spune *„nu am comparat tot"*.
 
 ```powershell
 # 1. starea cotorului (câte indexuri nu sunt aliniate)
-& 'G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\align-index.ps1' -CeVad | Select-String 'rezumat'
+& 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\align-index.ps1' -CeVad | Select-String 'rezumat'
 
 # 2. cifrele vii ale vaultului
-& 'G:\My Drive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\health-check.ps1'
+& 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\health-check.ps1'
 
 # 3. dublarea de 14,09 GB, măsurată din agregatul generat
-Select-String -LiteralPath 'G:\My Drive\GDrive-Second_Brain_PKMS\INDEX CENTRAL.md' -Pattern 'Knights Templar'
+Select-String -LiteralPath 'E:\Google\GDrive\GDrive-Second_Brain_PKMS\INDEX CENTRAL.md' -Pattern 'Knights Templar'
 ```
 
 *Fișier scris de om. Nu se regenerează automat — de aceea fiecare cifră din el

@@ -1,6 +1,6 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual
 
-**De ce e aici:** pachetul de predare al vaultului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie vaultul (`G:\My Drive\GDrive-Second_Brain_PKMS`) fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
+**De ce e aici:** pachetul de predare al vaultului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie vaultul (`E:\Google\GDrive\GDrive-Second_Brain_PKMS`) fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
 
 **18 fișiere · 279 KB · 0 subfoldere**
 
