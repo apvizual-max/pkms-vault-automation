@@ -247,10 +247,7 @@ try {
 
     # Căile care EXISTĂ acum pe disc. O ștergere nu e o cale cu secrete:
     # portile au rost doar pe ce urmează să intre în istoric.
-    $caiNoi = New-Object System.Collections.Generic.List[string]
-    foreach ($c in $cai) {
-        if (Test-Path -LiteralPath (Join-Path $Repo $c)) { $caiNoi.Add($c) }
-    }
+    $caiNoi = @($cai | Where-Object { Test-Path -LiteralPath (Join-Path $Repo $_) })
 
     # --- poarta 1: secrete pe NUME -------------------------------------------
     $periculoase = @($caiNoi | Where-Object { $_ -match $secreteNume })
