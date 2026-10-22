@@ -162,16 +162,28 @@ $hc = Invoke-Porta 'health-check.ps1' @('-Vault', $Vault)
 if (-not $hc.Exista) {
     $errors.Add("health-check.ps1 lipseste din motor. Masura nu s-a facut.")
 } else {
-    $m = [regex]::Match($hc.Text, '(?m)^\s*masura:\s*(.+)$')
-    $masura = if ($m.Success) { $m.Groups[1].Value.Trim() } else { 'NU CITITA' }
+    # health-check.ps1 emite randul "TOTAL: N fisiere | X GB" si randul
+    # "stabilitate: ... diferenta N". Se citesc acelea, nu un rand inventat:
+    # o poarta care cauta un text inexistent raporteaza "nu am masurat" (2)
+    # chiar cand masuratoarea s-a facut - fals negativ scump.
+    $mt = [regex]::Match($hc.Text, '(?m)^TOTAL:\s*(\d+)\s+fisiere\s*\|\s*([\d.,]+)\s*GB')
     $dm = [regex]::Match($hc.Text, '(?m)diferenta\s*(\d+)')
     $diferenta = if ($dm.Success) { [int]$dm.Groups[1].Value } else { -1 }
-    if ($masura -eq 'NU CITITA') {
+    if (-not $mt.Success) {
         $nefacute++
-        $errors.Add("Vault: masura nu a putut fi citita. Masuratoarea nu s-a facut.")
+        $errors.Add("Vault: randul TOTAL nu a putut fi citit. Masuratoarea nu s-a facut.")
     } else {
+        $masura = ($mt.Groups[1].Value + " fisiere | " + $mt.Groups[2].Value + " GB")
         $ok.Add("vault: $masura")
         $linii.Add(("  $masura"))
+        if ($diferenta -lt 0) {
+            $nefacute++
+            $errors.Add("Vault: stabilitatea nu a putut fi citita. Masuratoarea nu s-a facut.")
+        } elseif ($diferenta -ne 0) {
+            $errors.Add("Vault: $diferenta fisiere s-au schimbat intre cele doua masuratori.")
+        } else {
+            $ok.Add("vault stabil: diferenta 0 intre cele doua masuratori")
+        }
     }
 }
 $linii.Add("")
@@ -218,7 +230,7 @@ if ($nefacute -gt 0) {
     $linii.Add(("MASURATORI NEFACUTE: {0} - verdictul despre acele porti e NECUNOSCUT, nu 'bine'" -f $nefacute))
 }
 $linii.Add(("REZULTAT: {0} erori, {1} atentioni" -f $errors.Count, $warn.Count))
-$verdict = if ($nefacute -gt 0) { 'NECUNOSCUT - o masuratoare nu s-a facut' } elseif ($errors.Count -gt 0) { 'NEIN ORDINE' } else { 'IN ORDINE' }
+$verdict = if ($nefacute -gt 0) { 'NECUNOSCUT - o masuratoare nu s-a facut' } elseif ($errors.Count -gt 0) { 'NU IN ORDINE' } else { 'IN ORDINE' }
 $linii.Add(("VERDICT: {0}" -f $verdict))
 
 $textRaport = ($linii -join "`r`n") + "`r`n"
