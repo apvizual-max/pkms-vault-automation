@@ -103,13 +103,13 @@ function Actualizeaza-Raport {
     if ($r.Erori -gt 0) { $buc.Add("$($r.Erori) erori") }
 
     if ($r.Atentii -gt 0) {
-      $o = "$($r.Nume): $($r.Atentii) atentioni"
       if ($r.Detalii.Count -gt 0) {
         $t = $r.Detalii[0]
         if ($t.Length -gt 220) { $t = $t.Substring(0, 220) + '...' }
-        $o += ' - ' + $t
+        $observatii.Add("$($r.Nume): $($r.Atentii) atentioni - $t")
+      } else {
+        $observatii.Add("$($r.Nume): $($r.Atentii) atentioni")
       }
-      $observatii.Add($o)
     }
 
     if ($buc.Count -eq 0) { continue }
