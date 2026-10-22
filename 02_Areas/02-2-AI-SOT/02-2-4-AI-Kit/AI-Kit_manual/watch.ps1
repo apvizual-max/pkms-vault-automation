@@ -67,7 +67,12 @@ function Get-Detalii([string[]]$linii, [string[]]$modele, [switch]$Blocuri) {
     $bloc = $linii[$i].Trim()
     $j = $i + 1
     if ($Blocuri) {
-      while ($j -lt $linii.Count -and $linii[$j].Trim() -ne '') { $bloc += ' ' + $linii[$j].Trim(); $j++ }
+      $sb = [System.Text.StringBuilder]::new($bloc)
+      while ($j -lt $linii.Count -and $linii[$j].Trim() -ne '') {
+        [void]$sb.Append(' ').Append($linii[$j].Trim())
+        $j++
+      }
+      $bloc = $sb.ToString()
     }
     $rez.Add($bloc)
     if ($Blocuri) { $i = $j }
