@@ -357,19 +357,32 @@ id_rsa*
 /_QUARANTINE/indexuri generate in gresit/
 
 # ── 8. Cote ──
-# tot ce nu este deschis mai sus ramane in afara, intentionat:
+# tot ce nu este deschis mai sus ramane in afara, intentionat.
+#
+# COTE MASURATE 2026-10-22, pe structura de pe E: (fisiere pe raft, recursiv,
+# fara fisierele de la radacina vaultului):
+#   01_Projects 33.122 · _SYSTEM 7.051 · _QUARANTINE 4.778 · 02_Areas 3.667
+#   05_Attachments 1.275 · 03_Resources 912 · 08_Clippings 457 · 06_Metadata 43
+#   00_Inbox 30 · 09_raport-archive 4 · _ARCHIVE 13 · 07_Canvas Bases 9
+#   04_Archive 11
+#
+# COTELE VECHI, pastrate ca istoric al granitei, INACTIVE de la 2026-10-19
+# (masurate pe D:, inainte de mutarea pe E: si de renumerarea din 19-10):
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
 #   04_Archive 11 · 05_Attachments 1.253 · 06_Metadata 43
 #   10_Work 32.252 · 07_Canvas Bases 9 · 08_Clippings 457 · Wisper_Transcripts 6
+#   _ARCHIVE 7 · _QUARANTINE 4.789
+#
 #   09_raport-archive: INCHISA din 2026-10-19 (regula 7c). Ramane pe Drive, in
 #     istoric; nu urca, fiindca tinea numele clientului inchis.
-#   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — 4.543 de indexuri care
-#     intra in istoric. Excepții: raftul retras _QUARANTINE\retirat-2026-10-10
-#     (regula 7b, 88 de indexuri) si 09_raport-archive/00_INDEX.md (regula 4b, ca
-#     artefact derivat).
-#   _ARCHIVE 7 · _QUARANTINE 4.789
-#   _SYSTEM\Skills\Skills_Archive 9.740 · _SYSTEM\arhiva-indexe, rapoarte,
+#   INDEXURILE: DESCHISE din 2026-10-19 (regula 1b) — masurat 2026-10-22:
+#     625 de indexuri care intra in istoric (4.450 inainte de regula 7d).
+#     Exceptii: raftul retras _QUARANTINE\retirat-2026-10-10 (regula 7b, 88 de
+#     indexuri), 09_raport-archive/00_INDEX.md (regula 4b, ca artefact derivat)
+#     si martorii unui defect (regula 7d, 3.825 de indexuri).
+#   _SYSTEM\Skills\Skills_Archive · _SYSTEM\arhiva-indexe, rapoarte,
 #   resturi de unelte (derivate)
-#   .obsidian 1.174 · .vault-intelligence 14 · .trash · .sentinel_temp ·
-#   .wwebjs_cache · .claudian · .git
-#   106 fisiere peste 100 MB in total, pe care GitHub le respinge oricum.
+#   .obsidian 1.174 · .vault-intelligence 14 · .claudian 1 · .sentinel_temp 1 ·
+#   .wwebjs_cache 1 · .neural_memory 0 · .trash 0 · .git
+#   Nimun fisier urmarit nu depaseste 100 MB (masurat 2026-10-22) — deci nu
+#   mai exista nimic pe care GitHub sa-l refuze.
