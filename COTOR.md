@@ -6,7 +6,7 @@ Ultima actualizare: **21 octombrie 2026**. 51.157 de fișiere de conținut · 88
 Vaultul trăiește fizic ca oglindă locală NVMe pe **`E:\Google\GDrive\GDrive-Second_Brain_PKMS`** — oglinda locală a Google Drive Cloud, sincronizată permanent cu cloud-ul.
 Baza de date Git este **decuplată fizic** la **`E:\Google\GitData-PKMS`**, lăsând în rădăcina vaultului doar un pointer scalar de 31 octeți (`.git`).
 **Reperul de siguranță este oglinda Google Drive Cloud** (Decizia 1, 21-10-2026): fiecare fișier există în două locuri, iar starea lor se verifică **per fișier**, local↔cloud. Arhiva externă de pe **`H:`** — `H:\CLAUDE_Archive` (**711.821 fișiere · 180,77 GB**, măsurat 21-10-2026) — rămâne **arhivă neatinsă** — nu mai e reperul, e ultimul rând de rezervă, și se citește doar când e nevoie.
-**Calea vaultului, a mountului și a reperului nu se scriu tare nicăieri:** le descoperă dinamic `AI-Kit\paths.ps1`.
+**Calea vaultului, a mountului și a reperului nu se scriu tare nicăieri:** le descoperă dinamic `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\paths.ps1`.
 
 > **MUTAREA DIN 10-11.** Pe `D:` nu mai există nici vaultul, nici backupul. Ce a rămas pe
 > `D:` e un folder stub, fără rol. Doi termeni și-au schimbat înțelesul:
@@ -61,8 +61,8 @@ E:\Google\GDrive\GDrive-Second_Brain_PKMS\
 
 | Ce | Unde | De ce acolo |
 |---|---|---|
-| `AI-Kit\AI-Kit_manual` | `02_Areas\02-2-AI-SOT\` | scripturile — **motorul** |
-| `AI-Kit\AI-Kit_guide` | `02_Areas\02-2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
+| `02-2-4-AI-Kit\AI-Kit_manual` | `02_Areas\02-2-AI-SOT\` | scripturile — **motorul** |
+| `02-2-4-AI-Kit\AI-Kit_guide` | `02_Areas\02-2-AI-SOT\` | documentația: contractul, procesele, workflow, onboarding |
 | skill-urile vii `git-autonom` / `git-install` | `_SYSTEM\Skills_MASTER_Folder\SENTINEL - git-*- Skill\` | copii vii, verificate prin SHA-256 |
 | skill-urile PKMS (`administrare` / `indexare`) | `_SYSTEM\Skills_MASTER_Folder\PKMS - *- Skill\` | sursa de adevăr a sistemului; copii și în sistemul central |
 | `arhiva vendor` de skill-uri | `_SYSTEM\Skills_MASTER_Folder\_Skills_BackUp_Archive_2026-07-15\` | **închisă**, nu e motor |
@@ -92,7 +92,7 @@ Total `01_Projects`: **33.053 de fișiere în cele 6 rafturi · 79,43 GB.** (cu 
 
 > **O cifră vie e o obligație, o cifră statică e o minciună cu termen.**
 > Tabelul de mai sus e o fotografie, nu o sursă. **Pentru cifra de azi rulează
-> `AI-Kit\health-check.ps1`**, care numără pe loc și tipărește `TOTAL:`. Nu edita cifrele
+> `02-2-4-AI-Kit\AI-Kit_manual\health-check.ps1`**, care numără pe loc și tipărește `TOTAL:`. Nu edita cifrele
 > aici după ureche — rulează o unealtă.
 
 > **`Work_Folder (to sort)` e datoria, și e numele ei.** 32.181 de fișiere într-un singur
@@ -235,7 +235,7 @@ recunoaște **181/181** reziduuri reale.
 „Să fie respectat în permanență" nu înseamnă „când îmi amintesc".
 Înseamnă un punct de intrare care poate fi chemat de om **sau de ceas**.
 
-### Un singur punct de intrare: `AI-Kit\watch.ps1`
+### Un singur punct de intrare: `02-2-4-AI-Kit\AI-Kit_manual\watch.ps1`
 
 Rulează, în ordine fixă, doar lucruri care **nu scriu în vault**:
 
@@ -286,7 +286,7 @@ Un raport care spune „merge bine" fără un număr lângă el nu e raport, e d
 
 ## Alinierea automată a indexurilor — §19
 
-`AI-Kit\align-index.ps1` repară indexurile care **există deja**. Nu le creează din
+`02-2-4-AI-Kit\AI-Kit_manual\align-index.ps1` repară indexurile care **există deja**. Nu le creează din
 conținut ca `build-index`; le aduce la contract, măsurând folderul și rescriind
 **doar blocurile derivate**.
 
@@ -456,7 +456,7 @@ Plus `Canvas Bases` — funcția **Bases** din Obsidian, se folosește de pe loc
 
 ## Restul documentației
 
-Toate stau acum în **`AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
+Toate stau acum în **`02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\`**, nu la rădăcină:
 
 | Fișier | Ce e |
 |---|---|

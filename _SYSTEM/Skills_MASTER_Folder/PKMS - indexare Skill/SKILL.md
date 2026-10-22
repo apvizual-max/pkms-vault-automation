@@ -24,7 +24,7 @@ Fiecare folder de conținut are **exact un** `00_INDEX.md`, generat. Structura:
 ```
 # 00_INDEX — <calea relativă>
 **N fișiere · X KB · Y subfoldere**
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 ## Ce e aici          ← BLOC DERIVAT (propozitie + extensii)
 ## Cuvinte cheie      ← BLOC DERIVAT (identitatea folderului)
@@ -106,8 +106,19 @@ ciclul se reînnoiește la nesfârșit.
 **Proba de echivalență (măsurată 19.10.2026):** 2.511 foldere ale căror indexuri
 fuseseră scrise de `build-index` la 11:29 au fost găsite **CONFORM** de `align-index` la
 22:37 — deci textul produs de cele două e identic. Plus: `align-index` **păstrează
-capul cu atribuirea** („Generat automat de `AI-Kit\build-index.ps1`"), deci rularea
+capul cu atribuirea** („Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`"), deci rularea
 `build-index` nu produce ping-pong.
+
+**Proba de echivalență, măsurată 22.10.2026:** după o regenerare integrală — `build-index.ps1` a
+rescris 2.616 de indexuri în 74,7 s — `align-index.ps1 -CeVad` a raportat **0 LIPSA ·
+0 CORUPT · 0 INCOMPLET · 0 NEALINIAT · 2.616 CONFORM** și **0 evenimente de log**. Deci
+cele două generatoare converg la scară întreagă, nu doar pe un eșantion.
+
+Și ambele scriu **același** text de proveniență, cu calea reală a motorului. Masurat
+pe disk: 6.591 de indexuri in total, dintre care 2.616 scrise de motor — toate cu
+aceeasi nota de provenienta. Celelalte 3.975 sunt in `_QUARANTINE\indexuri generate
+in gresit\`, zona pe care ambele generatoare o exclud (sunt martorii unui defect),
+deci pastreaza forma veche prin design.
 
 **Asimetria măsurată, încă nepatchată:** `align-index` scrie cu **un newline final în
 plus** (`Set-Content` adaugă peste EOL deja prezent, la L853) și **nu recunoaște
