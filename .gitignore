@@ -335,6 +335,27 @@ id_rsa*
 **/RAPORT DE STARE*.md
 /09_raport-archive/
 
+# ── 7d. MARTORII UNUI DEFECT, inchisi la 2026-10-22, masurat. ──
+#       Ce este: `_QUARANTINE\indexuri generate in gresit\` — 3.976 de indexuri
+#       care sunt COPII ale celor scrise candva, gresit, in arborii pe care
+#       generatorul nu are voie sa-i atinga (Skills_Archive, HERMES-Skills,
+#       _Skills_BackUp, arborele temei cumparate, folderele cu punct).
+#       De ce inchis: sunt martorii unui defect, NU continut — iar motorul ii
+#       exclude deja din orice masuratoare, cu un motiv scris in cod
+#       (align-index.ps1, lista de excluziuni: „sunt probe ale unui defect,
+#       nu continut"). Regula 1b deschide indexurile; CELE DIN CARA NU SUNT
+#       indexuri ale arborelui, sunt martori. Masurat: intrau in istoric 3.825
+#       dintre ele, iar fiecare purta in nota de provenienta calea moarta
+#       `AI-Kit\build-index.ps1` — deci un AI cu 0 memorie care le citea
+#       primea instructiune de la un folder care nu mai exista.
+#       CE NU SE SCHIMBA: fisierele RAMAN pe disc, in _QUARANTINE, cu motivul
+#       lor scris chiar in indexul zonei. Se scot din URMARIRE, nu se sterg.
+#       Daca istoricul trebuie citit, commit-urile vechi il au, neatins.
+#       Masurat: `git ls-files '*00_INDEX.md'` = 4.450 inainte, 625 dupa;
+#       `git rm -r --cached --dry-run` = 3.825 de fisiere scoase din indice,
+#       0 sterse de pe disc (verificat dupa: 3.976 indexuri in zona).
+/_QUARANTINE/indexuri generate in gresit/
+
 # ── 8. Cote ──
 # tot ce nu este deschis mai sus ramane in afara, intentionat:
 #   00_Inbox 23 · 01_Projects 2 · 02_Areas 779 · 03_Resources 914
