@@ -92,15 +92,13 @@ $blocuri = @('## Ce e aici', '## Cuvinte cheie', '## Subfoldere', '## Fișiere')
 $minCuv = 2
 $maxCuv = 12
 
-function Test-Index {
-  param([string]$Rel, [string]$Text, [string]$Dir, [string]$Radacina = '')
 
-  $Gasit = New-Object System.Collections.ArrayList
+function Test-IndexStructure {
+  param([string[]]$linii, $Gasit)
+
   function Adauga([string]$nivel, [string]$motiv, [string]$detaliu) {
     [void]$Gasit.Add([pscustomobject]@{ Nivel = $nivel; Motiv = $motiv; Detaliu = $detaliu })
   }
-
-  $linii = $Text -split "`r?`n"
 
   # --- titlul ---
   $titlu = ''
@@ -132,6 +130,19 @@ function Test-Index {
     Adauga 'observatie' 'MOTIV' 'nu are randul "**De ce e aici:**". E al omului — automatul nu are voie sa-l scrie.'
   } elseif ($idxMotiv -gt 2) {
     Adauga 'observatie' 'MOTIV_POZITIE' ('motivul e pe linia ' + ($idxMotiv + 1) + '; schema §18.1 il pune pe linia 3.')
+  }
+
+  # --- nota de generare ---
+  $areNota = $false
+  foreach ($l in $linii) { if ($l -match '^>\s*Generat automat de') { $areNota = $true; break } }
+  if (-not $areNota) { Adauga 'observatie' 'NOTA' 'lipseste nota "> Generat automat de <scriptul>".' }
+}
+
+function Test-IndexSemantics {
+  param([string[]]$linii, [string]$Dir, [string]$Radacina, $Gasit)
+
+  function Adauga([string]$nivel, [string]$motiv, [string]$detaliu) {
+    [void]$Gasit.Add([pscustomobject]@{ Nivel = $nivel; Motiv = $motiv; Detaliu = $detaliu })
   }
 
   # --- ce s-a măsurat efectiv ---
@@ -190,14 +201,21 @@ function Test-Index {
       Adauga 'eroare' 'CUVINTE_MULTE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere maximum ' + $maxCuv + '.')
     }
   }
+}
 
-  # --- nota de generare ---
-  $areNota = $false
-  foreach ($l in $linii) { if ($l -match '^>\s*Generat automat de') { $areNota = $true; break } }
-  if (-not $areNota) { Adauga 'observatie' 'NOTA' 'lipseste nota "> Generat automat de <scriptul>".' }
+function Test-Index {
+  param([string]$Rel, [string]$Text, [string]$Dir, [string]$Radacina = '')
+
+  $Gasit = New-Object System.Collections.ArrayList
+  $linii = $Text -split "`r?`n"
+
+  Test-IndexStructure -linii $linii -Gasit $Gasit
+  Test-IndexSemantics -linii $linii -Dir $Dir -Radacina $Radacina -Gasit $Gasit
 
   return $Gasit.ToArray()
 }
+
+
 
 # ======================= AUTOPROBA =========================================
 function Invoke-AutoTest {
@@ -337,7 +355,7 @@ $faraSub = ($faraSub -join "`n")
     $fs = [System.IO.File]::Open($gIdx, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::None)
     $eaVechi = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
-    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
+    $gOut = & 'pwsh' -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
     $gCod = $LASTEXITCODE
     $ErrorActionPreference = $eaVechi
   } finally {
