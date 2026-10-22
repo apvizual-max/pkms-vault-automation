@@ -201,14 +201,14 @@ function Test-Index {
 
 # ======================= AUTOPROBA =========================================
 function Invoke-AutoTest {
-  Write-Host "AUTOPROBA — arbore de test in %TEMP%, cu 6 indexuri:"
-  Write-Host "  A) corect, pe schema        -> trebuie: ZERO probleme"
-  Write-Host "  B) titlu scris cu '\'       -> trebuie: prins ca TITLU_BARLA"
-  Write-Host "  C) fara '## Fisier'      -> trebuie: prins ca BLOC_LIPSA (exista un fisier de masurat)"
-  Write-Host "  E) fara '## Subfoldere'   -> trebuie: prins ca BLOC_LIPSA (exista un subfolder de masurat)"
-  Write-Host "  F) fara '## Subfoldere'   -> NU trebuie prins: singurul subfolder e interzis"
-  Write-Host "  D) o singura cuvant cheie   -> trebuie: prins ca CUVINTE_PUTINE"
-  Write-Host ""
+  Write-Output "AUTOPROBA — arbore de test in %TEMP%, cu 6 indexuri:"
+  Write-Output "  A) corect, pe schema        -> trebuie: ZERO probleme"
+  Write-Output "  B) titlu scris cu '\'       -> trebuie: prins ca TITLU_BARLA"
+  Write-Output "  C) fara '## Fisier'      -> trebuie: prins ca BLOC_LIPSA (exista un fisier de masurat)"
+  Write-Output "  E) fara '## Subfoldere'   -> trebuie: prins ca BLOC_LIPSA (exista un subfolder de masurat)"
+  Write-Output "  F) fara '## Subfoldere'   -> NU trebuie prins: singurul subfolder e interzis"
+  Write-Output "  D) o singura cuvant cheie   -> trebuie: prins ca CUVINTE_PUTINE"
+  Write-Output ""
 
   $t = Join-Path $env:TEMP ('pkms-schema-autotest-' + [guid]::NewGuid().ToString('N').Substring(0,8))
   $null = New-Item -ItemType Directory -Path $t -Force
@@ -279,15 +279,15 @@ $faraSub = ($faraSub -join "`n")
     if ($c.Astept.Count -eq 0) { $trecut = ($motive.Count -eq 0) }
     else { $trecut = $false; foreach ($a in $c.Astept) { if ($motive -contains $a) { $trecut = $true } } }
     if (-not $trecut) { $ok = $false }
-    if ($trecut) { Write-Host ('  [PRINS]    ' + $c.Nume + ' (' + $c.De + ')') }
-    else { Write-Host ('  [NEPRINS]  ' + $c.Nume + ' (' + $c.De + ')  — POARTA NU POATE DEVENI ROSIE') }
-    if ($cuEroare.Count -eq 0) { Write-Host '             motivele: (niciuna)' }
-    else { foreach ($m in $cuEroare) { Write-Host ('             motiv: ' + $m.Motiv + ' — ' + $m.Detaliu) } }
+    if ($trecut) { Write-Output ('  [PRINS]    ' + $c.Nume + ' (' + $c.De + ')') }
+    else { Write-Output ('  [NEPRINS]  ' + $c.Nume + ' (' + $c.De + ')  — POARTA NU POATE DEVENI ROSIE') }
+    if ($cuEroare.Count -eq 0) { Write-Output '             motivele: (niciuna)' }
+    else { foreach ($m in $cuEroare) { Write-Output ('             motiv: ' + $m.Motiv + ' — ' + $m.Detaliu) } }
   }
 
   # --- proba de excluziuni ---
-  Write-Host ""
-  Write-Host "  EXCLUZIUNI — fiecare tipar, pe o cale care AR TREBUI sa se excluda:"
+  Write-Output ""
+  Write-Output "  EXCLUZIUNI — fiecare tipar, pe o cale care AR TREBUI sa se excluda:"
   $probe = @(
     @{ C = '10_Work\Site\07_Site_Build\02_Media_Uploads\2010\01';  A = $true;  De = 'interior WordPress' },
     @{ C = '10_Work\Site\07_Site_Build\02_Media_Uploads\2024\07';  A = $true;  De = 'interior WordPress' },
@@ -308,17 +308,17 @@ $faraSub = ($faraSub -join "`n")
   $probeOk = $true
   foreach ($pr in $probe) {
     $got = Test-Excluded -Rel $pr.C
-    if ($got -eq $pr.A) { Write-Host ('  [OK]       asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
-    else { $probeOk = $false; Write-Host ('  [GRESIT]   asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
+    if ($got -eq $pr.A) { Write-Output ('  [OK]       asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
+    else { $probeOk = $false; Write-Output ('  [GRESIT]   asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
   }
   if (-not $probeOk) { $ok = $false }
 
   # --- proba NESCRISE: singura poarta pe care o poate omori o stare gresita ---
-  Write-Host ""
-  Write-Host "  NESCRISE — un index BLOCAT (deschis cu FileShare.None, ca un folder"
-  Write-Host "  la care nu ai drept). Trebuie: 'NESCRISE: 1' + 'verdict incomplet' +"
-  Write-Host "  iesire cu cod nenul. Altfel verdictul 'totul e pe schema' se prefacea"
-  Write-Host "  despre un arbore pe care nu l-a citit."
+  Write-Output ""
+  Write-Output "  NESCRISE — un index BLOCAT (deschis cu FileShare.None, ca un folder"
+  Write-Output "  la care nu ai drept). Trebuie: 'NESCRISE: 1' + 'verdict incomplet' +"
+  Write-Output "  iesire cu cod nenul. Altfel verdictul 'totul e pe schema' se prefacea"
+  Write-Output "  despre un arbore pe care nu l-a citit."
   $gRoot = Join-Path $t 'g'
   $gOk   = Join-Path $gRoot 'g_bun'
   $gBl   = Join-Path $gRoot 'g_blocaj'
@@ -344,18 +344,18 @@ $faraSub = ($faraSub -join "`n")
     if ($fs) { $fs.Close(); $fs.Dispose() }
   }
   foreach ($ln in @($gOut -split "`r?`n")) {
-    if ($ln -match 'NESCRISE|REZULTAT|analizate|erori:') { Write-Host ('             ' + $ln.Trim()) }
+    if ($ln -match 'NESCRISE|REZULTAT|analizate|erori:') { Write-Output ('             ' + $ln.Trim()) }
   }
   $gPrins = (($gOut -match 'NESCRISE:\s+1') -and ($gOut -match 'verdict incomplet') -and ($gCod -ne 0))
-  if ($gPrins) { Write-Host ('  [PRINS]    G index blocat -> cod ' + $gCod + ', "NESCRISE: 1" + "verdict incomplet"') }
-  else { $ok = $false; Write-Host ('  [NEPRINS]  G index blocat (cod=' + $gCod + ') — POARTA NU POATE DEVENI ROSIE') }
+  if ($gPrins) { Write-Output ('  [PRINS]    G index blocat -> cod ' + $gCod + ', "NESCRISE: 1" + "verdict incomplet"') }
+  else { $ok = $false; Write-Output ('  [NEPRINS]  G index blocat (cod=' + $gCod + ') — POARTA NU POATE DEVENI ROSIE') }
 
-  Write-Host ""
+  Write-Output ""
   if ($ok) {
-    Write-Host "AUTOPROBA: TOATE CAZURILE AU FOST PRINSE, SI TIPARELE DE EXCLUDERE LOVESC CAILE REALE. Poarta e vie."
+    Write-Output "AUTOPROBA: TOATE CAZURILE AU FOST PRINSE, SI TIPARELE DE EXCLUDERE LOVESC CAILE REALE. Poarta e vie."
     return 0
   }
-  Write-Host "AUTOPROBA: UN CAZ NU A FOST PRINS. Poarta nu poate fi de incredere."
+  Write-Output "AUTOPROBA: UN CAZ NU A FOST PRINS. Poarta nu poate fi de incredere."
   return 2
 }
 
@@ -403,7 +403,7 @@ foreach ($f in $idx) {
         if ($nescrise -eq $null) { $nescrise = New-Object System.Collections.Generic.List[string] }
         # si inapoi: un .Add() care arunca aici ar omori chiar mesajul pe care
         # il are ca datorie. Poarta nu se poate ucide pe ea insasi.
-        try { [void]$nescrise.Add($rel) } catch { Write-Host ('  ATENTIE: nu am putut nota indexul neles: ' + $rel) }
+        try { [void]$nescrise.Add($rel) } catch { Write-Output ('  ATENTIE: nu am putut nota indexul neles: ' + $rel) }
       }
       else { Start-Sleep -Milliseconds 400 }
     }
@@ -417,42 +417,42 @@ foreach ($f in $idx) {
   }
 }
 
-Write-Host ('Schema §18.1 — indexuri gasite: ' + $idx.Count + ' | analizate: ' + $analizat)
-Write-Host ('  erori:      ' + $eroare)
+Write-Output ('Schema §18.1 — indexuri gasite: ' + $idx.Count + ' | analizate: ' + $analizat)
+Write-Output ('  erori:      ' + $eroare)
 if ($nescrise.Count -gt 0) {
-  Write-Host ('  NESCRISE:    ' + $nescrise.Count + '   (NU au fost verificate)')
-  foreach ($x in ($nescrise | Select-Object -First 20)) { Write-Host ('     ' + $x) }
+  Write-Output ('  NESCRISE:    ' + $nescrise.Count + '   (NU au fost verificate)')
+  foreach ($x in ($nescrise | Select-Object -First 20)) { Write-Output ('     ' + $x) }
 }
-Write-Host ('  observatii: ' + $observatie + '   (informeaza, nu blocheaza)')
-Write-Host ''
+Write-Output ('  observatii: ' + $observatie + '   (informeaza, nu blocheaza)')
+Write-Output ''
 
 $groups = @($probleme | Group-Object -Property M | Sort-Object -Property Count -Descending)
 if ($groups.Count -gt 0) {
-  Write-Host 'Pe motive:'
+  Write-Output 'Pe motive:'
   foreach ($g in $groups) {
     $suf = ''
     if ($g.Group[0].N -eq 'observatie') { $suf = '   [informeaza]' }
-    Write-Host ('  ' + $g.Name + ': ' + $g.Count + $suf)
+    Write-Output ('  ' + $g.Name + ': ' + $g.Count + $suf)
   }
   if ($Nivel -ge 1) {
-    Write-Host ''
-    Write-Host 'Primele 25, cu fisierul:'
+    Write-Output ''
+    Write-Output 'Primele 25, cu fisierul:'
     foreach ($p in @($probleme | Select-Object -First 25)) {
-      Write-Host ('  [' + $p.N + '] ' + $p.F + ' — ' + $p.M + ': ' + $p.D)
+      Write-Output ('  [' + $p.N + '] ' + $p.F + ' — ' + $p.M + ': ' + $p.D)
     }
   }
 }
 
-Write-Host ''
+Write-Output ''
 if ($eroare -gt 0) {
-  Write-Host ('REZULTAT: NEALINIAT cu §18.1 — ' + $eroare + ' erori.')
+  Write-Output ('REZULTAT: NEALINIAT cu §18.1 — ' + $eroare + ' erori.')
   return 1
 }
 if ($nescrise.Count -gt 0) {
-  Write-Host ('REZULTAT: cele ' + $analizat + ' indexuri CITITE sunt pe schema §18.1; ' + $nescrise.Count + ' NU au putut fi citite — verdict incomplet.')
+  Write-Output ('REZULTAT: cele ' + $analizat + ' indexuri CITITE sunt pe schema §18.1; ' + $nescrise.Count + ' NU au putut fi citite — verdict incomplet.')
   return 1
 }
-Write-Host 'REZULTAT: toate indexurile analizate sunt pe schema §18.1.'
+Write-Output 'REZULTAT: toate indexurile analizate sunt pe schema §18.1.'
 return 0
 }
 
