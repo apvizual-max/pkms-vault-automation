@@ -475,28 +475,38 @@ ar rescrie indexuri în interiorul caruia n-are voie să scrie.
 > toate rezolvate. **Logul gol e rezultatul dorit**: înseamnă că nu e treabă deschisă.
 > Verifică: `Get-Item E:\Google\GDrive\GDrive-Second_Brain_PKMS\raport-aliniere.log | Select-Object Length`
 
-### Cele trei automate, cu riscuri diferite
+### Cele cinci automate, cu riscuri diferite
 
-| Automat | Când | Ce face | Risc | Stare la 2026-10-08 |
+| Automat | Când | Ce face | Risc | Măsurat |
 |---|---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic | ✅ există |
-| `PKMS-Aliniere` | **la autentificare** + **de 3 ori pe zi** | aliniază indexurile, scrie doar ce diferă | **scrie în vault** | ✅ **există, măsurat** |
-| `PKMS-GitAutoCommit` | **la 5 minute** | comită singur ce a rămas necomitat în repo git | **scrie în istoric**, și poate **refuza** | ✅ **există, măsurat** |
+| `PKMS-Aliniere` | **la autentificare** + **09:00, 15:00, 22:00** | **întreabă întâi**; aliniază doar dacă există nealiniere | **scrie în vault**, doar când e nevoie | ✅ există, măsurat 22.10.2026 |
+| `PKMS-RaportSaptamanal` | **luni, 08:00** | raport de stare: oglindă + indexuri + schemă + reguli + cotor | scrie **un raport**; nu repara | ✅ există, măsurat 22.10.2026 |
+| `PKMS-GitAutoCommit` | **la 5 minute** | comită singur ce a rămas necomitat în repo git | **scrie în istoric**, și poate **refuza** | ✅ există, măsurat |
+| `PKMS-DriveFS-AutoRepair` | **la 5 minute** | repornește DriveFS dacă procesul a murit | rulează **în afara vaultului** | ✅ există, măsurat |
 
 Neamestecate pentru că riscurile nu sunt aceleași: automatul care doar citește poate
 rula oricând, iar automatul care scrie trebuie creat conștient, cu ora lui.
 
-`PKMS-Aliniere` **există** — măsurat: **4 declanșatori** (autentificare + 06:00,
-13:00, 20:00), rulat ca `apviz`, `Limited`, `Interactive`, directorul de lucru
-`AI-Kit`, limita de 1 oră, `IgnoreNew`, fereastră ascunsă. Declanșat o singură dată
-cu mâna: **22,4 secunde, rezultat 0** — și a prins un drift real, deci nu e decor.
-„La computer pornit" s-a implementat ca **la autentificare**, cu 3 minute întârziere,
-ca Alex și nu ca SYSTEM (altfel ar avea alte drepturi și altă vedere asupra vaultului).
+`PKMS-Aliniere` — **măsurat 22.10.2026**: **4 declanșatori** (autentificare +
+**09:00, 15:00, 22:00**), rulat ca `apviz`, `Limited`, `Interactive`, directorul de
+lucru pe `C:`, limita de 1 oră, `IgnoreNew`, fereastră ascunsă. Acțiunea nu mai este
+`align-index.ps1`, ci **`aliniere-conditionala.ps1`**: vezi secțiunea de mai jos.
+„La computer pornit" a rămas **la autentificare**, ca Alex și nu ca SYSTEM (altfel
+ar avea alte drepturi și altă vedere asupra vaultului).
+
+**Ore locale, nu instante absolute — măsurat 22.10.2026.** Declanșatorii au
+`StartBoundary` **fără** designator de fus orar. Cu `+03:00` explicit, granița
+era un *instant absolut*, iar România trece la EET pe **25.10.2026**: programarea
+s-ar fi derivat cu o oră (08:00 → 07:00). Măsurat: taskul săptămânal înregistrat cu
+`+03:00` raporta `NextRunTime 07:00`; reînregistrat fără offset, raportează
+`08:00`. Corectat pe toate cele cinci taskuri.
 
 Cum se oprește:
 
 ```powershell
 Unregister-ScheduledTask -TaskName 'PKMS-Aliniere' -Confirm:$false
+Unregister-ScheduledTask -TaskName 'PKMS-RaportSaptamanal' -Confirm:$false
 ```
 
 Indexurile deja scrise rămân; se văd în `_SYSTEM\arhiva-indexe\`, iar logul rămâne la
@@ -650,6 +660,91 @@ adevărat:
 
 Ultimele trei sunt rare prin construcție — sunt exact cazurile în care intervenția
 automată ar distruge informație.
+
+---
+
+## `aliniere-conditionala.ps1` — alinierea care întreabă întâi
+
+```powershell
+.\aliniere-conditionala.ps1
+```
+
+Scriptul pe care îl rulează taskul `PKMS-Aliniere`. O singură regulă: **întreabă
+întâi, scrie doar dacă e nevoie.** Unele zile nu se schimbă nimic, și atunci nu are
+rost să lucrezi în van.
+
+Trei pași, măsurați pe vaultul real (22.10.2026):
+
+1. **CENSUS** — `align-index.ps1 -CeVad`. Modul de citire: nu scrie nimic — nici
+   logul de aliniere, nici arhiva de indexe, nici un index. Ieșirea are o linie
+   machine-readable: `rezumat: N LIPSA · N CORUPT · N INCOMPLET · N NEALINIAT · N CONFORM · N nemodificate`.
+2. **ACȚIUNE** — doar dacă censusul a găsit ceva. `align-index.ps1` în modul
+   scriere rescrie **doar folderele nealiniate**, pe subarborii afectați.
+3. **CONFIRMARE** — census din nou. Dacă mai rămâne nealiniere, ieșirea e 1.
+
+**Probe pe vaultul real:**
+
+| Situație | Ce s-a măsurat |
+|---|---|
+| 2 nealiniere reale (2 scripturi noi adăugate în motor) | găsite → reparate → confirmare **2.616 CONFORM / 0 rămase**, 181 s, cod 0 |
+| nimic schimbat | „nimic de făcut" — **6.617 fișiere comparate înainte și după, zero diferențe** în afara celor două jurnale vii; arhiva de indexe: 46 de runuri înainte și 46 după |
+
+Verdictul e o singură linie, începutul ei e mereu `ALINIERE:`.
+
+| Ieșire | Când |
+|---|---|
+| `0` | totul aliniat (fie era deja aliniat, fie a fost reparat acum) |
+| `1` | au rămas nealinieri după reparație |
+| `2` | censusul nu a putut fi citit — măsurătoarea nu s-a făcut (**nu e „bine"**) |
+| `4` | `align-index.ps1` lipsește din motor |
+
+**Nu rulează `build-index.ps1`.** Acela rescrie tot arborele (2.616 indexuri, ~74 s)
+și e intervenție, nu rutină: rămâne la cerere, după mutări în masă.
+
+Cum se oprește (fără să dezactivezi taskul):
+
+```powershell
+Unregister-ScheduledTask -TaskName 'PKMS-Aliniere' -Confirm:$false
+```
+
+---
+
+## `raport-saptamanal.ps1` — raportul de stare săptămânal
+
+```powershell
+.\raport-saptamanal.ps1
+```
+
+Scriptul pe care îl rulează taskul `PKMS-RaportSaptamanal` (luni, 08:00). Rolul lui
+e **NU repara**: verifică și raportează starea de ansamblu, ca degradarea dintre două
+alinieri să fie vizibilă, nu ascunsă.
+
+Șase verificări, fiecare cu poarta ei:
+
+| # | Verificare | Poarta |
+|---|---|---|
+| 1 | oglinda local ↔ Google Drive Cloud | `verifica-oglinda.ps1` |
+| 2 | structura completă de indexuri | `align-index.ps1 -CeVad` |
+| 3 | indexurile pe schema §18.1 | `verifica-schema.ps1` |
+| 4 | regulile de denumire și encoding | `lint.ps1` |
+| 5 | măsura vaultului | `health-check.ps1` |
+| 6 | cotorul: cele 4 documente din rădăcină + fiecare folder de nivel 1 trebuie să fie menționat în `COTOR.md` |
+
+Toate porțile rulează în **procese copil**: fiecare apelează `exit`, iar `exit` într-un
+script apelat cu `&` ar omorî și procesul părinte — deci părintele n-ar mai putea
+citi rezultatul.
+
+| Ieșire | Când |
+|---|---|
+| `0` | totul în ordine |
+| `1` | s-a găsit ceva în afara de ordine |
+| `2` | o măsurătoare nu s-a putut face — verdictul despre acea poartă e **necunoscut**, nu „bine" |
+
+Scrie raportul în `_SYSTEM\rapoarte\raport-saptamanal-<data>.txt` și în
+`raport-saptamanal-ultima.txt`. **Urmare, măsurată:** indexul folderului
+`_SYSTEM\rapoarte` devine nealiniat până la următoarea trecere a lui
+`PKMS-Aliniere` — care îl repară, pe acel arbore doar. E comportamentul dorit: o
+măsurătoare care scrie ceva trebuie să se vadă în index.
 
 ---
 

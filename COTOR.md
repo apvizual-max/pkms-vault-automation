@@ -338,16 +338,32 @@ ar rescrie indexuri acolo unde n-are voie.
 - **O dată pe săptămână** Alex citește logul și rezolvă. Automatul nu rezolvă nimic
   în numele lui — doar notează ce n-a putut.
 
-### Cele două automate, cu riscuri diferite
+### Cele cinci automate, cu riscuri diferite
 
 | Automat | Când | Ce face | Risc |
 |---|---|---|---|
 | `PKMS-Watch` | zilnic, **03:30** | doar citire: `lint`, `health-check`, `reconcile` | nu scrie nimic |
-| `PKMS-Aliniere` | la autentificare + de 3 ori pe zi | aliniază indexurile, scrie doar ce diferă | **scrie în vault** |
+| `PKMS-Aliniere` | la autentificare + **09:00, 15:00, 22:00** | **întreabă întâi**, aliniază doar dacă există nealiniere | **scrie în vault** — dar numai când e nevoie |
+| `PKMS-RaportSaptamanal` | **luni, 08:00** | raport de stare: oglindă, indexuri, schemă, reguli, cotor | scrie **un raport**; nu repara |
+| `PKMS-GitAutoCommit` | la 5 minute | comită singur ce a rămas necomitat | scrie în istoric |
+| `PKMS-DriveFS-AutoRepair` | la 5 minute | repornește DriveFS dacă a murit | rulează în afara vaultului |
 
 **Neamestecate, pentru că riscurile nu sunt aceleași.** Automatul care doar citește
 poate fi lăsat să ruleze oricând; automatul care scrie trebuie creat conștient, cu
 ora lui, ca alegere — nu ca efect secundar.
+
+**Alinierea e condiționată — măsurat 22.10.2026.** `PKMS-Aliniere` rulează
+`aliniere-conditionala.ps1`: întâi face **census** (`align-index -CeVad`, care nu
+scrie absolut nimic), și doar dacă găsește nealinieri rescrie **arborii afectați**,
+nu tot vaultul. Probe pe vaultul real:
+
+- rulare **cu** schimbări (2 scripturi noi adăugate în motor): a găsit 2 nealiniere,
+  le-a reparat, confirmare **2.616 CONFORM / 0 rămase**, 181 s, cod de ieșire 0;
+- rulare **fără** schimbări: verdict „nimic de făcut", **6.617 fișiere comparate
+  înainte și după, zero diferențe** în afara celor două jurnale vii.
+
+Reconstruirea completă (`build-index.ps1`, 2.616 indexuri, ~74 s) rămâne **la
+cerere**, după mutări în masă — nu e parte a rutinei.
 
 **Cursa de montare, măsurată și reparată (20.10.2026).** `PKMS-Aliniere` a pornit la
 **23:04:40** pe triggerul de **logon** și a murit cu `2147942667` (ERROR_DIRECTORY): `G:`
@@ -361,14 +377,14 @@ calea** (max 300 s), apoi rulează scriptul și îi propagă codul de ieșire. J
 
 ### Cârligul de auto-repair pentru DriveFS — `PKMS-DriveFS-AutoRepair`
 
-Al treilea automat, dar **în afara vaultului**: rulează din
+Al cincilea automat, dar **în afara vaultului**: rulează din
 `C:\Users\apviz\.minimax\drivefs\auto-repair-drivefs.ps1`, la fiecare **5 minute**.
 
-| | `PKMS-Watch` | `PKMS-Aliniere` | `PKMS-DriveFS-AutoRepair` |
-|---|---|---|---|
-| Unde rulează | în vault | în vault | **în afara vaultului** |
-| Scrie în vault | nu | da | nu |
-| Ce face | citește | aliniază indexurile | verifică santinelele DriveFS, repornește procesul doar dacă e rupt |
+| | `PKMS-Watch` | `PKMS-Aliniere` | `PKMS-RaportSaptamanal` | `PKMS-GitAutoCommit` | `PKMS-DriveFS-AutoRepair` |
+|---|---|---|---|---|---|
+| Unde rulează | în vault | în vault | în vault | launcher pe `C:`, scriptul în vault | **în afara vaultului** |
+| Scrie în vault | nu | da — doar arborii nealiniați | da — un raport | nu | nu |
+| Ce face | citește | aliniază indexurile, dacă e nevoie | raportează starea, nu repara | comită singur ce a rămas necomitat | verifică santinelele DriveFS, repornește procesul doar dacă e rupt |
 
 **De ce stă în afara vaultului:** trebuie să funcționeze chiar și atunci când
 vaultul e ilizibil. Un cârlig aflat în vault ar lipsi exact atunci când ar trebui
@@ -409,10 +425,9 @@ rulate pe rând își rescriu reciproc indexurile la nesfârșit.
 
 ---
 
-## Cele 12 scripturi din `AI-Kit`
+## Cele 15 scripturi din `AI-Kit`
 
-Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual' -Filter *.ps1).Count`
-→ **12**.
+Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual' -Filter *.ps1).Count` → **15** (plus `drivefs-oglinda.js`).
 
 | Script | Rolul |
 |---|---|
@@ -430,6 +445,8 @@ Măsurate pe disc, nu promise: `(Get-ChildItem '02_Areas\02-2-AI-SOT\02-2-4-AI-K
 | `inchide-log.ps1` | spune ce e **DESCHIS acum** în log; cu `-Arhiveaza` mută rezolvatele în arhivă |
 | `git-autocommit.ps1` | **NU atinge vaultul.** Comită singur, în repo git, ce a rămas necomitat — ca panoul `Changes` să nu aibă ce arăta. Patru porți: secrete pe nume, secrete pe conținut, căi interzise, timp de așezare. Nu face push. Task: `PKMS-GitAutoCommit`, la 5 minute |
 | `rula-din-task.ps1` | **lansatorul taskurilor**, nu o treaptă: stă pe `C:` (`C:\Users\apviz\.minimax\pkms\`), **așteaptă** ca vaultul să fie accesibil (max 300 s), apoi rulează un script din `AI-Kit_manual` și îi propagă codul de ieșire. Rezolvă reperul **dinamic**, din shortcutul DriveFS — nu din `G:`, care nu există ca director | **da** — rulează scriptul însuși, cu `PKMS_VAULT` setat și `PKMS_BACKUP` setat **numai dacă backupul există** |
+| `aliniere-conditionala.ps1` | **rutina zilnică**: census `-CeVad` (nu scrie absolut nimic), apoi rescrie **doar arborii nealiniați** — numai dacă există nealiniere. Nu rulează `build-index.ps1`. Task: `PKMS-Aliniere` (autentificare + **09:00, 15:00, 22:00**) |
+| `raport-saptamanal.ps1` | **raportul săptămânal**: 6 verificări (oglindă, indexuri, schemă, reguli, măsură, cotor) — **nu repara**, doar raportează. Task: `PKMS-RaportSaptamanal` (luni, **08:00**) |
 
 **Ordinea canonică rămâne cea de 5 trepte** (`paths` → `setup` → `lint` →
 `health-check` → `reconcile`) și **nu se schimbă**.

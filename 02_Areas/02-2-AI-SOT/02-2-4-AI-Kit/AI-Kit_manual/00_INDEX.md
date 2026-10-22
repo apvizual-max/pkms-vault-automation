@@ -34,7 +34,7 @@ Cele mai frecvente două extensii sunt `.ps1` (15 din 22 fișiere) și `.md` (4 
 | `ONBOARDING.md` | 20 KB | 2026-10-21 |
 | `paths.ps1` | 17 KB | 2026-10-21 |
 | `PROMPT-INSCRIERE.md` | 5 KB | 2026-10-21 |
-| `raport-saptamanal.ps1` | 10 KB | 2026-10-22 |
+| `raport-saptamanal.ps1` | 11 KB | 2026-10-22 |
 | `reconcile.ps1` | 30 KB | 2026-10-21 |
 | `rula-din-task.ps1` | 5 KB | 2026-10-21 |
 | `setup.ps1` | 6 KB | 2026-10-21 |

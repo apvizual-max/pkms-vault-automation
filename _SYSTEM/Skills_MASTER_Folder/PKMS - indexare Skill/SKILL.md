@@ -5,9 +5,9 @@ description: >
   stări (LIPSA / CORUPT / INCOMPLET / NEALINIAT / CONFORM), cine deține fiecare piesă,
   regula „jurnalele vii nu sunt conținut", contractul de convergență dintre cele două
   generatoare (build-index ↔ align-index), blocurile „De ce e aici" și „Cuvinte cheie",
- zonele interzise, logul `raport-aliniere.log`, cele două automate și comutatoarele
+ zonele interzise, logul `raport-aliniere.log`, cele cinci automate și comutatoarele
   lor. Se declanșează la orice întrebare despre `00_INDEX.md`, `build-index.ps1`,
-  `align-index.ps1`, `watch.ps1`, `verifica-schema.ps1`, despre cifrele din indexuri sau
+  `align-index.ps1`, `aliniere-conditionala.ps1`, `raport-saptamanal.ps1`, `watch.ps1`, `verifica-schema.ps1`, despre cifrele din indexuri sau
   despre faptul că un folder rămâne „nealiniat".
 license: Proprietar — Popy / OPTIMUS PRIME
 ---
@@ -243,3 +243,36 @@ nu eroare.
 
 **Cifrele de la §12 rămân istoric**: erau corecte pe 19.10 și sunt păstrate ca
 atare, pentru că §12 e datat. Cifrele de aici sunt cele măsurate acum.
+
+## 14. Rutina zilnică și raportul săptămânal (22.10.2026)
+
+Indexurile nu stau loc: se schimbă, se mută, se creează. Ca să nu fie nevoie de
+intervenție manuală, alinierea e automată, dar **condiționată** — și reconstruirea
+completă e tot la cerere.
+
+| Automat | Când | Ce rulează | Ce scrie |
+|---|---|---|---|
+| `PKMS-Aliniere` | la autentificare + **09:00, 15:00, 22:00** | `aliniere-conditionala.ps1` | doar arborii nealiniați, **numai dacă există nealiniere** |
+| `PKMS-RaportSaptamanal` | **luni, 08:00** | `raport-saptamanal.ps1` | **un raport**; nu repara |
+| `PKMS-Watch` | zilnic, **03:30** | `watch.ps1` | doar raportul zilnic |
+| `PKMS-GitAutoCommit` | la 5 minute | `git-autocommit.ps1` | commit autonomous |
+| `PKMS-DriveFS-AutoRepair` | la 5 minute | DriveFS | nimic în vault |
+
+**Regula de aur, măsurată:** automatul care aliniază **întreabă întâi**. Face
+census (`align-index -CeVad`, care nu scrie nimic), și doar dacă găsește nealinieri
+rescrie arborii afectați. Probe pe vaultul real:
+
+- cu schimbări: 2 nealiniere găsite → reparate → confirmare **2.616 CONFORM / 0
+  rămase**, 181 s, cod 0;
+- fără schimbări: „nimic de făcut" — **6.617 fișiere comparate înainte și după,
+  zero diferențe** în afara celor două jurnale vii (jurnalul de aliniere **neatins**,
+  arhiva de indexe **46 de runuri înainte și 46 după**).
+
+**`build-index.ps1` nu e în rutină.** Rescrie tot arborele (2.616 indexuri, ~74 s) și
+e intervenție: se rulează cu mâna, după mutări în masă.
+
+**Ore locale, nu instante absolute.** Declanșatorii au `StartBoundary` fără
+designator de fus orar. Cu `+03:00` explicit, granița e un instant absolut, iar
+România trece la EET pe 25.10.2026 — programarea s-ar fi derivat cu o oră.
+Măsurat: 08:00 cu offset → `NextRunTime 07:00`; fără offset → `08:00`.
+
