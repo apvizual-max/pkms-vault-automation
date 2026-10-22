@@ -196,6 +196,12 @@ function Test-LiniaGenerata([string]$l) {
   if ($l -match '^\*\*De ce e aici:')   { return $true }
   if ($l -match '^\*\*\d+ ')           { return $true }   # randul de stare, fara diacritic
   if ($l -match '^> Generat automat de ') { return $true }
+  # Forma VECHEA a notei de provenienta, scrisa de un generator anterioar:
+  # "> Generat pentru <cale>. Nu edita manual - randul **De ce e aici** se pastreaza."
+  # Masurat: 1 index (HANDOFF-2026-10-21) o mai purta, cu folderul `AI-Kit\`,
+  # care nu mai exista. Fara aceasta regula linia ar fi luata ca TEXT SCRIS DE
+  # OM si ar supravietui regenerarii, pastrand o cale moarta in harta.
+  if ($l -match '^> Generat pentru ') { return $true }
   if ($l -match '^> Randul \*\*De ce e aici\*\*') { return $true }
   if ($l -match '^_Fiecare raft e legat')  { return $true }
   # Randurile de date pe care le genereaza automatul: tabelul de fisiere si
@@ -338,7 +344,20 @@ Get-ChildItem -LiteralPath $Vault -Directory -Recurse -Force -EA SilentlyContinu
   }
   [void]$a.AppendLine("**$($real.Count) fișiere · $(Human $bytes) · $($subs.Count) subfoldere**")
   [void]$a.AppendLine()
-  [void]$a.AppendLine("> Generat automat de `AI-Kit\build-index.ps1`. Nu edita manual — rulează scriptul din nou.")
+  # NOTA DE PROVENIENTA — calea REALA a motorului.
+  # Doua corectii in aceeasi linie, ambele masurate:
+  #  1) FOLDERUL: `AI-Kit\` nu mai exista (renumerotat in 02-2-4-AI-Kit\AI-Kit_manual
+  #     pe 2026-10-19). Un index care indica un script inexistent e o harta care
+  #     trimite cititorul in gol — iar cititorul e un AI cu 0 memorie.
+  #  2) BACKTICK-URILE: intr-un sir cu ghilimele duble, un backtick UNIC
+  #     introduce escape si DISPARE din iesire. Masurat pe disc: linia scrisa de
+  #     acest generator era "> Generat automat de AI-Kit\build-index.ps1." — fara
+  #     backtick-uri, deci fara formatare de cod, in 6.502 de indexuri. De aceea
+  #     backtick-urile se scriu DOUBLU aici: ` ` = un backtick literal.
+  #  3) Textul e IDENTIC cu cel scris de align-index.ps1 (care foloseste ghilimele
+  #     simple si pastreaza backtick-urile cum sunt). Daca cele doua generatoare
+  #     ar scrie texte diferite, ele s-ar rescrie reciproc la nesfarsit.
+  [void]$a.AppendLine("> Generat automat de ``02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1`` și ``align-index.ps1``. Nu edita manual — rulează scriptul din nou.")
   [void]$a.AppendLine("> Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.")
   [void]$a.AppendLine()
 
@@ -654,7 +673,7 @@ $top = @(Get-ChildItem -LiteralPath $Vault -Directory -Force -EA SilentlyContinu
 $sb = New-Object System.Text.StringBuilder
 [void]$sb.AppendLine("# INDEX CENTRAL — generat automat, nu se scrie manual")
 [void]$sb.AppendLine()
-[void]$sb.AppendLine("**Tot vaultul, pe un singur ecran.** Generat de ``AI-Kit\build-index.ps1``. Dacă editezi acest fișier, următoarea rulare îl suprascrie.")
+[void]$sb.AppendLine("**Tot vaultul, pe un singur ecran.** Generat de ``02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1``. Dacă editezi acest fișier, următoarea rulare îl suprascrie.")
 [void]$sb.AppendLine()
 [void]$sb.AppendLine("Actualizat: $(Get-Date -Format 'yyyy-MM-dd HH:mm')")
 [void]$sb.AppendLine()
@@ -666,11 +685,23 @@ $allBytes = [int64](($allFiles | Measure-Object Length -Sum).Sum)
 [void]$sb.AppendLine("> Cifra de mai sus **nu** e totalul de pe disc. Sunt scoase folderele cu punct (ale uneltelor), dosarul ``.git``, ``node_modules``, arborele temei cumpărate ``01_Theme_Salient`` și structura WordPress YYYY\MM din ``02_Media_Uploads``. Rădăcinile temei și ale mediilor rămân indexate, fiindcă nu se exclud. Scriptul nu numără niciodată totalul de pe disc, deci nu compară cifra asta cu nimic.")
 [void]$sb.AppendLine()
 
-$bk = Get-PkmsBackup
-if ($bk) {
-  [void]$sb.AppendLine("Backup: ``$bk`` — imutabil, nu i se scrie niciodată.")
+# REPERUL (Decizia 1, Popy, 21-10-2026): reperul nu mai e o copie locala pe
+# D:/H:, ci oglinda Google Drive Cloud, verificata per fisier local<->cloud.
+# Backupul local a devenit ultima rezerva, NU reperul. Se raporteaza reperul
+# REAL, masurat de paths.ps1 — nu un backup cautat la o cale care nu mai exista.
+#
+# MASURAT inainte de aceasta schimbare: Get-PkmsBackup intorcea nimic (nu
+# mai exista nicio copie completa a vaultului pe niciun volum — corect, asa e
+# acum), deci indexul central scria "Backup: NEGĂSIT ... Verifică înainte de
+# orice reconciliere". Adica un FALS ALARM: trimitea orice AI cu 0 memorie sa
+# caute un backup care NU trebuie sa existe si sa se opreasca acolo.
+$ref = Get-PkmsReference
+if ($ref -and $ref.Tip -eq 'cloud') {
+  [void]$sb.AppendLine("Reper: **oglinda Google Drive Cloud** — comparatie per fisier local <-> cloud. Baza de metadate: ``$($ref.Baza)``. Mount: ``$($ref.Mount)``. Verifică cu ``verifica-oglinda.ps1``.")
+} elseif ($ref -and $ref.Tip -eq 'backup-local') {
+  [void]$sb.AppendLine("Reper: **backup local** ``$($ref.Cale)`` — oglinda DriveFS nu e masurabila ($($ref.Motiv)).")
 } else {
-  [void]$sb.AppendLine("Backup: **NEGĂSIT** — `paths.ps1` nu l-a descoperit. Verifică înainte de orice reconciliere.")
+  [void]$sb.AppendLine("Reper: **NEDESCOPERIT** — nici oglinda DriveFS, nici backup local. Verifică înainte de orice reconciliere.")
 }
 [void]$sb.AppendLine()
 [void]$sb.AppendLine("---")
