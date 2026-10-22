@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS lint.ps1 - verifica regulile vaultului si raporteaza abaterile.
   NU corecteaza nimic. doar raporteaza. corectia ramane decizia lui Alex.
 #>

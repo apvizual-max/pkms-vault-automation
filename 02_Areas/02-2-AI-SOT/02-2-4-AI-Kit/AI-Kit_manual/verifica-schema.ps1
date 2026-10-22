@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS verifica-schema.ps1
   Verifica daca fiecare 00_INDEX.md respecta SCHEMA din contractul vaultului
   §18.1 — nu daca exista (astea e treaba lui lint.ps1, punctul 5), ci daca e
@@ -178,12 +178,13 @@ function Test-Index {
   # --- cuvintele cheie ---
   if ($poz.ContainsKey('## Cuvinte cheie')) {
     $start = $poz['## Cuvinte cheie'] + 1
-    $cuv = @()
-    for ($i = $start; $i -lt $linii.Count; $i++) {
+    $foundSome = $false
+    $cuv = @(for ($i = $start; $i -lt $linii.Count; $i++) {
       $t = $linii[$i].Trim()
-      if ($t -eq '' -or $t.StartsWith('#')) { if ($cuv.Count -gt 0) { break } else { continue } }
-      $cuv += @($t -split '·' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
-    }
+      if ($t -eq '' -or $t.StartsWith('#')) { if ($foundSome) { break } else { continue } }
+      $foundSome = $true
+      $t -split '·' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' }
+    })
     if ($cuv.Count -lt $minCuv) {
       Adauga 'eroare' 'CUVINTE_PUTINE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere minimum ' + $minCuv + '.')
     } elseif ($cuv.Count -gt $maxCuv) {
@@ -233,16 +234,17 @@ function Invoke-AutoTest {
 
   $bara = $corect.Replace('autotest/bun', 'autotest\bun')
   $lin = $corect -split "`n"
-  $fara = @(); for ($i = 0; $i -lt $lin.Count; $i++) { if ($lin[$i] -ne '## Fișiere') { $fara += $lin[$i] } } ; $fara = ($fara -join "`n")
+  $fara = $(for ($i = 0; $i -lt $lin.Count; $i++) { if ($lin[$i] -ne '## Fișiere') { $lin[$i] } }) -join "`n"
   # Varianta fara "## Subfoldere", cu randul ei de link scos deasupra, ca sa
   # nu se amestece in cuvintele cheie. Pe asta se construiesc cazurile E si F.
-$faraSub = @(); $sarit = $false
-foreach ($l in $lin) {
-  if ($l -eq '## Subfoldere') { $sarit = $true; continue }
-  if ($sarit) { if ($l -eq '') { $sarit = $false }; continue }
-  $faraSub += $l
-}
-$faraSub = ($faraSub -join "`n")
+$faraSub = $(
+  $sarit = $false
+  foreach ($l in $lin) {
+    if ($l -eq '## Subfoldere') { $sarit = $true; continue }
+    if ($sarit) { if ($l -eq '') { $sarit = $false }; continue }
+    $l
+  }
+) -join "`n"
   $unu = $corect.Replace('`autotest` · `proba`', '`singur`')
 
   $cazuri = @(
@@ -337,7 +339,7 @@ $faraSub = ($faraSub -join "`n")
     $fs = [System.IO.File]::Open($gIdx, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::None)
     $eaVechi = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
-    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
+    $gOut = & $PSHOME/pwsh -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
     $gCod = $LASTEXITCODE
     $ErrorActionPreference = $eaVechi
   } finally {
