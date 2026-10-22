@@ -241,7 +241,7 @@ nu eroare.
 | taskuri | **5/5** cu `LastTaskResult=0` — `PKMS-Aliniere` (next 22.10 15:00), `PKMS-RaportSaptamanal` (next 26.10 08:00), `PKMS-Watch` (23.10 03:30), `PKMS-GitAutoCommit` + `PKMS-DriveFS-AutoRepair` (la 5 min) |
 | arhiva de indexe | 49 de runuri în `_SYSTEM\arhiva-indexe` — fiecare rulare cu scriere își arhivează versiunea veche |
 | raport săptămânal | prima rulare prin task, 22.10 09:02: **6 porți toate verzi**, `VERDICT: IN ORDINE`, 0 erori, 1 atențiune, 131 s |
-| repo | `master`, arbore curat, 699 fișiere urmărite (din care 629 indexuri) |
+| repo | `master`, arbore curat, **701 fișiere urmărite** (din care 625 indexuri), local = remote |
 
 **Cifrele de la §12 rămân istoric**: erau corecte pe 19.10 și sunt păstrate ca
 atare, pentru că §12 e datat. Cifrele de aici sunt cele măsurate acum.
