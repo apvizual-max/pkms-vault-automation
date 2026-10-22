@@ -2,14 +2,14 @@
 
 **De ce e aici:** pachetul de predare al vaultului — scripturile și documentele cu care orice AI, cu sau fără memorie, ia în posesie vaultul (`E:\Google\GDrive\GDrive-Second_Brain_PKMS`) fără să scrie nimic în backup. Ordinea canonică de rulare e cea de 5 trepte (`paths` → `setup` → `lint` → `health-check` → `reconcile`); `build-index.ps1` și `align-index.ps1` scriu și nu intră în lanț.
 
-**18 fișiere · 279 KB · 0 subfoldere**
+**20 fișiere · 318 KB · 0 subfoldere**
 
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Cele mai frecvente două extensii sunt `.ps1` (12 din 18 fișiere) și `.md` (4 din 18 fișiere). Cel mai mare element din folder e `align-index.ps1` (46 KB)
+Cele mai frecvente două extensii sunt `.ps1` (13 din 20 fișiere) și `.md` (4 din 20 fișiere). Cel mai mare element din folder e `align-index.ps1` (47 KB)
 
 ## Cuvinte cheie
 
@@ -19,22 +19,24 @@ Cele mai frecvente două extensii sunt `.ps1` (12 din 18 fișiere) și `.md` (4 
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `align-index.ps1` | 46 KB | 2026-10-19 |
-| `build-index.ps1` | 37 KB | 2026-10-19 |
-| `DELEGARE - plan de verificare.md` | 7 KB | 2026-10-19 |
+| `align-index.ps1` | 47 KB | 2026-10-22 |
+| `build-index.ps1` | 39 KB | 2026-10-22 |
+| `DELEGARE - plan de verificare.md` | 7 KB | 2026-10-21 |
+| `drivefs-oglinda.js` | 12 KB | 2026-10-21 |
 | `git-autocommit.ps1` | 17 KB | 2026-10-19 |
 | `git-autocommit-ignorat.txt` | 615 B | 2026-10-11 |
 | `git-autocommit-registru.txt` | 2 KB | 2026-10-21 |
 | `health-check.ps1` | 6 KB | 2026-10-21 |
 | `inchide-log.ps1` | 14 KB | 2026-10-19 |
-| `lint.ps1` | 18 KB | 2026-10-19 |
-| `MANUAL DE OPERARE - Hermes.md` | 23 KB | 2026-10-19 |
-| `ONBOARDING.md` | 19 KB | 2026-10-21 |
-| `paths.ps1` | 12 KB | 2026-10-21 |
-| `PROMPT-INSCRIERE.md` | 4 KB | 2026-10-19 |
-| `reconcile.ps1` | 28 KB | 2026-10-19 |
-| `rula-din-task.ps1` | 3 KB | 2026-10-21 |
-| `setup.ps1` | 4 KB | 2026-10-19 |
+| `lint.ps1` | 20 KB | 2026-10-21 |
+| `MANUAL DE OPERARE - Hermes.md` | 23 KB | 2026-10-21 |
+| `ONBOARDING.md` | 20 KB | 2026-10-21 |
+| `paths.ps1` | 17 KB | 2026-10-21 |
+| `PROMPT-INSCRIERE.md` | 5 KB | 2026-10-21 |
+| `reconcile.ps1` | 30 KB | 2026-10-21 |
+| `rula-din-task.ps1` | 5 KB | 2026-10-21 |
+| `setup.ps1` | 6 KB | 2026-10-21 |
+| `verifica-oglinda.ps1` | 8 KB | 2026-10-21 |
 | `verifica-schema.ps1` | 23 KB | 2026-10-19 |
-| `watch.ps1` | 14 KB | 2026-10-20 |
+| `watch.ps1` | 16 KB | 2026-10-21 |
 

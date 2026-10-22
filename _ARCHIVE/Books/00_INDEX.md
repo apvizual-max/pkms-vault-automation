@@ -2,7 +2,7 @@
 
 **2 fișiere · 134 MB · 0 subfoldere**
 
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici

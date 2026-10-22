@@ -1,13 +1,13 @@
 ﻿# 00_INDEX — 02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_guide
 
-**10 fișiere · 128 KB · 0 subfoldere**
+**10 fișiere · 134 KB · 0 subfoldere**
 
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
 
-Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element din folder e `AUTOMATIZARI - scripturi.md` (39 KB)
+Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element din folder e `AUTOMATIZARI - scripturi.md` (41 KB)
 
 ## Cuvinte cheie
 
@@ -17,14 +17,14 @@ Singura extensie prezentă e `.md` (10 din 10 fișiere). Cel mai mare element di
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `AUDIT_RECONCILIERE_FINAL.md` | 3 KB | 2026-10-19 |
-| `AUTOMATIZARI - scripturi.md` | 39 KB | 2026-10-20 |
+| `AUDIT_RECONCILIERE_FINAL.md` | 5 KB | 2026-10-21 |
+| `AUTOMATIZARI - scripturi.md` | 41 KB | 2026-10-21 |
 | `Gemini Saved Info Memory Pack.md` | 11 KB | 2026-10-14 |
-| `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-19 |
+| `INTEGRARE - Mavis CI.md` | 3 KB | 2026-10-21 |
 | `LOGICA - cum se foloseste fiecare baza.md` | 8 KB | 2026-10-19 |
-| `ONBOARDING AI - cum preia un AI vaultul.md` | 19 KB | 2026-10-21 |
-| `PROCESE - flux de la captură la utilizare.md` | 6 KB | 2026-10-19 |
-| `SPECIFICATII - contractul vaultului.md` | 28 KB | 2026-10-21 |
-| `START AICI.md` | 7 KB | 2026-10-21 |
+| `ONBOARDING AI - cum preia un AI vaultul.md` | 20 KB | 2026-10-21 |
+| `PROCESE - flux de la captură la utilizare.md` | 6 KB | 2026-10-21 |
+| `SPECIFICATII - contractul vaultului.md` | 29 KB | 2026-10-21 |
+| `START AICI.md` | 8 KB | 2026-10-21 |
 | `WORKFLOW - ce faci concret.md` | 3 KB | 2026-10-19 |
 

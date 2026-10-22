@@ -4,7 +4,7 @@
 
 **4 fișiere · 29 MB · 0 subfoldere**
 
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
@@ -19,8 +19,8 @@ Cele mai frecvente două extensii sunt `.md` (3 din 4 fișiere) și `.json` (1 d
 
 | Fișier | Dimensiune | Modificat |
 |---|---|---|
-| `handoff-harta-implementarii.md` | 40 KB | 2026-10-20 |
-| `handoff-prompt.md` | 11 KB | 2026-10-20 |
-| `RAPORT FINAL — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` | 28 KB | 2026-10-20 |
+| `handoff-harta-implementarii.md` | 42 KB | 2026-10-21 |
+| `handoff-prompt.md` | 12 KB | 2026-10-21 |
+| `RAPORT FINAL — OPTIMUS PKMS DASHBOARD - 2026-10-20.md` | 29 KB | 2026-10-21 |
 | `transcript-complet.json` | 29 MB | 2026-10-19 |
 

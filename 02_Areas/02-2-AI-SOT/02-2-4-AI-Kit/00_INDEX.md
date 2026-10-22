@@ -4,7 +4,7 @@
 
 **2 fișiere · 1 MB · 5 subfoldere**
 
-> Generat automat de AI-Kit\build-index.ps1. Nu edita manual — rulează scriptul din nou.
+> Generat automat de `02_Areas/02-2-AI-SOT/02-2-4-AI-Kit/AI-Kit_manual/build-index.ps1` și `align-index.ps1`. Nu edita manual — rulează scriptul din nou.
 > Randul **De ce e aici** de mai sus, daca exista, se pastreaza la fiecare regenerare.
 
 ## Ce e aici
@@ -20,7 +20,7 @@ Cele mai frecvente două extensii sunt `.md` (1 din 2 fișiere) și `.txt` (1 di
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`AI-Kit_guide`](<AI-Kit_guide/00_INDEX.md>) — 10 fișiere · 0 subfoldere
-- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 18 fișiere · 0 subfoldere
+- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 20 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-19`](<HANDOFF-2026-10-19/00_INDEX.md>) — 4 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-21`](<HANDOFF-2026-10-21/00_INDEX.md>) — 4 fișiere · 0 subfoldere
 - [`PKMS-tooling`](<PKMS-tooling/00_INDEX.md>) — 2 fișiere · 6 subfoldere
