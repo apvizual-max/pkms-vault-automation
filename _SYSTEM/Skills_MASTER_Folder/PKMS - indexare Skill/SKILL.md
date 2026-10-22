@@ -232,13 +232,15 @@ nu eroare.
 | foldere indexate | **2.616**, toate CONFORM (census `align-index -CeVad`) |
 | indexuri pe disc | 6.591 — 2.616 cu nota de proveniență nouă (2.615 în afara zonei de martori + rădăcina zonei) și 3.975 în `_QUARANTINE\indexuri generate in gresit`, cu forma veche (martori, excluși prin design) |
 | `INDEX CENTRAL.md` | 992.622 B · „Actualizat: 2026-10-22 05:18" · 16.653 fișiere · 86,67 GB indexate |
-| vault total (health-check) | 51.304 fișiere · 88,72 GB (măsurat 22.10 05:45) |
-| oglinda cloud (verifica-oglinda) | 52.403 fișiere · md5 identice 52.400 · **divergență 0** · latență 3 (cozi queued_uploads=3) — oglinda e vie, cifrele drift-ează |
-| scripturi | 13 `.ps1` + 1 `.js` — parse 0 erori, encoding 13/13 |
+| vault total (health-check) | 51.319 fișiere · 88,72 GB (măsurat 22.10 09:02, prin raportul săptămânal) |
+| oglinda cloud (verifica-oglinda) | 52.403 fișiere · md5 identice 52.400 (măsurat 05:45) · **divergență 0** · latență 1 (măsurat 22.10 09:02) — oglinda e vie, cifrele drift-ează |
+| scripturi | 15 `.ps1` + 1 `.js` — parse 0 erori, encoding 15/15 |
 | `build-index` | regenerare integrală: 2.616 indexuri rescrise în 74,7 s, EXIT=0 |
 | `align-index` (scriere) | probe izolate pe `00_Inbox/00-1-WhatsApp`: INCOMPLET reparat și NEALINIAT reparat, ambele **octet cu octet** identice cu `build-index` |
 | lanț `watch` | 3 trepte, toate codurile de ieșire 0, 0 erori, 0 atenții, 46 s |
-| taskuri | 4/4 cu `LastTaskResult=0` |
+| taskuri | **5/5** cu `LastTaskResult=0` — `PKMS-Aliniere` (next 22.10 15:00), `PKMS-RaportSaptamanal` (next 26.10 08:00), `PKMS-Watch` (23.10 03:30), `PKMS-GitAutoCommit` + `PKMS-DriveFS-AutoRepair` (la 5 min) |
+| arhiva de indexe | 49 de runuri în `_SYSTEM\arhiva-indexe` — fiecare rulare cu scriere își arhivează versiunea veche |
+| raport săptămânal | prima rulare prin task, 22.10 09:02: **6 porți toate verzi**, `VERDICT: IN ORDINE`, 0 erori, 1 atențiune, 131 s |
 | repo | `master`, arbore curat, 699 fișiere urmărite (din care 629 indexuri) |
 
 **Cifrele de la §12 rămân istoric**: erau corecte pe 19.10 și sunt păstrate ca
