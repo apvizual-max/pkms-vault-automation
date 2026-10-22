@@ -184,10 +184,15 @@ function Test-Index {
       if ($t -eq '' -or $t.StartsWith('#')) { if ($cuv.Count -gt 0) { break } else { continue } }
       $cuv += @($t -split '·' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
     }
-    if ($cuv.Count -lt $minCuv) {
-      Adauga 'eroare' 'CUVINTE_PUTINE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere minimum ' + $minCuv + '.')
-    } elseif ($cuv.Count -gt $maxCuv) {
-      Adauga 'eroare' 'CUVINTE_MULTE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere maximum ' + $maxCuv + '.')
+    switch ($cuv.Count) {
+      { $_ -lt $minCuv } {
+        Adauga 'eroare' 'CUVINTE_PUTINE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere minimum ' + $minCuv + '.')
+        break
+      }
+      { $_ -gt $maxCuv } {
+        Adauga 'eroare' 'CUVINTE_MULTE' ($cuv.Count.ToString() + ' cuvinte cheie; §18 cere maximum ' + $maxCuv + '.')
+        break
+      }
     }
   }
 
