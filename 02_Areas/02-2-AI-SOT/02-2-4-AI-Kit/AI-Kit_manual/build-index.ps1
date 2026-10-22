@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS build-index.ps1
   Generează 00_INDEX.md în fiecare folder al vaultului, din conținutul REAL.
   Apoi scrie indexul central, prin însumare de la jos în sus.
@@ -572,7 +572,8 @@ foreach ($r in $recs) {
     # Ce a fost scris de om deasupra lui ramane in cap; ce a fost scris intre
     # blocuri sau sub ultimul bloc ramane acolo, la coada.
     $primulBloc = -1
-    for ($i=0; $i -lt $vechiLinii.Count; $i++) {
+    $vechiLiniiCount = $vechiLinii.Count
+    for ($i=0; $i -lt $vechiLiniiCount; $i++) {
       if (([string]$vechiLinii[$i]).Trim() -match '^#{2,3}\s') { $primulBloc = $i; break }
     }
     # ce contine asamblarea noua: orice rand vechi care se regaseste acolo e al automatului
@@ -582,7 +583,7 @@ foreach ($r in $recs) {
       if ($t -eq '') { continue }
       if ($cnt.ContainsKey($t)) { $cnt[$t] = $cnt[$t] + 1 } else { $cnt[$t] = 1 }
     }
-    for ($i=0; $i -lt $vechiLinii.Count; $i++) {
+    for ($i=0; $i -lt $vechiLiniiCount; $i++) {
       $t = ([string]$vechiLinii[$i]).TrimEnd()
       if ($t -eq '') { continue }
       if ($cnt.ContainsKey($t) -and $cnt[$t] -gt 0) { $cnt[$t] = $cnt[$t] - 1; continue }
@@ -606,7 +607,8 @@ foreach ($r in $recs) {
     $areMotiv = (@($L | Where-Object { $_ -match '^\*\*De ce e aici:' })).Count -gt 0
     $rez = New-Object System.Collections.Generic.List[string]
     $introdusCap = $false
-    for ($i=0; $i -lt $L.Count; $i++) {
+    $LCount = $L.Count
+    for ($i=0; $i -lt $LCount; $i++) {
       $rez.Add($L[$i])
       if ((-not $introdusCap) -and ($capOm.Count -gt 0)) {
         $acum = $false
