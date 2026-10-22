@@ -149,7 +149,7 @@ if (-not $gasitCorect) { $errors.Add("nu exista stratul de lucru: nici $($workCo
 # lista urmarea 10_Work, care nu mai exista — deci cel mai mare arbore din vault
 # putea lipsi de index fara ca poarta sa geaba. O poarta mutata pe baza noua trebuie
 # sa-si mute si aria, nu doar numele.
-$noIdx = @()
+$noIdx = New-Object System.Collections.Generic.List[string]
 foreach ($top in @('01_Projects','02_Areas','03_Resources','00_Inbox','06_Metadata')) {
   $p = Join-Path $Vault $top
   if (Test-Path $p) {
@@ -157,7 +157,7 @@ foreach ($top in @('01_Projects','02_Areas','03_Resources','00_Inbox','06_Metada
       $hit = $false
       foreach ($s in $skip) { if ($d.FullName -match $s) { $hit = $true } }
       if ($hit) { continue }
-      if (-not (Test-Path (Join-Path $d.FullName '00_INDEX.md'))) { $noIdx += $d.FullName.Substring($Vault.Length+1) }
+      if (-not (Test-Path (Join-Path $d.FullName '00_INDEX.md'))) { $noIdx.Add($d.FullName.Substring($Vault.Length+1)) }
     }
   }
 }
