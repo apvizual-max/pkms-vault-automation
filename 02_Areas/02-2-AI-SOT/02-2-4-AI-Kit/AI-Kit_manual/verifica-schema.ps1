@@ -337,7 +337,7 @@ $faraSub = ($faraSub -join "`n")
     $fs = [System.IO.File]::Open($gIdx, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::None)
     $eaVechi = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
-    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
+    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy RemoteSigned -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
     $gCod = $LASTEXITCODE
     $ErrorActionPreference = $eaVechi
   } finally {
