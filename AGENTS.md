@@ -54,7 +54,7 @@ Sistemul este operat într-o arhitectură duală:
 3. `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_guide\START AICI.md` — harta rafturilor, cifrele de azi.
 4. `00_INDEX.md` din folderul în care lucrezi.
 
-Motorul stă în `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` (12 scripturi).
+Motorul stă în `02_Areas\02-2-AI-SOT\02-2-4-AI-Kit\AI-Kit_manual\` (13 scripturi `.ps1` + 1 cititor `.js` — măsurat pe disc, nu promis din document).
 
 ---
 

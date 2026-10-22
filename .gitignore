@@ -257,8 +257,10 @@
 
 # ── 5. Stare vie in AI-Kit: se rescrie singura, nu are istoric ──
 #       (masurat: a produs 55 de comituri consecutive pe 2026-10-11)
-/AI-Kit/raport-autocomit.log
-/AI-Kit/git-autocomit-registru.txt
+# INACTIVE din 2026-10-19 (caile vechi): raport-autocomit.log e inchis la 3d,
+# in AI-Kit_manual; registrul e configuratie urmarita intentionat, la calea reala.
+# /AI-Kit/raport-autocomit.log
+# /AI-Kit/git-autocomit-registru.txt
 
 # ── 6. INDEX CENTRAL.md — RAMANE INCHIS. ──
 #       Era inchis cu doua motive: „artefact derivat" si „contine nume personale
