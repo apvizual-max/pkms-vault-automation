@@ -20,7 +20,7 @@ Cele mai frecvente două extensii sunt `.md` (1 din 2 fișiere) și `.txt` (1 di
 _Fiecare raft e legat la indexul lui. Un index care nu e legat nu e în arbore._
 
 - [`AI-Kit_guide`](<AI-Kit_guide/00_INDEX.md>) — 10 fișiere · 0 subfoldere
-- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 20 fișiere · 0 subfoldere
+- [`AI-Kit_manual`](<AI-Kit_manual/00_INDEX.md>) — 22 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-19`](<HANDOFF-2026-10-19/00_INDEX.md>) — 4 fișiere · 0 subfoldere
 - [`HANDOFF-2026-10-21`](<HANDOFF-2026-10-21/00_INDEX.md>) — 4 fișiere · 0 subfoldere
 - [`PKMS-tooling`](<PKMS-tooling/00_INDEX.md>) — 2 fișiere · 6 subfoldere
