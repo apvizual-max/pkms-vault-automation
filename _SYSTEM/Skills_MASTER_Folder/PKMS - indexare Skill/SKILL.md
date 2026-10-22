@@ -120,13 +120,24 @@ aceeasi nota de provenienta. Celelalte 3.975 sunt in `_QUARANTINE\indexuri gener
 in gresit\`, zona pe care ambele generatoare o exclud (sunt martorii unui defect),
 deci pastreaza forma veche prin design.
 
-**Asimetria măsurată, încă nepatchată:** `align-index` scrie cu **un newline final în
-plus** (`Set-Content` adaugă peste EOL deja prezent, la L853) și **nu recunoaște
-blocurile derivate vechi** — a lăsat un rând stale cu „18 fișiere" în `AI-Kit_manual`,
-unde corect era 17. `build-index` normalizează ambele. Convergența **contractuală** e
-intactă (censusul dă 0 NEALINIAT), dar rămâne zgomot de git la rescrierile viitoare.
-**Nu s-a patchat**, pentru că `PKMS-Aliniere` rulează zilnic la 06:00: orice schimbare
-a căii de scriere cere probă izolată și ciclu de verificare propriu.
+**Asimetria măsurată în 19.10.2026 — probată și închisă în 22.10.2026.** La
+măsurarea din 19.10, `align-index` scria cu **un newline final în plus**
+(`Set-Content` adaugă peste EOL deja prezent) și **nu repara un rând de stare
+stale**. Ambele au fost **probe izolate pe un folder real, astăzi**, prin
+perturbare controlată urmată de rescriere:
+
+- blocuri derivate trunchiate → `align-index` raportează **INCOMPLET** și scrie
+  înapoi **632 octeți, identici octet cu octet** cu ieșirea lui `build-index`;
+- rând de stare stricat la „999 fișiere" → raportează **NEALINIAT** și îl
+  readuce la valoarea corectă (**1 fișiere · 196 B · 0 subfoldere**), tot
+  octet cu octet identic.
+
+`git status` a rămas **gol** după ambele probe: zero drift în vault. **Nu există
+asimetrie între cele două generatoare** — pentru același folder, `build-index`
+și `align-index` scriu aceiași octeți. Diferența reală rămasă e de **conținut**,
+nu de format: `align-index` reînnoiește doar blocurile derivate și rândul de
+stare, pe când `build-index` rescrie tot arborele (de aceea rulează doar după
+mutări în masă).
 
 ## 6. Reparația se face din datele lui
 
@@ -213,3 +224,22 @@ e `NOT_MEASURED`.
 **Cele două cifre mari nu se contrazic:** `INDEX CENTRAL.md` măsoară **substratul
 indexat** (fără zonele excluse), `health-check` măsoară **tot vaultul**. Scope diferit,
 nu eroare.
+
+## 13. Cifrele de referință (22.10.2026, măsurate)
+
+| | |
+|---|---|
+| foldere indexate | **2.616**, toate CONFORM (census `align-index -CeVad`) |
+| indexuri pe disc | 6.591 — 2.616 cu nota de proveniență nouă (2.615 în afara zonei de martori + rădăcina zonei) și 3.975 în `_QUARANTINE\indexuri generate in gresit`, cu forma veche (martori, excluși prin design) |
+| `INDEX CENTRAL.md` | 992.622 B · „Actualizat: 2026-10-22 05:18" · 16.653 fișiere · 86,67 GB indexate |
+| vault total (health-check) | 51.304 fișiere · 88,72 GB (măsurat 22.10 05:45) |
+| oglinda cloud (verifica-oglinda) | 52.403 fișiere · md5 identice 52.400 · **divergență 0** · latență 3 (cozi queued_uploads=3) — oglinda e vie, cifrele drift-ează |
+| scripturi | 13 `.ps1` + 1 `.js` — parse 0 erori, encoding 13/13 |
+| `build-index` | regenerare integrală: 2.616 indexuri rescrise în 74,7 s, EXIT=0 |
+| `align-index` (scriere) | probe izolate pe `00_Inbox/00-1-WhatsApp`: INCOMPLET reparat și NEALINIAT reparat, ambele **octet cu octet** identice cu `build-index` |
+| lanț `watch` | 3 trepte, toate codurile de ieșire 0, 0 erori, 0 atenții, 46 s |
+| taskuri | 4/4 cu `LastTaskResult=0` |
+| repo | `master`, arbore curat, 699 fișiere urmărite (din care 629 indexuri) |
+
+**Cifrele de la §12 rămân istoric**: erau corecte pe 19.10 și sunt păstrate ca
+atare, pentru că §12 e datat. Cifrele de aici sunt cele măsurate acum.
