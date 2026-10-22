@@ -38,6 +38,9 @@ $errors = New-Object System.Collections.Generic.List[string]
 $warn   = New-Object System.Collections.Generic.List[string]
 $ok     = New-Object System.Collections.Generic.List[string]
 $linii  = New-Object System.Collections.Generic.List[string]
+# Masuratoare care nu s-au putut face. Se tin separate de erori, pentru ca
+# iesirea sa fie distincta: 2 = "nu am masurat", 1 = "am masurat si e rau".
+$nefacute = 0
 
 $psExe = Join-Path $PSHOME 'powershell.exe'
 $inceput = Get-Date
@@ -75,6 +78,7 @@ if (-not $ogl.Exista) {
     $mas = [regex]::Match($ogl.Text, '(?m)^MASURAT OGLINDA:\s*(\S+)')
     $masurat = if ($mas.Success) { $mas.Groups[1].Value } else { 'NU' }
     if ($div -lt 0 -or $lat -lt 0) {
+        $nefacute++
         $errors.Add("Oglinda: randul de rezultat nu a putut fi citit. Masuratoarea nu s-a facut.")
     } else {
         if ($div -gt 0) { $errors.Add("Oglinda: $div fisiere DIVERGENTE intre local si cloud.") }
@@ -96,6 +100,7 @@ if (-not $al.Exista) {
 } else {
     foreach ($l in ($al.Text -split "`r?`n")) { if ($l -match '^\s*rezumat:') { $rezumat = $l; break } }
     if (-not $rezumat) {
+        $nefacute++
         $errors.Add("Indexuri: randul 'rezumat' nu a putut fi citit. Masuratoarea nu s-a facut.")
     } else {
         $lipsa = Get-NumDinText $rezumat '(?<!\d)(\d+)\s+LIPSA\b'
@@ -141,6 +146,7 @@ if (-not $li.Exista) {
     $ne = if ($m.Success) { [int]$m.Groups[1].Value } else { -1 }
     $na = if ($m.Success) { [int]$m.Groups[2].Value } else { -1 }
     if ($ne -lt 0) {
+        $nefacute++
         $errors.Add("Lint: randul de rezultat nu a putut fi citit. Masuratoarea nu s-a facut.")
     } else {
         if ($ne -gt 0) { $errors.Add("Lint: $ne erori de regula.") } else { $ok.Add("lint: 0 erori, $na atentioni") }
@@ -161,6 +167,7 @@ if (-not $hc.Exista) {
     $dm = [regex]::Match($hc.Text, '(?m)diferenta\s*(\d+)')
     $diferenta = if ($dm.Success) { [int]$dm.Groups[1].Value } else { -1 }
     if ($masura -eq 'NU CITITA') {
+        $nefacute++
         $errors.Add("Vault: masura nu a putut fi citita. Masuratoarea nu s-a facut.")
     } else {
         $ok.Add("vault: $masura")
@@ -207,8 +214,11 @@ foreach ($e in $errors) { $linii.Add("  EROARE  $e") }
 $linii.Add("")
 $durata = [int]((Get-Date) - $inceput).TotalSeconds
 $linii.Add(("durata: {0}s" -f $durata))
+if ($nefacute -gt 0) {
+    $linii.Add(("MASURATORI NEFACUTE: {0} - verdictul despre acele porti e NECUNOSCUT, nu 'bine'" -f $nefacute))
+}
 $linii.Add(("REZULTAT: {0} erori, {1} atentioni" -f $errors.Count, $warn.Count))
-$verdict = if ($errors.Count -gt 0) { 'NEIN ORDINE' } else { 'IN ORDINE' }
+$verdict = if ($nefacute -gt 0) { 'NECUNOSCUT - o masuratoare nu s-a facut' } elseif ($errors.Count -gt 0) { 'NEIN ORDINE' } else { 'IN ORDINE' }
 $linii.Add(("VERDICT: {0}" -f $verdict))
 
 $textRaport = ($linii -join "`r`n") + "`r`n"
@@ -229,4 +239,5 @@ try {
     Write-Output ("ATENTIE: raportul NU a putut fi scris: " + $_.Exception.Message)
 }
 
+if ($nefacute -gt 0) { exit 2 }
 if ($errors.Count -gt 0) { exit 1 } else { exit 0 }
