@@ -178,7 +178,7 @@ $align = Join-Path $PSScriptRoot 'align-index.ps1'
 if (-not (Test-Path -LiteralPath $align)) { throw ('Lipseste poarta: ' + $align) }
 # -Vault se propaga. Fara asta, cu -Vault spre alt arbore, clasificarea s-ar
 # face dupa starea vaultului implicit, nu a celui cerut.
-$ie = & powershell -NoProfile -ExecutionPolicy Bypass -File $align -Vault $Vault -CeVad 2>&1 | Out-String
+$ie = & powershell -NoProfile -File $align -Vault $Vault -CeVad 2>&1 | Out-String
 
 $deschise = New-Object System.Collections.ArrayList
 foreach ($l in ($ie -split "`r?`n")) {
