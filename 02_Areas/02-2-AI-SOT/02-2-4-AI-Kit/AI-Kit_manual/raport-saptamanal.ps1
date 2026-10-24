@@ -191,12 +191,11 @@ $linii.Add("")
 # ── 6. COTOR ──
 $linii.Add("--- 6. COTOR (documentatia de la radacina) ---")
 $cotoruri = @('COTOR.md', 'INDEX CENTRAL.md', 'MANUAL DE NAVIGARE - cotor.md', 'AGENTS.md')
-$lipsaCotor = @()
-foreach ($c in $cotoruri) {
+$lipsaCotor = @(foreach ($c in $cotoruri) {
     $p = Join-Path $Vault $c
-    if (-not (Test-Path -LiteralPath $p -PathType Leaf)) { $lipsaCotor += $c }
-    elseif ((Get-Item -LiteralPath $p -Force).Length -eq 0) { $lipsaCotor += ($c + ' (gol)') }
-}
+    if (-not (Test-Path -LiteralPath $p -PathType Leaf)) { $c }
+    elseif ((Get-Item -LiteralPath $p -Force).Length -eq 0) { $c + ' (gol)' }
+})
 if ($lipsaCotor.Count -gt 0) {
     $errors.Add(("Cotor: documentatie lipsa sau goala la radacina - " + ($lipsaCotor -join ', ')))
 } else {
@@ -205,11 +204,10 @@ if ($lipsaCotor.Count -gt 0) {
 $cotorPath = Join-Path $Vault 'COTOR.md'
 if (Test-Path -LiteralPath $cotorPath -PathType Leaf) {
     $textCotor = [System.IO.File]::ReadAllText($cotorPath)
-    $neMentionate = @()
-    foreach ($d in (Get-ChildItem -LiteralPath $Vault -Directory -Force -ErrorAction SilentlyContinue)) {
+    $neMentionate = @(foreach ($d in (Get-ChildItem -LiteralPath $Vault -Directory -Force -ErrorAction SilentlyContinue)) {
         if ($d.Name.StartsWith('.')) { continue }
-        if (-not $textCotor.Contains($d.Name)) { $neMentionate += $d.Name }
-    }
+        if (-not $textCotor.Contains($d.Name)) { $d.Name }
+    })
     if ($neMentionate.Count -gt 0) {
         $errors.Add(("Cotor: foldere de nivel 1 nementionate in COTOR.md - " + ($neMentionate -join ', ')))
     } else {
