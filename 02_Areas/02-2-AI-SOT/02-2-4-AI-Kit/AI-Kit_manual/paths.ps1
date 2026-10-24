@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS paths.ps1 - descopera singure backupul si locatiile canonice.
   se include din toate scripturile, ca numele sa nu mai fie scris tare in 4 locuri.
 
@@ -59,8 +59,8 @@ function Test-PkmsVaultReal([string]$Path) {
   if (-not $Path) { return $false }
   if (-not (Test-Path -LiteralPath $Path)) { return $false }
   $p = (Normalize-PkmsPath $Path)
-  if (-not (Test-Path -LiteralPath (Join-Path $p '.git')))      { return $false }
-  if (-not (Test-Path -LiteralPath (Join-Path $p 'COTOR.md')))  { return $false }
+  if (-not (Test-Path -LiteralPath (Join-Path $p '.git') -ErrorAction SilentlyContinue))      { return $false }
+  if (-not (Test-Path -LiteralPath (Join-Path $p 'COTOR.md') -ErrorAction SilentlyContinue))  { return $false }
   $numerotat = @(Get-ChildItem -LiteralPath $p -Directory -Force -EA SilentlyContinue |
                  Where-Object { $_.Name -match '^\d\d_' })
   if ($numerotat.Count -lt 3) { return $false }
