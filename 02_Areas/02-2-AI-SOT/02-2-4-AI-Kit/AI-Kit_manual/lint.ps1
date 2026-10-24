@@ -106,7 +106,7 @@ $ok.Add("rafturile masinii sunt fara numerotare")
 # --- 3. cuvantul interzis: se verifica in NUME, nu in continut ---
 # regula e despre nume (foldere, fisiere, scripturi), nu despre text.
 # documentatia care DEFINESTE regula trebuie sa poata numi cuvantul, altfel nu exista.
-$bad = @()
+$bad = New-Object System.Collections.Generic.List[string]
 # 01_Projects intra in scanare din 2026-10-08. pana atunci nu era verificat, desi
 # baza exista si health-check o raporteaza: un nume cu cuvantul interzis acolo trecea
 # prin lint cu "OK". nu exista ratione documentata pentru excludere - contractul
@@ -120,11 +120,11 @@ $bad = @()
 foreach ($d in @('01_Projects','_SYSTEM','_QUARANTINE','00_Inbox','02_Areas','03_Resources','04_Archive','05_Attachments','06_Metadata','07_Canvas Bases','08_Clippings','09_raport-archive','_ARCHIVE','Canvas Bases','Clippings','raport-archive')) {
   $p = Join-Path $Vault $d
   if (-not (Test-Path $p)) { continue }
-  $bad += Get-ChildItem -LiteralPath $p -Recurse -Force -EA SilentlyContinue |
-           Where-Object { $_.Name -match 'LUCURARE' } | ForEach-Object { $_.FullName.Substring($Vault.Length+1) }
+  Get-ChildItem -LiteralPath $p -Recurse -Force -EA SilentlyContinue |
+           Where-Object { $_.Name -match 'LUCURARE' } | ForEach-Object { $bad.Add($_.FullName.Substring($Vault.Length+1)) }
 }
-$bad += Get-ChildItem -LiteralPath $Vault -Force -EA SilentlyContinue |
-        Where-Object { $_.Name -match 'LUCURARE' } | ForEach-Object { $_.Name }
+Get-ChildItem -LiteralPath $Vault -Force -EA SilentlyContinue |
+        Where-Object { $_.Name -match 'LUCURARE' } | ForEach-Object { $bad.Add($_.Name) }
 if ($bad.Count -gt 0) { foreach ($b in ($bad|Sort-Object -Unique|Select-Object -First 20)) { $errors.Add("nume cu cuvantul interzis: $b") } }
 else { $ok.Add("niciun nume de folder/fisier nu contine cuvantul interzis") }
 
