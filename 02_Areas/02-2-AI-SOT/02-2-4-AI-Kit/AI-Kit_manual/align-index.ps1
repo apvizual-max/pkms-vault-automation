@@ -254,13 +254,13 @@ try {
     $radacina = (Resolve-Path -LiteralPath $c).Path
   }
 
-  $dirs = @()
   # folderul numit chiar trebuie masurat: Get-ChildItem intoarce COPIILE lui,
   # nu pe el. fara asta, -DoarCargol ar alinia golul.
-  if ($radacina -ne $Vault) { $dirs += @(Get-Item -LiteralPath $radacina -Force) }
-  $dirs += @(Get-ChildItem -LiteralPath $radacina -Directory -Recurse -Force -EA SilentlyContinue |
-             Where-Object { -not (Test-Excluded $_.FullName) -and -not (Test-UnderBackup $_.FullName) -and $_.FullName -ne $Vault })
-  $dirs = @($dirs | Sort-Object FullName -Unique)
+  $dirs = @(
+    if ($radacina -ne $Vault) { Get-Item -LiteralPath $radacina -Force }
+    Get-ChildItem -LiteralPath $radacina -Directory -Recurse -Force -EA SilentlyContinue |
+      Where-Object { -not (Test-Excluded $_.FullName) -and -not (Test-UnderBackup $_.FullName) -and $_.FullName -ne $Vault }
+  ) | Sort-Object FullName -Unique
 
   $recs = New-Object System.Collections.Generic.List[object]
   foreach ($dir in $dirs) {
