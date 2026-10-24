@@ -120,21 +120,21 @@ function Invoke-AutoTest {
   $ev = Parse-Log $log
   $ok = $true
 
-  Write-Host ('  evenimente parsate: ' + $ev.Count + '   (asteptat 2)')
+  Write-Host "  evenimente parsate: $($ev.Count)   (asteptat 2)"
   if ($ev.Count -ne 2) { $ok = $false }
 
   $a = Test-Census -evenimente $ev -deschise @('raft/rau')
-  Write-Host ('  A) rezolvate=' + $a.Rezolvate.Count + '  deschise=' + $a.Deschise.Count + '   (asteptat 1 / 1)')
+  Write-Host "  A) rezolvate=$($a.Rezolvate.Count)  deschise=$($a.Deschise.Count)   (asteptat 1 / 1)"
   if ($a.Rezolvate.Count -ne 1 -or $a.Deschise.Count -ne 1) { $ok = $false; Write-Host '     [NEPRINS]' }
   else { Write-Host '     [PRINS] — poarta stie sa devina rosie' }
 
   $b = Test-Census -evenimente $ev -deschise @()
-  Write-Host ('  B) rezolvate=' + $b.Rezolvate.Count + '  deschise=' + $b.Deschise.Count + '   (asteptat 2 / 0)')
+  Write-Host "  B) rezolvate=$($b.Rezolvate.Count)  deschise=$($b.Deschise.Count)   (asteptat 2 / 0)"
   if ($b.Rezolvate.Count -ne 2 -or $b.Deschise.Count -ne 0) { $ok = $false; Write-Host '     [NEPRINS]' }
   else { Write-Host '     [PRINS]' }
 
   $c = Test-Census -evenimente @() -deschise @('raft/rau')
-  Write-Host ('  C) rezolvate=' + $c.Rezolvate.Count + '  deschise=' + $c.Deschise.Count + '   (asteptat 0 / 0)')
+  Write-Host "  C) rezolvate=$($c.Rezolvate.Count)  deschise=$($c.Deschise.Count)   (asteptat 0 / 0)"
   if ($c.Rezolvate.Count -ne 0 -or $c.Deschise.Count -ne 0) { $ok = $false; Write-Host '     [NEPRINS]' }
   else { Write-Host '     [PRINS]' }
 
@@ -145,7 +145,7 @@ function Invoke-AutoTest {
   $d2 = (-not $inArhiva.Contains('raft/rau'))
   $d3 = $inViu.Contains('raft/rau')
   $d4 = (-not $inViu.Contains('raft/bun'))
-  Write-Host ('  D) arhiva: [' + $inArhiva + ']   log viu: [' + $inViu + ']')
+  Write-Host "  D) arhiva: [$inArhiva]   log viu: [$inViu]"
   if (-not ($d1 -and $d2 -and $d3 -and $d4)) { $ok = $false; Write-Host '     [NEPRINS] — arhivarea a atins ceva ce era deschis' }
   else { Write-Host '     [PRINS] — arhivarea nu inghiteaza lucru deschis' }
 
@@ -168,7 +168,7 @@ $Vault = Normalize-PkmsPath $Vault
 if (-not (Test-Path -LiteralPath $Vault)) { throw ('Vaultul nu exista: ' + $Vault) }
 if (-not $Log) { $Log = Join-Path $Vault 'raport-aliniere.log' }
 if (-not (Test-Path -LiteralPath $Log)) {
-  Write-Host ('LOGUL NU EXISTA: ' + $Log)
+  Write-Host "LOGUL NU EXISTA: $Log"
   Write-Host 'Nu am citit nimic. Nu pot spune ca nu e treaba.'
   exit 1
 }
@@ -231,15 +231,15 @@ foreach ($d in $deschise) {
   if (-not $acoperit) { [void]$neacoperite.Add($d) }
 }
 
-Write-Host ('Log: ' + $Log)
-Write-Host ('Evenimente inregistrate: ' + $ev.Count + '   in ' + $toateDrumuri.Count + ' foldere distincte')
-Write-Host ('  rezolvate ACUM: ' + $cls.Rezolvate.Count + ' evenimente, in ' + $foldereRezolvate.Count + ' foldere')
-Write-Host ('  DESCHISE ACUM:  ' + $cls.Deschise.Count + ' evenimente, in ' + $foldereDeschise.Count + ' foldere')
+Write-Host "Log: $Log"
+Write-Host "Evenimente inregistrate: $($ev.Count)   in $($toateDrumuri.Count) foldere distincte"
+Write-Host "  rezolvate ACUM: $($cls.Rezolvate.Count) evenimente, in $($foldereRezolvate.Count) foldere"
+Write-Host "  DESCHISE ACUM:  $($cls.Deschise.Count) evenimente, in $($foldereDeschise.Count) foldere"
 Write-Host ''
 if ($neacoperite.Count -gt 0) {
   Write-Host ''
-  Write-Host ('ATENTIE — POARTA REPORTA ' + $neacoperite.Count + ' STRICARI PE CARE LOGUL NU LE CONTINE:')
-  foreach ($d in $neacoperite) { Write-Host ('    ' + $d) }
+  Write-Host "ATENTIE — POARTA REPORTA $($neacoperite.Count) STRICARI PE CARE LOGUL NU LE CONTINE:"
+  foreach ($d in $neacoperite) { Write-Host "    $d" }
   Write-Host 'Logul si vaultul nu mai sunt de acord. Aceste foldere nu pot fi nici'
   Write-Host 'arhivate, nici declarate rezolvate: nu au eveniment de corespuns.'
   Write-Host 'Ruleaza align-index.ps1 ca evenimentele sa ajunga in log.'
@@ -253,14 +253,14 @@ if ($cls.Deschise.Count -gt 0) {
   Write-Host 'RAMANE DE FACUT, pe foldere:'
   foreach ($d in $foldereDeschise) {
     $stari = @($cls.Deschise | Where-Object { $_.Drum -eq $d } | Select-Object -ExpandProperty Stare -Unique)
-    Write-Host ('  [' + ($stari -join ', ') + '] ' + $d)
+    Write-Host "  [$($stari -join ', ')] $d"
   }
   if ($Nivel -ge 1) {
     Write-Host ''
     foreach ($e in ($cls.Deschise | Select-Object -First 6)) {
-      Write-Host ('  --- ' + $e.Drum + '   (raportat ' + $e.Data + ')')
+      Write-Host "  --- $($e.Drum)   (raportat $($e.Data))"
       foreach ($d in ($e.Detalii | Where-Object { $_.Trim() -ne '' } | Select-Object -First 4)) {
-        Write-Host ('      ' + $d.Trim())
+        Write-Host "      $($d.Trim())"
       }
     }
   }
@@ -269,12 +269,12 @@ if ($cls.Deschise.Count -gt 0) {
 if (-not $Arhiveaza) {
   Write-Host ''
   if ($neacoperite.Count -gt 0) {
-    Write-Host ('VERDICT INCOMPLET: ' + $neacoperite.Count + ' stricari reale, necuprinse in log.')
+    Write-Host "VERDICT INCOMPLET: $($neacoperite.Count) stricari reale, necuprinse in log."
     Write-Host 'Nu pot spune "nimic deschis" — stiu ca sunt stricari, si nu le-am vazut.'
     exit 1
   }
   if ($cls.Deschise.Count -gt 0) {
-    Write-Host ('RAMANE TREABA: ' + $cls.Deschise.Count + ' evenimente deschise.')
+    Write-Host "RAMANE TREABA: $($cls.Deschise.Count) evenimente deschise."
     Write-Host 'Nu s-a scris nimic. Cu -Arhiveaza se muta doar cele rezolvate.'
     exit 1
   }
@@ -321,10 +321,10 @@ foreach ($g in ($cls.Deschise | Group-Object -Property Data)) {
 [IO.File]::WriteAllText($Log, $sb2.ToString(), $enc)
 
 Write-Host ''
-Write-Host ('ARHIVAT: ' + $cls.Rezolvate.Count + ' evenimente -> ' + (Split-Path -Path $arhivaPath -Leaf))
-Write-Host ('RAMASE IN LOG: ' + $cls.Deschise.Count + ' evenimente deschise')
+Write-Host "ARHIVAT: $($cls.Rezolvate.Count) evenimente -> $(Split-Path -Path $arhivaPath -Leaf)"
+Write-Host "RAMASE IN LOG: $($cls.Deschise.Count) evenimente deschise"
 if ($neacoperite.Count -gt 0) {
-  Write-Host ('VERDICT INCOMPLET: ' + $neacoperite.Count + ' stricari reale, necuprinse in log.')
+  Write-Host "VERDICT INCOMPLET: $($neacoperite.Count) stricari reale, necuprinse in log."
   exit 1
 }
 if ($cls.Deschise.Count -gt 0) { exit 1 } else { exit 0 }
