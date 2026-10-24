@@ -236,13 +236,12 @@ function Invoke-AutoTest {
   $fara = @(); for ($i = 0; $i -lt $lin.Count; $i++) { if ($lin[$i] -ne '## Fișiere') { $fara += $lin[$i] } } ; $fara = ($fara -join "`n")
   # Varianta fara "## Subfoldere", cu randul ei de link scos deasupra, ca sa
   # nu se amestece in cuvintele cheie. Pe asta se construiesc cazurile E si F.
-$faraSub = @(); $sarit = $false
-foreach ($l in $lin) {
+$sarit = $false
+$faraSub = $(foreach ($l in $lin) {
   if ($l -eq '## Subfoldere') { $sarit = $true; continue }
   if ($sarit) { if ($l -eq '') { $sarit = $false }; continue }
-  $faraSub += $l
-}
-$faraSub = ($faraSub -join "`n")
+  $l
+}) -join "`n"
   $unu = $corect.Replace('`autotest` · `proba`', '`singur`')
 
   $cazuri = @(
