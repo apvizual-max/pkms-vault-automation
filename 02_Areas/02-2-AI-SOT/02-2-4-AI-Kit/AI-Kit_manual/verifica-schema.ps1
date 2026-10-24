@@ -307,6 +307,26 @@ $faraSub = $(foreach ($l in $lin) {
     else { foreach ($m in $cuEroare) { Write-Host ('             motiv: ' + $m.Motiv + ' — ' + $m.Detaliu) } }
   }
 
+
+  # --- proba Relativ ---
+  Write-Host ""
+  Write-Host "  RELATIV — eliminarea radacinii:"
+  $probeRelativ = @(
+    @{ F = 'C:\Vault\Folder\Fisier.md'; R = 'C:\Vault'; A = 'Folder\Fisier.md'; De = 'caz normal' },
+    @{ F = 'C:\Vault\Folder\Fisier.md'; R = 'C:\VAULT'; A = 'Folder\Fisier.md'; De = 'ignora literele mari/mici' },
+    @{ F = 'C:\Vault\Folder\Fisier.md'; R = 'C:\Vault\'; A = 'Folder\Fisier.md'; De = 'radacina cu slash final' },
+    @{ F = 'C:\Alt\Folder\Fisier.md'; R = 'C:\Vault'; A = 'C:\Alt\Folder\Fisier.md'; De = 'fara potrivire' },
+    @{ F = 'C:\Vault'; R = 'C:\Vault'; A = ''; De = 'calea e chiar radacina' },
+    @{ F = 'Folder\Fisier.md'; R = ''; A = 'Folder\Fisier.md'; De = 'fara radacina' }
+  )
+  $probeRelativOk = $true
+  foreach ($pr in $probeRelativ) {
+    $got = Relativ -full $pr.F -root $pr.R
+    if ($got -eq $pr.A) { Write-Host ('  [OK]       asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
+    else { $probeRelativOk = $false; Write-Host ('  [GRESIT]   asteptat=' + $pr.A + ' primit=' + $got + '  ' + $pr.De) }
+  }
+  if (-not $probeRelativOk) { $ok = $false }
+
   # --- proba de excluziuni ---
   Write-Host ""
   Write-Host "  EXCLUZIUNI — fiecare tipar, pe o cale care AR TREBUI sa se excluda:"
