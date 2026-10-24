@@ -758,11 +758,11 @@ try {
           }
         }
 
-        $necesare = @('## Ce e aici', '## Cuvinte cheie')
-        if ($r.subsN -gt 0) { $necesare += '## Subfoldere' }
-        if ($r.realN -gt 0) { $necesare += '## Fișiere' }
-        $lipsa = @()
-        foreach ($n in $necesare) { if (-not $seenBlk.ContainsKey($n)) { $lipsa += $n } }
+        $necesare = [System.Collections.Generic.List[string]]@('## Ce e aici', '## Cuvinte cheie')
+        if ($r.subsN -gt 0) { $necesare.Add('## Subfoldere') }
+        if ($r.realN -gt 0) { $necesare.Add('## Fișiere') }
+        $lipsa = [System.Collections.Generic.List[string]]::new()
+        foreach ($n in $necesare) { if (-not $seenBlk.ContainsKey($n)) { $lipsa.Add($n) } }
 
         if (-not $motiv) {
           # §19.4: index fara motiv. Nu stiu cine l-a scris si nu stiu daca a
