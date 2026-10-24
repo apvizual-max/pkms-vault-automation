@@ -281,10 +281,9 @@ try {
     # inseamna ca ele nu se pot verifica una pe cealalta.
     $bytes = $realBytes
 
-    $exts = @()
-    foreach ($g in ($real | Group-Object Extension | Sort-Object @{e={$_.Count};d=$true}, @{e={$_.Name};d=$false})) {
-      if ($g.Name) { $exts += ,@([string]$g.Name, [int]$g.Count) }
-    }
+    $exts = @(foreach ($g in ($real | Group-Object Extension | Sort-Object @{e={$_.Count};d=$true}, @{e={$_.Name};d=$false})) {
+      if ($g.Name) { ,@([string]$g.Name, [int]$g.Count) }
+    })
     $e1n = ''; $e1c = 0; $e2n = ''; $e2c = 0
     if ($exts.Count -gt 0) { $e1n = $exts[0][0]; $e1c = $exts[0][1] }
     if ($exts.Count -gt 1) { $e2n = $exts[1][0]; $e2c = $exts[1][1] }
