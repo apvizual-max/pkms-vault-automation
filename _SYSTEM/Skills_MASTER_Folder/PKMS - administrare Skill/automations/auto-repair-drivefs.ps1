@@ -139,7 +139,8 @@ function Read-State {
     if ($raw.Trim() -eq '') { throw 'gol' }
     return $raw | ConvertFrom-Json
   } catch {
-    Log "STATE CORUPT (refacut): $($_.Exception.Message)"
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Log "STATE CORUPT (refacut): $($msg)"
     return [pscustomobject]@{ ultimaRepornire = 0; reporniriOra = @(); totalReporniri = 0; ultimaVerdict = 'necunoscut' }
   }
 }
@@ -148,7 +149,10 @@ function Save-State($s) {
   try {
     $json = $s | ConvertTo-Json -Depth 4
     [System.IO.File]::WriteAllText($stateFile, $json, (New-Object System.Text.UTF8Encoding($false)))
-  } catch { Log "STATE NU S-A PUTUT SCRIE: $($_.Exception.Message)" }
+  } catch {
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Log "STATE NU S-A PUTUT SCRIE: $($msg)"
+  }
 }
 
 # --- santinelele: locuri diferite din arbore, ca sa nu depindem de un punct ---
@@ -218,7 +222,8 @@ function Test-Citibilitate {
       $b = [System.IO.File]::ReadAllBytes($p)
       if ($b.Length -eq 0) { $picate.Add("$p (gol)") }
     } catch {
-      $picate.Add("$p :: $($_.Exception.Message)")
+      $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+      $picate.Add("$p :: $($msg)")
     }
   }
   return [pscustomobject]@{
@@ -317,7 +322,10 @@ if ($ora.Count -ge $MaxPeOra) {
 # --- repornirea ---
 Log "ACTION: repornesc DriveFS."
 foreach ($p in @(Get-Process GoogleDriveFS -EA SilentlyContinue)) {
-  try { Stop-Process -Id $p.Id -Force -EA Stop } catch { Log "  oprire proces $($p.Id): $($_.Exception.Message)" }
+  try { Stop-Process -Id $p.Id -Force -EA Stop } catch {
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Log "  oprire proces $($p.Id): $($msg)"
+  }
 }
 Start-Sleep -Seconds 5
 if (-not [System.IO.File]::Exists($launchBat)) {
@@ -329,7 +337,8 @@ if (-not [System.IO.File]::Exists($launchBat)) {
 try {
   Start-Process -FilePath $launchBat -WindowStyle Hidden
 } catch {
-  Log "ACTION IMPOSIBIL: nu pot porni launch.bat: $($_.Exception.Message)"
+  $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+  Log "ACTION IMPOSIBIL: nu pot porni launch.bat: $($msg)"
   $st.ultimaVerdict = 'pornire esuita'
   Save-State $st
   exit 0

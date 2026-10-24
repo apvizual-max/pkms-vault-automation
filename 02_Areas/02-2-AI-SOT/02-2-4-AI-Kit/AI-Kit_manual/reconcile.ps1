@@ -84,7 +84,8 @@ if ($mod -eq 'cloud') {
     $out = & powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $oglinda -Vault $Vault 2>&1
     $cod = [int]$LASTEXITCODE
   } catch {
-    Write-Output "EXCEPTIE: $($_.Exception.Message)"
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Write-Output "EXCEPTIE: $($msg)"
     Write-Output 'Nu am masurat nimic. Nu pot afirma ca nu s-a pierdut nimic.'
     exit 1
   }
@@ -242,10 +243,11 @@ if (Test-Path -LiteralPath $retireFile) {
     }
   }
   catch {
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
     Write-Output ""
     Write-Output "STOP: REGISTRUL DE RETRAGERI NU POATE FI CITIT."
     Write-Output "  $retireFile"
-    Write-Output "  $($_.Exception.Message)"
+    Write-Output "  $($msg)"
     Write-Output "Un registru pe care nu pot sa-l citesc nu e o hotarare valida."
     Write-Output "Nu afirm ca nu s-a pierdut nimic. Nu stiu ce a fost retras."
     exit 1
