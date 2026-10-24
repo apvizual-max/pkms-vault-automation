@@ -108,8 +108,11 @@ function Test-ContinutSecret {
     try { $raw = [System.IO.File]::ReadAllText($Full) } catch { return $motive }
     if ([string]::IsNullOrEmpty($raw)) { return $motive }
 
-    # nul = binar deghizat
-    if ($raw.IndexOf([char]0) -ge 0) { return $motive }
+    # nul = binar deghizat sau încercare de bypass
+    if ($raw.IndexOf([char]0) -ge 0) {
+        $motive.Add('continut: contine caracter nul (posibil bypass secret sau binar necunoscut)')
+        return $motive
+    }
 
     foreach ($t in $secreteContinut) {
         if ($raw -match $t) {
@@ -146,6 +149,7 @@ if ($AutoProbe) {
         @{ n = 'token GitHub';     c = 'ghp_0123456789abcdefghijABCDEFGHIJ';               a = $true },
         @{ n = 'parola atribuita'; c = 'password = "Str0ng-SecreT!"';                     a = $true },
         @{ n = 'api_key atribuita';c = 'api_key: abcd1234efgh5678';                        a = $true },
+        @{ n = 'bypass nul byte';  c = "password = `"Str0ng-SecreT!`"`0";                 a = $true },
         @{ n = 'text oarecare';    c = "nu comita asta`n";                                a = $false },
         @{ n = 'README curat';     c = "# Documentatie`nFoloseste tokenul din vault.";    a = $false },
         @{ n = 'cod fara secret';  c = 'function Get() { return password.Length; }';      a = $false }
