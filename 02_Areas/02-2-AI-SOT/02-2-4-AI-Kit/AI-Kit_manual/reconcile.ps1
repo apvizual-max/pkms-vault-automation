@@ -338,12 +338,14 @@ foreach ($f in $bak) {
 # absorbita ca "mutare" si sistemul a raportat ca nu s-a pierdut nimic.
 function Test-FisiereIdentice($a, $b) {
   try {
-    if (-not (Test-Path -LiteralPath $a)) { return $false }
-    if (-not (Test-Path -LiteralPath $b)) { return $false }
+    $ia = Get-Item -LiteralPath $a -ErrorAction Stop
+    $ib = Get-Item -LiteralPath $b -ErrorAction Stop
+    if ($ia.Length -ne $ib.Length) { return $false }
+
     # -LiteralPath, obligatoriu: numele de foldere contin [ si ], pe care -Path
     # le-ar citi ca metacaractere si ar intoarce un hash gol.
-    $h1 = (Get-FileHash -LiteralPath $a -Algorithm SHA256).Hash
-    $h2 = (Get-FileHash -LiteralPath $b -Algorithm SHA256).Hash
+    $h1 = (Get-FileHash -LiteralPath $ia.FullName -Algorithm SHA256).Hash
+    $h2 = (Get-FileHash -LiteralPath $ib.FullName -Algorithm SHA256).Hash
     return ($h1 -eq $h2)
   } catch { return $false }
 }
