@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS verifica-schema.ps1
   Verifica daca fiecare 00_INDEX.md respecta SCHEMA din contractul vaultului
   §18.1 — nu daca exista (astea e treaba lui lint.ps1, punctul 5), ci daca e
@@ -337,7 +337,7 @@ $faraSub = ($faraSub -join "`n")
     $fs = [System.IO.File]::Open($gIdx, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::None)
     $eaVechi = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
-    $gOut = & (Join-Path $PSHOME 'powershell.exe') -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
+    $gOut = & (Join-Path $PSHOME $(if (Get-Command 'pwsh' -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell.exe' })) -NoProfile -ExecutionPolicy Bypass -File $self -Vault $gRoot -Nivel 0 2>&1 | Out-String
     $gCod = $LASTEXITCODE
     $ErrorActionPreference = $eaVechi
   } finally {

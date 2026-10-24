@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS health-check.ps1 - starea de sanatate a vaultului, intr-un raport scurt.
   Nu modifica nimic.
 #>
@@ -20,11 +20,9 @@ $ex = '\\\.obsidian\\|\\\.git\\'
 # Get-ChildItem -File -Recurse si 52.242 cu [System.IO.Directory]::EnumerateFiles
 # pe prefixul \\?\, deci delta 0. Exista 128 de cai peste 259 de caractere
 # (maxima 329) si toate sunt numarate. Calea lunga NU e motivul nedeterminismului.
-$probe1 = @(Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue |
-            Where-Object { $_.FullName -notmatch $ex }).Count
+$probe1 = @(foreach ($fi in Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } }).Count
 Start-Sleep -Milliseconds 700
-$probe2 = @(Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue |
-            Where-Object { $_.FullName -notmatch $ex }).Count
+$probe2 = @(foreach ($fi in Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } }).Count
 $drift = $probe2 - $probe1
 $exSurse = "excludere folosita aici: \\.obsidian\\ si \\.git\\ (2 tipare). paths.ps1 Get-PkmsExclusions are 15 tipare si da ALT numar - nu se amesteca."
 
@@ -41,7 +39,7 @@ if (Test-Path (Join-Path $Vault $workLayer)) {
   foreach ($r in Get-ChildItem -LiteralPath (Join-Path $Vault $workLayer) -Directory -Force | Sort-Object Name) {
     # Acelasi filtru ca in bucla de mai jos (BAZA): altfel rafturile si bazele
     # masoara doua lucruri diferite, iar suma lor nu mai este suma bazei.
-    $f = @(Get-ChildItem -LiteralPath $r.FullName -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
+    $f = @(foreach ($fi in Get-ChildItem -LiteralPath $r.FullName -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
     $mb = [math]::Round((($f | Measure-Object Length -Sum).Sum)/1MB,0)
     Write-Output ("  {0,-22} {1,6} fisiere  {2,8} MB" -f $r.Name, $f.Count, $mb)
   }
@@ -52,7 +50,7 @@ Write-Output "BAZA"
 foreach ($b in @('00_Inbox','01_Projects','02_Areas','03_Resources','04_Archive','05_Attachments','06_Metadata','07_Canvas Bases','08_Clippings','09_raport-archive')) {
   $p = Join-Path $Vault $b
   if (Test-Path $p) {
-    $f = @(Get-ChildItem -LiteralPath $p -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
+    $f = @(foreach ($fi in Get-ChildItem -LiteralPath $p -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
     $mb = [math]::Round((($f | Measure-Object Length -Sum).Sum)/1MB,0)
     Write-Output ("  {0,-22} {1,6} fisiere  {2,8} MB" -f $b, $f.Count, $mb)
   }
@@ -63,13 +61,13 @@ Write-Output "RAFTURILE MASINII"
 foreach ($m in @('_SYSTEM','_ARCHIVE','_QUARANTINE')) {
   $p = Join-Path $Vault $m
   if (Test-Path $p) {
-    $f = @(Get-ChildItem -LiteralPath $p -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
+    $f = @(foreach ($fi in Get-ChildItem -LiteralPath $p -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
     $mb = [math]::Round((($f | Measure-Object Length -Sum).Sum)/1MB,0)
     Write-Output ("  {0,-22} {1,6} fisiere  {2,8} MB" -f $m, $f.Count, $mb)
   }
 }
 
-$all = @(Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
+$all = @(foreach ($fi in Get-ChildItem -LiteralPath $Vault -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
 $gb = [math]::Round((($all | Measure-Object Length -Sum).Sum)/1GB,2)
 Write-Output ""
 Write-Output "TOTAL: $($all.Count) fisiere | $gb GB"

@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS watch.ps1 - singurul punct de intrare al verificarii.
   Ruleaza, in ordine fixa, trei trepte care NU scriu in vault:
      1. lint          - regulile de denumire, legaturi, documentatia
@@ -64,11 +64,12 @@ function Get-Detalii([string[]]$linii, [string[]]$modele, [switch]$Blocuri) {
     $hit = $false
     foreach ($mo in $modele) { if ($linii[$i] -match $mo) { $hit = $true; break } }
     if (-not $hit) { continue }
-    $bloc = $linii[$i].Trim()
+    $sb = [System.Text.StringBuilder]::new($linii[$i].Trim())
     $j = $i + 1
     if ($Blocuri) {
-      while ($j -lt $linii.Count -and $linii[$j].Trim() -ne '') { $bloc += ' ' + $linii[$j].Trim(); $j++ }
+      while ($j -lt $linii.Count -and $linii[$j].Trim() -ne '') { [void]$sb.Append(' ').Append($linii[$j].Trim()); $j++ }
     }
+    $bloc = $sb.ToString()
     $rez.Add($bloc)
     if ($Blocuri) { $i = $j }
   }

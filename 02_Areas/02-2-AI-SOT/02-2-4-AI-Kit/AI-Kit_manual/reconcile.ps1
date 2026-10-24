@@ -1,4 +1,4 @@
-﻿<#
+<#
   PKMS reconcile.ps1 - compara vaultul cu backupul si raporteaza pierderile.
   REGULA: nu scrie niciodata in backup. doar citeste.
   Daca gaseste lipsuri, le COPIAZA din backup in vault - nu le muta.
@@ -108,8 +108,8 @@ if (-not (Test-Path -LiteralPath $Backup)) {
 }
 $ex = '\\\.obsidian\\|\\\.git\\'
 
-$now = @(Get-ChildItem -LiteralPath $Vault  -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
-$bak = @(Get-ChildItem -LiteralPath $Backup -File -Recurse -Force -EA SilentlyContinue | Where-Object { $_.FullName -notmatch $ex })
+$now = @(foreach ($fi in Get-ChildItem -LiteralPath $Vault  -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
+$bak = @(foreach ($fi in Get-ChildItem -LiteralPath $Backup -File -Recurse -Force -EA SilentlyContinue) { if ($fi.FullName -notmatch $ex) { $fi } })
 
 $nv = [int64](($now | Measure-Object Length -Sum).Sum)
 $bk = [int64](($bak | Measure-Object Length -Sum).Sum)
