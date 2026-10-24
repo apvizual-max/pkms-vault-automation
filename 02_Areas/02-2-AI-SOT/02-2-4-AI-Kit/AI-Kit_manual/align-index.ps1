@@ -401,7 +401,7 @@ try {
     $seen = @{}
     foreach ($c in $cand) {
       if ($kw.Count -ge 12) { break }
-      $t = ([string]$c).Replace('`','').Replace('·','').Trim()
+      $t = $c.Replace('`','').Replace('·','').Trim()
       if ($t.Length -lt 2) { continue }
       if ($seen.ContainsKey($t)) { continue }
       $seen[$t] = $true
@@ -409,7 +409,7 @@ try {
     }
     if ($kw.Count -lt 5) {
       foreach ($s in ($r.subInfos | Sort-Object @{e={$_.total};d=$true}, @{e={$_.Name};d=$false})) {
-        $t = ([string]$s.name).Replace('`','').Replace('·','').Trim()
+        $t = $s.name.Replace('`','').Replace('·','').Trim()
         if ($t.Length -lt 2) { continue }
         if ($seen.ContainsKey($t)) { continue }
         $seen[$t] = $true
