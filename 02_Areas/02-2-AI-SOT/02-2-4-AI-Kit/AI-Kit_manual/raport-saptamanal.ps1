@@ -248,7 +248,8 @@ try {
     Write-Output ("raport scris: {0}" -f $arhiva)
     Write-Output ("raport scris: {0}" -f $ultima)
 } catch {
-    Write-Output ("ATENTIE: raportul NU a putut fi scris: " + $_.Exception.Message)
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Write-Output ("ATENTIE: raportul NU a putut fi scris: " + $msg)
 }
 
 if ($nefacute -gt 0) { exit 2 }

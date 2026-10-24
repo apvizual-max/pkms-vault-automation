@@ -127,7 +127,8 @@ try {
     & powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $calea
     $cod = $LASTEXITCODE
 } catch {
-    Write-Jurnal ("EXCEPTIE: {0}" -f $_.Exception.Message)
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    Write-Jurnal ("EXCEPTIE: {0}" -f $msg)
     exit 5
 }
 

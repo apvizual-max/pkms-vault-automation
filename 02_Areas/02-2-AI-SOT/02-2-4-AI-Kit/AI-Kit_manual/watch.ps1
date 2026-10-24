@@ -250,7 +250,8 @@ foreach ($t in $trepte) {
       }
       $cod = [int]$LASTEXITCODE
     } catch {
-      $rand.Add('EXCEPTIE: ' + $_.Exception.Message)
+      $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+      $rand.Add('EXCEPTIE: ' + $msg)
       $cod = 1
     }
   }
@@ -343,7 +344,10 @@ $arhivaDir = Join-Path $raportDir 'arhiva'
 if (-not (Test-Path -LiteralPath $arhivaDir)) { New-Item -ItemType Directory -Path $arhivaDir -Force | Out-Null }
 $arhivaFile = Join-Path $arhivaDir ('raport-' + (Get-Date -Format 'yyyy-MM-dd_HH-mm-ss') + '.txt')
 try { Copy-Item -LiteralPath $raportFile -Destination $arhivaFile -Force }
-catch { Write-Output ('ATENTIE: raport scris, dar nu arhivat: ' + $_.Exception.Message) }
+catch {
+  $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+  Write-Output ('ATENTIE: raport scris, dar nu arhivat: ' + $msg)
+}
 Write-Output "arhiva:       $arhivaFile"
 Write-Output "raport scris: $raportFile"
 Write-Output $script:raportVerdict

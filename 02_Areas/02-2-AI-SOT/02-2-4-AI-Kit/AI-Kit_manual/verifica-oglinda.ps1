@@ -80,7 +80,8 @@ if ($errors.Count -eq 0) {
     $raw = & $node @argsJs 2>&1
     $cod = [int]$LASTEXITCODE
   } catch {
-    $errors.Add("CITITORUL DE OGLINDA A PICAT: $($_.Exception.Message). Masuratoarea nu s-a putut face.")
+    $msg = $_.Exception.Message -replace '[a-zA-Z]:\\[^\s"''<>]+', '<CALE_MASCATA>'
+    $errors.Add("CITITORUL DE OGLINDA A PICAT: $($msg). Masuratoarea nu s-a putut face.")
     $raw = $null
   }
   if ($raw) {
